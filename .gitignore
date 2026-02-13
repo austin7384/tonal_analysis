@@ -1,0 +1,17 @@
+# macOS
+.DS_Store
+
+# PyCharm
+.idea/
+
+# Virtual environments
+.venv/
+venv/
+
+# Python
+__pycache__/
+*.pyc
+
+# Data
+data/
+*.jsonl
