@@ -2,7 +2,7 @@ from openai import OpenAI
 import logging
 
 MODEL = 'gpt-5'
-API_KEY = 'REMOVED'
+API_KEY = ''
 TIMEOUT = 300
 
 client = OpenAI(
