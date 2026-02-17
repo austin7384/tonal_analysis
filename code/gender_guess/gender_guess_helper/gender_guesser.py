@@ -1,8 +1,12 @@
 import pandas as pd
 import requests
 import uuid
+import os
+from dotenv import load_dotenv
 
-API_KEY = ''
+load_dotenv()
+
+API_KEY = os.getenv("NAMSOR_API_KEY")
 
 URL = "https://v2.namsor.com/NamSorAPIv2/api2/json/genderFullBatch"
 

@@ -1,9 +1,16 @@
 from openai import OpenAI
 import logging
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
 
 MODEL = 'gpt-5'
-API_KEY = ''
+API_KEY = os.getenv("OPENAI_API_KEY")
 TIMEOUT = 300
+
+if API_KEY is None:
+    raise ValueError("OPENAI_API_KEY environment variable not set.")
 
 client = OpenAI(
     api_key=API_KEY,
