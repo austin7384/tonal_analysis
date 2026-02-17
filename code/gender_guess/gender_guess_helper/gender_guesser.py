@@ -2,7 +2,7 @@ import pandas as pd
 import requests
 import uuid
 
-API_KEY = 'e9da17bf8d41234886bf2e1a72fbd8ab'
+API_KEY = ''
 
 URL = "https://v2.namsor.com/NamSorAPIv2/api2/json/genderFullBatch"
 
