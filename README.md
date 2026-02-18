@@ -4,7 +4,7 @@
 
 This repository contains the data construction and text-analysis pipeline for a research project examining whether the gender composition of author teams is associated with systematic differences in academic writing style.
 
-Using 10.000 articles published in the five leading journals in economics, we analyze titles and abstracts using a 16-item rubric capturing clarity, technicality, evidentiary support, tone, and rhetorical structure.
+Using 9,684 articles published in the five leading journals in economics, as well as 3298 articles from Management Science, we analyze titles and abstracts using a 16-item rubric capturing clarity, technicality, evidentiary support, tone, and rhetorical structure.
 
 We document large and robust differences in writing style associated with team gender composition. Abstracts authored by female-majority teams are more readable, less jargon-intensive, more direct, and more likely to employ active voice and explicit evidentiary citations. Differences in tone—such as assertiveness, hedging, emotional valence, and qualifier use—are generally small or statistically negligible. These findings suggest that gender composition is associated with how research is communicated rather than what is studied.
 
@@ -132,6 +132,11 @@ This stage uses the OpenAI API to evaluate abstracts using a structured 16-item 
 **Required input:** Author name columns, article identifiers
 
 **Output:** `author_level.csv`, `gender_guesses.csv`, team-level gender composition variables
+
+### Other
+`merge_datasets.py` merges the Hengel evaluations with the scraped evaluations.
+
+`data_summary.py` provides summary statistics for cleaned and merged data.
 
 ---
 

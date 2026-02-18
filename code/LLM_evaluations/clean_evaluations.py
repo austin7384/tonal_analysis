@@ -1,6 +1,6 @@
 import ast
-import pandas as pd
 import re
+import pandas as pd
 
 RUBRIC_KEYWORDS = {
     "Modal Verb Strength": ["modal"],
@@ -21,24 +21,45 @@ RUBRIC_KEYWORDS = {
     "Readability": ["readability", "readable"],
 }
 
+
 def add_rubric_columns_keyword_match(df: pd.DataFrame, eval_col: str) -> pd.DataFrame:
+    """
+    Parses a column of LLM evaluation strings and extracts rubric scores into
+    separate columns. Supports two formats:
+      - Wrapped:  {'sections': [{criterion, score, ...}, ...]}
+      - Flat list: [{criterion, score, ...}, ...]
+    """
+    # Initialize all rubric columns with NA
     for rubric in RUBRIC_KEYWORDS:
         df[rubric] = pd.NA
 
-    def normalize(text):
+    def normalize(text: str) -> str:
+        """Lowercase and strip punctuation for robust keyword matching."""
         return re.sub(r"[^\w\s]", "", text.lower())
 
     for idx, eval_str in df[eval_col].items():
+        # --- Parse the evaluation string ---
         try:
-            eval_dict = ast.literal_eval(eval_str)
-            sections = eval_dict.get("sections", [])
+            parsed = ast.literal_eval(eval_str)
+
+            # Handle both formats: wrapped dict or flat list
+            if isinstance(parsed, dict):
+                sections = parsed.get("sections", [])
+            elif isinstance(parsed, list):
+                sections = parsed
+            else:
+                print(f"[UNKNOWN FORMAT] row {idx}: {type(parsed)}")
+                continue
+
         except Exception as e:
             print(f"[PARSE ERROR] row {idx}: {e}")
             continue
 
+        # --- Match each section to a rubric criterion ---
         for section in sections:
             crit_raw = section.get("criterion", "")
-            crit = normalize(crit_raw)
+            crit_name = crit_raw.split(":")[0]
+            crit = normalize(crit_name)
             score = section.get("score")
 
             matches = [
@@ -48,17 +69,19 @@ def add_rubric_columns_keyword_match(df: pd.DataFrame, eval_col: str) -> pd.Data
             ]
 
             if len(matches) == 0:
-                print(f"[UNMATCHED] row {idx}: {crit_raw}")
+                print(f"[UNMATCHED] row {idx}: '{crit_raw}'")
                 continue
 
             if len(matches) > 1:
-                print(f"[AMBIGUOUS] row {idx}: {crit_raw} → {matches}")
+                print(f"[AMBIGUOUS] row {idx}: '{crit_raw}' → {matches}")
                 continue
 
             df.at[idx, matches[0]] = score
 
     return df
 
-df = pd.read_csv('/data/processed/llm_evaluated/raw_evaluations/full_results.csv')
+
+# --- Load, process, and save ---
+df = pd.read_csv('~/Documents/Who_Writes_What/data/processed/llm_evaluated/raw_evaluations/full_results.csv')
 df = add_rubric_columns_keyword_match(df, eval_col="evaluations")
-df.to_csv('/Users/austincoffelt/Documents/Who_Writes_What/data/processed/llm_evaluated/clean_evaluations/full_results_clean.csv')
+df.to_csv('~/Documents/Who_Writes_What/data/processed/llm_evaluated/clean_evaluations/full_results_clean.csv')
