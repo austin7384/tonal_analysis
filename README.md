@@ -8,7 +8,7 @@ Using 9,684 articles published in the five leading journals in economics, as wel
 
 We document large and robust differences in writing style associated with team gender composition. Abstracts authored by female-majority teams are more readable, less jargon-intensive, more direct, and more likely to employ active voice and explicit evidentiary citations. Differences in tone—such as assertiveness, hedging, emotional valence, and qualifier use—are generally small or statistically negligible. These findings suggest that gender composition is associated with how research is communicated rather than what is studied.
 
-This repository contains the full data collection and processing pipeline used to construct the dataset. It does not contain econometric analysis code, regression output, or final figures.
+This repository contains the full data collection and processing pipeline used to construct the dataset, as well as some simple summary statistics. It does not contain econometric analysis code, regression output, or final figures.
 
 ---
 
@@ -56,6 +56,9 @@ The Hengel replication dataset serves as a structured baseline dataset that we a
 ├── data
 │   ├── processed
 │   └── raw
+├── outputs
+│   ├── figures
+│   └── tables
 └── requirements.txt
 ```
 
@@ -136,7 +139,9 @@ This stage uses the OpenAI API to evaluate abstracts using a structured 16-item 
 ### Other
 `merge_datasets.py` merges the Hengel evaluations with the scraped evaluations.
 
-`data_summary.py` provides summary statistics for cleaned and merged data.
+`data_summary.py` provides summary statistics for cleaned and merged data. Tables and figures created here go to the output folder.
+
+Both meant to be ran after the full execution pipeline.
 
 ---
 
@@ -150,10 +155,11 @@ This stage uses the OpenAI API to evaluate abstracts using a structured 16-item 
 pip install -r requirements.txt
 ```
 
-**Required environment variable:** This project requires an OpenAI API key. Create a `.env` file in the project root:
+**Required environment variable:** This project requires an OpenAI API key and a Namsor gender checker API key. Create a `.env` file in the project root:
 
 ```
 OPENAI_API_KEY=your_key_here
+NAMSOR_API_KEY=your_key_here
 ```
 
 > The `.env` file should not be committed to version control.
