@@ -1,7 +1,7 @@
 import pandas as pd
 
-hengel = pd.read_csv('~/Documents/Who_Writes_What/data/processed/llm_evaluated/clean_evaluations/Hengel_evaluations.csv')
-scraped = pd.read_csv('~/Documents/Who_Writes_What/data/processed/llm_evaluated/clean_evaluations/ready_results.csv')
+hengel = pd.read_csv('/data/processed/llm_evaluated/clean_evaluations/Hengel_evaluations.csv')
+scraped = pd.read_csv('/data/processed/llm_evaluated/clean_evaluations/ready_results.csv')
 
 print(list(hengel.columns))
 print('-----------------------------')
