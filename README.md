@@ -1,32 +1,39 @@
-Gender Composition and Scientific Writing Style in Economics
-Overview
+# Gender Composition and Scientific Writing Style in Economics
+
+## Overview
 
 This repository contains the data construction and text-analysis pipeline for a research project examining whether the gender composition of author teams is associated with systematic differences in academic writing style.
 
-Using 9,684 articles published in the five leading journals in economics, we analyze titles and abstracts using a 16-item rubric capturing clarity, technicality, evidentiary support, tone, and rhetorical structure.
+Using 10.000 articles published in the five leading journals in economics, we analyze titles and abstracts using a 16-item rubric capturing clarity, technicality, evidentiary support, tone, and rhetorical structure.
 
 We document large and robust differences in writing style associated with team gender composition. Abstracts authored by female-majority teams are more readable, less jargon-intensive, more direct, and more likely to employ active voice and explicit evidentiary citations. Differences in tone—such as assertiveness, hedging, emotional valence, and qualifier use—are generally small or statistically negligible. These findings suggest that gender composition is associated with how research is communicated rather than what is studied.
 
 This repository contains the full data collection and processing pipeline used to construct the dataset. It does not contain econometric analysis code, regression output, or final figures.
 
-Relationship to Hengel (2022)
+---
+
+## Relationship to Hengel (2022)
 
 This project builds directly on the dataset constructed in Hengel (2022), which documents gender differences in readability and peer-review standards in economics journals.
 
 The original Hengel analysis focused primarily on readability metrics. In contrast, the present project extends the analysis along three dimensions:
 
-Multidimensional Writing Evaluation
+**Multidimensional Writing Evaluation**
 We introduce a 16-item rubric capturing clarity, technical density, evidentiary support, rhetorical structure, and tone.
 
-Tonal and Rhetorical Analysis
+**Tonal and Rhetorical Analysis**
 We measure features such as assertiveness, hedging, emotional valence, novelty framing, and use of qualifiers—dimensions not evaluated in the original paper.
 
-Expanded Communication Measures
+**Expanded Communication Measures**
 We distinguish structural clarity (e.g., active voice, evidentiary citation) from affective or tonal dimensions, allowing a sharper separation between communication structure and expressive tone.
 
 The Hengel replication dataset serves as a structured baseline dataset that we augment with new writing-style measures generated via LLM-based evaluation.
 
-Repository Structure
+---
+
+## Repository Structure
+
+```
 .
 ├── code
 │   ├── LLM_evaluations
@@ -50,200 +57,142 @@ Repository Structure
 │   ├── processed
 │   └── raw
 └── requirements.txt
+```
 
-Data Sources
+---
+
+## Data Sources
 
 This repository uses two distinct data sources.
 
-1. Hengel Replication Data
+### 1. Hengel Replication Data
 
-Location:
+**Source:** [erinhengel/readability](https://github.com/erinhengel/readability)
 
-data/raw/hengel_replication_data/
+**Location:** `data/raw/hengel_replication_data/`
 
-
-Characteristics:
-
-Pre-existing structured dataset
-
-Does not require scraping
-
-Does not require gender inference
-
-Extended in this project with additional writing-style measures
+**Characteristics:**
+- Pre-existing structured dataset
+- Does not require scraping or gender inference
+- Only requires Step 2 (LLM-Based Writing Evaluation) of the pipeline below
+- Extended in this project with additional writing-style measures
 
 This dataset is used to extend the original readability analysis toward multidimensional tonal and rhetorical analysis.
 
-2. Newly Constructed Dataset
+### 2. Newly Constructed Dataset
 
 This dataset is constructed through:
+- Web scraping of article metadata and abstracts
+- LLM-based writing style evaluation
+- Author-level gender inference and team composition construction
 
-Web scraping of article metadata and abstracts
+**Execution pipeline:** Scraping → LLM Evaluation → Gender Inference
 
-LLM-based writing style evaluation
+> Some steps require API access and may incur usage costs.
 
-Author-level gender inference and team composition construction
+---
 
-Execution pipeline:
+## Execution Pipeline
 
-Scraping → LLM Evaluation → Gender Inference
+### 1. Data Scraping
 
+**Location:** `code/data_scraping/`
 
-Some steps require API access and may incur usage costs.
+**Entry point:** `scrape_master_script.py`
 
-Execution Pipeline
-1. Data Scraping
+**Description:** Scrapes article metadata and abstracts, parses acceptance and publication information, and outputs structured article-level records.
 
-Location:
+**Required input:** A column containing article URLs
 
-code/data_scraping/
+**Output:** `data/processed/scraped_results.csv`
 
+### 2. LLM-Based Writing Evaluation
 
-Entry point:
+**Location:** `code/LLM_evaluations/`
 
-scrape_master_script.py
+**Scripts (run in order):**
+1. `run_evaluations.py`
+2. `clean_evaluations.py`
 
-
-Description:
-
-Scrapes article metadata and abstracts
-
-Parses acceptance and publication information
-
-Outputs structured article-level records
-
-Required input:
-
-A column containing article URLs
-
-Output:
-
-data/processed/scraped_results.csv
-
-2. LLM-Based Writing Evaluation
-
-Location:
-
-code/LLM_evaluations/
-
-
-Scripts (run in order):
-
-run_evaluations.py
-clean_evaluations.py
-
-
-Required columns:
-
-ArticleID
-
-Abstract
+**Required columns:** `ArticleID`, `Abstract`
 
 This stage uses the OpenAI API to evaluate abstracts using a structured 16-item rubric.
 
-Output:
+**Output:** Cleaned LLM evaluation dataset in `data/processed/`
 
-Cleaned LLM evaluation dataset in data/processed/
+### 3. Gender Inference
 
-3. Gender Inference
+**Location:** `code/gender_guess/`
 
-Location:
+**Scripts (run in order):**
+1. `data_cleaning.py`
+2. `gender_name_master.py`
+3. `create_gender_index.py`
 
-code/gender_guess/
+**Required input:** Author name columns, article identifiers
 
+**Output:** `author_level.csv`, `gender_guesses.csv`, team-level gender composition variables
 
-Scripts (run in order):
+---
 
-data_cleaning.py
-gender_name_master.py
-create_gender_index.py
+## Environment Setup
 
+**Python Version:** Python 3.10+ recommended.
 
-Required input:
+**Install dependencies:**
 
-Author name columns
-
-Article identifiers
-
-Output:
-
-author_level.csv
-
-gender_guesses.csv
-
-Team-level gender composition variables
-
-Environment Setup
-Python Version
-
-Python 3.10+ recommended.
-
-Install Dependencies
+```bash
 pip install -r requirements.txt
+```
 
-Required Environment Variable
+**Required environment variable:** This project requires an OpenAI API key. Create a `.env` file in the project root:
 
-This project requires an OpenAI API key.
-
-Create a .env file in the project root:
-
+```
 OPENAI_API_KEY=your_key_here
+```
 
+> The `.env` file should not be committed to version control.
 
-The .env file should not be committed to version control.
+---
 
-Data Availability
+## Data Availability
 
-Due to file size constraints, full raw datasets are not included in this repository.
+Due to file size constraints, full raw datasets are not included in this repository. To regenerate the newly constructed dataset:
 
-To regenerate the newly constructed dataset:
+1. Provide article URLs
+2. Run scraping
+3. Run LLM evaluation
+4. Run gender inference
 
-Provide article URLs
+**Note:** Scraping depends on continued website availability. LLM outputs may vary slightly across model versions. Gender inference depends on name database coverage and configuration.
 
-Run scraping
+---
 
-Run LLM evaluation
+## Scope of This Repository
 
-Run gender inference
+**This repository contains:**
+- Data construction scripts
+- Text evaluation pipeline
+- Gender inference and aggregation procedures
 
-Note:
-
-Scraping depends on continued website availability.
-
-LLM outputs may vary slightly across model versions.
-
-Gender inference depends on name database coverage and configuration.
-
-Scope of This Repository
-
-This repository contains:
-
-Data construction scripts
-
-Text evaluation pipeline
-
-Gender inference and aggregation procedures
-
-This repository does not contain:
-
-Econometric analysis code
-
-Regression models
-
-Tables or figures
-
-Final paper outputs
+**This repository does not contain:**
+- Econometric analysis code
+- Regression models
+- Tables or figures
+- Final paper outputs
 
 Its purpose is to provide full transparency into the data construction and text-evaluation process.
 
-Reproducibility Notes
+---
 
-LLM-based measures may vary slightly across API versions.
+## Reproducibility Notes
 
-Some steps require paid API access.
+- LLM-based measures may vary slightly across API versions.
+- Some steps require paid API access.
+- The replication dataset from Hengel (2022) is used as structured input and extended with additional writing-style measures.
 
-The replication dataset from Hengel (2022) is used as structured input and extended with additional writing-style measures.
+---
 
-Contact
+## Contact
 
 For replication or data construction questions, please contact the project authors directly.
