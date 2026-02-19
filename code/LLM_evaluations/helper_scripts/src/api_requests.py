@@ -1,4 +1,4 @@
-from src.config import MODEL
+from config import MODEL
 from prompt import RUBRIC_OUTPUT_SCHEMA, SYSTEM_PROMPT
 import json
 
