@@ -5,8 +5,8 @@ from helper_scripts.rubric import CHECKLIST_RUBRIC
 
 
 BATCH_SIZE = 1000
-INPUT_CSV = "/Users/austincoffelt/Documents/Who_Writes_What/data/processed/scraped_results.csv"
-OUTPUT_CSV = "/Users/austincoffelt/Documents/Who_Writes_What/data/processed/llm_evaluated/raw_evaluations/full_results.csv"
+INPUT_CSV = "/Users/austincoffelt/Documents/Who_Writes_What/data/raw/hengel_replication_data/Article.csv"
+OUTPUT_CSV = "/Users/austincoffelt/Documents/Who_Writes_What/data/processed/llm_evaluated/raw_evaluations/hengel_QJE.csv"
 
 
 def main():
@@ -14,8 +14,9 @@ def main():
     # Load and filter dataset
     # ------------------------------------------------------------
     df = pd.read_csv(INPUT_CSV)
-    df.drop(['abstract', 'acceptance_info', 'scrape_error'], axis=1, inplace=True)
-    df.rename(columns={"Unnamed: 0": "ArticleID", 'cleaned_abstracts':'Abstract'}, inplace=True)
+    #df.drop(['abstract', 'acceptance_info', 'scrape_error'], axis=1, inplace=True)
+    #df.rename(columns={"Unnamed: 0": "ArticleID", 'cleaned_abstracts':'Abstract'}, inplace=True)
+    df = df[df['Journal'] == 'QJE']
     df = df[~df['Abstract'].isna()]
 
     # Ensure IDs are strings (batch API expects string custom_ids)

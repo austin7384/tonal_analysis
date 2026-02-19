@@ -30,7 +30,6 @@ def make_single_request(rubric_checklist, passage, custom_id):
         "body": {
             "model": MODEL,
             "input": messages,
-            "temperature": 0,
             "text": {
                 "format": {
                     "type": "json_schema",
