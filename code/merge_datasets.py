@@ -16,4 +16,5 @@ scraped['ArticleID'] += 15000
 
 # merging dataframe
 merged_df = pd.concat([hengel, scraped])
+merged_df.drop_duplicates(subset=['ArticleID', 'Author_name', 'Abstract'], keep='last', inplace=True)
 merged_df.to_csv('~/tonal_analysis/data/processed/llm_evaluated/clean_evaluations/merged_evaluations.csv')

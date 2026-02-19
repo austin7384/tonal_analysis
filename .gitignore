@@ -13,8 +13,15 @@ __pycache__/
 *.pyc
 
 # Data
-data/
+data/raw/gpt_processing.log
+data/processed/llm_evaluated/
+data/processed/author_level.csv
+data/processed/gender_guesses.csv
+data/processed/scraped_results.csv
 *.jsonl
 
 # Environment
 .env
+
+# Small Changes Script
+code/small_changes.py

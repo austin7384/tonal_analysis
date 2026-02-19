@@ -1,0 +1,1127 @@
+InstID,InstName
+1,MIT
+2,Harvard U
+3,U Chicago
+4,Princeton U
+5,Stanford U
+6,Yale U
+7,U Minnisota
+8,U Pennsylvania
+9,Columbia U
+10,"U California, Los Angeles"
+11,"U California, Berkeley"
+12,U Wisconsin
+13,Northwestern U
+14,U Michigan
+15,U Rochester
+16,New York U
+17,Brown U
+18,U Maryland
+19,Cornell U
+20,"U California, San Diego"
+21,Carnegie Mellon U
+22,Johns Hopkins U
+23,California Institute of Technology
+24,Duke U
+25,U Virginia
+26,U Washington
+27,Michigan State U
+28,Virginia Polytechnic Institute and State U
+29,U Illinois
+30,U North Carolina
+31,U Southern California
+32,Washington U
+33,Texas A&M U
+34,Purdue U
+35,Vanderbilt U
+36,"U California, Davis"
+37,Iowa State U
+38,Boston U
+39,U Massachusetts
+40,Ohio State U
+41,"State U New York, Stony Brook"
+42,"U California, Santa Barbara"
+43,U Florida
+44,U Texas
+45,U Iowa
+46,U Pittsburgh
+47,Claremont Colleges
+48,Pennsylvania State U
+49,Indiana U
+50,North Carolina State U
+51,Dartmouth College
+52,Georgetown U
+53,Case Western Reserve U
+54,Williams College
+55,U Houston
+56,Rice U
+57,George Washington U
+58,George Mason U
+59,Boston College
+60,U Delaware
+61,U Notre Dame
+62,U Colorado
+63,Colorado State U
+64,Middlebury College
+65,Syracuse U
+66,City U New York
+67,U Arizona
+68,Arizona State U
+69,Florida International U
+70,U Central Florida
+71,U South Florida
+72,Florida State U
+73,Tufts U
+74,Seattle U
+75,U Georgia
+76,Georgia State U
+77,Georgia Institute of Technology
+78,Emory U
+79,U Kentucky
+80,Western Kentucky U
+81,Auburn U
+82,Brandeis U
+83,Brigham Young U
+84,California Polytechnic State U
+85,"U California, Riverside"
+86,U Oregon
+87,Clemson U
+88,U Mississippi
+89,U Arkansas
+90,U Oklahoma
+91,Oklahoma State U
+92,U Missouri
+93,U Nevada
+94,U Utah
+95,U Connecticut
+96,Idaho State U
+97,U Kansas
+98,East Carolina U
+99,U South Carolina
+100,U Tennessee
+101,U Minnesota
+102,Wellesley College
+103,Southern Methodist U
+104,Swarthmore College
+105,"U California, Irvine"
+106,"U California, Santa Cruz"
+107,U Miami
+108,Chapman U
+109,College of William and Mary
+110,St. Mary's College
+111,Loyola Marymount U
+112,Drexel U
+113,Berea College
+114,Rutgers U
+115,Santa Clara U
+116,Towson U
+117,Virginia Commonwealth U
+118,Wheaton College
+119,Macalester College
+120,Monterey Institute of International Studies
+121,American U
+122,Tulane U
+123,St. Cloud State U
+124,Seton Hall U
+125,Bowling Green State U
+126,"California State U, Fullerton"
+127,Colgate U
+128,U Alabama
+129,Hamilton College
+130,"State U New York, Buffalo"
+131,Dickinson College
+132,Lehigh U
+133,Wesleyan U
+134,Fordham U
+135,Black Hills State U
+136,"State U New York, Binghampton"
+137,Virginia State U
+138,Wayne State U
+140,"State U New York, Albany"
+141,Eastern Michigan U
+142,"Minnesota State U, Moorhead"
+143,Baylor U
+144,Northern Illinois U
+145,Pepperdine U
+146,Union College
+147,Amherst College
+148,Vassar College
+149,Stevens Institute of Technology
+150,US Air Force Academy
+151,US Military Academy
+152,US Naval Academy
+153,U New Hampshire
+154,Smith College
+155,"U Louisiana, Lafayette"
+156,U Nebraska
+157,West Virginia U
+158,Kansas State U
+159,Oberlin College
+160,Montana State U
+161,Northeastern U
+162,Trinity U
+163,Bard College
+164,New School U
+165,Meharry Medical College
+166,Occidental College
+167,Salisbury U
+168,U Kent
+169,London School of Economics
+170,U College London
+171,U London
+172,London Business School
+173,U Essex
+174,U Cambridge
+175,U Oxford
+176,"Trinity College, Dublin"
+177,U Reading
+178,Warwick U
+179,U East Anglia
+180,U Southampton
+181,U College Dublin
+182,U Leicester
+183,U Exeter
+184,U Stirling
+185,U Nottingham
+186,U York
+187,U Birmingham
+188,U Sussex
+189,Newcastle U
+190,U Aberdeen
+191,U St. Andrews
+192,U Edinburgh
+193,U Bristol
+194,Durham U
+195,U Glasgow
+196,City U London
+197,National U Ireland
+198,U Keele
+199,Imperial College London
+200,U Manchester
+201,Queen's U Belfast
+202,Cardiff U
+203,Swansea U
+204,U Surrey
+205,Middlesex U
+206,U Liverpool
+207,Brunel U London
+208,Heriot-Watt U
+209,London School of Hygiene and Tropical Medicine
+210,Cass Business School
+211,U Lancaster
+212,Simon Fraser U
+213,U Toronto
+214,U Calgary
+215,U British Columbia
+216,McGill U
+217,U Western Ontario
+218,Brock U
+219,U Montreal
+220,Carleton U
+221,U Waterloo
+222,"Queen's U, Kingston"
+223,McMaster U
+224,Concordia U
+225,U Saskatchewan
+226,U Guelph
+227,Ryerson U
+228,Laval U
+229,U Alberta
+230,Wilfrid Laurier U
+231,"U Québec, Montréal"
+232,"York U, Toronto"
+233,U New South Wales
+234,U Sydney
+235,Monash U
+236,Australian National U
+237,U New England
+238,U Auckland
+239,U Canterbury
+240,Victoria U
+241,U Waikato
+242,U Melbourne
+243,U Queensland
+244,U Western Australia
+245,Queensland U Technology
+246,"U Technology, Sydney"
+247,Paris School of Economics
+248,Barcelona Graduate School of Economics
+249,U Toulouse
+250,Sciences Po
+251,Graduate Institute of International and Development Studies
+252,Pompeu Fabra U
+253,U Amsterdam
+254,Central European U
+255,Bocconi U
+256,EDHEC Business School
+257,U Libre Bruxelles
+258,Center for Monetary and Financial Studies
+259,U Pavia
+260,Panthéon-Assas U
+261,Aix-Marseille U
+262,School for Advanced Studies in the Social Sciences
+263,European U Institute
+264,Panthéon-Sorbonne U
+265,INSEAD
+266,U Namur
+267,U Vienna
+268,Vienna U Technology
+269,U Catholique Louvain
+270,Louis Pasteur U
+271,U Lausanne
+272,École polytechnique
+273,U Sassari
+274,Navarra U
+275,U Naples
+276,U Valladolid
+277,Catholic U Leuven
+278,U Bologna
+279,U Geneva
+280,U Lugano
+281,U Minho
+282,U Lille 3
+283,Autonomous U Barcelona
+284,U Salerno
+285,U Venice
+286,U Murcia
+287,U Complutense Madrid
+288,Paris Dauphine U
+289,Pierre and Marie Curie U
+290,U Pau and Pays de l'Adour
+291,U Nova de Lisboa
+292,Charles III U Madrid
+293,Montesquieu U Bordeaux IV
+294,U Alicante
+295,U Turin
+296,U Málaga
+297,U Florence
+298,Télécom ParisTech
+299,Paris West U Nanterre La Défense
+300,U Maine
+301,Parthenope U Naples
+302,U Perugia
+303,U Rome II
+304,Sapienza U Rome
+305,Lumière U Lyon 2
+306,Cergy-Pontoise U
+307,U Valencia
+308,Swiss Finance Institute
+309,Catholic U Portugal
+310,U Granada
+311,U Strasbourg
+312,Catholic U Sacred Heart
+313,U Lorraine
+314,U Cantabria
+315,U Padua
+316,U Brescia
+317,U Bergamo
+318,Jaume I U
+319,U Basque Country
+320,LUISS U
+321,HEC Paris
+322,IÉSEG School of Management
+323,École Normale Supérieure de Cachan
+324,U Lisbon
+325,École des ponts ParisTech
+326,IMDEA
+327,Paris Descartes U
+328,U Paris 13
+329,U Trieste
+330,U Siena
+331,"Swiss Federal Institute of Technology, Lausanne"
+332,Roma Tre U
+333,Paris-Sorbonne U
+334,Aalto U
+335,Koç U
+336,Norwegian School of Economics
+337,Stockholm School of Economics
+338,Stockholm U
+339,New Economic School
+340,U Bonn
+341,U Zurich
+342,U St. Gallen
+343,U Munich
+344,U Copenhagen
+345,U Bergen
+346,Uppsala U
+347,Tilburg U
+348,U Basel
+349,U Oslo
+350,Leiden U
+351,Erasmus U Rotterdam
+352,U Osnabrück
+353,U Kassel
+354,Vienna U Economics and Business
+355,Free U Berlin
+356,Berlin School of Economics and Law
+357,U Mannheim
+358,U Helsinki
+359,Humboldt U Berlin
+360,U Aarhus
+361,Goethe U
+362,Bern U
+363,Lund U
+364,Maastricht U
+365,U Twente
+366,Bielefeld U
+367,VU U Amsterdam
+368,U Heidelberg
+369,Carl von Ossietzky U Oldenburg
+370,U Groningen
+371,Wageningen U
+372,U Innsbruck
+373,RWTH Aachen U
+374,U Hamburg
+375,Utrecht U
+376,Radboud U Nijmegen
+377,Charles U Prague
+378,U Konstanz
+379,U Cologne
+380,U Regensburg
+381,U Stavanger
+382,U Hagen
+383,U Bamberg
+384,Otto-von-Guericke U Magdeburg
+385,Technical U Berlin
+386,ESMT European School of Management & Technology
+387,Frankfurt School of Finance & Management
+388,International Max Planck Research School
+389,BI Norwegian Business School
+390,Copenhagen Business School
+391,Karlsruhe Institute of Technology
+392,Karolinska Institutet
+393,CERGE-EI
+394,ETH Zürich
+395,U Belgrade
+396,U Duisburg
+397,U Kiel
+398,Boğaziçi U
+399,Tinbergen Institute
+400,Maastricht School of Management
+401,U Warsaw
+402,U Gothenburg
+403,Linnaeus U
+404,U Ljubljana
+405,Novosibirsk State U
+406,National Research U Higher School of Economics
+407,Bilkent U
+408,Athens U Economics and Business
+409,U Cyprus
+410,U Macedonia
+411,Hebrew U
+412,Tel Aviv U
+413,Technion
+414,Haifa U
+415,Bar-Ilan U
+416,"Open U, Israel"
+417,Weizmann Institute of Science
+418,Ben-Gurion U Negev
+419,Academic College Tel Aviv-Yafo
+420,College of Management Academic Studies
+421,IDC Herzliya
+422,City U Hong Kong
+423,Xiamen U
+424,U Ghana
+425,National U Singapore
+426,Kwangwoon U
+427,U Peradeniya
+428,Singapore Management U
+429,U Dhaka
+430,U Tokyo
+431,Musashi U
+432,Osaka U
+433,U Tsukuba
+434,Seoul National U
+435,Peking U
+437,Shiga U
+438,Nagoya U
+439,Shandong U
+440,Otaru U
+441,Keio U
+442,Dongguk U
+443,Kyoto U
+444,Hong Kong Polytechnic U
+445,Yonsei U
+446,Shanghai Jiao Tong U
+447,Yokohama National U
+448,Hitotsubashi U
+449,Hong Kong U Science & Technology
+450,Kanto Gakuin U
+451,Tsinghua U
+452,Nanyang Technological U
+453,National Dong Hwa U
+454,Indian Statistical Institute
+455,Donghua U
+456,National Taiwan U
+457,U Hong Kong
+458,KAIST
+459,"Indian Institute of Management, Calcutta"
+460,"Indian Institute of Management, Ahmedabad"
+461,"National Graduate Institute for Policy Studies, Tokyo"
+462,U Delhi
+463,International U Japan
+464,Kobe U
+465,China Europe International Business School
+466,Kookmin U
+467,Cheung Kong Graduate School of Business
+468,Central U Finance and Economics
+469,Shanghai U Finance and Economics
+470,Zhejiang U
+471,Sogang U
+472,Fudan U
+473,Sungkyunkwan U
+474,Doshisha U
+475,U Chile
+476,U San Andrés
+477,Torcuato di Tella U
+478,Pontifical Catholic U Rio de Janeiro
+479,U Brasília
+480,U Montevideo
+481,U São Paulo
+482,National U La Plata
+483,KDI School of Public Policy & Management
+484,São Paulo School of Economics
+485,Getulio Vargas Foundation
+486,Mexico Autonomous Institute of Technology
+487,Instituto Nacional de Matemática Pura e Aplicada
+488,Instituto Nacional de Salud Publica
+489,National U Columbia
+490,Centro de Investigacion y Docencia Economicas
+491,INSEA
+492,U los Andes
+493,African School of Economics
+494,NBER
+495,Brookings Institution
+496,Einaudi Institute
+497,Institute for Employment Research
+498,CREST
+499,DIW Berlin
+500,WZB Berlin Social Science Center
+501,INSEE
+502,INRA
+503,CEPREMAP
+504,CEPR
+505,TIAA-CREF Institute
+506,CEFIR
+507,CIDE
+508,Max Planck Institute
+509,IZA
+510,IFAU
+511,Institute for Defense Analyses
+512,CSIC
+513,RAND
+514,CESifo
+515,RTI International
+516,Peterson Institute for International Economics
+517,Kiel Institute for the World Economy
+518,Resources for the Future
+519,Research Institute of Industrial Economics
+520,CEPII
+521,BREAD
+522,CGIAR
+523,Academia Sinica
+524,IFS
+525,Weierstrass Institute for Applied Analysis and Stochastics
+526,Fonds National de la Recherche Scientifique
+527,CNRS
+528,Institute of World Economy and International Relations
+529,"Institute for Advanced Studies, Vienna"
+530,Urban Institute
+531,Center for Naval Analyses
+532,Institute of Applied Economic Research
+533,Neptis
+534,American Enterprise Institute
+535,Bill & Melinda Gates Foundation
+536,International Food Policy Research Institute
+537,Korea Development Institute
+538,South European Center for Contemporary Finance
+539,MDRC
+540,CIFAR
+541,CAERP
+542,American Bar Foundation
+543,Chung-Hua Institution for Economic Research
+544,Upjohn Institute for Employment Research
+545,Hungarian Academy of Sciences
+546,European Corporate Governance Institute
+547,IRVAPP
+548,ECARES
+549,Barcelona Insitute of Economics
+550,Study Center Gerzensee
+551,CEPS/INSTEAD
+552,Santa Fe Institute
+553,CEMMAP
+554,GREQAM
+555,CSEF
+556,ICER
+557,EUREQua
+558,IDEP
+559,IUF
+560,Collegium Helveticum
+561,CIRPÉE
+562,CIRANO
+563,CIREQ
+564,ICREA
+565,GFRI
+566,Czech Academy of Sciences
+567,INED
+568,Potsdam Institute for Climate Impact Research
+569,Tokyo Center for Economic Research
+570,FEEM
+571,IUFM
+572,Royal Swedish Academy of Sciences
+573,EABCN
+574,Innovations for Poverty Action
+575,Western Consortium for Public Health
+576,Falk Institute
+577,CFM
+578,World Bank
+579,Bank for International Settlements
+580,Inter-American Development Bank
+581,IMF
+582,EBRD
+583,OECD
+584,US Social Security Administration
+585,US Department of Labor
+586,US Department of the Treasury
+587,US Agency for International Development
+588,US Census Bureau
+589,US Council of Economic Advisers
+590,US Securities and Exchange Commission
+591,US Pension Benefit Guaranty Corporation
+592,US Office of the Comptroller of the Currency
+593,US Air Force
+594,US Geological Survey
+595,US Centers for Medicare and Medicaid Services
+596,US Federal Trade Commission
+597,US International Trade Commission
+598,US Congressional Budget Office
+599,US Department of Commerce
+600,US Department of Defense
+601,US Department of Justice
+602,US Senate Committee on Finance
+603,US Court of Appeals
+604,"National Banking and Securities Commission, Mexico"
+605,Singapore Public Services Commission
+606,New Zealand Treasury
+607,"Ministry of Taxation, Denmark"
+608,State of Connecticut Department of Labor
+609,State of Massachusets Executive Office for Administration and Finance
+610,Organismo Publico Valenciano de Investigacion
+611,"Ministry of Education, Spain"
+612,"Ministry of Finance, Mexico"
+613,Statistics Norway
+614,"Ministry of Finance, Sweden"
+615,Statistics Canada
+616,European Central Bank
+617,US Federal Reserve
+618,Bank of Japan
+619,Bank of Israel
+620,Bank of Sweden
+621,Bank of Turkey
+622,Bank of Finland
+623,Bank of England
+624,Bank of Italy
+625,Bank of Chile
+626,Bank of Canada
+627,Bank of Spain
+628,Bank of Switzerland
+629,Bank of Portugal
+630,Bank of Mexico
+631,Bank of Norway
+632,Bank of Belgium
+633,Bank of India
+634,Providence Health and Services
+635,MasterCard
+636,Minnesota Public Radio
+637,"Mathematica Policy Research, Inc."
+638,Compass Lexecon
+639,"The Vanguard Group, Inc."
+640,ITT Corporation
+641,Baird
+642,Swiss Re
+643,Morgan Stanley
+644,Goldman Sachs
+645,Sorin Capital Management
+646,Bell Laboratories
+647,Telcordia Technologies
+648,ICF International
+649,AT&T
+650,Unicon Research Corporation
+651,"Analysis Group, Inc."
+652,Capital Guidance
+653,Cornerstone OnDemand
+654,Charles River Associates
+655,West End Capital Management
+656,Google
+657,eBay
+658,Microsoft
+659,Savvy Sherpa
+660,RxEconomics
+661,Kirkland & Ellis LLP
+662,Sand Hill Econometrics
+663,Virtu Financial LLC
+664,The Monitor Company
+665,Cornerstone Research
+666,National Matching Services
+667,Highbridge Capital Management
+668,JP Morgan Chase
+669,Providian Financial
+670,Citigroup
+671,United Energy Resources
+672,Ernst & Young
+673,BNP Paribas
+674,Vega Asset Managers
+675,LECG Corporation
+676,QuantMetrics R&D Associates
+677,Lyxor Asset Management
+678,McKinsey & Company
+679,Nomura Asset Management
+680,Overland Advisors
+681,Kronos
+683,Ontario Hydro
+684,"Paine Webber, Inc."
+685,Ctrip.com
+686,None
+688,American Express
+689,Asian Development Bank
+690,"Brevan Howard, Inc."
+691,Center for Global Development
+692,Bank of Ireland
+693,Clark U
+694,Etro Consulting
+695,U Metz
+696,Gianinni Foundation
+697,Institut de Recherches Economiques et Sociales
+698,"Institute for Advanced Study, Princeton"
+699,Jawaharlal Nehru U
+700,U Leeds
+701,Louisiana State U
+702,NERA Economic Consulting
+703,Public Policy Institute of California
+704,School Board of Alachua County
+705,U Crete
+706,U New Mexico
+707,"U Québec, Rimouski"
+708,U Naples Federico II
+709,Wuhan U
+710,Yahoo!
+711,Bank of France
+712,Bates College
+713,University of Wyoming
+714,University of Hawaii at Manoa
+717,MINES ParisTech
+718,U Rennes
+719,KTH Royal Institute of Technology
+720,Central Michigan University
+721,Capital University of Economics and Business
+722,Sun Yat-sen University
+723,Economists Inc.
+724,Flinders University of South Australia
+725,Yeshiva University
+726,Yamagata University
+727,Xerox Corp.
+728,Whitman College
+729,Western Michigan University
+730,Westat Incorporated
+731,Wells Fargo Bank
+732,Washington State University
+733,Université de Fribourg
+734,Université Paris XII
+735,Virginia Military Institute
+736,Vector Research
+737,University of the Philippines
+738,University of Wisconsin-Milwaukee
+739,University of Texas at Dallas
+740,University of Ottawa
+741,University of Orleans
+742,University of North Carolina at Greensboro
+743,University of New Orleans
+744,University of Nevada Reno
+745,University of Missouri-St. Louis
+746,University of Missouri Rolla
+747,University of Massachusetts Boston
+748,University of Malaya
+749,University of Louisville
+750,University of Limburg
+751,University of Kagawa
+752,University of Jodhpur
+753,University of Islamabad
+754,University of Illinois-Chicago Circle
+755,University of Hull
+756,University of Giessen
+757,TU Dortmund University
+758,University of Cincinnati
+759,University of Mumbai
+760,University of Adelaide
+761,University of Wales
+763,University of Hannover
+764,Pontifical Catholic University of Argentina
+765,Universidad Autónoma de Madrid
+766,US Government Accountability Office
+767,US Department of Agriculture
+768,UNCTAD
+769,Russian Academy of Sciences
+770,US Department of State
+771,US Department of Housing and Urban Development
+772,Trans World Oil
+773,University of Toyama
+774,Tokyo Metropolitan University
+775,Tokyo Institute of Technology
+776,Tokyo College of Economics
+777,Tohoku University
+778,Thammasat University
+779,Texas Tech University
+780,Temple University
+781,Technical University of Varna
+782,Tamkang University
+783,Hanken School of Economics
+784,Swedish Employers Association
+785,Southern Illinois University Edwardsville
+786,Southern Illinois University
+787,Southern Connecticut State College
+788,SEDES
+789,Seikei University
+790,National Oceanic and Atmospheric Administration
+791,San Diego State University
+792,Salomon Inc.
+793,Saitama University
+794,SRI International
+795,Resource Management Corporation
+796,Research Analysis Corporation
+797,"Queens College, City University of New York"
+798,Philadelphia Research Associates
+799,Shiraz University
+800,Osaka Sangyo University
+801,Oregon State University
+802,Old Dominion University
+803,Office of Management and Budget
+804,Ministerio de Desarrollo Social de Chile
+805,Nippon Software Company
+806,New Zealand Institute of Economic Research
+807,New Mexico State University
+808,Statistics Netherlands
+809,Naval Postgraduate School
+810,"Ministry of Agriculture, Forestry and Fisheries, Japan"
+811,Hungarian National Planning Office
+812,Hungarian National Management Development Center
+813,National Institute of Economic and Social Research
+814,National Council on Compensation Insurance
+815,"Ministry of Finance, Chile"
+816,"Ministry of Agriculture, Israel"
+817,"Ministry of Finance, France"
+818,"Miller, Anderson & Sherrerd"
+819,Miami University
+820,Medical Research Council
+821,Williamson Magor
+822,Maynooth College
+823,Koninklijke Philips N.V.
+824,Lucknow University
+825,Los Alamos National Laboratory
+826,"Lincoln University, New Zealand"
+827,Université Lille 1
+828,University of Liège
+829,Library of Congress
+830,Lawrence University
+831,Consiglio Nazionale delle Ricerche
+832,La Trobe University
+833,Kurukshetra University
+834,Korea University
+835,IBM
+836,"National Institute of Statistics, Spain"
+837,Hungarian Institute for Economic and Market Research
+838,Research Institute of the Finnish Economy
+839,Reserve Bank of Australia
+840,Ruppin Academic Center
+841,United Nations
+842,"University of Alaska, Fairbanks"
+843,Paris Institute of Statistics
+844,Illinois State University
+845,Hungarian Central Statistical Office
+846,Hong Kong Baptist College
+847,Hirosaki University
+848,"Hastings-Raydist, Inc."
+849,Hanford Site
+850,General Motors Corporation
+851,General Electric Company
+852,Frostburg State University
+853,First Interstate Bancorp
+854,"Federal Competition Commission, Mexico"
+855,"Saint-Louis University, Brussels"
+856,Japan Bank for International Cooperation
+857,European Commission
+858,Brazilian Agricultural Research Corporation
+859,Electricité de France
+860,Electric Power Research Institute
+861,"Economic and Social Research Institute, Dublin"
+862,ENSAE ParisTech
+863,"Dynamics Associates, Inc."
+864,Douglas Aircraft Company
+865,Development Research Center of the State Council
+866,"Department of Agriculture, Australia"
+867,DePaul University
+868,"Data Resources, Incorporated"
+869,Czech Technical University
+870,US Congressional Research Service
+871,"President's Committee of Economic Advisors, Mexico"
+872,University of St. Thomas
+873,Clarion University of Pennsylvania
+874,London Metropolitan University
+875,Christopher Newport College
+876,Chr. Michelsen Institute
+877,Chinese University of Hong Kong
+878,Chicago Mercantile Exchange
+879,Chiba University
+880,University of CEMA
+881,"Ministry of Economic Affairs, the Netherlands"
+882,Center of Planning and Economic Research
+883,Carleton College
+884,Canisius College
+885,Canadian National Railway
+886,"California State University, Northridge"
+887,"California State University, Chico"
+888,Cairo University
+889,Bryn Mawr College
+890,Bowdoin College
+891,Bentley University
+892,Bank of Greece
+893,Bank of America
+894,Bank of Iran
+895,Aoyama Gakuin University
+896,Antioch College
+897,Air Force Institute of Technology
+898,Aichi University
+899,"Bureau of Agricultural Research, the Philippines"
+900,Air Force Research Laboratory
+901,Acadia University
+902,"Abt Associates, Inc."
+903,"A.B. Laffer Associates, Inc."
+904,Griffith University
+905,Chicago Metropolitan Agency for Planning
+906,Phatra Securities
+907,E2e
+908,Logistics Management Institute
+909,CSIRO
+910,University of Mons
+911,Universidad de Salamanca
+912,Utah State University
+914,Tokyo International University
+915,University of Windsor
+916,Ramo-Wooldridge Corporation
+917,Jesuits at Wernersville
+918,Polish Academy of Sciences
+919,MathSoft Inc.
+920,Kenan Systems Corp.
+921,Educational Testing Service
+922,Cieplan
+923,FEDEA
+924,Southern University
+925,University College of Southeast Norway
+926,James Cook University
+927,Federal Communications Commission
+928,Mercer
+929,Hokkaido University
+930,Université d’Auvergne
+931,BBVA
+932,Universidad de Buenos Aires
+933,Environmental Defense Fund
+934,University of Ghent
+935,Bergen University College
+936,Loyola University of Chicago
+937,"Department of the Treasury, Australia"
+938,Teisberg Associates
+939,Indira Gandhi Institute of Development Research
+940,US Department of Energy
+941,Arthur Andersen Economic Consulting
+942,"Saint Mary's University, Halifax"
+943,Dong-A University
+944,University of San Francisco
+945,University of Cagliari
+948,National Center for Health Services Research
+949,Health Care Technology Assessment
+950,University of Manitoba
+951,Ford Foundation
+952,US Department of Health and Human Services
+953,Ball State University
+954,Ahmadu Bello University
+955,Tribhuvan University
+956,University of Vermont
+957,Pakistan Institute of Development Economics
+958,Hofstra University
+959,Wilmington College
+960,President's Commission on Federal Statistics
+962,Kasetsart University
+963,Gakushuin University
+964,Indiana University of Pennsylvania
+965,University of North Carolina at Charlotte
+966,Royal Economic Society
+967,"Bureau of the Budge, State of New York"
+968,Ohio University
+969,Howard University
+971,"Ministry of Finance, India"
+972,Universidad Nacional Autonoma de México
+973,Food and Agriculture Oranization of the United Nations
+974,Lionel Edie and Co.
+975,Human Resources Research Organization
+976,Kent State University
+977,Universität Münster
+978,San Francisco State College
+979,National Board for Prices and Incomes
+980,Instituto de Pesquisas Ecológicas
+981,Federal University of Ceará
+982,"Royal Military College, Duntroon"
+983,Lafayette College
+984,Real Estate Research Corporation
+985,Center for Studying Health System Change
+986,ADESS
+987,ISVV
+988,ERMES
+989,ALISS
+990,Council on Foreign Relations
+991,Mayo Clinic
+992,Alfred P. Sloan Foundation
+993,Kenneth and Anne Griffin Foundation
+994,U Wollongong
+995,Norwegian U Science and Technology
+996,Tartu U
+997,Bates White
+998,African Development Bank
+999,Appalachian State U
+1000,U TX-Pan American
+1001,Eastern NM U
+1002,U Memphis
+1003,"U CO, Denver"
+1004,Nova Southeastern U
+1005,Blue Cross Blue Shield of MA Foundation
+1006,Bucknell U
+1007,"National Institute for Environmental Studies, Tsukuba"
+1008,De Nederlandsche Bank
+1009,Westfield State U
+1010,US Navy
+1011,Mexican Social Security Institute
+1012,U Thai Chamber of Commerce
+1013,St Lawrence U
+1014,Clarkson U
+1015,AlphaSimplex Group
+1016,"U Paris, Est Creteil Val-de-Marne"
+1017,US Joint Committee on Taxation
+1019,Ramon Llul U
+1020,Providence College
+1021,Morehouse College
+1022,Morgan State U
+1023,U Johannesburg
+1024,Netspar
+1025,Moody's Corporation
+1026,U South Australia
+1027,FL Atlantic U
+1028,"Ministry of Finance, Japan"
+1029,Russell Sage Foundation
+1030,"Rockwool Foundation, Copenhagen"
+1031,Hanyang U
+1032,U Salento
+1033,Catholic U Chile
+1034,Elon U
+1035,El Colegio de Mexico
+1036,Washington and Lee U
+1037,Loughborough U
+1038,"CDC, China"
+1039,U Cape Town
+1040,"IMT Institute for Advanced Studies, Lucca"
+1041,DERASAT
+1042,Brigham and Women's Hospital
+1043,"Centros de Estudios Publicos, Santiago"
+1044,Lahore School of Economics
+1045,Agnes Scott College
+1046,Grand Valley State U
+1047,Hankuk U Foreign Studies
+1048,University of Indonesia
+1049,Russian Privatization Center
+1050,Boston Consulting Group
+1051,FHLBank System
+1052,University of Tübingen
+1054,Cranfield University
+1080,Universidad del Rosario
+1096,University of Southern Denmark
+1100,Università degli studi di Milano
+1119,Universidade de Santiago de Compostela
+1135,Sam Houston State University
+1149,Dresden University of Technology
+1158,Technical University of Munich
+1193,American University of Sharjah
+1232,University of Barcelona
+1239,Middle East Technical University
+1295,University of International Business and Economics
+1316,Chung-Ang University
+1325,University of Strathclyde
+1330,University of Salford
+1357,Sabanci University
+1369,University of Rhode Island
+1370,University of Vigo
+1385,University of Bremen
+1411,University of Trento
+1443,University of Freiburg
+1445,Memorial University of Newfoundland
+1480,Portland State University
+1513,Ritsumeikan University
+1548,University of Göttingen
+1559,Universiti Brunei Darussalam
+1570,Tunis University
+1843,Conservatoire national des arts et métiers (CNAM)
+1844,Airbnb
+1845,Analytical Assessments Corporation
+1846,Apax Partners
+1847,"Audits of Great Britain, Ltd."
+1848,Belarusian Economic Research and Outreach Center (BEROC)
+1849,Central Bank of Venezuela
+1850,University of Évora
+1851,ARC Centre of Excellence in Population Ageing Research (CEPAR)
+1852,Commodity Futures Trading Commission (CFTC)
+1853,Citizens National Bank
+1854,Centre for Population Change (CPC)
+1855,Cambridge Systematics
+1856,Cleveland State University
+1857,Deutsche Bahn AG
+1858,German Federal Bank
+1859,ECORE
+1860,Giannini Foundation
+1861,Imperial Oil
+1862,Tallinn University of Technology
+1863,Instituto Valenciano de Investigaciones Económicas (IVIE)
+1864,International Water Management Institute (IWMI)
+1865,Istituto Mobiliare Italiano (IMI)
+1866,National Aeronautics and Space Administration (NASA)
+1867,Kwansei Gakuin University
+1868,Kyoto Sangyo University
+1869,Lake Forest College
+1870,Centro Studi Luca d'Agliano (LdA)
+1871,Ministry of Education of Chile
+1872,Ontario Economic Council
+1873,Ortus Capital Management
+1874,Poynt
+1875,Rimini Centre for Economic Analysis (RCEA)
+1876,Resolution Economics
+1877,Royal Military College of Canada
+1878,Sema Group
+1880,Shalem College
+1881,Soka University
+1883,SUNY College at Old Westbury
+1884,UK Statistics Authority (UKSA)
+1885,Swiss Prison Staff Training Center (SPSTC)
+1886,Ulster University
+1887,Population Council
+1888,Trade Union Institute for Economic Research
+1889,University of Piura
+1890,Federal University of Santa Catarina
+1891,University of Bayreuth
+1892,University of Gdańsk
+1893,"University of Minnesota, Morris"
+1894,University of Modena and Reggio Emilia
+1895,University of Sheffield
+1896,Vienna Graduate School of Finance (VGSF)
+1897,Yrjö Jahnsson Foundation
+1898,Citizens & Southern National Bank
+1899,Australian Productivity Commission
+3001,Colby College
+3002,Grinnell College
+3003,San Jos State University
+3004,University of North Dakota
+3005,Wake Forest University
