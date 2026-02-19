@@ -21,7 +21,9 @@ Many-to-many relationships are defined via correspondence tables.
 
 ---
 
-# PART I — HENGEL REPLICATION DATABASE (read.db)
+# PART I — HENGEL REPLICATION DATABASE
+
+**Location:** `data/raw/hengel_replication_data/`
 
 ## Table: Article
 
