@@ -1,7 +1,7 @@
 import pandas as pd
 
-from batch_runner import batch_call_and_validate
-from rubric import CHECKLIST_RUBRIC
+from helper_scripts.batch_runner import batch_call_and_validate
+from helper_scripts.rubric import CHECKLIST_RUBRIC
 
 
 BATCH_SIZE = 1000

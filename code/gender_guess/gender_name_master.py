@@ -1,5 +1,5 @@
 import pandas as pd
-from apply_guesses import add_gender_namsor_fullname
+from gender_guess_helper.apply_guesses import add_gender_namsor_fullname
 
 # read in data
 authors = pd.read_csv('~/Documents/Who_Writes_What/data/processed/author_level.csv')

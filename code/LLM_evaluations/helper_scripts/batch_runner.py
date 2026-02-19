@@ -4,9 +4,9 @@ import sys
 from typing import List, Dict
 
 from src.config import client, logger
-from api_requests import make_single_request
-from validation import validate_schema
-from prompt import extract_schema_output
+from src.api_requests import make_single_request
+from src.validation import validate_schema
+from src.prompt import extract_schema_output
 
 
 def batch_call_and_validate(
