@@ -1,0 +1,8 @@
+Journal,Modal Verb Strength,Hedging Frequency & Type,Qualifier Density,Acknowledgement of Limitations,Caution-Signaling Connectors,Assertiveness & Voice,Active/Passive Voice Ratio,Sentence Length & Directness,Imperative-Form Occurrence,Pronoun Commitment,Novelty-Claim Strength,Jargon/Technicality Density,Emotional Valence,Evidence & Citation Usage,Practical/Impact Orientation,Readability
+AER,6.231,8.52,8.463,8.654,8.426,8.339,8.74,7.106,1.006,5.787,2.114,6.351,1.12,1.998,2.626,7.586
+ECA,6.367,8.718,8.47,7.843,8.936,8.513,6.528,5.445,1.029,4.571,2.795,7.967,1.076,1.452,2.049,6.074
+JPE,6.017,8.01,8.013,7.919,8.383,7.999,7.481,5.88,1.012,4.336,2.024,6.523,1.146,1.875,2.579,6.888
+MgSc,4.194,7.697,8.234,8.079,7.302,8.333,9.025,5.193,1.002,7.956,3.053,7.171,1.409,2.815,4.421,6.876
+P&P,5.88,8.184,8.233,8.674,8.146,8.011,9.052,7.201,1.003,6.449,1.911,5.496,1.184,2.106,2.749,7.937
+QJE,6.09,8.211,8.139,8.464,8.427,8.149,8.323,6.559,1.005,5.532,2.107,6.125,1.129,2.268,2.805,7.515
+QJE_Other_Prompt,4.738,8.011,8.414,8.191,8.043,8.183,8.402,5.957,1.007,5.463,2.038,6.672,1.223,2.48,2.476,7.05

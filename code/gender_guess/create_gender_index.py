@@ -1,7 +1,7 @@
 import pandas as pd
 import numpy as np
 
-df = pd.read_csv('~/Documents/Who_Writes_What/data/processed/llm_evaluated/clean_evaluations/full_results_clean_gender_guess.csv')
+df = pd.read_csv('~/tonal_analysis/data/processed/llm_evaluated/clean_evaluations/hengel_QJE_gender.csv')
 # ------------------------------------------------------------------
 # PAPER-LEVEL COUNTS
 # ------------------------------------------------------------------
@@ -11,8 +11,8 @@ paper_author_counts = df.groupby("ArticleID").size()
 
 # female authors per paper
 female_author_counts = (
-    df["gender_namsor"]
-    .eq("female")
+    df["Sex"]
+    .eq("Female")
     .groupby(df["ArticleID"])
     .sum()
 )
@@ -61,4 +61,4 @@ df["Single_gender_paper"] = (
     (df["Female_authorship_ratio"] == 1)
 ).astype(int)
 
-df.to_csv("~/Documents/Who_Writes_What/data/processed/llm_evaluated/clean_evaluations/ready_results.csv")
+df.to_csv("~/tonal_analysis/data/processed/llm_evaluated/clean_evaluations/hengel_QJE_gender_index.csv")
