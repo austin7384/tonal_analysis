@@ -95,6 +95,8 @@ This dataset is constructed through:
 
 > Some steps require API access and may incur usage costs.
 
+`DATA_DICTIONARY.md` thoroughly describes the variables in each dataset, as well as variables created in this code pipeline. `Methodological_Note___Capstone_Project.pdf` describes any limitations in the dataset, the choices we made regarding the data, and further work left to do.
+
 ---
 
 ## Execution Pipeline
