@@ -25,3 +25,6 @@ data/processed/scraped_results.csv
 
 # Small Changes Script
 code/small_changes.py
+
+# Textatistic
+code/hengel_replication/0-code/programs/Textatistic
