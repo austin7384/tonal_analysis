@@ -1,0 +1,337 @@
+StatName,Correlation,Test,TestType,Source,Note
+flesch,0.64,McCall-Crabbs 1925,RCT,Flesch1948,
+flesch,0.70,McCall-Crabbs 1950,RCT,Powers1958,
+flesch,0.56,Gray-Leary Rating,RS,Klare1952,
+flesch,0.40,Washburne-Morphett,RS,Klare1952,
+flesch,0.55,Gray-Leary Test,RCT,Klare1952,
+flesch,0.82,Ojemann Test,RCT,Klare1952,
+flesch,0.70,Reweighted Flesch,RS,Benoit2017,
+flesch,0.96,Fry Readability,RS,Meade1991,
+flesch,0.95,SMOG,RS,Meade1991,
+flesch,0.92,cloze,cloze,Caylor1973,N=12
+flesch,0.78,cloze,cloze,Caylor1973,N=12
+flesch,0.68,cloze,cloze,Entin1978,N=7
+flesch,0.74,cloze,cloze,Entin1978,N=7
+flesch,-0.10,MCQ,RCT,Entin1978,N=7
+flesch,0.01,MCQ,RCT,Entin1978,N=7
+flesch,0.13,cloze,cloze,Woods1998,n=20
+flesch,0.56,Expert judgement,ALT,Jongsma1972,public librarians n=12
+flesch,0.68,Expert judgement,ALT,Jongsma1972,school librarians n=12
+flesch,0.31,Expert judgement,ALT,Fulcher1997,n=10
+flesch,0.53,Fry,RS,Woods1998,n=20
+flesch,0.53,SMOG,RS,Woods1998,n=20
+flesch,0.46,Forecast,RS,Woods1998,n=20
+flesch,0.90,Flesch-Kincaid,RS,Lenzner2014
+flesch,0.58,Gunning Fog,RS,Lenzner2014
+flesch,0.59,Dale-Chall,RS,Lenzner2014
+flesch,0.85,Flesch-Kincaid,RS,Hengel2017
+flesch,0.85,Gunning Fog,RS,Hengel2017
+flesch,0.88,SMOG,RS,Hengel2017
+flesch,0.68,Dale-Chall,RS,Hengel2017
+flesch,0.30,Dale-Chall,RS,Harwell1996
+flesch,0.40,Gunning Fog,RS,Harwell1996
+flesch,0.20,Gunning Fog,RS,Harwell1996
+flesch,0.10,Expert judgement,ALT,Russell1951,catelog grade level n=12
+flesch,0.34,Expert judgement,ALT,Russell1951,librarians n=12
+flesch,0.28,Dale-Chall,RS,Russell1951
+flesch,0.51,Lewerenz,RS,Russell1951
+flesch,0.07,Lorge,RS,Russell1951
+flesch,0.39,Winnetka,RS,Russell1951
+flesch,0.36,Yoakam,RS,Russell1951
+flesch,0.85,cloze,cloze,Greenfield1999,correlations actually from his 1999 (unpublished) dissertation but reported in Crossley2008
+flesch,0.90,Coh-Metrix,RS,Crossley2008,
+flesch,0.49,cloze,cloze,Brown1998
+flesch,0.98,Flesch-Kincaid,RS,Brown1998
+flesch,0.92,Fry,RS,Brown1998
+flesch,0.89,Gunning Fog,RS,Brown1998
+flesch,0.92,Gunning Fog,RS,Brown1998
+flesch,0.95,Gunning Fog,RS,Brown1998
+flesch,0.96,Miyazaki EFL Index,RS,Greenfield2004
+flesch,0.76,Brown (original),RS,Brown1998
+flesch,0.91,Brown (recalculated),RS,Greenfield2004
+flesch,0.33,Expert judgement,ALT,Crossley2017,text processing judgements in adult reading material
+flesch,0.24,Expert judgement,ALT,Crossley2017,text comprehension judgements in adult reading material
+flesch,0.14,Expert judgement,ALT,Crossley2017,text familiarity judgements in adult reading material
+flesch,0.96,Flesch-Kincaid,RS,Stajner2012
+flesch,0.96,Gunning Fog,RS,Stajner2012
+flesch,0.97,SMOG,RS,Stajner2012
+flesch,0.56,Dale-Chall,RS,vanOosten2010
+flesch,0.94,RIDE,RS,Carver1974,
+flesch,0.96,Dale-Chall,RS,Carver1974,
+flesch,0.92,ARI,RS,Carver1974,
+flesch,0.90,SMOG,RS,Carver1974,
+flesch,0.95,FRY,RS,Carver1974,N=31
+flesch,0.87,Recall,ALT,Carver1974,
+flesch,0.91,Judged difference,ALT,Carver1974,
+flesch,0.90,Cloze,cloze,Carver1974,
+flesch,0.87,Reading input,cloze,Carver1974,
+flesch,0.90,RIDE,RS,Carver1974,
+flesch,0.90,Dale-Chall,RS,Carver1974,
+flesch,0.92,ARI,RS,Carver1974,
+flesch,0.93,SMOG,RS,Carver1974,
+flesch,0.91,Fry,RS,Carver1974,
+flesch,0.87,Cloze,cloze,Carver1974,
+flesch,0.85,Teacher Rating 1,ALT,Carver1974,
+flesch,0.80,Teacher Rating 2,ALT,Carver1974,
+flesch,0.83,Bormuth Level,RS,Carver1974,
+flesch,0.90,RIDE,RS,Carver1974,
+flesch,0.92,Dale-Chall,RS,Carver1974,
+flesch,0.92,ARI,RS,Carver1974,
+flesch,0.97,SMOG,RS,Carver1974,
+flesch,0.95,Fry,RS,Carver1974,
+flesch,0.81,Cloze,cloze,Carver1974,
+flesch,0.81,Bormuth Level,RS,Carver1974,
+flesch,0.81,Bormuth Level,RS,Carver1974,
+flesch,0.80,Rauding Scale Group A,ALT,Carver1974,
+flesch,0.79,Rauding Scale Group B,ALT,Carver1974,
+flesch,0.83,Bormuth Level,RS,Carver1974,
+flesch,0.77,Rauding Scale Group A,ALT,Carver1974,
+flesch,0.80,Rauding Scale Group B,ALT,Carver1974,
+flesch,0.72,LEX,RS,Hayes1996,Mentioned in text: correlation between the LEX and Readability Indices is in the low 0.70s---fractionally higher with the Flesch index; lower with the others
+fleschkincaid,0.88,cloze,cloze,Hull1979,
+fleschkincaid,0.91,Flesch Reading Ease,RS,Ley1996,correlations computed between manual calculation of Flesch Reading Ease and computer calculation of Flesch-Kincaid
+fleschkincaid,0.75,cloze,cloze,Kincaid1975,I calculated the correlations based on results presented in Table 2 (N=18)
+fleschkincaid,0.08,Oral Reading Fluency,ORF,Compton2004
+fleschkincaid,0.38,Oral Reading Fluency,ORF,Ardoin2005,Words Read Correctly per Minute
+fleschkincaid,0.41,Oral Reading Fluency,ORF,Ardoin2005,Words read correctly per minute
+fleschkincaid,0.18,Oral Reading Fluency,ORF,Ardoin2005,Words read correctly per minute
+fleschkincaid,0.20,Oral Reading Fluency,ORF,Ardoin2005,Words read correctly per minute
+fleschkincaid,0.18,Oral Reading Fluency,ORF,Ardoin2005,Words read correctly per minute
+fleschkincaid,0.2,Oral Reading Fluency,ORF,Ardoin2005,Words read correctly per minute
+fleschkincaid,0.88,Spache,RS,Janan2014,N=64
+fleschkincaid,-0.32,Dale-Chall,RS,Janan2014,N=64
+fleschkincaid,0.68,ATOS,RS,Janan2014,N=64
+fleschkincaid,0.68,Gunning Fog,RS,Lenzner2014
+fleschkincaid,0.69,Dale-Chall,RS,Lenzner2014
+fleschkincaid,0.95,Gunning Fog,RS,Hengel2017
+fleschkincaid,0.89,SMOG,RS,Hengel2017
+fleschkincaid,0.53,Dale-Chall,RS,Hengel2017
+fleschkincaid,0.78,cloze,cloze,Cunningham2018
+fleschkincaid,0.85,cloze,cloze,Greenfield1999,correlations actually from his 1999 (unpublished) dissertation but reported in Crossley2008
+fleschkincaid,0.90,Coh-Metrix,RS,Crossley2008
+fleschkincaid,0.52,cloze,cloze,Brown1998
+fleschkincaid,0.9,Fry,RS,Brown1998
+fleschkincaid,0.87,Gunning Fog,RS,Brown1998
+fleschkincaid,0.92,Gunning Fog,RS,Brown1998
+fleschkincaid,0.95,Gunning Fog,RS,Brown1998
+fleschkincaid,0.98,Miyazaki EFL Index,RS,Greenfield2004
+fleschkincaid,0.78,Brown (original),RS,Brown1998
+fleschkincaid,0.91,Brown (recalculated),RS,Greenfield2004
+fleschkincaid,0.34,Expert judgement,ALT,Crossley2017,text processing judgements in adult reading material
+fleschkincaid,0.29,Expert judgement,ALT,Crossley2017,text comprehension judgements in adult reading material
+fleschkincaid,0.13,Expert judgement,ALT,Crossley2017,text familiarity judgments in adult reading material
+fleschkincaid,0.97,Flesch Reading Ease,RS,Crossley2017,adult reading material
+fleschkincaid,0.18,User rating of readability,ALT,Zheng2017,wikipedia articles
+fleschkincaid,0.30,User rating of readability,ALT,Zheng2017,medical literature
+fleschkincaid,0.97,Gunning Fog,RS,Stajner2012
+fleschkincaid,0.95,SMOG,RS,Stajner2012
+fleschkincaid,0.98,Gunning Fog,RS,vanOosten2010
+fleschkincaid,0.9,SMOG,RS,vanOosten2010
+fleschkincaid,0.96,Flesch Reading Ease,RS,vanOosten2010
+fleschkincaid,0.63,Dale-Chall,RS,vanOosten2010
+fleschkincaid,0.58,HIReA,RS,Clauson2010,manually calculated based on average results in Table 2
+fleschkincaid,0.71,LEX,RS,Hayes1996,Mentioned in text: correlation between the LEX and Readability Indices is in the low 0.70s---fractionally higher with the Flesch index; lower with the others
+gunningfog,0.59,McCall-Crabbs 1950,RCT,Powers1958,
+gunningfog,0.93,Fry Readability,RS,Meade1991,
+gunningfog,0.97,SMOG,RS,Meade1991,
+gunningfog,0.99,SMOG,RS,Meade1991,
+gunningfog,0.60,cloze,cloze,Kincaid1975,I calculated the correlations based on results presented in Table 2 (N=18)
+gunningfog,0.92,Fry Readability,RS,Klingbeil1995
+gunningfog,0.41,Oral Reading Fluency,ORF,Ardoin2005,Words Read Correctly per Minute
+gunningfog,0.41,Oral Reading Fluency,ORF,Ardoin2005,Words read correctly per minute
+gunningfog,0.34,Oral Reading Fluency,ORF,Ardoin2005,Words read correctly per minute
+gunningfog,0.33,Oral Reading Fluency,ORF,Ardoin2005,Words read correctly per minute
+gunningfog,0.34,Oral Reading Fluency,ORF,Ardoin2005,Words read correctly per minute
+gunningfog,0.33,Oral Reading Fluency,ORF,Ardoin2005,Words read correctly per minute
+gunningfog,0.45,Expert judgement,ALT,Jongsma1972,public librarians n=12
+gunningfog,0.31,Expert judgement,ALT,Jongsma1972,school librarians n=12
+gunningfog,0.95,Flesch-Kincaid,RS,Janan2014,n=64
+gunningfog,0.83,Spache,RS,Janan2014,n=64
+gunningfog,-0.47,Dale-Chall,RS,Janan2014,n=64
+gunningfog,0.74,ATOS,RS,Janan2014,n=64
+gunningfog,0.96,Dale-Chall,RS,Lenzner2014,
+gunningfog,0.97,SMOG,RS,Hengel2017
+gunningfog,0.56,Dale-Chall,RS,Hengel2017
+gunningfog,0.44,cloze,cloze,Brown1998
+gunningfog,0.7,Fry,RS,Brown1998
+gunningfog,0.27,User ratings,ALT,Zheng2017,Wikipedia articles
+gunningfog,0.13,User ratings,ALT,Zheng2017,Medical articles
+gunningfog,0.98,SMOG,RS,Stajner2012
+gunningfog,1.00,SMOG,RS,vanOosten2010
+gunningfog,0.93,Flesch Reading Ease,RS,vanOosten2010
+gunningfog,0.61,Dale-Chall,RS,vanOosten2010
+smog,0.985,McCall-Crabbs 1950,RCT,McLaughlin1969,
+smog,0.71,LEX,RS,Hayes1996,Mentioned in text: correlation between the LEX and Readability Indices is in the low 0.70s---fractionally higher with the Flesch index; lower with the others
+smog,1,RAIN,ALT,King2003,N=7
+smog,0.93,Fry Readability,RS,Meade1991,
+smog,0.96,Fry Readability,RS,Meade1991,
+smog,0.55,RAIN,ALT,Singh2003,N=10; I calculated the correlation based on results presented in Tables I and II
+smog,0.92,Expert judgement,ALT,Wells1994,N=15;independent human assessment
+smog,0.97,Gunning Fog,RS,Wells1994
+smog,0.96,Flesch Reading Ease,RS,Wells1994
+smog,0.96,Fry Readability,RS,Wells1994
+smog,0.96,Flesch-Kincaid,RS,Wells1994
+smog,0.93,Lasbarhetsindex,RS,Wells1994
+smog,0.99,Gunning Fog,RS,Klingbeil1995
+smog,0.99,Fry Readability,RS,Klingbeil1995
+smog,0.24,Oral Reading Fluency,ORF,Ardoin2005,Words Read Correctly per Minute
+smog,0.22,Oral Reading Fluency,ORF,Ardoin2005,Words read correctly per minute
+smog,0.12,Oral Reading Fluency,ORF,Ardoin2005,Words read correctly per minute
+smog,0.14,Oral Reading Fluency,ORF,Ardoin2005,Words read correctly per minute
+smog,0.23,Oral Reading Fluency,ORF,Ardoin2005,Words read correctly per minute
+smog,0.20,Oral Reading Fluency,ORF,Ardoin2005,Words read correctly per minute
+smog,0.29,Expert judgement,ALT,Jongsma1972,public librarians n=12
+smog,0.41,Expert judgement,ALT,Jongsma1972,school librarians n=12
+smog,0.23,cloze,cloze,Woods1998,n=20
+smog,0.28,Fry,RS,Woods1998,n=20
+smog,0.32,Forcast,RS,Woods1998,n=20
+smog,0.98,Gunning Fog,RS,Janan2014,n=64
+smog,0.93,Flesch-Kincaid,RS,Janan2014,n=64
+smog,0.83,Spache,RS,Janan2014,n=64
+smog,-0.41,Dale-Chall,RS,Janan2014,n=64
+smog,0.70,ATOS,RS,Janan2014,n=64
+smog,0.56,Dale-Chall,RS,Hengel2017
+smog,0.41,User ratings,ALT,Zheng2017,Wikipedia articles
+smog,0.10,User ratings,ALT,Zheng2017,Nedical articles
+smog,0.84,RIDE,RS,Carver1974,
+smog,0.89,ARI,RS,Carver1974,
+smog,0.87,Fry,RS,Carver1974,
+smog,0.72,Recall,ALT,Carver1974,
+smog,0.84,Judged difference,ALT,Carver1974,
+smog,0.80,Cloze,cloze,Carver1974,
+smog,0.80,Reading-input,cloze,Carver1974,
+smog,0.88,RIDE,RS,Carver1974,
+smog,0.91,ARI,RS,Carver1974,
+smog,0.90,Fry,RS,Carver1974,
+smog,0.85,Cloze,cloze,Carver1974,
+smog,0.88,Teacher Rating 1,ALT,Carver1974,
+smog,0.82,Teacher Rating 2,ALT,Carver1974,
+smog,0.78,Bormuth Level,RS,Carver1974,
+smog,0.86,RIDE,RS,Carver1974,
+smog,0.91,ARI,RS,Carver1974,
+smog,0.89,Fry,RS,Carver1974,
+smog,0.79,Cloze,cloze,Carver1974,
+smog,0.79,Bormuth Level,RS,Carver1974,
+smog,0.78,Bormuth Level,RS,Carver1974,
+smog,0.78,Rauding Scale Group A,ALT,Carver1974,
+smog,0.83,Rauding Scale Group B,ALT,Carver1974,
+dalechall,0.70,McCall-Crabbs 1950,RCT,Dale1948
+dalechall,0.70,Gray-Leary Rating,RS,Klare1952,
+dalechall,0.67,Washburne-Morphett,RS,Klare1952,
+dalechall,0.61,Gray-Leary Test,RCT,Klare1952,
+dalechall,0.82,Ojemann Test,RCT,Klare1952,
+dalechall,0.92,generic reading comprehension test,RCT,Powell-Smith2001,reporting correlation from another source
+dalechall,0.00,Oral Reading Fluency,ORF,Powell-Smith2001,N=60 reading probes mean number of words read correctly
+dalechall,0.93,cloze,cloze,Caylor1973,N=12
+dalechall,0.86,cloze,cloze,Caylor1973,N=12
+dalechall,0.00,Oral Reading Fluency,ORF,Ardoin2005,Words Read Correctly per Minute
+dalechall,0.00,Oral Reading Fluency,ORF,Ardoin2005,Words read correctly per minute
+dalechall,0.11,Oral Reading Fluency,ORF,Ardoin2005,Words read correctly per minute
+dalechall,0.20,Oral Reading Fluency,ORF,Ardoin2005,Words read correctly per minute
+dalechall,0.03,Oral Reading Fluency,ORF,Ardoin2005,Words read correctly per minute
+dalechall,0.07,Oral Reading Fluency,ORF,Ardoin2005,Words read correctly per minute
+dalechall,0.92,Bormuth Mean Cloze Scores,cloze,Chall1995
+dalechall,0.35,Custom reading comprehension test,RCT,Dale1934,Only analysed the 769 words on the original Dale list
+dalechall,0.35,Custom reading comprehension test,RCT,Gray1935,VERIFY; only analysed the 769 words on the original Dale list
+dalechall,0.61,Custom reading comprehension test,RCT,Lorge1948,VERIFY; only analysed on the 769 words on the original Dale list
+dalechall,0.68,Custom reading comprehension test,RCT,Dale1948,VERIFY; only analysed on revised list of 3000 words
+dalechall,0.68,cloze,cloze,Bormuth1966,only analysed on the 769 words on the original Dale list
+dalechall,0.64,cloze,cloze,Bormuth1966,only analysed the 3000 words on the updated Dale list
+dalechall,0.49,McCall-Crabbs 1961,RCT,Harris1976,used only more difficult passages of the McCall-Crabbs reading comprenension tests
+dalechall,0.57,McCall-Crabbs 1961,RCT,Harris1976,used only simpler passages of the McCall-Crabbs reading comprehension tests
+dalechall,0.53,McCall-Crabbs 1961,RCT,Harris1976,used only simplest passages of the McCall-Crabbs reading comprehension tests
+dalechall,0.91,1967 Miller-Colman Readability Scale (Cloze),cloze,Miller1974,n=36
+dalechall,0.69,McCall-Crabbs 1961,RCT,Miller1974,n=195
+dalechall,0.29,Cloze,cloze,Froese1971,n=12
+dalechall,0.76,Custom reading comprehension test,RCT,Lee1966
+dalechall,0.76,Cloze,cloze,Guthrie1972,only analysed word list (difficult)
+dalechall,0.68,Expert judgement,ALT,Jongsma1972,public librarians n=12
+dalechall,0.57,Expert judgement,ALT,Jongsma1972,school librarians n=12
+dalechall,0.46,cloze,cloze,Sullivan1976,n=34
+dalechall,-0.14,Spache,RS,Janan2014,n=64
+dalechall,-0.49,ATOS,RS,Janan2014,n=64
+dalechall,0.50,Gunning Fog,RS,Harwell1996
+dalechall,0.50,Gunning Fog,RS,Harwell1996
+dalechall,0.70,Expert judgement,ALT,Russell1951,catalog grade level n=12
+dalechall,0.90,Expert judgement,ALT,Russell1951,librarian judgement n=12
+dalechall,0.56,Lewerenz,RS,Russell1951
+dalechall,0.54,Lorge,RS,Russell1951
+dalechall,0.87,Winnetka,RS,Russell1951
+dalechall,0.68,Yoakam,RS,Russell1951
+dalechall,0.69,cloze,cloze,Greenfield1999,correlations actually from his 1999 (unpublished) dissertation but reported in Crossley2008
+dalechall,0.70,Coh-Metrix,RS,Crossley2008
+dalechall,0.79,Miyazaki EFL Index,RS,Greenfield2004
+dalechall,0.65,Brown (original),RS,Brown1998
+dalechall,0.82,Brown (recalculated),RS,Greenfield2004
+dalechall,0.92,Expert judgement,ALT,Dale1948,Figure reported in Klare1976.
+dalechall,0.99,Bormuth scores,cloze,Chall1995,35% correct answers
+dalechall,0.87,Bormuth scores,cloze,Chall1995,45% correct answers
+dalechall,0.82,Bormuth scores,cloze,Chall1995,55% correct answers
+dalechall,0.92,Bormuth scores,cloze,Chall1995,cloze mean score (I think this is already included in the data as a reported statistic found elsewhere).
+dalechall,0.87,Miller-Colman scores,cloze,Chall1995,cloze scores
+dalechall,0.89,Miller-Colman scores,ALT,Chall1995,rank order score derived by averaging the subjective ranks assigned to each passage by forteen judges
+dalechall,0.64,MacGinitie-Tretiak scores,RCT,Chall1995,grade level equivalent of 75% correct on multiple choice tests from McCall-Crabbs Standardised Test Lessons in Readability
+dalechall,0.85,Caylor-Sticht-Fox-Ford-Scores,cloze,Chall1995,average percent of correct responses on cloze tests
+dalechall,0.87,Caylor-Sticht-Fox-Ford-Scores,cloze,Chall1995,reading grade level from the USAG Intelligence Achievement Tests achieved by 50% of the subjects who scored at least 35% correct on cloze tests constructed from the passage
+dalechall,0.42,Gates-MacGinitie,cloze,Chall1995,grade 3
+dalechall,0.39,Gates-MacGinitie,cloze,Chall1995,grade 4
+dalechall,0.37,Gates-MacGinitie,cloze,Chall1995,grade 5
+dalechall,0.34,Gates-MacGinitie,cloze,Chall1995,grade 6
+dalechall,0.47,Gates-MacGinitie,cloze,Chall1995,grade 7
+dalechall,0.46,Gates-MacGinitie,cloze,Chall1995,grade 8
+dalechall,0.42,Gates-MacGinitie,cloze,Chall1995,grade 9
+dalechall,0.44,Gates-MacGinitie,cloze,Chall1995,grade 10
+dalechall,0.42,Gates-MacGinitie,cloze,Chall1995,grade 11
+dalechall,0.42,Gates-MacGinitie,cloze,Chall1995,grade 12
+dalechall,0.9,Oral Reading Level on DARTTS,ORF,Chall1995,manually calculated from Table 5-3 p. 70
+dalechall,0.78,DAR level,RCT,Chall1995,difficulty levels on the silent reading passages of the DARTTS; manually calculated from Table 5-4 p. 71
+dalechall,0.97,Expert judgement,ALT,Chall1995,qualitative evaluation of difficulty by a highly experienced teacher who read each selection and assets its level of difficulty independent of other assessments; manually calculated from Table 5-3 p.70
+dalechall,0.78,Expert judgement,ALT,Chall1995,qualitative evaluation of difficulty by a highly experienced teacher who read each selection and assets its level of difficulty independent of other assessments; manually calculated from Table 5-4 p.71
+dalechall,0.95,Expert judgement,ALT,Chall1995,NAEP levels of proficiency; manually calculated correlations from Table 5-5 p. 72
+dalechall,0.75,Fry,RS,Chall1995,grade 3
+dalechall,0.49,Fry,RS,Chall1995,grade 4
+dalechall,0.7,Fry,RS,Chall1995,grade 5/6
+dalechall,0.78,Fry,RS,Chall1995,grade7/9
+dalechall,0.91,Fry,RS,Chall1995,grade 10/12
+dalechall,0.97,Expert judgement,ALT,Chall1995,mean judgement of difficulty by teachers and reading specialists compared with Dale-Chall cloze scores; manually calculated correlation from Table 5-7 in Chall1995
+dalechall,0.43,Expert judgement,ALT,Crossley2017,correlation with text processing judgments (adult reading material)
+dalechall,0.33,Expert judgement,ALT,Crossley2017,correlation with text comprehension judgments (adult reading material)
+dalechall,0.21,Expert judgement,ALT,Crossley2017,correlation with text familiarity judgements (adult reading material)
+dalechall,0.59,Flesch Reading Ease,RS,Crossley2017,correlation with Flesch Reading Ease (adult reading material)
+dalechall,0.66,Flesch-Kincaid,RS,Crossley2017,correlation with Flesch-Kincaid (adult reading material)
+dalechall,0.93,RIDE,RS,Carver1974,
+dalechall,0.89,ARI,RS,Carver1974,
+dalechall,0.89,SMOG,RS,Carver1974,
+dalechall,0.88,Fry,RS,Carver1974,
+dalechall,0.86,Recall,ALT,Carver1974,
+dalechall,0.90,Judged difference,ALT,Carver1974,
+dalechall,0.89,Cloze,cloze,Carver1974,
+dalechall,0.90,Reading-input,cloze,Carver1974,
+dalechall,0.87,RIDE,RS,Carver1974,
+dalechall,0.82,ARI,RS,Carver1974,
+dalechall,0.88,SMOG,RS,Carver1974,
+dalechall,0.87,Fry,RS,Carver1974,
+dalechall,0.89,Cloze,cloze,Carver1974,
+dalechall,0.87,Teacher Rating 1,ALT,Carver1974,
+dalechall,0.86,Teacher Rating 2,ALT,Carver1974,
+dalechall,0.86,Bormuth Level,RS,Carver1974,
+dalechall,0.86,Dale-Chall,RS,Carver1974,
+dalechall,0.83,ARI,RS,Carver1974,
+dalechall,0.86,SMOG,RS,Carver1974,
+dalechall,0.85,Fry,RS,Carver1974,
+dalechall,0.84,Cloze,cloze,Carver1974,
+dalechall,0.82,Bormuth Level,RS,Carver1974,
+dalechall,0.82,Bormuth Level,RS,Carver1974,
+dalechall,0.80,Rauding Scale Group A,ALT,Carver1974,
+dalechall,0.79,Rauding Scale Group B,ALT,Carver1974,
+dalechall,0.86,Bormuth Level,ALT,Carver1974,
+dalechall,0.83,Rauding Scale Group A,ALT,Carver1974,
+dalechall,0.82,Rauding Scale Group B,ALT,Carver1974,
+dalechall,0.92,SEER Technique Scale I,ALT,Singer1975,Sprache for grades 1--3; Dale-Chall for grades 4--6; manually calculated correlation from Table 1 in Singer1975
+dalechall,0.93,SEER Technique Scale II,ALT,Singer1975,Sprache for grades 1--3; Dale-Chall for grades 4--6; manually calculated correlation from Table 1 in Singer1975
+dalechall,0.64,McCall-Crabbs,RCT,Kemper1983,
+dalechall,0.63,Inference Load Score,RS,Kemper1983,
+average,0.97,Dale-Chall; Flesch Reading Ease; Gunning Fog; SMOG,RS,Morris1980, average estimated intra-class correlation coefficient as reported in Ley1996 Table 2
+average,0.79,Dale-Chall; Flesch Reading Ease; Gunning Fog; Fry; SMOG,RS,Meade1989, average estimated intra-class correlation coefficient as reported in Ley1996 Table 2
+average,0.74,Flesch Reading Ease; Gunning Fog; SMOG,RS,Kanouse1981,average estimated intra-class correlation coefficient as reported in Ley1996
+average,0.76,Flesch Reading Ease; Flesch-Kincaid; Gunning Fog;SMOG,RS,Ley1996,average estimated intra-class correlation coefficient as reported in Ley1996

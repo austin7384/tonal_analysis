@@ -1,0 +1,5 @@
+*! version 1.0.0 30may2018
+sequence 9000
+label "Teal (publishing-female)"
+
+set rgb "42 157 143"

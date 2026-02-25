@@ -1,0 +1,128 @@
+* Scheme Name:  thesis.scheme
+* Created by:  Erin Hengel
+* Created on:  18 July 2016
+* Abstract:  special scheme for PhD dissertation.
+
+*! version 1.0.0 17jul2016
+
+#include s2color
+color background white
+
+* Grid
+color major_grid "176 197 204"
+linepattern major_grid dash
+linewidth major_grid vthin
+yesno draw_major_hgrid no
+yesno draw_major_vgrid no
+
+* Axes
+color axisline "116 116 116"
+linestyle axisline none
+linestyle axis_withgrid none
+color axis_title "116 116 116"
+gsize axis_title vsmall
+gsize tick_label half_tiny
+gsize axis_title_gap small
+
+* Ticks
+color tick "176 197 204"
+color tickline "176 197 204"
+color tick_label "116 116 116"
+gsize tick_label vsmall
+anglestyle vertical_tick horizontal
+
+* Title
+color heading "116 116 116"
+gsize heading vlarge
+clockdir title_position 11
+yesno title_span yes
+
+* Subtitle
+color subheading "116 116 116"
+gsize subheading medsmall
+clockdir subtitle_position 12
+gridringstyle subtitle_ring 1
+yesno subtitle_span yes
+yesno subtitle_textbox no
+
+* Notes
+color small_body "116 116 116"
+gsize small_body vsmall
+clockdir note_position 5
+
+* Legend
+color key_label "116 116 116"
+gsize key_label small
+gsize legend_key_gap tiny
+gsize legend_row_gap tiny
+gsize legend_col_gap half_tiny
+linewidth legend none
+clockdir legend_position 5
+clockdir by_legend_position 5
+gridringstyle by_legend_ring 0
+numstyle legend_rows 1
+gridringstyle legend_ring 0
+gsize legend_key_xsize 1
+gsize legend_key_ysize 1
+
+* Margins
+margin graph zero
+
+* Added lines
+color xyline "116 116 116"
+linewidth xyline vthin
+
+* Pie charts
+gsize pie_explode large
+intensity pie 65
+
+* Bar charts
+intensity bar 70
+relsize bar_gap 0pct
+gsize gap miniscule
+relsize bar_outergap 0pct
+
+* Textboxes
+yesno textbox no
+color textbox none
+margin textbox zero
+linestyle textbox none
+
+* Scatter plots
+symbol p circle
+symbolsize p medium
+linewidth p vthin
+color pline yellow
+
+* By graphs
+margin by_indiv zero
+
+* Plot 1 Blue
+color p1 "52 108 139"
+
+* Plot 2 Pink
+color p2 "216 92 99"
+
+* Plot 3 Light Blue
+color p3 "174 212 253"
+
+* Plot 4 Blue
+color p4 "57 156 251"
+
+* Plot 5 Yellow
+color p5 "253 189 66"
+
+* Plot 6 Aqua
+color p6 "167 234 222"
+
+* Plot 7 Brown
+color p7 "122 108 69"
+
+* Plot 8 Lime
+color p8 "231 237 88"
+
+* Plot 9 Pink
+color p9 "253 147 173"
+
+* Plot 10 Dark Pink
+color p10 "204 55 92"

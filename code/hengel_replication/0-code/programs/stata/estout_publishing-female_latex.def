@@ -1,0 +1,60 @@
+*! estout_publishing-female_latex.def, version 1.1.0  29jun2016 Erin Hengel
+*! -estout- style: publishing-female_latex
+
+// parameter statistics options
+
+cells               b se
+
+b_star              star
+b_fmt               2
+
+se_par              ( )
+se_fmt              2
+
+omitted             noomitted
+baselevels          nobaselevels
+indicatelabels      Yes No
+discrete            " (d)" for discrete change of dummy variable from 0 to 1
+
+// summary statistics options
+
+statsfmt            %9.0fc
+statslabelsfirst    first
+statslabelslast     last
+
+// significance stars options
+
+starlevels          * 0.1 ** 0.05 *** 0.01
+
+// layout options
+
+varwidth            30
+modelwidth          12
+delimiter           &
+end                 \\
+incelldelimiter     " "
+lz                  lz
+substitute          "#" "\(\times\)" "✓¹" "{\(\text{\ding{51}}^1\)}" "✓²" "{\(\text{\ding{51}}^2\)}" "✓³" "{\(\text{\ding{51}}^3\)}" "✓⁴" "{\(\text{\ding{51}}^4\)}" "✓⁵" "{\(\text{\ding{51}}^5\)}" "✓" "{\ding{51}}" "Δ" "\(\Delta\)" " .&" "  &" " .\\" "  \\" "%" "\%" "$" "\$"
+
+// labeling options
+
+label               label
+interaction         \(\times\)
+indicatelabels      {\ding{51}} No
+
+varlabels           _cons Constant
+varlabelsfirst      first
+varlabelslast       last
+
+refcatlabel         ref.
+
+mlabelsnone         none
+collabelsnone       none
+// eqlabelsnone		none
+
+eqlabelsfirst       first
+eqlabelslast        last
+
+// output options
+
+replace             replace
