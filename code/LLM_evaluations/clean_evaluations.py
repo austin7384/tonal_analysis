@@ -82,6 +82,8 @@ def add_rubric_columns_keyword_match(df: pd.DataFrame, eval_col: str) -> pd.Data
 
 
 # --- Load, process, and save ---
-df = pd.read_csv('~/tonal_analysis/data/processed/llm_evaluated/raw_evaluations/hengel_QJE.csv')
-df = add_rubric_columns_keyword_match(df, eval_col="evaluations")
-df.to_csv('~/tonal_analysis/data/processed/llm_evaluated/clean_evaluations/hengel_QJE.csv')
+df = pd.read_csv('~/Documents/Who_Writes_What/data/processed/llm_evaluated/raw_evaluations/Hengel_evaluations.csv')
+df.dropna(subset='evaluation_nber_parsed', inplace=True)
+df.drop_duplicates(subset=['NberID', 'evaluation_nber_parsed'], inplace=True)
+df = add_rubric_columns_keyword_match(df, eval_col="evaluation_nber_parsed")
+df.to_csv('~/Documents/Who_Writes_What/data/processed/llm_evaluated/clean_evaluations/Hengel_nber_evaluations.csv')
