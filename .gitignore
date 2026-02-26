@@ -19,6 +19,7 @@ data/processed/author_level.csv
 data/processed/gender_guesses.csv
 data/processed/scraped_results.csv
 *.jsonl
+*.db
 
 # Environment
 .env
