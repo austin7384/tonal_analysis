@@ -60,12 +60,35 @@ links_to_scrape.csv
 
 **`code/gender_guess/`** — Namsor API client. Deduplicates names before calling the API, batches 100 names per request, then maps results back. `create_gender_index.py` aggregates to paper-level metrics (female authorship ratio, binary indicators, etc.).
 
-**`code/hengel_replication/`** — Exports 12 relational tables from a SQLite `.db` to CSV (`hengel_data_cleaning.py`), then constructs derived variables in Stata (`hengel_master.do`).
+**`code/hengel_replication/`** — Exports relational tables from CSV sources (`hengel_data_cleaning.py`), then constructs derived variables in Stata (`hengel_master.do`). The cleaning script also merges LLM evaluations (`data/raw/hengel_replication_data/LLM_evaluations.csv` and `NBER_LLM_evaluations.csv`) into the long-format stat CSVs. LLM criterion names are renamed to Stata-compatible snake_case (e.g. `llm_modal_verb`, `llm_hedging`) via `LLM_RENAME` before melting.
 
 **`code/merge_datasets.py`** — Combines Hengel and scraped datasets. Offsets scraped `ArticleID` by 15,000 to avoid collisions, standardizes column names, tags journal source.
 
 ### LLM rubric
 16 criteria scored 1–10 on surface-level linguistic features only (no author intent inference). Dimensions: modal verb strength, hedging, qualifier density, limitations acknowledgement, assertiveness, voice, sentence directness, novelty-claim strength, jargon density, emotional valence, evidence usage, practical orientation, readability.
+
+The 16 criteria are grouped into five composite scores in `Data.do`:
+| Group | Stata var suffix | Criteria |
+|---|---|---|
+| G1 Creativity & Hedging | `_llm_g1_score` | modal_verb, hedging, qualifier, ack_limits, caution |
+| G2 Assertiveness & Voice | `_llm_g2_score` | assertiveness, active_passive |
+| G3 Structural Directness | `_llm_g3_score` | directness, imperative |
+| G4 Authorial Stance & Novelty | `_llm_g4_score` | pronoun, novelty, jargon, emotional |
+| G5 Support & Impact | `_llm_g5_score` | evidence, practical |
+
+`Jargon/Technicality Density` is negated before computing the composite (higher raw = denser = harder). NBER versions are prefixed `nber_llm_g*_score`. All composites end in `_score` so they are captured by the existing `reshape long @_score` in the `nber_fe` paired-difference dataset.
+
+### Stata variable naming conventions for LLM criteria
+After `reshape wide` in `Data.do`, individual LLM criterion variables are named `_llm_<short>` (article-level) and `nber_llm_<short>` (NBER-level):
+- `_llm_readability`, `_llm_modal_verb`, `_llm_hedging`, `_llm_qualifier`, `_llm_ack_limits`
+- `_llm_caution`, `_llm_assertiveness`, `_llm_active_passive`, `_llm_directness`, `_llm_imperative`
+- `_llm_pronoun`, `_llm_novelty`, `_llm_jargon`, `_llm_emotional`, `_llm_evidence`, `_llm_practical`
+
+### Data.do status and next steps
+`Data.do` (`code/hengel_replication/0-code/output/Data.do`) now produces datasets with all hengel readability stats **plus** the 16 LLM criterion variables and five group composite scores. The `nber_fe` paired-difference dataset includes the LLM group composites automatically.
+
+**Remaining work (as of last session):**
+- Table-3.do and Table-5.do (and similar) produce regression tables using `stats(flesch fleschkincaid gunningfog smog dalechall)`. Parallel LLM versions using `stats(llm_g1 llm_g2 llm_g3 llm_g4 llm_g5)` have not yet been created. To add them, follow the same program structure as the existing tables but point to the `_llm_g*_score` variables.
 
 ### Article ID conventions
 - Hengel articles: original IDs from the SQLite database
