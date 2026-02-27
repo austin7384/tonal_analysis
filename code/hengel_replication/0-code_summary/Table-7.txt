@@ -1,0 +1,22 @@
+INPUTS
+------
+data/raw/hengel_generated/duration.dta
+
+OPERATIONS
+----------
+- Defines program review_time_restud for modeling review duration at Econometrica and REStud
+- Estimates separate regressions for Econometrica (Journal==2) and REStud (Journal==6)
+- Also estimates a pooled model with a Journal x AcceptedYear interaction
+- Fixed effects: AcceptedYear (or AcceptedYear##Journal), Editor, MaxInst
+- Tests with and without primary JEL code controls
+- Runs all specifications for each of 7 author-composition definitions
+
+OUTPUTS
+-------
+outputs/tables/tex/Table-7-FemRatio.tex
+outputs/tables/tex/Table-7-Fem100.tex
+outputs/tables/tex/Table-7-FemSolo.tex
+outputs/tables/tex/Table-7-Fem1.tex
+outputs/tables/tex/Table-7-Fem50.tex
+outputs/tables/tex/Table-7-FemSenior.tex
+outputs/tables/tex/Table-7-FemJunior.tex

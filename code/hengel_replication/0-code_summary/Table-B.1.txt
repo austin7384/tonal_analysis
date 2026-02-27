@@ -1,0 +1,15 @@
+INPUTS
+------
+data/raw/hengel_generated/article.dta
+
+OPERATIONS
+----------
+- Defines decade categories (1950-59, 1960-69, ..., 2010-15)
+- Collapses data to article count by Decade x Journal
+- Reshapes to wide format with journals as columns and decades as rows
+- Adds a totals row and a totals column
+- Converts to a Stata matrix for LaTeX export
+
+OUTPUTS
+-------
+outputs/tables/tex/Table-B.1.tex

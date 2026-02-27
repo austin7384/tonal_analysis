@@ -1,0 +1,27 @@
+INPUTS
+------
+data/raw/hengel_generated/author.dta
+
+OPERATIONS
+----------
+- Defines programs matching_table and matching_figure for reuse across three specifications
+- Conducts Mahalanobis 1:1 matching of female to male authors on: career length (T), first institution, citation count, publication decade, journal, and JEL code
+- For matched pairs, computes: Rit (reconstructed readability), Dik (gender difference measure), conditional and unconditional Dik, and percentage discrimination
+- Runs three specifications: "base" (simple), "jel" (JEL-adjusted), and "R" (alternative readability package)
+- Generates balance tables comparing pre- and post-matching summary statistics
+- Generates tables of discrimination estimates
+- Produces histograms and kernel density plots of the Dik distribution
+- Runs regression output used to reconstruct Rit
+
+OUTPUTS
+-------
+data/raw/hengel_generated/author_matching.dta
+data/raw/hengel_generated/author_matching_dik.dta
+outputs/figures/Figure-5-base.pdf
+outputs/figures/Figure-5-jel.pdf
+outputs/figures/Figure-5-R.pdf
+outputs/tables/tex/Table-9-base.tex
+outputs/tables/tex/Table-9-jel.tex
+outputs/tables/tex/Table-9-R.tex
+outputs/tables/tex/Table-J.1.tex
+outputs/tables/tex/Table-J.3.tex

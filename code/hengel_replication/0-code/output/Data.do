@@ -213,7 +213,7 @@ generate _pww_count = _polysyblword_count / _word_count
 generate _dww_count = _notdalechall_count / _word_count
 generate asinhCiteCount = ln(CiteCount + sqrt(1+CiteCount^2))
 generate Blind = Year<=1997&(Journal==4|(PubDate>=date("1989-06-01", "YMD")&Journal==1))
-* LLM group composite scores (higher = more assertive/direct; jargon already negated in Python).
+* LLM group composite scores (higher = more assertive/direct; jargon already flipped in Python).
 * Group 1: Creativity and Hedging
 generate _llm_g1_score = (_llm_modal_verb + _llm_hedging + _llm_qualifier + _llm_ack_limits + _llm_caution) / 5
 * Group 2: Assertiveness and Voice
@@ -226,9 +226,35 @@ generate _llm_g4_score = (_llm_pronoun + _llm_novelty + _llm_jargon + _llm_emoti
 generate _llm_g5_score = (_llm_evidence + _llm_practical) / 2
 do `varlabels'
 compress
+* Save the full LLM dataset as a tempfile before pruning, so group datasets can be
+* built from it later. The main article_pp/article datasets retain only _llm_readability.
+tempfile article_llm_full
+save `article_llm_full'
+* Drop individual LLM criterion variables and group composites from main datasets.
+drop _llm_modal_verb _llm_hedging _llm_qualifier _llm_ack_limits _llm_caution ///
+	_llm_assertiveness _llm_active_passive _llm_directness _llm_imperative ///
+	_llm_pronoun _llm_novelty _llm_jargon _llm_emotional _llm_evidence _llm_practical ///
+	_llm_g1_score _llm_g2_score _llm_g3_score _llm_g4_score _llm_g5_score
 tempfile article_pp
 save `article_pp'
 save "~/tonal_analysis/data/raw/hengel_generated/article_pp", replace
+
+* Generate article-level JEL data + P&P.
+use `article_pp', clear
+merge 1:1 ArticleID using `primary_jel', keep(match) nogenerate
+do `varlabels'
+compress
+tempfile article_primary_jel_pp
+save `article_primary_jel_pp'
+save "~/tonal_analysis/data/raw/hengel_generated/article_primary_jel_pp", replace
+
+* Generate tertiary JEL data + P&P.
+use `article_pp', clear
+merge 1:1 ArticleID using `tertiary_jel', keep(match) nogenerate
+compress
+tempfile article_tertiary_jel_pp
+save `article_tertiary_jel_pp'
+save "~/tonal_analysis/data/raw/hengel_generated/article_tertiary_jel_pp", replace
 
 * Generate article-level data.
 * Generate article data.
@@ -247,15 +273,6 @@ tempfile article_primary_jel
 save `article_primary_jel'
 save "~/tonal_analysis/data/raw/hengel_generated/article_primary_jel", replace
 
-* Generate article-level JEL data + P&P.
-use `article_pp', clear
-merge 1:1 ArticleID using `primary_jel', keep(match) nogenerate
-do `varlabels'
-compress
-tempfile article_primary_jel_pp
-save `article_primary_jel_pp'
-save "~/tonal_analysis/data/raw/hengel_generated/article_primary_jel_pp", replace
-
 * Generate tertiary JEL data.
 use `article', clear
 merge 1:1 ArticleID using `tertiary_jel', keep(match) nogenerate
@@ -264,13 +281,253 @@ tempfile article_tertiary_jel
 save `article_tertiary_jel'
 save "~/tonal_analysis/data/raw/hengel_generated/article_tertiary_jel", replace
 
+* Generate LLM group datasets (top four journals, no P&P).
+* Each dataset contains all controls + that group's criterion variables + its composite score.
+************* Group 1: Creativity and Hedging *************
+use `article_llm_full', clear
+drop _llm_assertiveness _llm_active_passive ///
+	_llm_directness _llm_imperative ///
+	_llm_pronoun _llm_novelty _llm_jargon _llm_emotional ///
+	_llm_evidence _llm_practical ///
+	_llm_g2_score _llm_g3_score _llm_g4_score _llm_g5_score
+compress
+save "~/tonal_analysis/data/raw/hengel_generated/article_llm_g1_pp", replace
+use 'article_llm_g1_pp'
+drop if Journal==5
+tempfile article_llm_g1
+save 'article_llm_g1'
+save '~/tonal_analysis/data/raw/hengel_generated/article_llm_g1', replace
+
+* Generate article-level JEL data + P&P.
+use `article_llm_g1_pp', clear
+merge 1:1 ArticleID using `primary_jel', keep(match) nogenerate
+do `varlabels'
+compress
+tempfile article_llm_g1_primary_jel_pp
+save `article_llm_g1_primary_jel_pp'
+save "~/tonal_analysis/data/raw/hengel_generated/article_llm_g1_primary_jel_pp", replace
+
 * Generate tertiary JEL data + P&P.
-use `article_pp', clear
+use `article_llm_g1_pp', clear
 merge 1:1 ArticleID using `tertiary_jel', keep(match) nogenerate
 compress
-tempfile article_tertiary_jel_pp
-save `article_tertiary_jel_pp'
-save "~/tonal_analysis/data/raw/hengel_generated/article_tertiary_jel_pp", replace
+tempfile article_llm_g1_tertiary_jel_pp
+save `article_llm_g1_tertiary_jel_pp'
+save "~/tonal_analysis/data/raw/hengel_generated/article_llm_g1_tertiary_jel_pp", replace
+
+* Generate article-level JEL data.
+use `article_llm_g1', clear
+merge 1:1 ArticleID using `primary_jel', keep(match) nogenerate
+do `varlabels'
+compress
+tempfile article_llm_g1_primary_jel
+save `article_llm_g1_primary_jel'
+save "~/tonal_analysis/data/raw/hengel_generated/article_llm_g1_primary_jel", replace
+
+* Generate tertiary JEL data.
+use `article_llm_g1', clear
+merge 1:1 ArticleID using `tertiary_jel', keep(match) nogenerate
+compress
+tempfile article_llm_g1_tertiary_jel
+save `article_llm_g1_tertiary_jel'
+save "~/tonal_analysis/data/raw/hengel_generated/article_llm_g1_tertiary_jel", replace
+
+************* Group 2: Assertiveness and Voice *************
+use `article_llm_full', clear
+drop _llm_modal_verb _llm_hedging _llm_qualifier _llm_ack_limits _llm_caution ///
+	_llm_directness _llm_imperative ///
+	_llm_pronoun _llm_novelty _llm_jargon _llm_emotional ///
+	_llm_evidence _llm_practical ///
+	_llm_g1_score _llm_g3_score _llm_g4_score _llm_g5_score
+compress
+save "~/tonal_analysis/data/raw/hengel_generated/article_llm_g2_pp", replace
+use 'article_llm_g2_pp'
+drop if Journal==5
+tempfile article_llm_g2
+save 'article_llm_g2'
+save '~/tonal_analysis/data/raw/hengel_generated/article_llm_g2', replace
+
+* Generate article-level JEL data + P&P.
+use `article_llm_g2_pp', clear
+merge 1:1 ArticleID using `primary_jel', keep(match) nogenerate
+do `varlabels'
+compress
+tempfile article_llm_g2_primary_jel_pp
+save `article_llm_g2_primary_jel_pp'
+save "~/tonal_analysis/data/raw/hengel_generated/article_llm_g2_primary_jel_pp", replace
+
+* Generate tertiary JEL data + P&P.
+use `article_llm_g2_pp', clear
+merge 1:1 ArticleID using `tertiary_jel', keep(match) nogenerate
+compress
+tempfile article_llm_g2_tertiary_jel_pp
+save `article_llm_g2_tertiary_jel_pp'
+save "~/tonal_analysis/data/raw/hengel_generated/article_llm_g2_tertiary_jel_pp", replace
+
+* Generate article-level JEL data.
+use `article_llm_g2', clear
+merge 1:1 ArticleID using `primary_jel', keep(match) nogenerate
+do `varlabels'
+compress
+tempfile article_llm_g2_primary_jel
+save `article_llm_g2_primary_jel'
+save "~/tonal_analysis/data/raw/hengel_generated/article_llm_g2_primary_jel", replace
+
+* Generate tertiary JEL data.
+use `article_llm_g2', clear
+merge 1:1 ArticleID using `tertiary_jel', keep(match) nogenerate
+compress
+tempfile article_llm_g2_tertiary_jel
+save `article_llm_g2_tertiary_jel'
+save "~/tonal_analysis/data/raw/hengel_generated/article_llm_g2_tertiary_jel", replace
+
+************* Group 3: Structural Directness *************
+use `article_llm_full', clear
+drop _llm_modal_verb _llm_hedging _llm_qualifier _llm_ack_limits _llm_caution ///
+	_llm_assertiveness _llm_active_passive ///
+	_llm_pronoun _llm_novelty _llm_jargon _llm_emotional ///
+	_llm_evidence _llm_practical ///
+	_llm_g1_score _llm_g2_score _llm_g4_score _llm_g5_score
+compress
+save "~/tonal_analysis/data/raw/hengel_generated/article_llm_g3_pp", replace
+use 'article_llm_g3_pp'
+drop if Journal==5
+tempfile article_llm_g3
+save 'article_llm_g3'
+save '~/tonal_analysis/data/raw/hengel_generated/article_llm_g3', replace
+
+* Generate article-level JEL data + P&P.
+use `article_llm_g3_pp', clear
+merge 1:1 ArticleID using `primary_jel', keep(match) nogenerate
+do `varlabels'
+compress
+tempfile article_llm_g3_primary_jel_pp
+save `article_llm_g3_primary_jel_pp'
+save "~/tonal_analysis/data/raw/hengel_generated/article_llm_g3_primary_jel_pp", replace
+
+* Generate tertiary JEL data + P&P.
+use `article_llm_g3_pp', clear
+merge 1:1 ArticleID using `tertiary_jel', keep(match) nogenerate
+compress
+tempfile article_llm_g3_tertiary_jel_pp
+save `article_llm_g3_tertiary_jel_pp'
+save "~/tonal_analysis/data/raw/hengel_generated/article_llm_g3_tertiary_jel_pp", replace
+
+* Generate article-level JEL data.
+use `article_llm_g3', clear
+merge 1:1 ArticleID using `primary_jel', keep(match) nogenerate
+do `varlabels'
+compress
+tempfile article_llm_g3_primary_jel
+save `article_llm_g3_primary_jel'
+save "~/tonal_analysis/data/raw/hengel_generated/article_llm_g3_primary_jel", replace
+
+* Generate tertiary JEL data.
+use `article_llm_g3', clear
+merge 1:1 ArticleID using `tertiary_jel', keep(match) nogenerate
+compress
+tempfile article_llm_g3_tertiary_jel
+save `article_llm_g3_tertiary_jel'
+save "~/tonal_analysis/data/raw/hengel_generated/article_llm_g3_tertiary_jel", replace
+
+************* Group 4: Authorial Stance and Novelty *************
+use `article_llm_full', clear
+drop _llm_modal_verb _llm_hedging _llm_qualifier _llm_ack_limits _llm_caution ///
+	_llm_assertiveness _llm_active_passive ///
+	_llm_directness _llm_imperative ///
+	_llm_evidence _llm_practical ///
+	_llm_g1_score _llm_g2_score _llm_g3_score _llm_g5_score
+compress
+save "~/tonal_analysis/data/raw/hengel_generated/article_llm_g4_pp", replace
+use 'article_llm_g4_pp'
+drop if Journal==5
+tempfile article_llm_g4
+save 'article_llm_g4'
+save '~/tonal_analysis/data/raw/hengel_generated/article_llm_g4', replace
+
+* Generate article-level JEL data + P&P.
+use `article_llm_g4_pp', clear
+merge 1:1 ArticleID using `primary_jel', keep(match) nogenerate
+do `varlabels'
+compress
+tempfile article_llm_g4_primary_jel_pp
+save `article_llm_g4_primary_jel_pp'
+save "~/tonal_analysis/data/raw/hengel_generated/article_llm_g4_primary_jel_pp", replace
+
+* Generate tertiary JEL data + P&P.
+use `article_llm_g4_pp', clear
+merge 1:1 ArticleID using `tertiary_jel', keep(match) nogenerate
+compress
+tempfile article_ll4m_g4_tertiary_jel_pp
+save `article_llm_g4_tertiary_jel_pp'
+save "~/tonal_analysis/data/raw/hengel_generated/article_llm_g4_tertiary_jel_pp", replace
+
+* Generate article-level JEL data.
+use `article_llm_g4', clear
+merge 1:1 ArticleID using `primary_jel', keep(match) nogenerate
+do `varlabels'
+compress
+tempfile article_llm_g4_primary_jel
+save `article_llm_g4_primary_jel'
+save "~/tonal_analysis/data/raw/hengel_generated/article_llm_g4_primary_jel", replace
+
+* Generate tertiary JEL data.
+use `article_llm_g4', clear
+merge 1:1 ArticleID using `tertiary_jel', keep(match) nogenerate
+compress
+tempfile article_llm_g4_tertiary_jel
+save `article_llm_g4_tertiary_jel'
+save "~/tonal_analysis/data/raw/hengel_generated/article_llm_g4_tertiary_jel", replace
+
+************* Group 5: Support and Impact *************
+use `article_llm_full', clear
+drop _llm_modal_verb _llm_hedging _llm_qualifier _llm_ack_limits _llm_caution ///
+	_llm_assertiveness _llm_active_passive ///
+	_llm_directness _llm_imperative ///
+	_llm_pronoun _llm_novelty _llm_jargon _llm_emotional ///
+	_llm_g1_score _llm_g2_score _llm_g3_score _llm_g4_score
+compress
+save "~/tonal_analysis/data/raw/hengel_generated/article_llm_g5_pp", replace
+use 'article_llm_g5_pp'
+drop if Journal==5
+tempfile article_llm_g5
+save 'article_llm_g5'
+save '~/tonal_analysis/data/raw/hengel_generated/article_llm_g5', replace
+
+* Generate article-level JEL data + P&P.
+use `article_llm_g5_pp', clear
+merge 1:1 ArticleID using `primary_jel', keep(match) nogenerate
+do `varlabels'
+compress
+tempfile article_llm_g5_primary_jel_pp
+save `article_llm_g5_primary_jel_pp'
+save "~/tonal_analysis/data/raw/hengel_generated/article_llm_g5_primary_jel_pp", replace
+
+* Generate tertiary JEL data + P&P.
+use `article_llm_g5_pp', clear
+merge 1:1 ArticleID using `tertiary_jel', keep(match) nogenerate
+compress
+tempfile article_llm_g5_tertiary_jel_pp
+save `article_llm_g5_tertiary_jel_pp'
+save "~/tonal_analysis/data/raw/hengel_generated/article_llm_g5_tertiary_jel_pp", replace
+
+* Generate article-level JEL data.
+use `article_llm_g5', clear
+merge 1:1 ArticleID using `primary_jel', keep(match) nogenerate
+do `varlabels'
+compress
+tempfile article_llm_g5_primary_jel
+save `article_llm_g5_primary_jel'
+save "~/tonal_analysis/data/raw/hengel_generated/article_llm_g5_primary_jel", replace
+
+* Generate tertiary JEL data.
+use `article_llm_g5', clear
+merge 1:1 ArticleID using `tertiary_jel', keep(match) nogenerate
+compress
+tempfile article_llm_g5_tertiary_jel
+save `article_llm_g5_tertiary_jel'
+save "~/tonal_analysis/data/raw/hengel_generated/article_llm_g5_tertiary_jel", replace
+
 
 * Generate author-level data for top four journals.
 use `author_chars', clear
@@ -353,6 +610,15 @@ merge 1:1 NberID using "~/tonal_analysis/data/raw/hengel_generated/nberstat", as
 merge m:1 ArticleID using "~/tonal_analysis/data/raw/hengel_generated/readstat", assert(using match) keep(match) nogenerate
 do `varlabels'
 compress
+* Save the full nber LLM dataset as a tempfile before pruning, so group datasets can be
+* built from it later. The main nber dataset retain only nber_llm_readability.
+tempfile nber_llm_full
+save `nber_llm_full'
+* Drop individual LLM criterion variables and group composites from main datasets.
+drop nber_llm_modal_verb nber_llm_hedging nber_llm_qualifier nber_llm_ack_limits nber_llm_caution ///
+	nber_llm_assertiveness nber_llm_active_passive nber_llm_directness nber_llm_imperative ///
+	nber_llm_pronoun nber_llm_novelty nber_llm_jargon nber_llm_emotional nber_llm_evidence nber_llm_practical ///
+	nber_llm_g1_score nber_llm_g2_score nber_llm_g3_score nber_llm_g4_score nber_llm_g5_score
 tempfile nber
 save `nber'
 save "~/tonal_analysis/data/raw/hengel_generated/nber", replace
@@ -383,6 +649,189 @@ tempfile nber_fe_jel
 save `nber_fe_jel'
 save "~/tonal_analysis/data/raw/hengel_generated/nber_fe_jel", replace
 
+* Generate NBER LLM group datasets.
+* Each dataset contains all controls + that group's NBER criterion variables + its NBER composite
+* score + the matching article-level composite score (needed for the FE paired-difference reshape).
+************* NBER Group 1: Creativity and Hedging *************
+use `nber_llm_full', clear
+drop nber_llm_assertiveness nber_llm_active_passive ///
+	nber_llm_directness nber_llm_imperative ///
+	nber_llm_pronoun nber_llm_novelty nber_llm_jargon nber_llm_emotional ///
+	nber_llm_evidence nber_llm_practical ///
+	nber_llm_g2_score nber_llm_g3_score nber_llm_g4_score nber_llm_g5_score
+merge m:1 ArticleID using `article_llm_full', keepusing(_llm_g1_score) keep(match) nogenerate
+compress
+tempfile nber_llm_g1
+save `nber_llm_g1'
+save "~/tonal_analysis/data/raw/hengel_generated/nber_llm_g1", replace
+use `nber_llm_g1', clear
+reshape long @_score, i(NberID) j(stat) string
+generate time = substr(stat, 1, 4)!="nber"
+replace stat = substr(stat, 5, .) if !time
+reshape wide _score, i(NberID time) j(stat) string
+rename _score* *_score
+egen id = group(NberID)
+do `varlabels'
+xtset id time
+compress
+tempfile nber_llm_g1_fe
+save `nber_llm_g1_fe'
+save "~/tonal_analysis/data/raw/hengel_generated/nber_llm_g1_fe", replace
+use `nber_llm_g1', clear
+merge m:1 ArticleID using `primary_jel', keep(match) nogenerate
+tempfile nber_llm_g1_jel
+save `nber_llm_g1_jel'
+use `nber_llm_g1_fe', clear
+merge m:1 ArticleID using `primary_jel', keep(match) nogenerate
+sort id time
+tempfile nber_llm_g1_fe_jel
+save `nber_llm_g1_fe_jel'
+save "~/tonal_analysis/data/raw/hengel_generated/nber_llm_g1_fe_jel", replace
+
+************* NBER Group 2: Assertiveness and Voice *************
+use `nber_llm_full', clear
+drop nber_llm_modal_verb nber_llm_hedging nber_llm_qualifier nber_llm_ack_limits nber_llm_caution ///
+	nber_llm_directness nber_llm_imperative ///
+	nber_llm_pronoun nber_llm_novelty nber_llm_jargon nber_llm_emotional ///
+	nber_llm_evidence nber_llm_practical ///
+	nber_llm_g1_score nber_llm_g3_score nber_llm_g4_score nber_llm_g5_score
+merge m:1 ArticleID using `article_llm_full', keepusing(_llm_g2_score) keep(match) nogenerate
+compress
+tempfile nber_llm_g2
+save `nber_llm_g2'
+save "~/tonal_analysis/data/raw/hengel_generated/nber_llm_g2", replace
+use `nber_llm_g2', clear
+reshape long @_score, i(NberID) j(stat) string
+generate time = substr(stat, 1, 4)!="nber"
+replace stat = substr(stat, 5, .) if !time
+reshape wide _score, i(NberID time) j(stat) string
+rename _score* *_score
+egen id = group(NberID)
+do `varlabels'
+xtset id time
+compress
+tempfile nber_llm_g2_fe
+save `nber_llm_g2_fe'
+save "~/tonal_analysis/data/raw/hengel_generated/nber_llm_g2_fe", replace
+use `nber_llm_g2', clear
+merge m:1 ArticleID using `primary_jel', keep(match) nogenerate
+tempfile nber_llm_g2_jel
+save `nber_llm_g2_jel'
+use `nber_llm_g2_fe', clear
+merge m:1 ArticleID using `primary_jel', keep(match) nogenerate
+sort id time
+tempfile nber_llm_g2_fe_jel
+save `nber_llm_g2_fe_jel'
+save "~/tonal_analysis/data/raw/hengel_generated/nber_llm_g2_fe_jel", replace
+
+************* NBER Group 3: Structural Directness *************
+use `nber_llm_full', clear
+drop nber_llm_modal_verb nber_llm_hedging nber_llm_qualifier nber_llm_ack_limits nber_llm_caution ///
+	nber_llm_assertiveness nber_llm_active_passive ///
+	nber_llm_pronoun nber_llm_novelty nber_llm_jargon nber_llm_emotional ///
+	nber_llm_evidence nber_llm_practical ///
+	nber_llm_g1_score nber_llm_g2_score nber_llm_g4_score nber_llm_g5_score
+merge m:1 ArticleID using `article_llm_full', keepusing(_llm_g3_score) keep(match) nogenerate
+compress
+tempfile nber_llm_g3
+save `nber_llm_g3'
+save "~/tonal_analysis/data/raw/hengel_generated/nber_llm_g3", replace
+use `nber_llm_g3', clear
+reshape long @_score, i(NberID) j(stat) string
+generate time = substr(stat, 1, 4)!="nber"
+replace stat = substr(stat, 5, .) if !time
+reshape wide _score, i(NberID time) j(stat) string
+rename _score* *_score
+egen id = group(NberID)
+do `varlabels'
+xtset id time
+compress
+tempfile nber_llm_g3_fe
+save `nber_llm_g3_fe'
+save "~/tonal_analysis/data/raw/hengel_generated/nber_llm_g3_fe", replace
+use `nber_llm_g3', clear
+merge m:1 ArticleID using `primary_jel', keep(match) nogenerate
+tempfile nber_llm_g3_jel
+save `nber_llm_g3_jel'
+use `nber_llm_g3_fe', clear
+merge m:1 ArticleID using `primary_jel', keep(match) nogenerate
+sort id time
+tempfile nber_llm_g3_fe_jel
+save `nber_llm_g3_fe_jel'
+save "~/tonal_analysis/data/raw/hengel_generated/nber_llm_g3_fe_jel", replace
+
+************* NBER Group 4: Authorial Stance and Novelty *************
+use `nber_llm_full', clear
+drop nber_llm_modal_verb nber_llm_hedging nber_llm_qualifier nber_llm_ack_limits nber_llm_caution ///
+	nber_llm_assertiveness nber_llm_active_passive ///
+	nber_llm_directness nber_llm_imperative ///
+	nber_llm_evidence nber_llm_practical ///
+	nber_llm_g1_score nber_llm_g2_score nber_llm_g3_score nber_llm_g5_score
+merge m:1 ArticleID using `article_llm_full', keepusing(_llm_g4_score) keep(match) nogenerate
+compress
+tempfile nber_llm_g4
+save `nber_llm_g4'
+save "~/tonal_analysis/data/raw/hengel_generated/nber_llm_g4", replace
+use `nber_llm_g4', clear
+reshape long @_score, i(NberID) j(stat) string
+generate time = substr(stat, 1, 4)!="nber"
+replace stat = substr(stat, 5, .) if !time
+reshape wide _score, i(NberID time) j(stat) string
+rename _score* *_score
+egen id = group(NberID)
+do `varlabels'
+xtset id time
+compress
+tempfile nber_llm_g4_fe
+save `nber_llm_g4_fe'
+save "~/tonal_analysis/data/raw/hengel_generated/nber_llm_g4_fe", replace
+use `nber_llm_g4', clear
+merge m:1 ArticleID using `primary_jel', keep(match) nogenerate
+tempfile nber_llm_g4_jel
+save `nber_llm_g4_jel'
+use `nber_llm_g4_fe', clear
+merge m:1 ArticleID using `primary_jel', keep(match) nogenerate
+sort id time
+tempfile nber_llm_g4_fe_jel
+save `nber_llm_g4_fe_jel'
+save "~/tonal_analysis/data/raw/hengel_generated/nber_llm_g4_fe_jel", replace
+
+************* NBER Group 5: Support and Impact *************
+use `nber_llm_full', clear
+drop nber_llm_modal_verb nber_llm_hedging nber_llm_qualifier nber_llm_ack_limits nber_llm_caution ///
+	nber_llm_assertiveness nber_llm_active_passive ///
+	nber_llm_directness nber_llm_imperative ///
+	nber_llm_pronoun nber_llm_novelty nber_llm_jargon nber_llm_emotional ///
+	nber_llm_g1_score nber_llm_g2_score nber_llm_g3_score nber_llm_g4_score
+merge m:1 ArticleID using `article_llm_full', keepusing(_llm_g5_score) keep(match) nogenerate
+compress
+tempfile nber_llm_g5
+save `nber_llm_g5'
+save "~/tonal_analysis/data/raw/hengel_generated/nber_llm_g5", replace
+use `nber_llm_g5', clear
+reshape long @_score, i(NberID) j(stat) string
+generate time = substr(stat, 1, 4)!="nber"
+replace stat = substr(stat, 5, .) if !time
+reshape wide _score, i(NberID time) j(stat) string
+rename _score* *_score
+egen id = group(NberID)
+do `varlabels'
+xtset id time
+compress
+tempfile nber_llm_g5_fe
+save `nber_llm_g5_fe'
+save "~/tonal_analysis/data/raw/hengel_generated/nber_llm_g5_fe", replace
+use `nber_llm_g5', clear
+merge m:1 ArticleID using `primary_jel', keep(match) nogenerate
+tempfile nber_llm_g5_jel
+save `nber_llm_g5_jel'
+use `nber_llm_g5_fe', clear
+merge m:1 ArticleID using `primary_jel', keep(match) nogenerate
+sort id time
+tempfile nber_llm_g5_fe_jel
+save `nber_llm_g5_fe_jel'
+save "~/tonal_analysis/data/raw/hengel_generated/nber_llm_g5_fe_jel", replace
+
 * Generate review time data.
 import delimited "~/tonal_analysis/data/raw/hengel_generated/time.csv", clear varnames(1) case(preserve) encoding("utf-8") bindquotes(strict)
 merge m:1 ArticleID using `article_chars', assert(using match) keep(match) nogenerate
@@ -403,6 +852,67 @@ compress
 tempfile duration
 save `duration'
 save "~/tonal_analysis/data/raw/hengel_generated/duration", replace
+
+* Generate duration variants substituting LLM readability measures for _flesch_score.
+* Duration with LLM readability criterion score
+use `duration', clear
+drop _flesch_score
+merge m:1 ArticleID using `article', keep(master match) keepusing(_llm_readability) nogenerate
+do `varlabels'
+compress
+tempfile duration_llm_readability
+save `duration_llm_readability'
+save "~/tonal_analysis/data/raw/hengel_generated/duration_llm_readability", replace
+
+* Duration with LLM Group 1 (Creativity and Hedging) composite score
+use `duration', clear
+drop _flesch_score
+merge m:1 ArticleID using `article_llm_full', keep(master match) keepusing(_llm_g1_score) nogenerate
+do `varlabels'
+compress
+tempfile duration_llm_g1
+save `duration_llm_g1'
+save "~/tonal_analysis/data/raw/hengel_generated/duration_llm_g1", replace
+
+* Duration with LLM Group 2 (Assertiveness and Voice) composite score
+use `duration', clear
+drop _flesch_score
+merge m:1 ArticleID using `article_llm_full', keep(master match) keepusing(_llm_g2_score) nogenerate
+do `varlabels'
+compress
+tempfile duration_llm_g2
+save `duration_llm_g2'
+save "~/tonal_analysis/data/raw/hengel_generated/duration_llm_g2", replace
+
+* Duration with LLM Group 3 (Structural Directness) composite score
+use `duration', clear
+drop _flesch_score
+merge m:1 ArticleID using `article_llm_full', keep(master match) keepusing(_llm_g3_score) nogenerate
+do `varlabels'
+compress
+tempfile duration_llm_g3
+save `duration_llm_g3'
+save "~/tonal_analysis/data/raw/hengel_generated/duration_llm_g3", replace
+
+* Duration with LLM Group 4 (Authorial Stance and Novelty) composite score
+use `duration', clear
+drop _flesch_score
+merge m:1 ArticleID using `article_llm_full', keep(master match) keepusing(_llm_g4_score) nogenerate
+do `varlabels'
+compress
+tempfile duration_llm_g4
+save `duration_llm_g4'
+save "~/tonal_analysis/data/raw/hengel_generated/duration_llm_g4", replace
+
+* Duration with LLM Group 5 (Support and Impact) composite score
+use `duration', clear
+drop _flesch_score
+merge m:1 ArticleID using `article_llm_full', keep(master match) keepusing(_llm_g5_score) nogenerate
+do `varlabels'
+compress
+tempfile duration_llm_g5
+save `duration_llm_g5'
+save "~/tonal_analysis/data/raw/hengel_generated/duration_llm_g5", replace
 
 * Get author names for matched pair table
 import delimited "~/tonal_analysis/data/raw/hengel_generated/author_names.csv", clear varnames(1) case(preserve) encoding("utf-8") bindquotes(strict)

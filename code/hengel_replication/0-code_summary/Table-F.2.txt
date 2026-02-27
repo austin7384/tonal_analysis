@@ -1,0 +1,22 @@
+INPUTS
+------
+data/raw/hengel_generated/author.dta
+
+OPERATIONS
+----------
+- Defines program author_level using Arellano-Bond dynamic panel estimation (xtabond2)
+- Includes lagged dependent variable to capture readability persistence
+- Uses 3-step GMM estimator with robust inference
+- Reports Hansen and Sargan overidentification test statistics
+- Computes margins predictions for percentage gender differences in readability
+- Tests 7 author-composition definitions
+
+OUTPUTS
+-------
+outputs/tables/tex/Table-F.2-FemRatio.tex
+outputs/tables/tex/Table-F.2-Fem100.tex
+outputs/tables/tex/Table-F.2-FemSolo.tex
+outputs/tables/tex/Table-F.2-Fem1.tex
+outputs/tables/tex/Table-F.2-Fem50.tex
+outputs/tables/tex/Table-F.2-FemSenior.tex
+outputs/tables/tex/Table-F.2-R.tex

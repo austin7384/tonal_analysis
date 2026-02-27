@@ -1,0 +1,23 @@
+INPUTS
+------
+data/raw/hengel_generated/author.dta
+
+OPERATIONS
+----------
+- Defines program tth_pub for estimating author-level gender effects by career stage
+- Estimates separate regressions for t==1, 2, 3, 4-5, and 6+
+- Uses suest2 for joint inference across career stages
+- Also estimates a pooled model with panel-averaged regression (xtreg pa)
+- Tests statistical significance of differences in gender effects across career stages
+- Runs for 7 author-composition definitions
+
+OUTPUTS
+-------
+outputs/tables/tex/Table-8-FemRatio.tex
+outputs/tables/tex/Table-8-FemSolo.tex
+outputs/tables/tex/Table-8-Fem100.tex
+outputs/tables/tex/Table-8-Fem1.tex
+outputs/tables/tex/Table-8-Fem50.tex
+outputs/tables/tex/Table-8-FemSenior.tex
+outputs/tables/tex/Table-8-R.tex
+outputs/tables/tex/Table-I.3.tex

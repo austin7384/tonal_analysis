@@ -76,3 +76,53 @@ After these changes:
 
 ### Next Steps
 - Create LLM-specific regression tables mirroring Table-3 (`article_level` program) and Table-5 (`nber_fgls`/`nber_fe` programs) using `stats(llm_g1 llm_g2 llm_g3 llm_g4 llm_g5)` and column names `_llm_g1_score _llm_g2_score _llm_g3_score _llm_g4_score _llm_g5_score`.
+
+---
+
+## Session: 2026-02-27
+
+### Changes
+
+#### `code/hengel_replication/0-code/output/Data.do`
+
+**NBER per-group LLM datasets** — Added 15 new saved datasets (3 per group × 5 groups) after the existing `nber_fe_jel` block. For each LLM group G1–G5:
+- `nber_llm_g{n}` — NBER data retaining only that group's individual NBER criteria, its NBER composite score (`nber_llm_g{n}_score`), and the matching article-level composite (`_llm_g{n}_score`, merged from `article_llm_full`). The article-level score is required so the FE paired-difference reshape can pair NBER vs. published group scores.
+- `nber_llm_g{n}_fe` — Paired-difference version via the same double-reshape used for `nber_fe`.
+- `nber_llm_g{n}_fe_jel` — FE version with primary JEL code dummies added.
+- `nber_llm_g{n}_jel` (tempfile only) — `nber_llm_g{n}` + primary JEL; follows the existing `nber_jel` convention of not saving to disk.
+
+No tertiary JEL variants were added, consistent with the existing NBER section (unlike the article section which has both primary and tertiary JEL variants).
+
+**Duration variant datasets** — Added 6 new saved datasets immediately after the main `duration` dataset is saved. Each starts from the `duration` tempfile, drops `_flesch_score`, and merges in a replacement LLM readability measure:
+
+| Dataset | Variable merged | Source |
+|---|---|---|
+| `duration_llm_readability` | `_llm_readability` | `article` tempfile |
+| `duration_llm_g1` | `_llm_g1_score` | `article_llm_full` tempfile |
+| `duration_llm_g2` | `_llm_g2_score` | `article_llm_full` tempfile |
+| `duration_llm_g3` | `_llm_g3_score` | `article_llm_full` tempfile |
+| `duration_llm_g4` | `_llm_g4_score` | `article_llm_full` tempfile |
+| `duration_llm_g5` | `_llm_g5_score` | `article_llm_full` tempfile |
+
+`_llm_readability` is sourced from `article` (it was never dropped from the main article datasets). The group composites are sourced from `article_llm_full` (they were dropped from `article` before it was saved).
+
+#### `code/hengel_replication/hengel_data_cleaning.py` — Jargon scale flip
+
+Changed how `llm_jargon` is transformed in `compute_underscore`. Previously it was simple negation (`-value`), which placed it on a negative scale incompatible with all other LLM criteria (scored 1–10). It is now scale-flipped as `11 - value`, keeping it on the same 1–10 range:
+
+| Raw score | Before (negation) | After (flip) |
+|---|---|---|
+| 10 (densest jargon) | -10 | 1 |
+| 5 | -5 | 6 |
+| 1 (least jargon) | -1 | 10 |
+
+Implementation details:
+- Renamed `LLM_NEGATE` → `LLM_FLIP` to reflect the new semantics
+- Split `compute_underscore` into two independent steps: Hengel negation (unchanged) and LLM scale flip (new), applied sequentially so they cannot interfere
+- Updated inline comments and the sign-flip convention block
+
+`CLAUDE.md` updated to reflect the flip rather than negation.
+
+#### `code/hengel_replication/0-code_summary/` (new directory)
+
+Created short `.txt` summary files for all 25 Stata `.do` files in `0-code/output/`. Each file documents the inputs, main operations, and outputs of the corresponding do-file. Two non-`.do` files were identified and skipped: `Figure-3.nb` and `Figure-G.2.nb` (Jupyter/Mathematica notebooks).

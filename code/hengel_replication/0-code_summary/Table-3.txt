@@ -1,0 +1,31 @@
+INPUTS
+------
+data/raw/hengel_generated/article.dta
+data/raw/hengel_generated/article_primary_jel.dta
+data/raw/hengel_generated/article_tertiary_jel_pp.dta
+
+OPERATIONS
+----------
+- Defines program article_level that estimates gender effects on readability
+- Tests 7 female-authorship definitions: FemRatio, Fem100, FemSolo, Fem1, Fem50, FemSenior, FemJunior
+- Estimates 9 progressively-controlled regression models per definition:
+  (1) Journal + Editor FE
+  (2) + Year FE
+  (3) + Journal x Year FE
+  (4) + Institution rank + number of authors
+  (5) + Quality controls (asinh CiteCount, Maxt)
+  (6) Restricted to JEL-coded papers + quality controls
+  (7) + Primary JEL code dummies
+  (8) + Theory/Empirical type indicators
+  (9) + Tertiary JEL code dummies
+- Uses reghdfe with clustering by Editor for all 5 readability measures
+
+OUTPUTS
+-------
+outputs/tables/tex/Table-3-FemRatio.tex
+outputs/tables/tex/Table-3-Fem100.tex
+outputs/tables/tex/Table-3-FemSolo.tex
+outputs/tables/tex/Table-3-Fem1.tex
+outputs/tables/tex/Table-3-Fem50.tex
+outputs/tables/tex/Table-3-FemSenior.tex
+outputs/tables/tex/Table-3-FemJunior.tex

@@ -1,0 +1,30 @@
+INPUTS
+------
+data/raw/hengel_generated/duration.dta
+
+OPERATIONS
+----------
+- Defines program review_time for modeling review duration at Econometrica
+- Tests 7 model specifications varying sample restrictions and motherhood/birth indicators:
+  (1) Main model with both mother and birth indicators
+  (2) Exclude cases involving motherhood/birth
+  (3) Exclude only the mother indicator
+  (4) Exclude only the birth indicator
+  (5) Exclude both indicators
+  (6) Restrict to 1990s only
+  (7) Add JEL field fixed effects
+- Controls: Maxt, PageN, N, PubOrder, asinh(CiteCount), Flesch score, Theory/Empirical type
+- Fixed effects: MaxInst, AcceptedYear, Editor
+- Runs all 7 specifications for each of 7 author-composition definitions
+
+OUTPUTS
+-------
+outputs/tables/tex/Table-6-FemRatio.tex
+outputs/tables/tex/Table-6-Fem100.tex
+outputs/tables/tex/Table-6-FemSolo.tex
+outputs/tables/tex/Table-6-Fem1.tex
+outputs/tables/tex/Table-6-Fem50.tex
+outputs/tables/tex/Table-6-FemSenior.tex
+outputs/tables/tex/Table-6-FemJunior.tex
+outputs/tables/tex/Table-6-pubyear.tex
+outputs/tables/tex/Table-6-subyear.tex

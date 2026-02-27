@@ -1,0 +1,14 @@
+INPUTS
+------
+data/raw/hengel_generated/article.dta
+
+OPERATIONS
+----------
+- Normalizes character, word, syllable, polysyllabic-word, and Dale-Chall counts by sentence count
+- Regresses each normalized metric on Fem50 (binary: majority female-authored)
+- Extracts and stores: male-authored mean (Fem50=0), female-authored mean (Fem50=1), and difference
+- Exports results as a LaTeX table
+
+OUTPUTS
+-------
+outputs/tables/tex/Table-2.tex

@@ -69,9 +69,10 @@ def filter_titles(df, col='Title'):
 # Not negated (higher raw = easier, or raw counts):
 #   flesch_score, *_count
 #
-# LLM criteria negated (higher raw = harder):
-#   Jargon/Technicality Density  (10 = dense undefined jargon)
-# LLM criteria NOT negated (higher raw = easier/more direct, or no clear direction):
+# LLM criteria scale-flipped within 1-10 range (11 - value) so that the result
+# stays on the same 1-10 scale as all other LLM criteria (higher = clearer):
+#   Jargon/Technicality Density  (raw 10 = dense jargon → flipped to 1)
+# LLM criteria NOT flipped (higher raw = easier/more direct, or no clear direction):
 #   llm_readability              (10 = incredibly easy to understand)
 #   Sentence Length & Directness (10 = very short sentences)
 #   Active/Passive Voice Ratio   (10 = 90% active voice)
@@ -81,16 +82,19 @@ def filter_titles(df, col='Title'):
 #   All remaining criteria       (no unambiguous hard/easy direction)
 LLM_STAT_NAMES      = set(llm_eval.columns) - {'ArticleID'}
 NBER_LLM_STAT_NAMES = set(nber_llm.columns) - {'NberID'}
-LLM_NEGATE = {'llm_jargon'}  # Jargon/Technicality Density: higher = denser = harder
+LLM_FLIP = {'llm_jargon'}  # Jargon/Technicality Density: flipped as 11 - value
 
 def compute_underscore(df, llm_names):
-    is_negative = (
-        # Hengel readability composites where higher = harder
-        (~(df['StatName'] == 'flesch_score') & ~df['StatName'].str.endswith('_count') & ~df['StatName'].isin(llm_names))
-        # LLM criteria where higher = harder
-        | df['StatName'].isin(LLM_NEGATE)
+    # Hengel readability composites: simple negation (higher raw = harder to read)
+    is_hengel_negative = (
+        ~(df['StatName'] == 'flesch_score')
+        & ~df['StatName'].str.endswith('_count')
+        & ~df['StatName'].isin(llm_names)
     )
-    return df['StatValue'].where(~is_negative, -df['StatValue'])
+    result = df['StatValue'].where(~is_hengel_negative, -df['StatValue'])
+    # LLM scale flip: keep on 1-10 scale by computing 11 - value
+    is_llm_flip = df['StatName'].isin(LLM_FLIP)
+    return result.where(~is_llm_flip, 11 - df['StatValue'])
 
 # ── Editorial clusters ────────────────────────────────────────────────────────
 editor_board.to_csv(out('editors'), index=False)

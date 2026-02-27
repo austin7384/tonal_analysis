@@ -1,0 +1,16 @@
+INPUTS
+------
+data/raw/hengel_generated/duration.dta
+data/raw/hengel_generated/author5.dta
+
+OPERATIONS
+----------
+- Merges review duration data with author-level career data
+- Generates motherhood and childbirth indicators (child aged <= 4 at submission and acceptance)
+- Estimates separate SURE regressions for junior (t==1) and senior (t>1) female authors
+- Computes difference in review time between junior and senior women with confidence intervals
+- Creates a coefplot with 90% CI comparing junior vs. senior women's review times
+
+OUTPUTS
+-------
+outputs/figures/Figure-K.1.pdf

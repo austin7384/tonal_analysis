@@ -1,0 +1,13 @@
+INPUTS
+------
+data/raw/hengel_generated/article.dta
+
+OPERATIONS
+----------
+- Bins female authorship ratio (FemRatio) into five categories: 0, 0.25, 0.5, 0.75, 1
+- Regresses Flesch Reading Ease score on FemRatio
+- Creates a binscatter plot with a linear fit line
+
+OUTPUTS
+-------
+outputs/figures/Figure-1.pdf

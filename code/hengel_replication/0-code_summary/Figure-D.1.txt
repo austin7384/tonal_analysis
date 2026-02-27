@@ -1,0 +1,16 @@
+INPUTS
+------
+data/raw/hengel_generated/readability_corr.txt  (external correlation coefficients)
+data/raw/hengel_generated/article.dta
+
+OPERATIONS
+----------
+- Part 1 (meta-analysis): Imports correlation coefficients from external readability validity studies; creates box-and-whiskers plot across 5 test types; generates a LaTeX bibliography of cited studies
+- Part 2 (citation correlation): Creates binscatter plots of asinh(CiteCount) vs. Flesch score for papers published pre-1990 and post-2000
+
+OUTPUTS
+-------
+outputs/figures/Figure-D.1-meta.pdf
+outputs/figures/Figure-D.1-early.pdf
+outputs/figures/Figure-D.1-late.pdf
+outputs/tables/tex/Figure-D.1-bib.tex

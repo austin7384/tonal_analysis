@@ -1,0 +1,14 @@
+INPUTS
+------
+data/raw/hengel_generated/duration.dta
+
+OPERATIONS
+----------
+- Runs quantile regression at the 25th, 50th, and 75th percentiles
+- Tests two specifications: Econometrica only (as in Table 6) and Econometrica + REStud pooled (as in Table 7)
+- Computes pseudo-R squared as 1 minus (sum of absolute deviations / sum of residual deviations)
+- Produces 6 model estimates in total
+
+OUTPUTS
+-------
+outputs/tables/tex/Table-H.4.tex

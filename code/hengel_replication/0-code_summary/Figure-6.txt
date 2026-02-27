@@ -1,0 +1,16 @@
+INPUTS
+------
+data/raw/hengel_generated/nber.dta
+data/raw/hengel_generated/author.dta
+
+OPERATIONS
+----------
+- Merges NBER (working paper) readability with published article readability
+- Creates interaction term FemRatio x career stage (t)
+- Estimates SUEST system jointly comparing draft and published readability
+- Uses margins to compute predicted values and differences by gender and career stage
+- Creates a dual-axis plot with confidence intervals showing the draft vs. final readability gap
+
+OUTPUTS
+-------
+outputs/figures/Figure-6.pdf

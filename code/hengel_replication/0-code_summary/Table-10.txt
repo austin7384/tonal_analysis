@@ -1,0 +1,15 @@
+INPUTS
+------
+data/raw/hengel_generated/nber.dta
+data/raw/hengel_generated/author.dta
+
+OPERATIONS
+----------
+- Merges NBER and author-level career data
+- Estimates regressions for: peer-review effect on women, peer-review effect on men, and the difference-in-differences between them
+- Computes margins predictions and contrasts at FemRatio = {0, 1}
+- Produces 5 estimation sets, one per career stage
+
+OUTPUTS
+-------
+outputs/tables/tex/Table-10.tex

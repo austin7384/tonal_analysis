@@ -1,0 +1,13 @@
+INPUTS
+------
+data/raw/hengel_generated/JEL.csv
+
+OPERATIONS
+----------
+- Imports JEL codes with their Type classifications (Empirical, Theory, Other)
+- Creates three observations, one per type, each containing a comma-separated list of JEL codes belonging to that type
+- Exports as a LaTeX table
+
+OUTPUTS
+-------
+outputs/tables/tex/Table-C.1.tex

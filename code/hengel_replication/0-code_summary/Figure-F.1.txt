@@ -1,0 +1,14 @@
+INPUTS
+------
+data/raw/hengel_generated/article_primary_jel_pp.dta
+
+OPERATIONS
+----------
+- Drops JEL codes with few observations (A, B, P, M)
+- Regresses Dale-Chall readability score on FemRatio x JEL code interactions
+- Uses matrix algebra to extract marginal effects of female ratio by JEL code with confidence intervals
+- Creates a coefficient plot with separate panels for the main effect and the interaction terms
+
+OUTPUTS
+-------
+outputs/figures/Figure-F.1.pdf

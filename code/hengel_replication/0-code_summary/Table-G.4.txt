@@ -1,0 +1,14 @@
+INPUTS
+------
+data/raw/hengel_generated/nber_fe.dta
+
+OPERATIONS
+----------
+- Estimates change-in-score regression using a SemiBlind indicator (partial double-blind for papers published after 1997 in journals with phased-in double-blind review)
+- Specification: D.readability ~ FemRatio x SemiBlind
+- Uses reghdfe with Editor and Year x Journal absorbed, Year-level clustering
+- Tests across 5 readability measures
+
+OUTPUTS
+-------
+outputs/tables/tex/Table-G.4.tex

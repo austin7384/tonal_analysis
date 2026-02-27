@@ -1,0 +1,15 @@
+INPUTS
+------
+data/raw/hengel_generated/article_primary_jel.dta
+data/raw/hengel_generated/article.dta
+
+OPERATIONS
+----------
+- Panel 1: Computes female authorship ratio by JEL code and produces a bar chart
+- Panel 2: Computes 5-year moving averages for FemRatio0, Fem50, Fem1, and Fem100 over 1990-2015
+- Panel 2: Plots gender representation trends over time for each measure
+
+OUTPUTS
+-------
+outputs/figures/Figure-2-jel.pdf
+outputs/figures/Figure-2-time.pdf

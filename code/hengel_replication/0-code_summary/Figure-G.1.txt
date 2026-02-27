@@ -1,0 +1,15 @@
+INPUTS
+------
+data/raw/hengel_generated/nber_fe.dta
+
+OPERATIONS
+----------
+- Creates a continuous blind-review policy change variable centered at the volume where the policy changed
+- For each of 5 readability measures (Flesch, Flesch-Kincaid, Gunning Fog, SMOG, Dale-Chall): residualizes readability changes after controlling for covariates; estimates separate regressions for gender and seniority groups; uses margins to plot predicted changes by distance from the policy-change point
+- Compares double-blind (pre-internet) vs. single-blind (post-internet) periods
+- Creates a combined graph with a policy-change annotation line
+
+OUTPUTS
+-------
+outputs/figures/Figure-G.1-flesch.pdf
+outputs/figures/Figure-G.1-combo.pdf

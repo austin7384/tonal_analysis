@@ -1,0 +1,74 @@
+INPUTS
+------
+data/raw/hengel_labels/varlabels.csv
+data/raw/hengel_labels/vallabels.csv
+data/raw/hengel_generated/editors.csv
+data/raw/hengel_generated/article_editors.csv
+data/raw/hengel_generated/article_main.csv
+data/raw/hengel_generated/authorcorr.csv
+data/raw/hengel_generated/article_gender.csv
+data/raw/hengel_generated/inst_rank.csv
+data/raw/hengel_generated/inst_rank_author.csv
+data/raw/hengel_generated/pub_order.csv
+data/raw/hengel_generated/english.csv
+data/raw/hengel_generated/JEL.csv
+data/raw/hengel_generated/theory_emp.csv
+data/raw/hengel_generated/primary_jel.csv
+data/raw/hengel_generated/tertiary_jel.csv
+data/raw/hengel_generated/article_pp.csv
+data/raw/hengel_generated/readstat.dta
+data/raw/hengel_generated/nberstat.dta
+data/raw/hengel_generated/article_top5.csv
+data/raw/hengel_generated/nber.csv
+data/raw/hengel_generated/time.csv
+data/raw/hengel_generated/author_names.csv
+
+OPERATIONS
+----------
+- Loads variable and value labels from CSVs for use throughout the script
+- Builds editorial cluster IDs from journal/volume/issue/part combinations
+- Merges article metadata with author-article links and gender data
+- Computes author career metrics: t5 (top-5 pub count at time of pub), T5 (lifetime), Maxt/MaxT (most experienced co-author)
+- Derives gender composition variables: FemRatio, FemSenior, FemJunior, FemSolo, Fem100, Fem50, Fem1
+- Computes 5-year moving-average institutional ranks and bins them into InstRank buckets
+- Generates publication order within journal issues
+- Classifies articles as Theory/Empirical/Other from JEL codes
+- Creates primary JEL one-hot dummies (JEL1_*) and tertiary JEL dummies (JEL3_*)
+- Merges readability statistics and computes derived text metrics (words/sentence, polysyllables/word, etc.)
+- Computes LLM group composite scores G1-G5 from 15 individual LLM criteria; saves full LLM dataset before dropping criteria from main datasets
+- Generates article-level datasets with/without P&P and with/without JEL dummies
+- Generates per-LLM-group article datasets (article_llm_g1-g5) with primary/tertiary JEL variants
+- Builds author-level panel datasets for top-4 and top-5 journals with career position, author weights, and factor variable bases
+- Imports NBER working paper text stats, merges with article data, computes NBER-level LLM group scores
+- Saves full NBER LLM dataset, then drops individual criteria from main nber dataset
+- Reshapes NBER data into paired-difference (FE) format pairing NBER vs. published scores
+- Generates per-LLM-group NBER datasets (nber_llm_g1-g5) with FE and JEL variants
+- Builds review duration dataset merging timeline data with article and author characteristics
+
+OUTPUTS
+-------
+data/raw/hengel_generated/author_chars.dta
+data/raw/hengel_generated/article_chars.dta
+data/raw/hengel_generated/primary_jel.dta
+data/raw/hengel_generated/tertiary_jel.dta
+data/raw/hengel_generated/article_pp.dta
+data/raw/hengel_generated/article_primary_jel_pp.dta
+data/raw/hengel_generated/article_tertiary_jel_pp.dta
+data/raw/hengel_generated/article.dta
+data/raw/hengel_generated/article_primary_jel.dta
+data/raw/hengel_generated/article_tertiary_jel.dta
+data/raw/hengel_generated/article_llm_g1_pp.dta  (and g2-g5 variants)
+data/raw/hengel_generated/article_llm_g1.dta      (and g2-g5 variants)
+data/raw/hengel_generated/article_llm_g1_primary_jel_pp.dta  (and g2-g5 variants)
+data/raw/hengel_generated/article_llm_g1_tertiary_jel_pp.dta (and g2-g5 variants)
+data/raw/hengel_generated/article_llm_g1_primary_jel.dta     (and g2-g5 variants)
+data/raw/hengel_generated/article_llm_g1_tertiary_jel.dta    (and g2-g5 variants)
+data/raw/hengel_generated/author.dta
+data/raw/hengel_generated/author5.dta
+data/raw/hengel_generated/nber.dta
+data/raw/hengel_generated/nber_fe.dta
+data/raw/hengel_generated/nber_fe_jel.dta
+data/raw/hengel_generated/nber_llm_g1.dta  (and g2-g5 variants)
+data/raw/hengel_generated/nber_llm_g1_fe.dta      (and g2-g5 variants)
+data/raw/hengel_generated/nber_llm_g1_fe_jel.dta  (and g2-g5 variants)
+data/raw/hengel_generated/duration.dta

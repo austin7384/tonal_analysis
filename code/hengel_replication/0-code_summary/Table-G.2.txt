@@ -1,0 +1,14 @@
+INPUTS
+------
+data/raw/hengel_generated/nber_fe.dta
+
+OPERATIONS
+----------
+- Re-estimates the fixed-effects (change-in-score) specification from Table 5 Panel 3 with full coefficient output
+- Specification: change in readability ~ FemRatio x Blind
+- Uses reghdfe absorbing Editor and Year x Journal fixed effects, with Year-level clustering
+- Reports all coefficients (not just key estimates)
+
+OUTPUTS
+-------
+outputs/tables/tex/Table-G.2.tex

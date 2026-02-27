@@ -1,0 +1,29 @@
+INPUTS
+------
+data/raw/hengel_generated/nber.dta
+data/raw/hengel_generated/nber_fe.dta
+data/raw/hengel_generated/nber_jel.dta  (tempfile)
+data/raw/hengel_generated/nber_fe_jel.dta
+
+OPERATIONS
+----------
+- Defines programs nber_fgls and nber_fe for estimating peer-review impact on readability
+- For each of 5 readability measures and 7 author-composition definitions:
+  (Panel 1 OLS) Regresses published readability on NBER readability + Female x Blind
+  (Panel 2 FGLS) Estimates NBER and published equations separately with suest for joint inference
+  (Panel 3 FE) Regresses change in readability on Female x Blind using paired-difference dataset
+- Tests with and without JEL code controls
+- Stores 11 separate estimation sets per specification
+
+OUTPUTS
+-------
+outputs/tables/tex/Table-5-FemRatio.tex
+outputs/tables/tex/Table-5-Fem100.tex
+outputs/tables/tex/Table-5-FemSolo.tex
+outputs/tables/tex/Table-5-FemSenior.tex
+outputs/tables/tex/Table-5-FemJunior.tex
+outputs/tables/tex/Table-5-Fem1.tex
+outputs/tables/tex/Table-5-Fem50.tex
+outputs/tables/tex/Table-5-wordlimit.tex
+outputs/tables/tex/Table-5-R.tex
+outputs/tables/tex/Table-5-jel.tex

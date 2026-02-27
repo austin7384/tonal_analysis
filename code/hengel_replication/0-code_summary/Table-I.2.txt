@@ -1,0 +1,15 @@
+INPUTS
+------
+data/raw/hengel_generated/author.dta  (restricted to authors with T > 2)
+
+OPERATIONS
+----------
+- Collapses data to the author level
+- Computes each author's first, mean, and last readability score
+- Computes percentage changes from first to final score
+- Stratifies results by gender using mean with over(Female)
+- Exports point estimates and standard errors to LaTeX
+
+OUTPUTS
+-------
+outputs/tables/tex/Table-I.2.tex

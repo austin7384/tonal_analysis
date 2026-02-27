@@ -1,0 +1,11 @@
+INPUTS
+------
+data/raw/hengel_generated/author.dta
+
+OPERATIONS
+----------
+- Creates a binscatter plot of Flesch Reading Ease score vs. publication order (t), stratified by gender (Female = 0/1)
+
+OUTPUTS
+-------
+outputs/figures/Figure-4.pdf

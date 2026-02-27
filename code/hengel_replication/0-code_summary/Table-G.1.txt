@@ -1,0 +1,14 @@
+INPUTS
+------
+data/raw/hengel_generated/nber.dta
+
+OPERATIONS
+----------
+- Re-estimates the main OLS regression from Table 5 Panel 1 with full coefficient output
+- Specification: published readability ~ NBER readability + FemRatio x Blind + all controls (Type, NativeEnglish) + Year x Journal and Editor fixed effects
+- Uses reghdfe with clustering by Editor
+- Reports all coefficients (not just key estimates)
+
+OUTPUTS
+-------
+outputs/tables/tex/Table-G.1.tex

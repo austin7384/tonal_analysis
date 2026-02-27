@@ -1,0 +1,13 @@
+INPUTS
+------
+data/raw/hengel_generated/nber.dta
+
+OPERATIONS
+----------
+- For 11 readability and textual metrics (word count, sentence count, various readability scores, etc.): computes means for male-authored papers (FemRatio < 0.5) and female-authored papers (FemRatio >= 0.5)
+- Regresses differences in each metric on Fem50 to estimate the gender gap
+- Stores 7 result sets for LaTeX export
+
+OUTPUTS
+-------
+outputs/tables/tex/Table-4.tex

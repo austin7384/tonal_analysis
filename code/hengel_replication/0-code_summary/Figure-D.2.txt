@@ -1,0 +1,14 @@
+INPUTS
+------
+data/raw/hengel_generated/nber.dta
+data/raw/hengel_generated/articlestat.dta
+
+OPERATIONS
+----------
+- Merges NBER abstract readability with full-article readability
+- For Flesch-Kincaid and Gunning Fog measures: negates scores for visualization, regresses article readability on abstract readability, creates binscatter with regression line
+
+OUTPUTS
+-------
+outputs/figures/Figure-D.2-fleschkincaid.pdf
+outputs/figures/Figure-D.2-gunningfog.pdf

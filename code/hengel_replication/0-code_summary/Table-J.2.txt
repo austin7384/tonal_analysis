@@ -1,0 +1,15 @@
+INPUTS
+------
+data/raw/hengel_generated/author_matching.dta  (produced by Section-4.3.do)
+data/raw/hengel_generated/names.dta
+
+OPERATIONS
+----------
+- Merges matched female-male author pairs with author name data
+- Formats names as "LastName, FirstName (Middle)" handling special prefixes (La, De, Van, etc.)
+- Sorts pairs by female author name using a unicode sort key
+- Splits the list into two columns (left and right) for a two-column LaTeX layout
+
+OUTPUTS
+-------
+outputs/tables/tex/Table-J.2.tex
