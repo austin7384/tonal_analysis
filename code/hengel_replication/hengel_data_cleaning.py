@@ -28,6 +28,30 @@ read_stat    = read('ReadStat')
 llm_eval     = read('LLM_evaluations')
 nber_llm     = read('NBER_LLM_evaluations')
 
+# ── Rename LLM criteria to Stata-compatible snake_case names ──────────────────
+# Original names contain spaces and special characters (&, /) that are invalid
+# in Stata variable names after reshape wide. llm_readability is already valid.
+LLM_RENAME = {
+    'Modal Verb Strength':            'llm_modal_verb',
+    'Hedging Frequency & Type':       'llm_hedging',
+    'Qualifier Density':              'llm_qualifier',
+    'Acknowledgement of Limitations': 'llm_ack_limits',
+    'Caution-Signaling Connectors':   'llm_caution',
+    'Assertiveness & Voice':          'llm_assertiveness',
+    'Active/Passive Voice Ratio':     'llm_active_passive',
+    'Sentence Length & Directness':   'llm_directness',
+    'Imperative-Form Occurrence':     'llm_imperative',
+    'Pronoun Commitment':             'llm_pronoun',
+    'Novelty-Claim Strength':         'llm_novelty',
+    'Jargon/Technicality Density':    'llm_jargon',
+    'Emotional Valence':              'llm_emotional',
+    'Evidence & Citation Usage':      'llm_evidence',
+    'Practical/Impact Orientation':   'llm_practical',
+    # llm_readability is already correctly named
+}
+llm_eval = llm_eval.rename(columns=LLM_RENAME)
+nber_llm = nber_llm.rename(columns=LLM_RENAME)
+
 # ── Title exclusion filter (used in multiple outputs) ─────────────────────────
 EXCL_PATTERNS = ['corrigendum', 'erratum', ': a correction', ': correction']
 
@@ -57,7 +81,7 @@ def filter_titles(df, col='Title'):
 #   All remaining criteria       (no unambiguous hard/easy direction)
 LLM_STAT_NAMES      = set(llm_eval.columns) - {'ArticleID'}
 NBER_LLM_STAT_NAMES = set(nber_llm.columns) - {'NberID'}
-LLM_NEGATE = {'Jargon/Technicality Density'}
+LLM_NEGATE = {'llm_jargon'}  # Jargon/Technicality Density: higher = denser = harder
 
 def compute_underscore(df, llm_names):
     is_negative = (

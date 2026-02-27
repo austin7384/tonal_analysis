@@ -213,6 +213,17 @@ generate _pww_count = _polysyblword_count / _word_count
 generate _dww_count = _notdalechall_count / _word_count
 generate asinhCiteCount = ln(CiteCount + sqrt(1+CiteCount^2))
 generate Blind = Year<=1997&(Journal==4|(PubDate>=date("1989-06-01", "YMD")&Journal==1))
+* LLM group composite scores (higher = more assertive/direct; jargon already negated in Python).
+* Group 1: Creativity and Hedging
+generate _llm_g1_score = (_llm_modal_verb + _llm_hedging + _llm_qualifier + _llm_ack_limits + _llm_caution) / 5
+* Group 2: Assertiveness and Voice
+generate _llm_g2_score = (_llm_assertiveness + _llm_active_passive) / 2
+* Group 3: Structural Directness
+generate _llm_g3_score = (_llm_directness + _llm_imperative) / 2
+* Group 4: Authorial Stance and Novelty
+generate _llm_g4_score = (_llm_pronoun + _llm_novelty + _llm_jargon + _llm_emotional) / 4
+* Group 5: Support and Impact
+generate _llm_g5_score = (_llm_evidence + _llm_practical) / 2
 do `varlabels'
 compress
 tempfile article_pp
@@ -325,6 +336,17 @@ generate nber_pww_count = nber_polysyblword_count / nber_word_count
 generate nber_dww_count = nber_notdalechall_count / nber_word_count
 generate SemiBlind = (Journal==1&Year<2012|Journal==4&Year<2005)&Year>1997
 generate BelowAbstractLen = (Journal==3)|(Journal==4)|(nber_word_count<=100&Journal==1)|(nber_word_count<=150&Journal==2)
+* NBER LLM group composite scores (jargon already negated in Python).
+* Group 1: Creativity and Hedging
+generate nber_llm_g1_score = (nber_llm_modal_verb + nber_llm_hedging + nber_llm_qualifier + nber_llm_ack_limits + nber_llm_caution) / 5
+* Group 2: Assertiveness and Voice
+generate nber_llm_g2_score = (nber_llm_assertiveness + nber_llm_active_passive) / 2
+* Group 3: Structural Directness
+generate nber_llm_g3_score = (nber_llm_directness + nber_llm_imperative) / 2
+* Group 4: Authorial Stance and Novelty
+generate nber_llm_g4_score = (nber_llm_pronoun + nber_llm_novelty + nber_llm_jargon + nber_llm_emotional) / 4
+* Group 5: Support and Impact
+generate nber_llm_g5_score = (nber_llm_evidence + nber_llm_practical) / 2
 date_replace WPDate, mask("YMD")
 * Add readability data calculated using alternative program.
 merge 1:1 NberID using "~/tonal_analysis/data/raw/hengel_generated/nberstat", assert(using match) keep(match) nogenerate
