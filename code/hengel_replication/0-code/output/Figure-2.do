@@ -13,8 +13,8 @@ foreach v of varlist JEL1_* {
 
 * Reshape data.
 reshape long JEL1_, i(ArticleID) j(jel) string
-drop if JEL==0 | missing(JEL1_)
-drop JEL
+drop if JEL1_==0 | missing(JEL1_)
+drop JEL1_
 rename jel JEL
 
 * Replace JEL code letters with their long names.
