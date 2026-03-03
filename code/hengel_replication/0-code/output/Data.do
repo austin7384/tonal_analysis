@@ -291,12 +291,14 @@ drop _llm_assertiveness _llm_active_passive ///
 	_llm_evidence _llm_practical ///
 	_llm_g2_score _llm_g3_score _llm_g4_score _llm_g5_score
 compress
+tempfile article_llm_g1_pp
+save `article_llm_g1_pp'
 save "~/tonal_analysis/data/raw/hengel_generated/article_llm_g1_pp", replace
-use 'article_llm_g1_pp'
+use `article_llm_g1_pp', clear
 drop if Journal==5
 tempfile article_llm_g1
-save 'article_llm_g1'
-save '~/tonal_analysis/data/raw/hengel_generated/article_llm_g1', replace
+save `article_llm_g1'
+save "~/tonal_analysis/data/raw/hengel_generated/article_llm_g1", replace
 
 * Generate article-level JEL data + P&P.
 use `article_llm_g1_pp', clear
@@ -340,12 +342,14 @@ drop _llm_modal_verb _llm_hedging _llm_qualifier _llm_ack_limits _llm_caution //
 	_llm_evidence _llm_practical ///
 	_llm_g1_score _llm_g3_score _llm_g4_score _llm_g5_score
 compress
+tempfile article_llm_g2_pp
+save `article_llm_g2_pp'
 save "~/tonal_analysis/data/raw/hengel_generated/article_llm_g2_pp", replace
-use 'article_llm_g2_pp'
+use `article_llm_g2_pp', clear
 drop if Journal==5
 tempfile article_llm_g2
-save 'article_llm_g2'
-save '~/tonal_analysis/data/raw/hengel_generated/article_llm_g2', replace
+save `article_llm_g2'
+save "~/tonal_analysis/data/raw/hengel_generated/article_llm_g2", replace
 
 * Generate article-level JEL data + P&P.
 use `article_llm_g2_pp', clear
@@ -389,12 +393,14 @@ drop _llm_modal_verb _llm_hedging _llm_qualifier _llm_ack_limits _llm_caution //
 	_llm_evidence _llm_practical ///
 	_llm_g1_score _llm_g2_score _llm_g4_score _llm_g5_score
 compress
+tempfile article_llm_g3_pp
+save `article_llm_g3_pp'
 save "~/tonal_analysis/data/raw/hengel_generated/article_llm_g3_pp", replace
-use 'article_llm_g3_pp'
+use `article_llm_g3_pp', clear
 drop if Journal==5
 tempfile article_llm_g3
-save 'article_llm_g3'
-save '~/tonal_analysis/data/raw/hengel_generated/article_llm_g3', replace
+save `article_llm_g3'
+save "~/tonal_analysis/data/raw/hengel_generated/article_llm_g3", replace
 
 * Generate article-level JEL data + P&P.
 use `article_llm_g3_pp', clear
@@ -438,12 +444,14 @@ drop _llm_modal_verb _llm_hedging _llm_qualifier _llm_ack_limits _llm_caution //
 	_llm_evidence _llm_practical ///
 	_llm_g1_score _llm_g2_score _llm_g3_score _llm_g5_score
 compress
+tempfile article_llm_g4_pp
+save `article_llm_g4_pp'
 save "~/tonal_analysis/data/raw/hengel_generated/article_llm_g4_pp", replace
-use 'article_llm_g4_pp'
+use `article_llm_g4_pp', clear
 drop if Journal==5
 tempfile article_llm_g4
-save 'article_llm_g4'
-save '~/tonal_analysis/data/raw/hengel_generated/article_llm_g4', replace
+save `article_llm_g4'
+save "~/tonal_analysis/data/raw/hengel_generated/article_llm_g4", replace
 
 * Generate article-level JEL data + P&P.
 use `article_llm_g4_pp', clear
@@ -458,7 +466,7 @@ save "~/tonal_analysis/data/raw/hengel_generated/article_llm_g4_primary_jel_pp",
 use `article_llm_g4_pp', clear
 merge 1:1 ArticleID using `tertiary_jel', keep(match) nogenerate
 compress
-tempfile article_ll4m_g4_tertiary_jel_pp
+tempfile article_llm_g4_tertiary_jel_pp
 save `article_llm_g4_tertiary_jel_pp'
 save "~/tonal_analysis/data/raw/hengel_generated/article_llm_g4_tertiary_jel_pp", replace
 
@@ -487,12 +495,14 @@ drop _llm_modal_verb _llm_hedging _llm_qualifier _llm_ack_limits _llm_caution //
 	_llm_pronoun _llm_novelty _llm_jargon _llm_emotional ///
 	_llm_g1_score _llm_g2_score _llm_g3_score _llm_g4_score
 compress
+tempfile article_llm_g5_pp
+save `article_llm_g5_pp'
 save "~/tonal_analysis/data/raw/hengel_generated/article_llm_g5_pp", replace
-use 'article_llm_g5_pp'
+use `article_llm_g5_pp', clear
 drop if Journal==5
 tempfile article_llm_g5
-save 'article_llm_g5'
-save '~/tonal_analysis/data/raw/hengel_generated/article_llm_g5', replace
+save `article_llm_g5'
+save "~/tonal_analysis/data/raw/hengel_generated/article_llm_g5", replace
 
 * Generate article-level JEL data + P&P.
 use `article_llm_g5_pp', clear
