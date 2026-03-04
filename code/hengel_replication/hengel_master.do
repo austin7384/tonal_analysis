@@ -10,23 +10,21 @@ set matsize 5000
 set maxvar 32767
 
 * Install third-party packages.
-ssc install ftools
-ssc install estout
-ssc install psmatch2
-ssc install xtabond2
-ssc install listtex
-ssc install reghdfe
-ssc install binscatter
-ssc install distinct
-ssc install labutil
-ssc install coefplot
+ssc install ftools, replace
+ssc install estout, replace
+ssc install psmatch2, replace
+ssc install xtabond2, replace
+ssc install listtex, replace
+ssc install reghdfe, replace
+ssc install require, replace
+ssc install binscatter, replace
+ssc install distinct, replace
+ssc install labutil, replace
+ssc install coefplot, replace
 net install "https://mloeffler.github.io/stata/wordwrap"
 
-* Install personal ado files by copying them to your personal ado directory.
-local files : dir `"0-code/programs/stata"' files "*"
-foreach file of local files {
-	copy `"0-code/programs/stata/`file'"' "`: sysdir PERSONAL'", replace
-}
+* Add project programs folder to adopath so Stata finds custom ado/style files.
+adopath + "~/tonal_analysis/code/hengel_replication/0-code/programs/stata"
 
 * Custom program to create LaTeX table.
 capture program drop create_latex

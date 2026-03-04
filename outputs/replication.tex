@@ -1,0 +1,283 @@
+\documentclass[12pt]{article}
+
+% ── Page layout ──────────────────────────────────────────────────────────────
+\usepackage[margin=1in, a4paper]{geometry}
+
+% ── Tables ───────────────────────────────────────────────────────────────────
+\usepackage{booktabs}
+\usepackage{threeparttable}
+\usepackage{siunitx}
+\usepackage{rotating}      % sidewaystable
+\usepackage{makecell}
+\usepackage{changepage}    % adjustwidth
+\usepackage{longtable}
+
+% ── Figures ──────────────────────────────────────────────────────────────────
+\usepackage{graphicx}
+\usepackage{float}
+
+% ── Fonts / symbols ──────────────────────────────────────────────────────────
+\usepackage{pifont}        % \ding
+
+% ── References ───────────────────────────────────────────────────────────────
+\usepackage{hyperref}
+
+% ── Custom macros ────────────────────────────────────────────────────────────
+% Fixed-width row label (used in all tables for the left column)
+\newcommand{\mrow}[2]{\parbox[t]{#1}{\raggedright #2}}
+
+% Centered column header cell with optional vertical alignment
+\newcommand{\crcell}[2][c]{\makecell[#1]{#2}}
+
+% ─────────────────────────────────────────────────────────────────────────────
+\begin{document}
+
+\title{Publishing while Female --- Replication Output}
+\date{\today}
+\maketitle
+\tableofcontents
+\clearpage
+
+% =============================================================================
+\section{Figures}
+% =============================================================================
+
+% ── Figure 1 ─────────────────────────────────────────────────────────────────
+\subsection{Figure 1}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{figures/Figure-1.pdf}
+    \caption{Figure 1}
+\end{figure}
+\clearpage
+
+% ── Figure 2 (time) ──────────────────────────────────────────────────────────
+\subsection{Figure 2 (time)}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{figures/Figure-2-time.pdf}
+    \caption{Figure 2 (time)}
+\end{figure}
+\clearpage
+
+% ── Figure 2 (JEL) ───────────────────────────────────────────────────────────
+\subsection{Figure 2 (JEL)}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{figures/Figure-2-jel.pdf}
+    \caption{Figure 2 (JEL)}
+\end{figure}
+\clearpage
+
+% ── Figure 4 ─────────────────────────────────────────────────────────────────
+\subsection{Figure 4}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{figures/Figure-4.pdf}
+    \caption{Figure 4}
+\end{figure}
+\clearpage
+
+% =============================================================================
+\section{Table 2 --- Textual characteristics by gender}
+% =============================================================================
+\input{tables/tex/Table-2.tex}
+\clearpage
+
+% =============================================================================
+\section{Table 3 --- Gender differences in readability, article-level}
+% =============================================================================
+
+\subsection{Female ratio}
+\input{tables/tex/Table-3-FemRatio.tex}
+\clearpage
+
+\subsection{At least one female author}
+\input{tables/tex/Table-3-Fem1.tex}
+\clearpage
+
+\subsection{Majority female-authored}
+\input{tables/tex/Table-3-Fem50.tex}
+\clearpage
+
+\subsection{Exclusively female-authored}
+\input{tables/tex/Table-3-Fem100.tex}
+\clearpage
+
+\subsection{Solo female-authored}
+\input{tables/tex/Table-3-FemSolo.tex}
+\clearpage
+
+\subsection{Senior female author}
+\input{tables/tex/Table-3-FemSenior.tex}
+\clearpage
+
+\subsection{Junior female author}
+\input{tables/tex/Table-3-FemJunior.tex}
+\clearpage
+
+\subsection{Robustness (R)}
+\input{tables/tex/Table-3-R.tex}
+\clearpage
+
+% =============================================================================
+\section{Table 4}
+% =============================================================================
+\input{tables/tex/Table-4.tex}
+\clearpage
+
+% =============================================================================
+\section{Table 5 --- Impact of peer review on gender readability gap}
+% =============================================================================
+
+\subsection{Female ratio}
+\input{tables/tex/Table-5-FemRatio.tex}
+\clearpage
+
+\subsection{At least one female author}
+\input{tables/tex/Table-5-Fem1.tex}
+\clearpage
+
+\subsection{Majority female-authored}
+\input{tables/tex/Table-5-Fem50.tex}
+\clearpage
+
+\subsection{Exclusively female-authored}
+\input{tables/tex/Table-5-Fem100.tex}
+\clearpage
+
+\subsection{Solo female-authored}
+\input{tables/tex/Table-5-FemSolo.tex}
+\clearpage
+
+\subsection{Senior female author}
+\input{tables/tex/Table-5-FemSenior.tex}
+\clearpage
+
+\subsection{Junior female author}
+\input{tables/tex/Table-5-FemJunior.tex}
+\clearpage
+
+\subsection{JEL}
+\input{tables/tex/Table-5-jel.tex}
+\clearpage
+
+\subsection{Robustness (R)}
+\input{tables/tex/Table-5-R.tex}
+\clearpage
+
+\subsection{Word limit}
+\input{tables/tex/Table-5-wordlimit.tex}
+\clearpage
+
+% =============================================================================
+\section{Table 6 --- NBER / paired-difference regressions}
+% =============================================================================
+
+\subsection{Female ratio}
+\input{tables/tex/Table-6-FemRatio.tex}
+\clearpage
+
+\subsection{At least one female author}
+\input{tables/tex/Table-6-Fem1.tex}
+\clearpage
+
+\subsection{Majority female-authored}
+\input{tables/tex/Table-6-Fem50.tex}
+\clearpage
+
+\subsection{Exclusively female-authored}
+\input{tables/tex/Table-6-Fem100.tex}
+\clearpage
+
+\subsection{Solo female-authored}
+\input{tables/tex/Table-6-FemSolo.tex}
+\clearpage
+
+\subsection{Senior female author}
+\input{tables/tex/Table-6-FemSenior.tex}
+\clearpage
+
+\subsection{Junior female author}
+\input{tables/tex/Table-6-FemJunior.tex}
+\clearpage
+
+\subsection{Publication year}
+\input{tables/tex/Table-6-pubyear.tex}
+\clearpage
+
+\subsection{Submission year}
+\input{tables/tex/Table-6-subyear.tex}
+\clearpage
+
+% =============================================================================
+\section{Table 7 --- Revision duration at Econometrica and REStud}
+% =============================================================================
+
+\subsection{Female ratio}
+\input{tables/tex/Table-7-FemRatio.tex}
+\clearpage
+
+\subsection{At least one female author}
+\input{tables/tex/Table-7-Fem1.tex}
+\clearpage
+
+\subsection{Majority female-authored}
+\input{tables/tex/Table-7-Fem50.tex}
+\clearpage
+
+\subsection{Exclusively female-authored}
+\input{tables/tex/Table-7-Fem100.tex}
+\clearpage
+
+\subsection{Solo female-authored}
+\input{tables/tex/Table-7-FemSolo.tex}
+\clearpage
+
+\subsection{Senior female author}
+\input{tables/tex/Table-7-FemSenior.tex}
+\clearpage
+
+\subsection{Junior female author}
+\input{tables/tex/Table-7-FemJunior.tex}
+\clearpage
+
+% =============================================================================
+\section{Table 8 --- Robustness checks}
+% =============================================================================
+
+\subsection{Female ratio}
+\input{tables/tex/Table-8-FemRatio.tex}
+\clearpage
+
+\subsection{At least one female author}
+\input{tables/tex/Table-8-Fem1.tex}
+\clearpage
+
+\subsection{Majority female-authored}
+\input{tables/tex/Table-8-Fem50.tex}
+\clearpage
+
+\subsection{Exclusively female-authored}
+\input{tables/tex/Table-8-Fem100.tex}
+\clearpage
+
+\subsection{Solo female-authored}
+\input{tables/tex/Table-8-FemSolo.tex}
+\clearpage
+
+\subsection{Senior female author}
+\input{tables/tex/Table-8-FemSenior.tex}
+\clearpage
+
+\subsection{Robustness (R)}
+\input{tables/tex/Table-8-R.tex}
+\clearpage
+
+% =============================================================================
+\section{Table I.3}
+% =============================================================================
+\input{tables/tex/Table-I.3.tex}
+\clearpage
+
+\end{document}

@@ -205,7 +205,7 @@ reshape long AuthorID FemRatio T _weight `jcode1' ///
 do `varlabels'
 * Table J.3: Regression output generating Rit (Equation (13))
 if "`R'"=="base" {
-	estout est_flesch_0* est_flesch_1* using "0-tex/generated/Table-J.3.tex", ///
+	estout est_flesch_0* est_flesch_1* using "~/tonal_analysis/outputs/tables/tex/Table-J.3.tex", ///
 		style(publishing-female_latex) ///
 		varlabels(_cons Constant, prefix("\quad ")) ///
 		prehead("\multicolumn{5}{l}{{\textbf{Flesch Reading Ease}}}\\") ///

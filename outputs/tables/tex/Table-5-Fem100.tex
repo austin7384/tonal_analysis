@@ -1,0 +1,37 @@
+\begin{sidewaystable}
+    \footnotesize
+    \centering
+    \begin{threeparttable}
+        \caption{\autoref{table6_FemRatio}, 100\% female-authored}
+        \label{table6_Fem100}
+        \begin{tabular}{p{3cm}S@{}S@{}S@{}S@{}S@{}S@{}S@{}S@{}S@{}S@{}S@{}}
+            \toprule
+            &\multicolumn{3}{c}{{OLS (score)}}&\multicolumn{2}{c}{{OLS ($\Delta$ in score)}}&\multicolumn{6}{c}{{FGLS (score)}}\\\cmidrule(lr){2-4}\cmidrule(lr){5-6}\cmidrule(lr){7-12}&&&&&&\multicolumn{2}{c}{{Working paper}}&\multicolumn{2}{c}{{Published paper}}&\multicolumn{2}{c}{{Difference}}\\\cmidrule(lr){7-8}\cmidrule(lr){9-10}\cmidrule(lr){11-12}&{\(R_{jW}\)}&{\crcell[b]{Female}}&{\crcell[b]{Blind$\times$\\[-0.1cm]female}}&{\crcell[b]{Female}}&{\crcell[b]{Blind$\times$\\[-0.1cm]female}}&{\crcell[b]{Female}}&{\crcell[b]{Blind$\times$\\[-0.1cm]female}}&{\crcell[b]{Female}}&{\crcell[b]{Blind$\times$\\[-0.1cm]female}}&{\crcell[b]{Female}}&{\crcell[b]{Blind$\times$\\[-0.1cm]female}}\\
+            \midrule
+            Flesch                        &        0.84***&        0.10   &       -1.87   &       -0.16   &       -1.70   &        1.61   &       -1.06   &        1.44   &       -2.76   &       -0.16   &       -1.70   \\
+                                          &      (0.03)   &      (0.91)   &      (5.88)   &      (0.99)   &      (3.57)   &      (1.44)   &      (4.30)   &      (1.69)   &      (2.95)   &      (0.97)   &      (3.50)   \\
+            Flesch-Kincaid                &        0.75***&        0.30   &       -1.04   &        0.26   &       -0.91   &        0.17   &       -0.50   &        0.43   &       -1.41** &        0.26   &       -0.91   \\
+                                          &      (0.05)   &      (0.29)   &      (1.08)   &      (0.32)   &      (0.90)   &      (0.25)   &      (0.94)   &      (0.39)   &      (0.65)   &      (0.31)   &      (0.88)   \\
+            Gunning Fog                   &        0.76***&        0.34   &       -1.17   &        0.27   &       -1.08   &        0.27   &       -0.39   &        0.54   &       -1.47** &        0.27   &       -1.08   \\
+                                          &      (0.04)   &      (0.28)   &      (1.10)   &      (0.33)   &      (0.94)   &      (0.29)   &      (1.08)   &      (0.40)   &      (0.67)   &      (0.32)   &      (0.92)   \\
+            SMOG                          &        0.78***&        0.14   &       -0.74   &        0.08   &       -0.67   &        0.26   &       -0.29   &        0.34   &       -0.96** &        0.08   &       -0.67   \\
+                                          &      (0.03)   &      (0.16)   &      (0.80)   &      (0.20)   &      (0.62)   &      (0.24)   &      (0.80)   &      (0.27)   &      (0.46)   &      (0.19)   &      (0.60)   \\
+            Dale-Chall                    &        0.84***&        0.08   &       -0.24   &        0.03   &       -0.19   &        0.28*  &       -0.27   &        0.31** &       -0.46*  &        0.03   &       -0.19   \\
+                                          &      (0.02)   &      (0.09)   &      (0.36)   &      (0.09)   &      (0.16)   &      (0.16)   &      (0.33)   &      (0.14)   &      (0.28)   &      (0.09)   &      (0.16)   \\
+            \midrule
+            No. observations              &               &       1,633   &               &       1,633   &               &       1,633   &               &       1,633   &               &       1,633   &               \\
+            \midruleEditor effects        &               &           {\ding{51}}   &               &           {\ding{51}}   &               &           {\ding{51}}   &               &           {\ding{51}}   &               &               &               \\
+            Journal\(\times\)Year effects          &               &           {\ding{51}}   &               &           {\ding{51}}   &               &           {\ding{51}}   &               &           {\ding{51}}   &               &               &               \\
+            \(N_j\)                       &               &           {\ding{51}}   &               &           {\ding{51}}   &               &           {\ding{51}}   &               &           {\ding{51}}   &               &               &               \\
+            Quality controls              &               &          {\(\text{\ding{51}}^2\)}   &               &          {\(\text{\ding{51}}^2\)}   &               &          {\(\text{\ding{51}}^2\)}   &               &          {\(\text{\ding{51}}^2\)}   &               &               &               \\
+            Native speaker                &               &           {\ding{51}}   &               &           {\ding{51}}   &               &           {\ding{51}}   &               &           {\ding{51}}   &               &               &               \\
+            Theory/emp. effects           &               &           {\ding{51}}   &               &           {\ding{51}}   &               &           {\ding{51}}   &               &           {\ding{51}}   &               &               &               \\
+            \bottomrule
+        \end{tabular}
+        \begin{tablenotes}
+            \tiny
+            \item \textit{Notes}. Estimates are identical to those in \autoref{table6_FemRatio}, except that female ratio has been replaced with a dummy variable equal to 1 if all authors on a paper are female. (Papers written by authors of both genders are excluded.) ***, ** and * statistically significant at 1\%, 5\% and 10\%, respectively.
+        \end{tablenotes}
+    \end{threeparttable}
+
+\end{sidewaystable}

@@ -1,0 +1,33 @@
+\begin{sidewaystable}
+    \footnotesize
+    \centering
+    \begin{threeparttable}
+        \caption{\autoref{table6_FemRatio}, alternative program for calculating readability}
+        \label{table6_R}
+        \begin{tabular}{p{3cm}S@{}S@{}S@{}S@{}S@{}S@{}S@{}S@{}S@{}S@{}S@{}}
+            \toprule
+            &\multicolumn{3}{c}{{OLS (score)}}&\multicolumn{2}{c}{{OLS ($\Delta$ in score)}}&\multicolumn{6}{c}{{FGLS (score)}}\\\cmidrule(lr){2-4}\cmidrule(lr){5-6}\cmidrule(lr){7-12}&&&&&&\multicolumn{2}{c}{{Working paper}}&\multicolumn{2}{c}{{Published paper}}&\multicolumn{2}{c}{{Difference}}\\\cmidrule(lr){7-8}\cmidrule(lr){9-10}\cmidrule(lr){11-12}&{\(R_{jW}\)}&{\crcell[b]{Female\\[-0.1cm]ratio}}&{\crcell[b]{Blind$\times$\\[-0.1cm]fem. ratio}}&{\crcell[b]{Female\\[-0.1cm]ratio}}&{\crcell[b]{Blind$\times$\\[-0.1cm]fem. ratio}}&{\crcell[b]{Female\\[-0.1cm]ratio}}&{\crcell[b]{Blind$\times$\\[-0.1cm]fem. ratio}}&{\crcell[b]{Female\\[-0.1cm]ratio}}&{\crcell[b]{Blind$\times$\\[-0.1cm]fem. ratio}}&{\crcell[b]{Female\\[-0.1cm]ratio}}&{\crcell[b]{Blind$\times$\\[-0.1cm]fem. ratio}}\\
+            \midrule
+            Flesch-Kincaid                &        0.74***&        0.54***&       -1.13   &        0.46** &       -0.93   &        0.31   &       -0.76   &        0.77***&       -1.69***&        0.46** &       -0.93   \\
+                                          &      (0.03)   &      (0.20)   &      (0.74)   &      (0.21)   &      (0.62)   &      (0.25)   &      (0.77)   &      (0.28)   &      (0.44)   &      (0.20)   &      (0.61)   \\
+            Gunning Fog                   &        0.77***&        0.56***&       -1.40   &        0.46** &       -1.20   &        0.43   &       -0.85   &        0.89***&       -2.05***&        0.46** &       -1.20   \\
+                                          &      (0.03)   &      (0.21)   &      (0.90)   &      (0.21)   &      (0.76)   &      (0.27)   &      (0.95)   &      (0.27)   &      (0.64)   &      (0.21)   &      (0.75)   \\
+            SMOG                          &        0.77***&        0.39** &       -1.01   &        0.33** &       -0.86   &        0.28   &       -0.64   &        0.61***&       -1.50***&        0.33** &       -0.86   \\
+                                          &      (0.02)   &      (0.16)   &      (0.65)   &      (0.15)   &      (0.55)   &      (0.18)   &      (0.71)   &      (0.18)   &      (0.49)   &      (0.15)   &      (0.54)   \\
+            \midrule
+            No. observations              &               &       1,988   &               &       1,988   &               &       1,988   &               &       1,988   &               &       1,988   &               \\
+            \midruleEditor effects        &               &           {\ding{51}}   &               &           {\ding{51}}   &               &           {\ding{51}}   &               &           {\ding{51}}   &               &               &               \\
+            Journal\(\times\)Year effects          &               &           {\ding{51}}   &               &           {\ding{51}}   &               &           {\ding{51}}   &               &           {\ding{51}}   &               &               &               \\
+            \(N_j\)                       &               &           {\ding{51}}   &               &           {\ding{51}}   &               &           {\ding{51}}   &               &           {\ding{51}}   &               &               &               \\
+            Quality controls              &               &          {\(\text{\ding{51}}^2\)}   &               &          {\(\text{\ding{51}}^2\)}   &               &          {\(\text{\ding{51}}^2\)}   &               &          {\(\text{\ding{51}}^2\)}   &               &               &               \\
+            Native speaker                &               &           {\ding{51}}   &               &           {\ding{51}}   &               &           {\ding{51}}   &               &           {\ding{51}}   &               &               &               \\
+            Theory/emp. effects           &               &           {\ding{51}}   &               &           {\ding{51}}   &               &           {\ding{51}}   &               &           {\ding{51}}   &               &               &               \\
+            \bottomrule
+        \end{tabular}
+        \begin{tablenotes}
+            \tiny
+            \item \textit{Notes}. Estimates are identical to those in \autoref{table6_FemRatio}, except readability scores were calculated using the R \texttt{readability} program. ***, ** and * statistically significant at 1\%, 5\% and 10\%, respectively.
+        \end{tablenotes}
+    \end{threeparttable}
+
+\end{sidewaystable}

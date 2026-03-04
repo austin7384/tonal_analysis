@@ -126,3 +126,72 @@ Implementation details:
 #### `code/hengel_replication/0-code_summary/` (new directory)
 
 Created short `.txt` summary files for all 25 Stata `.do` files in `0-code/output/`. Each file documents the inputs, main operations, and outputs of the corresponding do-file. Two non-`.do` files were identified and skipped: `Figure-3.nb` and `Figure-G.2.nb` (Jupyter/Mathematica notebooks).
+
+---
+
+## Session: 2026-03-03
+
+### Problems fixed
+
+#### 1. `hengel_master.do` — `ssc install` failing with `r(602)`
+`ssc install` refused to overwrite existing package files without permission. Fixed by adding `, replace` to all 10 `ssc install` calls.
+
+#### 2. `hengel_master.do` — personal ado directory not found (`r(603)`)
+The copy loop for custom Stata programs failed because `~/Documents/Stata/ado/personal/` did not exist. The entire approach was replaced: instead of copying files to the personal ado directory, `adopath +` is now used to add the project's `0-code/programs/stata/` directory directly to Stata's search path. Path uses tilde notation (`~/tonal_analysis/...`) consistent with all other paths in the codebase.
+
+#### 3. `reghdfe` failing with `r(9)` — missing `require` package
+Newer versions of `reghdfe` depend on the `require` package to check its own dependencies at runtime. Added `ssc install require, replace` to `hengel_master.do` immediately after `reghdfe`.
+
+#### 4. `Table-7.do` — `r(2001)` insufficient observations for REStud regressions
+Root cause: `CiteCount` was entirely missing for all REStud articles in the raw `Article.csv` (0/2,011 non-missing), so `asinhCiteCount` was missing for every RES observation, causing listwise deletion to drop all 1,812 RES articles before `reghdfe` ran.
+
+Fix: patched `data/raw/hengel_replication_data/Article.csv` with REStud citation counts sourced from the matching dataset at `/Users/austincoffelt/readability/0-data/generated/time.csv` (identical ArticleIDs, complete RES data). 1,812 values filled in; the remaining 199 RES articles without citation data are articles that lack `Received` dates and therefore never appear in the duration dataset anyway. Regenerated `hengel_data_cleaning.py` to propagate the fix downstream.
+
+#### 5. Figure export failing with `r(693)` — output directory missing
+`graph export` for Figure-1 failed because `~/tonal_analysis/outputs/figures/` did not exist. Directory was created (implicitly, by running the analysis after the other fixes allowed execution to reach the figure export step).
+
+---
+
+### Changes
+
+#### `code/hengel_replication/hengel_master.do`
+- All `ssc install` calls now use `, replace`
+- Added `ssc install require, replace` after `reghdfe`
+- Replaced copy-to-personal-ado loop with: `adopath + "~/tonal_analysis/code/hengel_replication/0-code/programs/stata"`
+
+#### `data/raw/hengel_replication_data/Article.csv`
+- Filled in `CiteCount` for 1,812 REStud articles using citation data from `/Users/austincoffelt/readability/0-data/generated/time.csv`
+
+#### `data/raw/hengel_generated/time.csv` (regenerated)
+- Downstream of `Article.csv` patch; now has complete `CiteCount` for RES (3,085 rows, previously 0)
+
+#### `outputs/replication.tex` (new file)
+- Mega LaTeX document aggregating all output for Overleaf comparison
+- Includes all 4 figures and all 44 table `.tex` files, organized by table number with subsections per gender specification
+- Preamble defines custom macros `\mrow` and `\crcell` used throughout the Hengel tables
+- References files via relative paths (`figures/` and `tables/tex/`) so the `outputs/` directory can be uploaded directly to Overleaf
+
+---
+
+### Current status of `hengel_master.do` run
+The run reaches `Table-3.do` (article-level readability regressions) before stopping. All `Data.do` datasets are successfully generated. Figures 1, 2, and 4 complete. Tables 2, 3 (partial) produced.
+
+---
+
+### Remaining issues / next steps
+
+#### A. Complete a clean full run of `hengel_master.do`
+The run has not yet completed end-to-end. Each session has been stopped by a new error. Need a clean run that produces all outputs.
+
+#### B. LLM regression tables (primary new analysis)
+Still the main outstanding deliverable. Need to create do-files (or extend existing ones) that mirror:
+- **Table-3** (`article_level` program) using `stats(llm_g1 llm_g2 llm_g3 llm_g4 llm_g5)` and column names `_llm_g1_score` through `_llm_g5_score`
+- **Table-5** (`nber_fgls`/`nber_fe` programs) using the same LLM group composites
+- **Table-7** (duration) using `duration_llm_g{n}` datasets
+
+These datasets already exist in `data/raw/hengel_generated/`. The regression programs already exist and accept a `stats()` argument. Adding the LLM table calls to `hengel_master.do` is the main remaining coding task.
+
+#### C. Verify `replication.tex` compiles cleanly in Overleaf
+Upload `outputs/` to Overleaf and confirm all tables and figures render correctly. Known potential issues:
+- `\autoref` cross-references point to labels in the original paper (e.g. `\autoref{gender}`) that don't exist in this standalone document — these will generate warnings but not compilation errors
+- Some landscape tables may need `pdflscape` in addition to `rotating` if Overleaf's engine differs
