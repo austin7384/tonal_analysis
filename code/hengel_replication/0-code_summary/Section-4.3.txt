@@ -25,3 +25,15 @@ outputs/tables/tex/Table-9-jel.tex
 outputs/tables/tex/Table-9-R.tex
 outputs/tables/tex/Table-J.1.tex
 outputs/tables/tex/Table-J.3.tex
+
+
+## File Paths
+
+| Line | Command | Path |
+|------|---------|------|
+| 9 | `estout df1 dm1 d31 using` | `~/tonal_analysis/outputs/tables/tex/Table-9-`type'.tex` |
+| 27 | `import excel` | `~/tonal_analysis/data/raw/hengel_labels/tables.xlsx` |
+| 72 | `graph export` | `~/tonal_analysis/outputs/figures/Figure-5-`type'.pdf` |
+| 208 | `estout est_flesch_0* est_flesch_1* using` | `~/tonal_analysis/outputs/tables/tex/Table-J.3.tex` |
+| 288 | `estout matrix(`b', fmt(2)) using` | `~/tonal_analysis/outputs/tables/tex/Table-J.1.tex` |
+| 430 | `save` | `~/tonal_analysis/data/raw/hengel_generated/author_matching_dik` |

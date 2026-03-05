@@ -20,6 +20,7 @@ data/processed/gender_guesses.csv
 data/processed/scraped_results.csv
 *.jsonl
 *.db
+*.stswp
 
 # Environment
 .env
@@ -29,3 +30,8 @@ code/small_changes.py
 
 # Textatistic
 code/hengel_replication/0-code/programs/Textatistic
+
+# Original PDF
+publishing_female.pdf
+empirical_summary_publishing_female.txt
+project_empirical_strategy.txt

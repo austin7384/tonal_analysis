@@ -28,3 +28,10 @@ outputs/tables/tex/Table-6-FemSenior.tex
 outputs/tables/tex/Table-6-FemJunior.tex
 outputs/tables/tex/Table-6-pubyear.tex
 outputs/tables/tex/Table-6-subyear.tex
+
+
+## File Paths
+
+| Line | Command | Path |
+|------|---------|------|
+| 40 | `estout est_none est_exclude est_nobirth est_nomom est_ est_90s est_jel using` | `~/tonal_analysis/outputs/tables/tex/Table-6-`type'.tex` |

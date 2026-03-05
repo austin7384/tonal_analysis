@@ -13,3 +13,10 @@ OPERATIONS
 OUTPUTS
 -------
 outputs/tables/tex/Table-B.1.tex
+
+
+## File Paths
+
+| Line | Command | Path |
+|------|---------|------|
+| 35 | `estout matrix(`N', fmt(%9.0f)) using` | `~/tonal_analysis/outputs/tables/tex/Table-B.1.tex` |

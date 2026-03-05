@@ -13,3 +13,10 @@ OPERATIONS
 OUTPUTS
 -------
 outputs/tables/tex/Table-I.2.tex
+
+
+## File Paths
+
+| Line | Command | Path |
+|------|---------|------|
+| 22 | `estout firstlast_* using` | `~/tonal_analysis/outputs/tables/tex/Table-I.2.tex` |

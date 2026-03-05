@@ -12,3 +12,10 @@ OPERATIONS
 OUTPUTS
 -------
 outputs/tables/tex/Table-G.1.tex
+
+
+## File Paths
+
+| Line | Command | Path |
+|------|---------|------|
+| 14 | `estout ols_* using` | `~/tonal_analysis/outputs/tables/tex/Table-G.1.tex` |

@@ -11,3 +11,10 @@ OPERATIONS
 OUTPUTS
 -------
 outputs/tables/tex/Table-C.1.tex
+
+
+## File Paths
+
+| Line | Command | Path |
+|------|---------|------|
+| 5 | `import delimited` | `~/tonal_analysis/data/raw/hengel_generated/JEL.csv` |

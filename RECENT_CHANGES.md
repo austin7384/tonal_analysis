@@ -195,3 +195,32 @@ These datasets already exist in `data/raw/hengel_generated/`. The regression pro
 Upload `outputs/` to Overleaf and confirm all tables and figures render correctly. Known potential issues:
 - `\autoref` cross-references point to labels in the original paper (e.g. `\autoref{gender}`) that don't exist in this standalone document — these will generate warnings but not compilation errors
 - Some landscape tables may need `pdflscape` in addition to `rotating` if Overleaf's engine differs
+
+---
+
+## Session: 2026-03-05
+
+### Changes
+
+#### `code/hengel_replication/0-code_summary/` — File Paths sections added
+
+Appended a `## File Paths` section to all 30 existing `.txt` summary files. Each section contains a markdown table (`| Line | Command | Path |`) listing every disk file path referenced in the corresponding `.do` file — extracted verbatim with line numbers and the Stata command used. Tempfile/macro references (backtick names like `` `article' ``) were excluded; only paths that resolve to actual disk locations were included.
+
+#### `code/hengel_replication/0-code_summary/hengel_master.txt` (new file)
+
+Created a new summary file for `hengel_master.do`, which previously had no corresponding `.txt`. Includes a description of the master script's role and a File Paths section covering its 33 file references: `adopath`, `import excel`, `log using`, and all 30 `include` calls.
+
+#### Two incorrect paths corrected
+
+During the file-path audit, two paths were found that referenced non-existent directories (`0-tex/generated/` and `0-data/generated/`) rather than the correct project locations. Both were corrected in the `.do` files and their summary files:
+
+| File | Line | Old path | Corrected path |
+|------|------|----------|----------------|
+| `0-code/output/Section-4.3.do` | 288 | `0-tex/generated/Table-J.1.tex` | `~/tonal_analysis/outputs/tables/tex/Table-J.1.tex` |
+| `0-code/output/Table-J.2.do` | 5 | `0-data/generated/author_matching` | `~/tonal_analysis/data/raw/hengel_generated/author_matching` |
+
+#### `0-code_summary/Table-J.2.txt` — two missing paths added
+
+`listtex` and `create_latex` commands on lines 38–39 of `Table-J.2.do` were not captured by the original extraction (non-standard Stata commands). Added manually:
+- L38: `listtex ... using` → `~/tonal_analysis/outputs/tables/tex/Table-J.2.tex`
+- L39: `create_latex using` → `~/tonal_analysis/outputs/tables/tex/Table-J.2.tex`

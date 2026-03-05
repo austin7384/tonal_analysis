@@ -11,3 +11,10 @@ OPERATIONS
 OUTPUTS
 -------
 outputs/tables/tex/Table-F.1.tex
+
+
+## File Paths
+
+| Line | Command | Path |
+|------|---------|------|
+| 12 | `estout reg_*_Editor using` | `~/tonal_analysis/outputs/tables/tex/Table-F.1.tex` |

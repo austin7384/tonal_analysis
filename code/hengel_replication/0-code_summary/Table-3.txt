@@ -29,3 +29,10 @@ outputs/tables/tex/Table-3-Fem1.tex
 outputs/tables/tex/Table-3-Fem50.tex
 outputs/tables/tex/Table-3-FemSenior.tex
 outputs/tables/tex/Table-3-FemJunior.tex
+
+
+## File Paths
+
+| Line | Command | Path |
+|------|---------|------|
+| 120 | `estout est_*_Editor using` | `~/tonal_analysis/outputs/tables/tex/Table-3-`type'.tex` |

@@ -1,0 +1,42 @@
+# hengel_master.do
+
+Master script that orchestrates the full Hengel replication analysis. Sets up paths, installs required Stata packages, imports table formatting from Excel, and sequentially includes all Data, Figure, Table, and Section .do files.
+
+
+## File Paths
+
+| Line | Command | Path |
+|------|---------|------|
+| 27 | `adopath` | `~/tonal_analysis/code/hengel_replication/0-code/programs/stata` |
+| 35 | `import excel` | `~/tonal_analysis/data/raw/hengel_labels/tables.xlsx` |
+| 72 | `log using` | `~/tonal_analysis/data/raw/<timestamp>.smcl` |
+| 76 | `include` | `0-code/output/Data.do` |
+| 79 | `include` | `0-code/output/Figure-1.do` |
+| 80 | `include` | `0-code/output/Figure-2.do` |
+| 81 | `include` | `0-code/output/Table-2.do` |
+| 82 | `include` | `0-code/output/Table-3.do` |
+| 83 | `include` | `0-code/output/Table-4.do` |
+| 84 | `include` | `0-code/output/Table-5.do` |
+| 85 | `include` | `0-code/output/Table-6.do` |
+| 86 | `include` | `0-code/output/Table-7.do` |
+| 87 | `include` | `0-code/output/Figure-4.do` |
+| 88 | `include` | `0-code/output/Table-8.do` |
+| 89 | `include` | `0-code/output/Section-4.3.do` |
+| 90 | `include` | `0-code/output/Figure-6.do` |
+| 91 | `include` | `0-code/output/Table-10.do` |
+| 92 | `include` | `0-code/output/Table-B.1.do` |
+| 93 | `include` | `0-code/output/Table-C.1.do` |
+| 94 | `include` | `0-code/output/Figure-D.1.do` |
+| 95 | `include` | `0-code/output/Figure-D.2.do` |
+| 96 | `include` | `0-code/output/Table-F.1.do` |
+| 97 | `include` | `0-code/output/Figure-F.1.do` |
+| 98 | `include` | `0-code/output/Table-F.2.do` |
+| 99 | `include` | `0-code/output/Table-G.1.do` |
+| 100 | `include` | `0-code/output/Table-G.2.do` |
+| 101 | `include` | `0-code/output/Figure-G.1.do` |
+| 102 | `include` | `0-code/output/Table-G.4.do` |
+| 103 | `include` | `0-code/output/Table-H.3.do` |
+| 104 | `include` | `0-code/output/Table-H.4.do` |
+| 105 | `include` | `0-code/output/Table-I.2.do` |
+| 106 | `include` | `0-code/output/Table-J.2.do` |
+| 107 | `include` | `0-code/output/Figure-K.1.do` |

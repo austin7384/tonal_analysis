@@ -20,3 +20,10 @@ outputs/tables/tex/Table-7-Fem1.tex
 outputs/tables/tex/Table-7-Fem50.tex
 outputs/tables/tex/Table-7-FemSenior.tex
 outputs/tables/tex/Table-7-FemJunior.tex
+
+
+## File Paths
+
+| Line | Command | Path |
+|------|---------|------|
+| 37 | `estout * using` | `~/tonal_analysis/outputs/tables/tex/Table-7-`type'.tex` |

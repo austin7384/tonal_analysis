@@ -11,3 +11,10 @@ OPERATIONS
 OUTPUTS
 -------
 outputs/figures/Figure-1.pdf
+
+
+## File Paths
+
+| Line | Command | Path |
+|------|---------|------|
+| 19 | `graph export` | `~/tonal_analysis/outputs/figures/Figure-1.pdf` |

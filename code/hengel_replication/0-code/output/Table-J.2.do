@@ -2,7 +2,7 @@
 *************************** Table J.2: Matched pairs ***************************
 ********************************************************************************
 * Match AuthorIDs to male names then to female names.
-use "0-data/generated/author_matching", clear
+use "~/tonal_analysis/data/raw/hengel_generated/author_matching", clear
 keep AuthorID*
 rename AuthorID0 AuthorID
 merge 1:m AuthorID using `names', assert(using match) keep(match) nogenerate

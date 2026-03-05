@@ -13,3 +13,12 @@ OPERATIONS
 OUTPUTS
 -------
 outputs/tables/tex/Table-J.2.tex
+
+
+## File Paths
+
+| Line | Command | Path |
+|------|---------|------|
+| 5 | `use` | `~/tonal_analysis/data/raw/hengel_generated/author_matching` |
+| 38 | `listtex ... using` | `~/tonal_analysis/outputs/tables/tex/Table-J.2.tex` |
+| 39 | `create_latex using` | `~/tonal_analysis/outputs/tables/tex/Table-J.2.tex` |

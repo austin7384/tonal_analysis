@@ -13,3 +13,10 @@ OPERATIONS
 OUTPUTS
 -------
 outputs/tables/tex/Table-10.tex
+
+
+## File Paths
+
+| Line | Command | Path |
+|------|---------|------|
+| 56 | `estout est_* using` | `~/tonal_analysis/outputs/tables/tex/Table-10.tex` |

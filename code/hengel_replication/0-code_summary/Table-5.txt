@@ -27,3 +27,10 @@ outputs/tables/tex/Table-5-Fem50.tex
 outputs/tables/tex/Table-5-wordlimit.tex
 outputs/tables/tex/Table-5-R.tex
 outputs/tables/tex/Table-5-jel.tex
+
+
+## File Paths
+
+| Line | Command | Path |
+|------|---------|------|
+| 163 | `estout reg_nber reg reg_blind fe fe_blind su_wp su_blind_wp su_pub su_blind_pub su_diff su_blind_diff using` | `~/tonal_analysis/outputs/tables/tex/Table-5-`type'.tex` |

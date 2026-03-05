@@ -11,3 +11,10 @@ OPERATIONS
 OUTPUTS
 -------
 outputs/tables/tex/Table-H.3.tex
+
+
+## File Paths
+
+| Line | Command | Path |
+|------|---------|------|
+| 20 | `estout est_2 est_3 est_4 est_9 est_17 using` | `~/tonal_analysis/outputs/tables/tex/Table-H.3.tex` |

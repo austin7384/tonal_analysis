@@ -12,3 +12,10 @@ OPERATIONS
 OUTPUTS
 -------
 outputs/tables/tex/Table-H.4.tex
+
+
+## File Paths
+
+| Line | Command | Path |
+|------|---------|------|
+| 29 | `estout q1_25 q1_50 q1_75 q2_25 q2_50 q2_75 using` | `~/tonal_analysis/outputs/tables/tex/Table-H.4.tex` |

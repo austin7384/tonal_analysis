@@ -11,3 +11,10 @@ OPERATIONS
 OUTPUTS
 -------
 outputs/tables/tex/Table-4.tex
+
+
+## File Paths
+
+| Line | Command | Path |
+|------|---------|------|
+| 51 | `estout sum_* using` | `~/tonal_analysis/outputs/tables/tex/Table-4.tex` |

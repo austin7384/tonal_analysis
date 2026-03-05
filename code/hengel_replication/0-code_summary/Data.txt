@@ -72,3 +72,96 @@ data/raw/hengel_generated/nber_llm_g1.dta  (and g2-g5 variants)
 data/raw/hengel_generated/nber_llm_g1_fe.dta      (and g2-g5 variants)
 data/raw/hengel_generated/nber_llm_g1_fe_jel.dta  (and g2-g5 variants)
 data/raw/hengel_generated/duration.dta
+
+
+## File Paths
+
+| Line | Command | Path |
+|------|---------|------|
+| 5 | `import delimited` | `~/tonal_analysis/data/raw/hengel_labels/varlabels.csv` |
+| 11 | `import delimited` | `~/tonal_analysis/data/raw/hengel_labels/vallabels.csv` |
+| 19 | `import delimited` | `~/tonal_analysis/data/raw/hengel_generated/editors.csv` |
+| 26 | `import delimited` | `~/tonal_analysis/data/raw/hengel_generated/article_editors.csv` |
+| 31 | `import delimited` | `~/tonal_analysis/data/raw/hengel_generated/article_main.csv` |
+| 37 | `import delimited` | `~/tonal_analysis/data/raw/hengel_generated/authorcorr.csv` |
+| 46 | `import delimited` | `~/tonal_analysis/data/raw/hengel_generated/article_gender.csv` |
+| 106 | `save` | `~/tonal_analysis/data/raw/hengel_generated/author_chars` |
+| 111 | `save` | `~/tonal_analysis/data/raw/hengel_generated/article_chars` |
+| 114 | `import delimited` | `~/tonal_analysis/data/raw/hengel_generated/inst_rank.csv` |
+| 123 | `import delimited` | `~/tonal_analysis/data/raw/hengel_generated/inst_rank_author.csv` |
+| 138 | `import delimited` | `~/tonal_analysis/data/raw/hengel_generated/pub_order.csv` |
+| 146 | `import delimited` | `~/tonal_analysis/data/raw/hengel_generated/english.csv` |
+| 151 | `import delimited` | `~/tonal_analysis/data/raw/hengel_generated/JEL.csv` |
+| 155 | `import delimited` | `~/tonal_analysis/data/raw/hengel_generated/theory_emp.csv` |
+| 168 | `import delimited` | `~/tonal_analysis/data/raw/hengel_generated/primary_jel.csv` |
+| 179 | `save` | `~/tonal_analysis/data/raw/hengel_generated/primary_jel` |
+| 182 | `import delimited` | `~/tonal_analysis/data/raw/hengel_generated/tertiary_jel.csv` |
+| 192 | `save` | `~/tonal_analysis/data/raw/hengel_generated/tertiary_jel` |
+| 195 | `import delimited` | `~/tonal_analysis/data/raw/hengel_generated/article_pp.csv` |
+| 240 | `save` | `~/tonal_analysis/data/raw/hengel_generated/article_pp` |
+| 249 | `save` | `~/tonal_analysis/data/raw/hengel_generated/article_primary_jel_pp` |
+| 257 | `save` | `~/tonal_analysis/data/raw/hengel_generated/article_tertiary_jel_pp` |
+| 265 | `save` | `~/tonal_analysis/data/raw/hengel_generated/article` |
+| 274 | `save` | `~/tonal_analysis/data/raw/hengel_generated/article_primary_jel` |
+| 282 | `save` | `~/tonal_analysis/data/raw/hengel_generated/article_tertiary_jel` |
+| 296 | `save` | `~/tonal_analysis/data/raw/hengel_generated/article_llm_g1_pp` |
+| 301 | `save` | `~/tonal_analysis/data/raw/hengel_generated/article_llm_g1` |
+| 310 | `save` | `~/tonal_analysis/data/raw/hengel_generated/article_llm_g1_primary_jel_pp` |
+| 318 | `save` | `~/tonal_analysis/data/raw/hengel_generated/article_llm_g1_tertiary_jel_pp` |
+| 327 | `save` | `~/tonal_analysis/data/raw/hengel_generated/article_llm_g1_primary_jel` |
+| 335 | `save` | `~/tonal_analysis/data/raw/hengel_generated/article_llm_g1_tertiary_jel` |
+| 347 | `save` | `~/tonal_analysis/data/raw/hengel_generated/article_llm_g2_pp` |
+| 352 | `save` | `~/tonal_analysis/data/raw/hengel_generated/article_llm_g2` |
+| 361 | `save` | `~/tonal_analysis/data/raw/hengel_generated/article_llm_g2_primary_jel_pp` |
+| 369 | `save` | `~/tonal_analysis/data/raw/hengel_generated/article_llm_g2_tertiary_jel_pp` |
+| 378 | `save` | `~/tonal_analysis/data/raw/hengel_generated/article_llm_g2_primary_jel` |
+| 386 | `save` | `~/tonal_analysis/data/raw/hengel_generated/article_llm_g2_tertiary_jel` |
+| 398 | `save` | `~/tonal_analysis/data/raw/hengel_generated/article_llm_g3_pp` |
+| 403 | `save` | `~/tonal_analysis/data/raw/hengel_generated/article_llm_g3` |
+| 412 | `save` | `~/tonal_analysis/data/raw/hengel_generated/article_llm_g3_primary_jel_pp` |
+| 420 | `save` | `~/tonal_analysis/data/raw/hengel_generated/article_llm_g3_tertiary_jel_pp` |
+| 429 | `save` | `~/tonal_analysis/data/raw/hengel_generated/article_llm_g3_primary_jel` |
+| 437 | `save` | `~/tonal_analysis/data/raw/hengel_generated/article_llm_g3_tertiary_jel` |
+| 449 | `save` | `~/tonal_analysis/data/raw/hengel_generated/article_llm_g4_pp` |
+| 454 | `save` | `~/tonal_analysis/data/raw/hengel_generated/article_llm_g4` |
+| 463 | `save` | `~/tonal_analysis/data/raw/hengel_generated/article_llm_g4_primary_jel_pp` |
+| 471 | `save` | `~/tonal_analysis/data/raw/hengel_generated/article_llm_g4_tertiary_jel_pp` |
+| 480 | `save` | `~/tonal_analysis/data/raw/hengel_generated/article_llm_g4_primary_jel` |
+| 488 | `save` | `~/tonal_analysis/data/raw/hengel_generated/article_llm_g4_tertiary_jel` |
+| 500 | `save` | `~/tonal_analysis/data/raw/hengel_generated/article_llm_g5_pp` |
+| 505 | `save` | `~/tonal_analysis/data/raw/hengel_generated/article_llm_g5` |
+| 514 | `save` | `~/tonal_analysis/data/raw/hengel_generated/article_llm_g5_primary_jel_pp` |
+| 522 | `save` | `~/tonal_analysis/data/raw/hengel_generated/article_llm_g5_tertiary_jel_pp` |
+| 531 | `save` | `~/tonal_analysis/data/raw/hengel_generated/article_llm_g5_primary_jel` |
+| 539 | `save` | `~/tonal_analysis/data/raw/hengel_generated/article_llm_g5_tertiary_jel` |
+| 571 | `save` | `~/tonal_analysis/data/raw/hengel_generated/author` |
+| 574 | `import delimited` | `~/tonal_analysis/data/raw/hengel_generated/article_top5.csv` |
+| 593 | `save` | `~/tonal_analysis/data/raw/hengel_generated/author5` |
+| 596 | `import delimited` | `~/tonal_analysis/data/raw/hengel_generated/nber.csv` |
+| 634 | `save` | `~/tonal_analysis/data/raw/hengel_generated/nber` |
+| 648 | `save` | `~/tonal_analysis/data/raw/hengel_generated/nber_fe` |
+| 660 | `save` | `~/tonal_analysis/data/raw/hengel_generated/nber_fe_jel` |
+| 676 | `save` | `~/tonal_analysis/data/raw/hengel_generated/nber_llm_g1` |
+| 689 | `save` | `~/tonal_analysis/data/raw/hengel_generated/nber_llm_g1_fe` |
+| 699 | `save` | `~/tonal_analysis/data/raw/hengel_generated/nber_llm_g1_fe_jel` |
+| 712 | `save` | `~/tonal_analysis/data/raw/hengel_generated/nber_llm_g2` |
+| 725 | `save` | `~/tonal_analysis/data/raw/hengel_generated/nber_llm_g2_fe` |
+| 735 | `save` | `~/tonal_analysis/data/raw/hengel_generated/nber_llm_g2_fe_jel` |
+| 748 | `save` | `~/tonal_analysis/data/raw/hengel_generated/nber_llm_g3` |
+| 761 | `save` | `~/tonal_analysis/data/raw/hengel_generated/nber_llm_g3_fe` |
+| 771 | `save` | `~/tonal_analysis/data/raw/hengel_generated/nber_llm_g3_fe_jel` |
+| 784 | `save` | `~/tonal_analysis/data/raw/hengel_generated/nber_llm_g4` |
+| 797 | `save` | `~/tonal_analysis/data/raw/hengel_generated/nber_llm_g4_fe` |
+| 807 | `save` | `~/tonal_analysis/data/raw/hengel_generated/nber_llm_g4_fe_jel` |
+| 820 | `save` | `~/tonal_analysis/data/raw/hengel_generated/nber_llm_g5` |
+| 833 | `save` | `~/tonal_analysis/data/raw/hengel_generated/nber_llm_g5_fe` |
+| 843 | `save` | `~/tonal_analysis/data/raw/hengel_generated/nber_llm_g5_fe_jel` |
+| 846 | `import delimited` | `~/tonal_analysis/data/raw/hengel_generated/time.csv` |
+| 864 | `save` | `~/tonal_analysis/data/raw/hengel_generated/duration` |
+| 875 | `save` | `~/tonal_analysis/data/raw/hengel_generated/duration_llm_readability` |
+| 885 | `save` | `~/tonal_analysis/data/raw/hengel_generated/duration_llm_g1` |
+| 895 | `save` | `~/tonal_analysis/data/raw/hengel_generated/duration_llm_g2` |
+| 905 | `save` | `~/tonal_analysis/data/raw/hengel_generated/duration_llm_g3` |
+| 915 | `save` | `~/tonal_analysis/data/raw/hengel_generated/duration_llm_g4` |
+| 925 | `save` | `~/tonal_analysis/data/raw/hengel_generated/duration_llm_g5` |
+| 928 | `import delimited` | `~/tonal_analysis/data/raw/hengel_generated/author_names.csv` |

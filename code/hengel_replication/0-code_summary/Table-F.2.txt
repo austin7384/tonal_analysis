@@ -20,3 +20,10 @@ outputs/tables/tex/Table-F.2-Fem1.tex
 outputs/tables/tex/Table-F.2-Fem50.tex
 outputs/tables/tex/Table-F.2-FemSenior.tex
 outputs/tables/tex/Table-F.2-R.tex
+
+
+## File Paths
+
+| Line | Command | Path |
+|------|---------|------|
+| 71 | `estout xtabond_* using` | `~/tonal_analysis/outputs/tables/tex/Table-F.2-`type'.tex` |

@@ -21,3 +21,11 @@ outputs/tables/tex/Table-8-Fem50.tex
 outputs/tables/tex/Table-8-FemSenior.tex
 outputs/tables/tex/Table-8-R.tex
 outputs/tables/tex/Table-I.3.tex
+
+
+## File Paths
+
+| Line | Command | Path |
+|------|---------|------|
+| 76 | `estout reg_* using` | `~/tonal_analysis/outputs/tables/tex/Table-8-`type'.tex` |
+| 106 | `estout matrix(`Chi', fmt(3)) using` | `~/tonal_analysis/outputs/tables/tex/Table-I.3.tex` |

@@ -14,3 +14,13 @@ outputs/figures/Figure-D.1-meta.pdf
 outputs/figures/Figure-D.1-early.pdf
 outputs/figures/Figure-D.1-late.pdf
 outputs/tables/tex/Figure-D.1-bib.tex
+
+
+## File Paths
+
+| Line | Command | Path |
+|------|---------|------|
+| 5 | `import delimited` | `~/tonal_analysis/data/raw/hengel_generated/readability_corr.txt` |
+| 59 | `graph export` | `~/tonal_analysis/outputs/figures/Figure-D.1-meta.pdf` |
+| 72 | `graph export` | `~/tonal_analysis/outputs/figures/Figure-D.1-early.pdf` |
+| 82 | `graph export` | `~/tonal_analysis/outputs/figures/Figure-D.1-late.pdf` |

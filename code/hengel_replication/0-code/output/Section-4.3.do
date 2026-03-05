@@ -285,7 +285,7 @@ if "`R'"=="base" {
 	matrix `b' = `b1' , `b2'
 	matrix rownames `b' = `rnames'
 
-	estout matrix(`b', fmt(2)) using "0-tex/generated/Table-J.1.tex", style(tex) ///
+	estout matrix(`b', fmt(2)) using "~/tonal_analysis/outputs/tables/tex/Table-J.1.tex", style(tex) ///
 		label ///
 		mlabels(none) ///
 		collabels(none) ///

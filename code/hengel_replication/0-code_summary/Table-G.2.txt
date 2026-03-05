@@ -12,3 +12,10 @@ OPERATIONS
 OUTPUTS
 -------
 outputs/tables/tex/Table-G.2.tex
+
+
+## File Paths
+
+| Line | Command | Path |
+|------|---------|------|
+| 13 | `estout fe_flesch fe_fleschkincaid fe_gunningfog fe_smog fe_dalechall using` | `~/tonal_analysis/outputs/tables/tex/Table-G.2.tex` |
