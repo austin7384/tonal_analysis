@@ -224,3 +224,30 @@ During the file-path audit, two paths were found that referenced non-existent di
 `listtex` and `create_latex` commands on lines 38–39 of `Table-J.2.do` were not captured by the original extraction (non-standard Stata commands). Added manually:
 - L38: `listtex ... using` → `~/tonal_analysis/outputs/tables/tex/Table-J.2.tex`
 - L39: `create_latex using` → `~/tonal_analysis/outputs/tables/tex/Table-J.2.tex`
+
+---
+
+## Session: 2026-03-05 (continued)
+
+### Changes
+
+#### `outputs/replication.pdf` (new file)
+
+Compiled `outputs/replication.tex` to PDF using `tectonic` (installed via Homebrew). Two pre-existing bugs in the Stata-generated table `.tex` files were fixed in order to compile:
+
+1. **`\midrule` + `Editor` concatenation** — All 41 table files in `outputs/tables/tex/` had `\midruleEditor` or `\midruleEditor effects` with no newline separator. Fixed with a Python script across all affected files.
+2. **Unbraced parenthesized values in `S` columns** — `siunitx`'s `S` column type rejects bare `(0.42)`-style entries; they must be wrapped in `{}`. Fixed across all 44 table files in `outputs/tables/tex/`.
+
+#### `~/readability/original.pdf` (new file)
+
+Compiled a parallel PDF from the original Hengel replication output at `~/readability/0-tex/generated/` (tables) and `~/readability/0-images/generated/` (figures). A new driver file `~/readability/original.tex` was created to aggregate all content.
+
+Fixes applied to the original source files:
+
+1. **Unbraced parenthesized values** — Same siunitx fix applied to all 67 generated table files in `~/readability/0-tex/generated/`.
+2. **Brace-wrapped filenames** — `{Figure-D.1-meta}.pdf` syntax (pdflatex-specific) replaced with bare filenames for XeTeX compatibility in `Figure-D.1.tex`, `Figure-D.2.tex`, `Figure-F.1.tex`, `Figure-G.1.tex`, `Figure-G.2.tex`, `Figure-K.1.tex`.
+3. **`\mcol` column mismatch** — `Table-F.2-R.tex` has 4 columns (not 6 like the other F.2 tables); its `\mcol{...}` calls were replaced with `\multicolumn{4}{l}{...}`.
+
+Packages added to `original.tex` preamble beyond those in `replication.tex`: `floatrow`, `array`, `natbib`, `bm`, `upgreek`, `threeparttablex`.
+
+Custom macros defined in `original.tex`: `\newcolumntype{L}`, `\vect`, `\vep`, `\mcol`, `\aref`.
