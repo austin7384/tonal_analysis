@@ -21,6 +21,7 @@ data/processed/scraped_results.csv
 *.jsonl
 *.db
 *.stswp
+*.smcl
 
 # Environment
 .env
