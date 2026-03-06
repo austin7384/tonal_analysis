@@ -1,0 +1,26 @@
+\begin{table}[H]
+    \footnotesize
+    \centering
+    \begin{threeparttable}
+        \caption{Journal readability, comparisons to \textit{AER}}
+        \label{table3_journal}
+        \begin{tabular}{p{3cm}S@{}S@{}S@{}S@{}S@{}}
+            \toprule
+            &{\crcell[b]{Flesch\\[-0.1cm]Reading\\[-0.1cm]Ease}}&{\crcell[b]{Flesch-\\[-0.1cm]Kincaid}}&{\crcell[b]{Gunning\\[-0.1cm]Fog}}&{SMOG}&{\crcell[b]{Dale-\\[-0.1cm]Chall}}\\
+            \midrule
+            \textit{Econometrica}         &      -12.25***&       -4.42***&       -4.23***&       -2.58***&       -0.67***\\
+                                          &      (1.92)   &      (0.41)   &      (0.47)   &      (0.38)   &      (0.16)   \\
+            \textit{JPE}                  &       -5.54***&       -3.98***&       -3.38***&       -1.80***&        0.18   \\
+                                          &      (1.91)   &      (0.41)   &      (0.47)   &      (0.38)   &      (0.16)   \\
+            \textit{QJE}                  &        1.51** &       -0.01   &        0.30***&        0.21***&        0.27***\\
+                                          &      (0.61)   &      (0.13)   &      (0.08)   &      (0.06)   &      (0.05)   \\
+            \midrule
+            No. observations              &       9,117   &       9,117   &       9,117   &       9,117   &       9,117   \\
+            \bottomrule
+        \end{tabular}
+        \begin{tablenotes}
+            \tiny
+            \item \textit{Notes}. Figures are the estimated coefficients on the journal dummy variables from column (2) in~\autoref{table3_FemRatio}. Each contrasts the readability of the journals in the left-hand column with the readability of \textit{AER}. Standard errors clustered on editor in parentheses. ***, ** and * statistically significant at 1\%, 5\% and 10\%, respectively.
+        \end{tablenotes}
+    \end{threeparttable}
+\end{table}

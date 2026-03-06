@@ -1,0 +1,38 @@
+\begin{table}
+    \footnotesize
+    \centering
+    \begin{threeparttable}
+        \caption{\autoref{table4_FemRatio}, alternative program for calculating readability}
+        \label{table4_R}
+        \begin{tabular}{p{4cm}S@{}S@{}S@{}}
+            \toprule
+            &{\crcell[b]{Flesch-\\[-0.1cm]Kincaid}}&{\crcell[b]{Gunning\\[-0.1cm]Fog}}&{SMOG}\\
+            \midrule
+            \mrow{4cm}{Female ratio for women (\(\beta_1\))}&        0.33   &        0.48** &        0.30*  \\
+                                          &      (0.21)   &      (0.24)   &      (0.17)   \\
+            \mrow{4cm}{Female ratio for men (\(\beta_1+\beta_2\))}&        0.38   &        0.50   &        0.32   \\
+                                          &      (0.30)   &      (0.34)   &      (0.24)   \\
+            \mrow{4cm}{Female ratio\(\times\)male (\(\beta_2\))}&        0.05   &        0.02   &        0.02   \\
+                                          &      (0.35)   &      (0.40)   &      (0.28)   \\
+            \mrow{4cm}{Lagged score (\(\beta_0\))}&        0.05** &        0.04*  &        0.04*  \\
+                                          &      (0.02)   &      (0.02)   &      (0.02)   \\
+            \midruleNo. observations      &       9,181   &       9,181   &       9,181   \\
+            \mcol{\textit{Tests of instrument validity}} \\\quad Hansen test (\(p\)-value)&       0.841   &       0.735   &       0.734   \\
+            \quad Sargan test (\(p\)-value)&       0.156   &       0.213   &       0.112   \\
+            \mcol{\textit{\(z\)-test for no serial correlation}} \\\quad Order 1&     -12.478   &     -13.245   &     -16.851   \\
+            \quad Order 2                 &       0.084   &       0.586   &       0.464   \\
+            \midruleEditor effects        &           {\ding{51}}   &           {\ding{51}}   &           {\ding{51}}   \\
+            Blind review                  &           {\ding{51}}   &           {\ding{51}}   &           {\ding{51}}   \\
+            Journal effects               &           {\ding{51}}   &           {\ding{51}}   &           {\ding{51}}   \\
+            \(N_j\)                       &           {\ding{51}}   &           {\ding{51}}   &           {\ding{51}}   \\
+            Institution effects           &           {\ding{51}}   &           {\ding{51}}   &           {\ding{51}}   \\
+            Quality controls              &          {\(\text{\ding{51}}^2\)}   &          {\(\text{\ding{51}}^2\)}   &          {\(\text{\ding{51}}^2\)}   \\
+            Native speaker                &           {\ding{51}}   &           {\ding{51}}   &           {\ding{51}}   \\
+            \bottomrule
+        \end{tabular}
+        \begin{tablenotes}
+            \tiny
+            \item \textit{Notes}. Estimates are identical to those in \autoref{table4_FemRatio}, except readability scores were calculated using the R \texttt{readability} program. ***, ** and * statistically significant at 1\%, 5\% and 10\%, respectively.
+        \end{tablenotes}
+    \end{threeparttable}
+\end{table}

@@ -1,0 +1,47 @@
+\begin{table}
+    \footnotesize
+    \centering
+    \begin{threeparttable}
+        \caption{\autoref{table6_FemRatio} (second panel), full output}
+        \label{table6_change_full}
+        \sisetup{round-precision=3}
+        \begin{tabular}{p{3cm}S@{}S@{}S@{}S@{}S@{}}
+            \toprule
+            &{\crcell[b]{Flesch\\[-0.1cm]Reading\\[-0.1cm]Ease}}&{\crcell[b]{Flesch-\\[-0.1cm]Kincaid}}&{\crcell[b]{Gunning\\[-0.1cm]Fog}}&{SMOG}&{\crcell[b]{Dale-\\[-0.1cm]Chall}}\\
+            \midrule
+            \mrow{4cm}{Female ratio}      &       1.191*  &       0.484** &       0.479** &       0.272*  &       0.143** \\
+                                          &     (0.701)   &     (0.204)   &     (0.219)   &     (0.140)   &     (0.062)   \\
+            \mrow{4cm}{Blind review}      &       1.953***&      -0.439***&      -0.679***&      -0.255***&      -0.181***\\
+                                          &     (0.326)   &     (0.086)   &     (0.094)   &     (0.057)   &     (0.022)   \\
+            \mrow{4cm}{Blind\(\times\)female ratio}&      -1.754   &      -0.738   &      -0.758   &      -0.483   &      -0.196   \\
+                                          &     (2.182)   &     (0.524)   &     (0.567)   &     (0.395)   &     (0.129)   \\
+            \mrow{4cm}{Max. \(t\)}        &      -0.041   &      -0.006   &      -0.003   &      -0.003   &      -0.008** \\
+                                          &     (0.054)   &     (0.016)   &     (0.018)   &     (0.012)   &     (0.004)   \\
+            \mrow{4cm}{Max. \(T\)}        &       0.039   &       0.007   &       0.006   &       0.004   &       0.005** \\
+                                          &     (0.032)   &     (0.010)   &     (0.011)   &     (0.007)   &     (0.002)   \\
+            \mrow{4cm}{\(N_j\)}           &       0.219   &       0.077   &       0.090   &       0.065   &       0.011   \\
+                                          &     (0.231)   &     (0.062)   &     (0.067)   &     (0.044)   &     (0.019)   \\
+            \mrow{4cm}{No. citations (asinh)}&      -0.187   &      -0.050   &      -0.057   &      -0.041   &      -0.005   \\
+                                          &     (0.228)   &     (0.059)   &     (0.070)   &     (0.044)   &     (0.015)   \\
+            \mrow{4cm}{Native speaker}    &      -0.403   &      -0.002   &      -0.033   &      -0.056   &      -0.028   \\
+                                          &     (0.496)   &     (0.163)   &     (0.185)   &     (0.111)   &     (0.031)   \\
+            \mrow{4cm}{Theory}            &       0.085   &      -0.010   &      -0.091   &      -0.016   &      -0.012   \\
+                                          &     (0.655)   &     (0.171)   &     (0.166)   &     (0.107)   &     (0.051)   \\
+            \mrow{4cm}{Empirical}         &       0.016   &       0.144   &       0.180   &       0.082   &      -0.023   \\
+                                          &     (0.466)   &     (0.110)   &     (0.118)   &     (0.077)   &     (0.041)   \\
+            \mrow{4cm}{Other}             &      -0.570   &      -0.077   &      -0.075   &      -0.008   &      -0.085   \\
+                                          &     (0.834)   &     (0.321)   &     (0.353)   &     (0.219)   &     (0.095)   \\
+            \mrow{4cm}{Constant}          &       0.669   &       0.441   &       0.515   &       0.279   &       0.056   \\
+                                          &     (1.394)   &     (0.430)   &     (0.462)   &     (0.267)   &     (0.127)   \\
+            \midrule
+            No. observations              &       1,988   &       1,988   &       1,988   &       1,988   &       1,988   \\
+            \midruleEditor effects        &           {\ding{51}}   &           {\ding{51}}   &           {\ding{51}}   &           {\ding{51}}   &           {\ding{51}}   \\
+            Year\(\times\)Journal effects          &           {\ding{51}}   &           {\ding{51}}   &           {\ding{51}}   &           {\ding{51}}   &           {\ding{51}}   \\
+            \bottomrule
+        \end{tabular}
+        \begin{tablenotes}
+            \tiny
+            \item \textit{Notes}. Coefficients from OLS regression of \autoref{equation3}. Coefficients in the first two rows correspond to the estimates presented in the second panel of \autoref{table6_FemRatio}. Standard errors clustered on editor (in parentheses). ***, ** and * statistically significant at 1\%, 5\% and 10\%, respectively.
+        \end{tablenotes}
+    \end{threeparttable}
+\end{table}

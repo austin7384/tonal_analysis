@@ -1,0 +1,38 @@
+\begin{table}
+    \footnotesize
+    \centering
+    \begin{threeparttable}
+        \caption{\autoref{table4_FemRatio}, majority female-authored}
+        \label{table4_Fem50}
+        \begin{tabular}{p{4cm}S@{}S@{}S@{}S@{}S@{}}
+            \toprule
+            &{\crcell[b]{Flesch\\[-0.1cm]Reading\\[-0.1cm]Ease}}&{\crcell[b]{Flesch-\\[-0.1cm]Kincaid}}&{\crcell[b]{Gunning\\[-0.1cm]Fog}}&{SMOG}&{\crcell[b]{Dale-\\[-0.1cm]Chall}}\\
+            \midrule
+            \mrow{4cm}{Female ratio for women (\(\beta_1\))}&        1.68** &        0.22   &        0.32*  &        0.22*  &        0.10   \\
+                                          &      (0.69)   &      (0.16)   &      (0.19)   &      (0.13)   &      (0.07)   \\
+            \mrow{4cm}{Female ratio for men (\(\beta_1+\beta_2\))}&        0.59   &        0.13   &        0.12   &        0.06   &        0.01   \\
+                                          &      (0.72)   &      (0.15)   &      (0.18)   &      (0.13)   &      (0.07)   \\
+            \mrow{4cm}{Female ratio\(\times\)male (\(\beta_2\))}&       -1.08   &       -0.10   &       -0.20   &       -0.16   &       -0.09   \\
+                                          &      (0.96)   &      (0.21)   &      (0.25)   &      (0.17)   &      (0.10)   \\
+            \mrow{4cm}{Lagged score (\(\beta_0\))}&        0.04** &        0.05** &        0.03   &        0.03   &        0.03   \\
+                                          &      (0.02)   &      (0.02)   &      (0.02)   &      (0.02)   &      (0.02)   \\
+            \midruleNo. observations      &       9,181   &       9,181   &       9,181   &       9,181   &       9,181   \\
+            \mcol{\textit{Tests of instrument validity}} \\\quad Hansen test (\(p\)-value)&       0.786   &       0.965   &       0.960   &       0.966   &       0.840   \\
+            \quad Sargan test (\(p\)-value)&       0.358   &       0.112   &       0.307   &       0.159   &       0.356   \\
+            \mcol{\textit{\(z\)-test for no serial correlation}} \\\quad Order 1&     -18.481   &     -13.647   &     -14.902   &     -17.513   &     -18.714   \\
+            \quad Order 2                 &       0.508   &      -0.423   &       0.123   &       0.443   &       0.090   \\
+            \midruleEditor effects        &           {\ding{51}}   &           {\ding{51}}   &           {\ding{51}}   &           {\ding{51}}   &           {\ding{51}}   \\
+            Blind review                  &           {\ding{51}}   &           {\ding{51}}   &           {\ding{51}}   &           {\ding{51}}   &           {\ding{51}}   \\
+            Journal effects               &           {\ding{51}}   &           {\ding{51}}   &           {\ding{51}}   &           {\ding{51}}   &           {\ding{51}}   \\
+            \(N_j\)                       &           {\ding{51}}   &           {\ding{51}}   &           {\ding{51}}   &           {\ding{51}}   &           {\ding{51}}   \\
+            Institution effects           &           {\ding{51}}   &           {\ding{51}}   &           {\ding{51}}   &           {\ding{51}}   &           {\ding{51}}   \\
+            Quality controls              &          {\(\text{\ding{51}}^2\)}   &          {\(\text{\ding{51}}^2\)}   &          {\(\text{\ding{51}}^2\)}   &          {\(\text{\ding{51}}^2\)}   &          {\(\text{\ding{51}}^2\)}   \\
+            Native speaker                &           {\ding{51}}   &           {\ding{51}}   &           {\ding{51}}   &           {\ding{51}}   &           {\ding{51}}   \\
+            \bottomrule
+        \end{tabular}
+        \begin{tablenotes}
+            \tiny
+            \item \textit{Notes}. Estimates are identical to those in \autoref{table4_FemRatio}, except that female ratio has been replaced with a dummy variable equal to 1 if a weak majority (50\% or more) of authors are female. (Mixed-gendered papers with a strict minority of female authors are included and classified as male-authored papers.) ***, ** and * statistically significant at 1\%, 5\% and 10\%, respectively.
+        \end{tablenotes}
+    \end{threeparttable}
+\end{table}

@@ -1,0 +1,38 @@
+\begin{table}
+    \footnotesize
+    \centering
+    \begin{threeparttable}
+        \caption{\autoref{table4_FemRatio}, at least one female author}
+        \label{table4_Fem1}
+        \begin{tabular}{p{4cm}S@{}S@{}S@{}S@{}S@{}}
+            \toprule
+            &{\crcell[b]{Flesch\\[-0.1cm]Reading\\[-0.1cm]Ease}}&{\crcell[b]{Flesch-\\[-0.1cm]Kincaid}}&{\crcell[b]{Gunning\\[-0.1cm]Fog}}&{SMOG}&{\crcell[b]{Dale-\\[-0.1cm]Chall}}\\
+            \midrule
+            \mrow{4cm}{Female ratio for women (\(\beta_1\))}&        1.00   &        0.13   &        0.22   &        0.16   &        0.10*  \\
+                                          &      (0.67)   &      (0.14)   &      (0.17)   &      (0.12)   &      (0.06)   \\
+            \mrow{4cm}{Female ratio for men (\(\beta_1+\beta_2\))}&       -0.08   &       -0.00   &        0.02   &        0.02   &        0.04   \\
+                                          &      (0.56)   &      (0.12)   &      (0.14)   &      (0.10)   &      (0.05)   \\
+            \mrow{4cm}{Female ratio\(\times\)male (\(\beta_2\))}&       -1.08   &       -0.13   &       -0.20   &       -0.14   &       -0.06   \\
+                                          &      (0.80)   &      (0.17)   &      (0.20)   &      (0.15)   &      (0.07)   \\
+            \mrow{4cm}{Lagged score (\(\beta_0\))}&        0.04** &        0.05** &        0.03   &        0.03   &        0.03   \\
+                                          &      (0.02)   &      (0.02)   &      (0.02)   &      (0.02)   &      (0.02)   \\
+            \midruleNo. observations      &       9,181   &       9,181   &       9,181   &       9,181   &       9,181   \\
+            \mcol{\textit{Tests of instrument validity}} \\\quad Hansen test (\(p\)-value)&       0.805   &       0.964   &       0.959   &       0.965   &       0.830   \\
+            \quad Sargan test (\(p\)-value)&       0.369   &       0.115   &       0.312   &       0.161   &       0.342   \\
+            \mcol{\textit{\(z\)-test for no serial correlation}} \\\quad Order 1&     -18.482   &     -13.638   &     -14.896   &     -17.512   &     -18.709   \\
+            \quad Order 2                 &       0.464   &      -0.450   &       0.100   &       0.429   &       0.106   \\
+            \midruleEditor effects        &           {\ding{51}}   &           {\ding{51}}   &           {\ding{51}}   &           {\ding{51}}   &           {\ding{51}}   \\
+            Blind review                  &           {\ding{51}}   &           {\ding{51}}   &           {\ding{51}}   &           {\ding{51}}   &           {\ding{51}}   \\
+            Journal effects               &           {\ding{51}}   &           {\ding{51}}   &           {\ding{51}}   &           {\ding{51}}   &           {\ding{51}}   \\
+            \(N_j\)                       &           {\ding{51}}   &           {\ding{51}}   &           {\ding{51}}   &           {\ding{51}}   &           {\ding{51}}   \\
+            Institution effects           &           {\ding{51}}   &           {\ding{51}}   &           {\ding{51}}   &           {\ding{51}}   &           {\ding{51}}   \\
+            Quality controls              &          {\(\text{\ding{51}}^2\)}   &          {\(\text{\ding{51}}^2\)}   &          {\(\text{\ding{51}}^2\)}   &          {\(\text{\ding{51}}^2\)}   &          {\(\text{\ding{51}}^2\)}   \\
+            Native speaker                &           {\ding{51}}   &           {\ding{51}}   &           {\ding{51}}   &           {\ding{51}}   &           {\ding{51}}   \\
+            \bottomrule
+        \end{tabular}
+        \begin{tablenotes}
+            \tiny
+            \item \textit{Notes}. Estimates are identical to those in \autoref{table4_FemRatio}, except that female ratio has been replaced with a dummy variable equal to 1 if at least one author on a paper is female. ***, ** and * statistically significant at 1\%, 5\% and 10\%, respectively.
+        \end{tablenotes}
+    \end{threeparttable}
+\end{table}
