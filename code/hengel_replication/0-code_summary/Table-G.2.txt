@@ -7,7 +7,7 @@ OPERATIONS
 - Re-estimates the fixed-effects (change-in-score) specification from Table 5 Panel 3 with full coefficient output
 - Specification: change in readability ~ FemRatio x Blind
 - Uses reghdfe absorbing Editor and Year x Journal fixed effects, with Year-level clustering
-- Reports all coefficients (not just key estimates)
+- Reports all coefficients (not just key estimates) for all 6 readability measures (5 traditional + LLM readability)
 
 OUTPUTS
 -------
@@ -18,4 +18,4 @@ outputs/tables/tex/Table-G.2.tex
 
 | Line | Command | Path |
 |------|---------|------|
-| 13 | `estout fe_flesch fe_fleschkincaid fe_gunningfog fe_smog fe_dalechall using` | `~/tonal_analysis/outputs/tables/tex/Table-G.2.tex` |
+| 13 | `estout fe_flesch fe_fleschkincaid fe_gunningfog fe_smog fe_dalechall fe_llm_readability using` | `~/tonal_analysis/outputs/tables/tex/Table-G.2.tex` |

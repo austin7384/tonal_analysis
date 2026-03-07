@@ -6,12 +6,13 @@ OPERATIONS
 ----------
 - Defines programs matching_table and matching_figure for reuse across three specifications
 - Conducts Mahalanobis 1:1 matching of female to male authors on: career length (T), first institution, citation count, publication decade, journal, and JEL code
-- For matched pairs, computes: Rit (reconstructed readability), Dik (gender difference measure), conditional and unconditional Dik, and percentage discrimination
+- For matched pairs, computes Rit (reconstructed readability) for all 6 readability measures (5 traditional + LLM readability)
+- Computes Dik (gender difference measure), conditional and unconditional Dik, and percentage discrimination for the 5 traditional readability measures
 - Runs three specifications: "base" (simple), "jel" (JEL-adjusted), and "R" (alternative readability package)
 - Generates balance tables comparing pre- and post-matching summary statistics
-- Generates tables of discrimination estimates
-- Produces histograms and kernel density plots of the Dik distribution
-- Runs regression output used to reconstruct Rit
+- Generates tables of discrimination estimates (Table 9) with columns for all 6 measures
+- Produces histograms and kernel density plots of the Dik distribution (Figure 5)
+- Runs and exports regression output used to reconstruct Rit (Table J.3), including an LLM Readability block
 
 OUTPUTS
 -------

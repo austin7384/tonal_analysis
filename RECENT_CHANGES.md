@@ -298,3 +298,60 @@ Fixes applied to the original source files:
 Packages added to `original.tex` preamble beyond those in `replication.tex`: `floatrow`, `array`, `natbib`, `bm`, `upgreek`, `threeparttablex`.
 
 Custom macros defined in `original.tex`: `\newcolumntype{L}`, `\vect`, `\vep`, `\mcol`, `\aref`.
+
+---
+
+## Session: 2026-03-06 (continued)
+
+### Theme: Consolidating LLM datasets — removing per-group splits
+
+#### `code/hengel_replication/0-code/output/Data.do` (major refactor, 933 → 413 lines)
+
+**Previous design:** After computing LLM group composites, Data.do saved a full `article_llm_full` tempfile, then dropped all 15 individual criteria and all 5 group composites from the main `article`/`nber` datasets (retaining only `_llm_readability`). It then created 30+ per-group saved datasets (`article_llm_g1` through `article_llm_g5` with PP/JEL variants, `nber_llm_g1` through `nber_llm_g5` with FE/JEL variants, and 6 duration variants).
+
+**New design:** Individual criteria and group composites are all retained directly in the main datasets. No per-group datasets are created.
+
+Specific changes:
+
+1. **Article section** — Removed `article_llm_full` tempfile save. Removed `drop` of individual criteria and group composites. All 15 individual criteria (`_llm_modal_verb`, `_llm_hedging`, etc.) and all 5 group composites (`_llm_g1_score` through `_llm_g5_score`) now flow into `article_pp`, `article`, `article_primary_jel`, `article_tertiary_jel`, and all JEL/PP variants.
+
+2. **Removed ~258 lines** of per-group article dataset creation blocks (Groups 1–5 with PP, non-PP, primary JEL, tertiary JEL variants).
+
+3. **NBER section** — Removed `nber_llm_full` tempfile save. Removed `drop` of individual NBER criteria and group composites. All 15 individual NBER criteria and 5 NBER group composites now flow into `nber`, `nber_fe`, `nber_fe_jel`. The `nber_fe` paired-difference `reshape long @_score` automatically picks up all group composites, producing `D._llm_g1_score` through `D._llm_g5_score` without extra code.
+
+4. **Removed ~183 lines** of per-group NBER dataset creation blocks (Groups 1–5 with FE and JEL variants).
+
+5. **Duration section** — Updated `keepusing` when merging from `article` to also pull `_llm_readability_score` and `_llm_g1_score` through `_llm_g5_score`, so the duration dataset carries all LLM composite scores alongside `_flesch_score`.
+
+6. **Removed ~61 lines** of per-group duration dataset creation blocks (`duration_llm_readability`, `duration_llm_g1` through `duration_llm_g5`).
+
+#### `code/hengel_replication/0-code_summary/Data.txt`
+
+- OPERATIONS updated to reflect consolidated design (no per-group datasets, all LLM variables retained throughout)
+- OUTPUTS updated: removed all per-group dataset entries (article_llm_g*, nber_llm_g*, duration_llm_*); duration entry now implicitly includes LLM composite scores
+- File Paths table: removed all per-group save entries; updated line numbers throughout
+
+#### `0-code_summary/*.txt` — summary files updated this session
+
+Earlier in this session, the following summary files were updated to reflect `llm_readability` being added as a sixth readability statistic (changes from the prior commit):
+
+- `Data.txt` — added duration_llm_* to OUTPUTS (now superseded by this session's rewrite)
+- `Table-3.txt` — Operations: 5 → 6 readability measures; added Table-3-R.tex to OUTPUTS
+- `Table-5.txt` — Operations: 5 → 6 readability measures
+- `Table-F.1.txt` — Operations: 5 → 6 regressions
+- `Table-G.2.txt` — Operations: noted 6 measures; File Paths: added fe_llm_readability to estout command
+- `Table-G.4.txt` — Operations: 5 → 6 readability measures
+- `Section-4.3.txt` — Operations: Rit reconstruction covers 6 stats; Table-J.3 includes LLM Readability block
+- `Figure-G.1.txt` — Operations: 5 → 6 measures; combo graph now includes llm_readability panel
+
+---
+
+### Next Steps
+
+#### A. LLM group regression tables (primary new analysis)
+With all LLM variables now in the main datasets, the new analysis do-file can use `article`, `nber`, and `nber_fe` directly with `stats(llm_g1 llm_g2 llm_g3 llm_g4 llm_g5)`. The one remaining obstacle is the hardcoded `estimates restore ols*_fleschkincaid` in `nber_fgls` (lines ~69, 74, 80 of Table-5.do), which needs a `refstat()` option or similar fix before LLM group FGLS tables can be produced.
+
+#### B. Complete a clean full run of `hengel_master.do`
+Data.do now needs to be re-run to regenerate all `.dta` files with the new schema (all LLM variables present in main datasets).
+
+#### C. Verify `replication.tex` compiles cleanly in Overleaf

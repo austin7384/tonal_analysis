@@ -18,7 +18,7 @@ OPERATIONS
   (7) + Primary JEL code dummies
   (8) + Theory/Empirical type indicators
   (9) + Tertiary JEL code dummies
-- Uses reghdfe with clustering by Editor for all 5 readability measures
+- Uses reghdfe with clustering by Editor for all 6 readability measures (5 traditional + LLM readability)
 
 OUTPUTS
 -------
@@ -29,6 +29,7 @@ outputs/tables/tex/Table-3-Fem1.tex
 outputs/tables/tex/Table-3-Fem50.tex
 outputs/tables/tex/Table-3-FemSenior.tex
 outputs/tables/tex/Table-3-FemJunior.tex
+outputs/tables/tex/Table-3-R.tex
 
 
 ## File Paths

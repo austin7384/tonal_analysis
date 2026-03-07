@@ -8,7 +8,7 @@ data/raw/hengel_generated/nber_fe_jel.dta
 OPERATIONS
 ----------
 - Defines programs nber_fgls and nber_fe for estimating peer-review impact on readability
-- For each of 5 readability measures and 7 author-composition definitions:
+- For each of 6 readability measures (5 traditional + LLM readability) and 7 author-composition definitions:
   (Panel 1 OLS) Regresses published readability on NBER readability + Female x Blind
   (Panel 2 FGLS) Estimates NBER and published equations separately with suest for joint inference
   (Panel 3 FE) Regresses change in readability on Female x Blind using paired-difference dataset

@@ -4,7 +4,7 @@ data/raw/hengel_generated/article.dta
 
 OPERATIONS
 ----------
-- Estimates 5 separate regressions of readability on: FemRatio x Blind, Journal, Editor FE, and Year FE
+- Estimates 6 separate regressions of readability on: FemRatio x Blind, Journal, Editor FE, and Year FE (one per readability measure: 5 traditional + LLM readability)
 - Retains only Journal coefficients (Econometrica, JPE, QJE) relative to AER as the base category
 - Reports journal-level readability differences relative to AER
 
