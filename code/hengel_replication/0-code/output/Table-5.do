@@ -169,50 +169,50 @@ end
 
 * Ratio of female authors.
 estimates clear
-nber_fe FemRatio using `nber_fe', stats(flesch fleschkincaid gunningfog smog dalechall) colnames(_flesch_score _fleschkincaid_score _gunningfog_score _smog_score _dalechall_score)
-nber_fgls FemRatio using `nber', stats(flesch fleschkincaid gunningfog smog dalechall) colnames(_flesch_score _fleschkincaid_score _gunningfog_score _smog_score _dalechall_score)
+nber_fe FemRatio using `nber_fe', stats(flesch fleschkincaid gunningfog smog dalechall llm_readability) colnames(_flesch_score _fleschkincaid_score _gunningfog_score _smog_score _dalechall_score _llm_readability_score)
+nber_fgls FemRatio using `nber', stats(flesch fleschkincaid gunningfog smog dalechall llm_readability) colnames(_flesch_score _fleschkincaid_score _gunningfog_score _smog_score _dalechall_score _llm_readability_score)
 nber_table, type(FemRatio)
 
 * Exclusively female-authored.
 estimates clear
-nber_fe Fem100 using `nber_fe', stats(flesch fleschkincaid gunningfog smog dalechall) colnames(_flesch_score _fleschkincaid_score _gunningfog_score _smog_score _dalechall_score)
-nber_fgls Fem100 using `nber', stats(flesch fleschkincaid gunningfog smog dalechall) colnames(_flesch_score _fleschkincaid_score _gunningfog_score _smog_score _dalechall_score)
+nber_fe Fem100 using `nber_fe', stats(flesch fleschkincaid gunningfog smog dalechall llm_readability) colnames(_flesch_score _fleschkincaid_score _gunningfog_score _smog_score _dalechall_score _llm_readability_score)
+nber_fgls Fem100 using `nber', stats(flesch fleschkincaid gunningfog smog dalechall llm_readability) colnames(_flesch_score _fleschkincaid_score _gunningfog_score _smog_score _dalechall_score _llm_readability_score)
 nber_table, type(Fem100)
 
 * Solo authored papers.
 estimates clear
-nber_fe FemSolo using `nber_fe', stats(flesch fleschkincaid gunningfog smog dalechall) colnames(_flesch_score _fleschkincaid_score _gunningfog_score _smog_score _dalechall_score)
-nber_fgls FemSolo using `nber', stats(flesch fleschkincaid gunningfog smog dalechall) colnames(_flesch_score _fleschkincaid_score _gunningfog_score _smog_score _dalechall_score)
+nber_fe FemSolo using `nber_fe', stats(flesch fleschkincaid gunningfog smog dalechall llm_readability) colnames(_flesch_score _fleschkincaid_score _gunningfog_score _smog_score _dalechall_score _llm_readability_score)
+nber_fgls FemSolo using `nber', stats(flesch fleschkincaid gunningfog smog dalechall llm_readability) colnames(_flesch_score _fleschkincaid_score _gunningfog_score _smog_score _dalechall_score _llm_readability_score)
 nber_table, type(FemSolo)
 
 * Senior female-authored.
 estimates clear
-nber_fe FemSenior using `nber_fe', stats(flesch fleschkincaid gunningfog smog dalechall) colnames(_flesch_score _fleschkincaid_score _gunningfog_score _smog_score _dalechall_score)
-nber_fgls FemSenior using `nber', stats(flesch fleschkincaid gunningfog smog dalechall) colnames(_flesch_score _fleschkincaid_score _gunningfog_score _smog_score _dalechall_score)
+nber_fe FemSenior using `nber_fe', stats(flesch fleschkincaid gunningfog smog dalechall llm_readability) colnames(_flesch_score _fleschkincaid_score _gunningfog_score _smog_score _dalechall_score _llm_readability_score)
+nber_fgls FemSenior using `nber', stats(flesch fleschkincaid gunningfog smog dalechall llm_readability) colnames(_flesch_score _fleschkincaid_score _gunningfog_score _smog_score _dalechall_score _llm_readability_score)
 nber_table, type(FemSenior)
 
 * Junior authored papers.
 estimates clear
-nber_fe FemSenior if Maxt<=3 using `nber_fe', stats(flesch fleschkincaid gunningfog smog dalechall) colnames(_flesch_score _fleschkincaid_score _gunningfog_score _smog_score _dalechall_score)
-nber_fgls FemSenior if Maxt<=3 using `nber', stats(flesch fleschkincaid gunningfog smog dalechall) colnames(_flesch_score _fleschkincaid_score _gunningfog_score _smog_score _dalechall_score)
+nber_fe FemSenior if Maxt<=3 using `nber_fe', stats(flesch fleschkincaid gunningfog smog dalechall llm_readability) colnames(_flesch_score _fleschkincaid_score _gunningfog_score _smog_score _dalechall_score _llm_readability_score)
+nber_fgls FemSenior if Maxt<=3 using `nber', stats(flesch fleschkincaid gunningfog smog dalechall llm_readability) colnames(_flesch_score _fleschkincaid_score _gunningfog_score _smog_score _dalechall_score _llm_readability_score)
 nber_table, type(FemJunior)
 
 * At least one female author.
 estimates clear
-nber_fe Fem1 using `nber_fe', stats(flesch fleschkincaid gunningfog smog dalechall) colnames(_flesch_score _fleschkincaid_score _gunningfog_score _smog_score _dalechall_score)
-nber_fgls Fem1 using `nber', stats(flesch fleschkincaid gunningfog smog dalechall) colnames(_flesch_score _fleschkincaid_score _gunningfog_score _smog_score _dalechall_score)
+nber_fe Fem1 using `nber_fe', stats(flesch fleschkincaid gunningfog smog dalechall llm_readability) colnames(_flesch_score _fleschkincaid_score _gunningfog_score _smog_score _dalechall_score _llm_readability_score)
+nber_fgls Fem1 using `nber', stats(flesch fleschkincaid gunningfog smog dalechall llm_readability) colnames(_flesch_score _fleschkincaid_score _gunningfog_score _smog_score _dalechall_score _llm_readability_score)
 nber_table, type(Fem1)
 
 * At least 50 percent female-authored.
 estimates clear
-nber_fe Fem50 using `nber_fe', stats(flesch fleschkincaid gunningfog smog dalechall) colnames(_flesch_score _fleschkincaid_score _gunningfog_score _smog_score _dalechall_score)
-nber_fgls Fem50 using `nber', stats(flesch fleschkincaid gunningfog smog dalechall) colnames(_flesch_score _fleschkincaid_score _gunningfog_score _smog_score _dalechall_score)
+nber_fe Fem50 using `nber_fe', stats(flesch fleschkincaid gunningfog smog dalechall llm_readability) colnames(_flesch_score _fleschkincaid_score _gunningfog_score _smog_score _dalechall_score _llm_readability_score)
+nber_fgls Fem50 using `nber', stats(flesch fleschkincaid gunningfog smog dalechall llm_readability) colnames(_flesch_score _fleschkincaid_score _gunningfog_score _smog_score _dalechall_score _llm_readability_score)
 nber_table, type(Fem50)
 
 * NBER abstract is below the journal word limit.
 estimates clear
-nber_fe FemRatio if BelowAbstractLen using `nber_fe', stats(flesch fleschkincaid gunningfog smog dalechall) colnames(_flesch_score _fleschkincaid_score _gunningfog_score _smog_score _dalechall_score)
-nber_fgls FemRatio if BelowAbstractLen using `nber', stats(flesch fleschkincaid gunningfog smog dalechall) colnames(_flesch_score _fleschkincaid_score _gunningfog_score _smog_score _dalechall_score)
+nber_fe FemRatio if BelowAbstractLen using `nber_fe', stats(flesch fleschkincaid gunningfog smog dalechall llm_readability) colnames(_flesch_score _fleschkincaid_score _gunningfog_score _smog_score _dalechall_score _llm_readability_score)
+nber_fgls FemRatio if BelowAbstractLen using `nber', stats(flesch fleschkincaid gunningfog smog dalechall llm_readability) colnames(_flesch_score _fleschkincaid_score _gunningfog_score _smog_score _dalechall_score _llm_readability_score)
 nber_table, type(wordlimit)
 
 * Alternative program for calculating readability scores.
@@ -223,7 +223,7 @@ nber_table, type(R)
 
 * Controlling for JEL codes
 estimates clear
-nber_fe FemRatio using `nber_fe_jel', stats(flesch fleschkincaid gunningfog smog dalechall) colnames(_flesch_score _fleschkincaid_score _gunningfog_score _smog_score _dalechall_score) jel
-nber_fgls FemRatio using `nber_jel', stats(flesch fleschkincaid gunningfog smog dalechall) colnames(_flesch_score _fleschkincaid_score _gunningfog_score _smog_score _dalechall_score) jel
+nber_fe FemRatio using `nber_fe_jel', stats(flesch fleschkincaid gunningfog smog dalechall llm_readability) colnames(_flesch_score _fleschkincaid_score _gunningfog_score _smog_score _dalechall_score _llm_readability_score) jel
+nber_fgls FemRatio using `nber_jel', stats(flesch fleschkincaid gunningfog smog dalechall llm_readability) colnames(_flesch_score _fleschkincaid_score _gunningfog_score _smog_score _dalechall_score _llm_readability_score) jel
 nber_table, type(jel) jel
 ********************************************************************************

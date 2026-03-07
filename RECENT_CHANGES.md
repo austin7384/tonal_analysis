@@ -227,6 +227,53 @@ During the file-path audit, two paths were found that referenced non-existent di
 
 ---
 
+## Session: 2026-03-06
+
+### Theme: Adding `llm_readability` as a new readability statistic
+
+All changes extend the existing set of readability stats (`flesch fleschkincaid gunningfog smog dalechall`) to also include `llm_readability` as a sixth statistic.
+
+#### `code/hengel_replication/0-code/output/Data.do`
+- After dropping individual LLM criterion variables, generates `_llm_readability_score = _llm_readability` (article level) and `nber_llm_readability_score = nber_llm_readability` (NBER level) so that `llm_readability` matches the `@_score` reshape pattern used by all other readability stats.
+
+#### `code/hengel_replication/0-code/output/Table-3.do`
+- All 7 `article_level` calls now include `llm_readability` in `stats(...)` and `_llm_readability_score` in `colnames(...)`.
+
+#### `code/hengel_replication/0-code/output/Table-5.do`
+- All 9 `nber_fe`/`nber_fgls` estimation calls now include `llm_readability` in `stats(...)` and `_llm_readability_score` in `colnames(...)`.
+
+#### `code/hengel_replication/0-code/output/Table-F.1.do`
+- Added `llm_readability` to the `foreach stat in ...` loop.
+
+#### `code/hengel_replication/0-code/output/Table-F.2.do`
+- All 6 `author_level` calls now include `llm_readability` in `stats(...)`.
+
+#### `code/hengel_replication/0-code/output/Table-G.1.do`, `Table-G.2.do`, `Table-G.4.do`, `Table-I.2.do`
+- Each adds `llm_readability` to its `foreach stat in ...` loop.
+- `Table-G.2.do` also adds `fe_llm_readability` to the `estout` call.
+
+#### `code/hengel_replication/0-code/output/Figure-G.1.do`
+- Adds `local _llm_readability_title "LLM Readability"`, adds `llm_readability` to the `foreach` loop, and includes it in the combined graph.
+
+#### `code/hengel_replication/0-code/output/Section-4.3.do` (largest change)
+- Adds `llm_readability` throughout the matching analysis: title local, `foreach` loops, `merge`/`rename`/`reshape` variable lists (both `reshape long` and `reshape wide` blocks), `ereturn_post colnames(...)`, and a new `estout` block outputting `est_llm_readability_*` results to Table 9.
+
+#### `outputs/replication.tex`
+- Added packages `threeparttablex` and `natbib`.
+- Added `\mcol` macro for 6-column spanning labels.
+- Expanded document substantially: added Figures 5 (base/JEL/R), Figure 6, Appendix Figures D.1/D.2/F.1/G.1/K.1, Tables 9 and 10, and full Appendix sections B, C, F, G, H, I, and J as `\input{}`/`\includegraphics` entries. Previously the document only contained Tables 2–8 and a stub for Table I.3.
+
+#### `outputs/replication.pdf`
+- Binary updated (274KB → 691KB) reflecting the expanded `.tex`.
+
+#### `outputs/tables/tex/Table-*.tex` (65 files, regenerated from Stata)
+- SE rows: parentheses now brace-wrapped — `(0.53)` → `{(0.53)}` (siunitx fix)
+- `\midruleEditor` → `\midrule` + newline + `Editor` (missing newline fix)
+- Notes text: `(6)` → `{(6)}` in footnotes (same brace-wrapping fix)
+- Tables with readability results now include an additional `LLM Readability` row
+
+---
+
 ## Session: 2026-03-05 (continued)
 
 ### Changes

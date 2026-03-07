@@ -4,7 +4,7 @@
 * Get coefficients on journal fixed effects.
 estimates clear
 use `article', clear
-foreach stat in flesch fleschkincaid gunningfog smog dalechall {
+foreach stat in flesch fleschkincaid gunningfog smog dalechall llm_readability {
   eststo reg_`stat'_Editor: regress _`stat'_score c.FemRatio##i.Blind i.Journal i.Editor i.Year, vce(cluster Editor)
 }
 

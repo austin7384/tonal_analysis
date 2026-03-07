@@ -6,8 +6,9 @@ local _fleschkincaid_title "Flesch-Kincaid"
 local _gunningfog_title "Gunning Fog"
 local _smog_title "SMOG"
 local _dalechall_title "Dale-Chall"
+local _llm_readability_title "LLM Readability"
 
-foreach stat in flesch fleschkincaid gunningfog smog dalechall {
+foreach stat in flesch fleschkincaid gunningfog smog dalechall llm_readability {
 	use `nber_fe', clear
 
 	* Create a continuous variable centered around zero, where zero represents the date at which a journal switched froom double-blind review to single-blind review (or switched from single blind review to double-blind review).
@@ -100,6 +101,6 @@ foreach stat in flesch fleschkincaid gunningfog smog dalechall {
 }
 
 * Create a combined graph of the other four readability scores.
-graph combine fleschkincaid gunningfog smog dalechall, ycommon imargin(0 0 0 0) commonscheme scheme(publishing-female) name(combo, replace)
+graph combine fleschkincaid gunningfog smog dalechall llm_readability, ycommon imargin(0 0 0 0) commonscheme scheme(publishing-female) name(combo, replace)
 graph export "~/tonal_analysis/outputs/figures/Figure-G.1-combo.pdf", replace as(pdf) fontface("Avenir-Light")
 ********************************************************************************

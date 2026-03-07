@@ -4,7 +4,7 @@
 * Semi-blind review.
 use `nber_fe', clear
 tempname B S
-foreach stat in flesch fleschkincaid gunningfog smog dalechall {
+foreach stat in flesch fleschkincaid gunningfog smog dalechall llm_readability {
 	eststo semiblind_`stat': reghdfe D._`stat'_score c.FemRatio##1.SemiBlind N Maxt MaxT asinhCiteCount i.NativeEnglish Type_* if Year>1997, absorb(i.Editor i.Year##i.Journal) vce(cluster Year)
   estadd local jnlyr = "✓"
   estadd local editor = "✓"

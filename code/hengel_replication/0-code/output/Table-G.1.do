@@ -1,7 +1,7 @@
 ********************************************************************************
 ***************** Table G.1: Table 5 (first panel), full output ****************
 ********************************************************************************
-foreach stat in flesch fleschkincaid gunningfog smog dalechall {
+foreach stat in flesch fleschkincaid gunningfog smog dalechall llm_readability {
   * Re-estimate Equation (1).
   use `nber', clear
   rename nber_`stat'_score nber_score // Rename NBER readability score variable to nber_score so it's constant across scores (easier to generate Table L.1).

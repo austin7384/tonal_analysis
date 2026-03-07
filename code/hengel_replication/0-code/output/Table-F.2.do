@@ -82,27 +82,27 @@ program define author_level_table
 end
 
 * Female ratio.
-author_level FemRatio using `author', stats(flesch fleschkincaid gunningfog smog dalechall)
+author_level FemRatio using `author', stats(flesch fleschkincaid gunningfog smog dalechall llm_readability)
 author_level_table, type(FemRatio)
 
 * Exclusively female-authored.
-author_level Fem100 using `author', stats(flesch fleschkincaid gunningfog smog dalechall)
+author_level Fem100 using `author', stats(flesch fleschkincaid gunningfog smog dalechall llm_readability)
 author_level_table, type(Fem100)
 
 * Solo-authored.
-author_level FemSolo using `author', stats(flesch fleschkincaid gunningfog smog dalechall)
+author_level FemSolo using `author', stats(flesch fleschkincaid gunningfog smog dalechall llm_readability)
 author_level_table, type(FemSolo)
 
 * At least one female author.
-author_level Fem1 using `author', stats(flesch fleschkincaid gunningfog smog dalechall)
+author_level Fem1 using `author', stats(flesch fleschkincaid gunningfog smog dalechall llm_readability)
 author_level_table, type(Fem1)
 
 * Majority female-authored.
-author_level Fem50 using `author', stats(flesch fleschkincaid gunningfog smog dalechall)
+author_level Fem50 using `author', stats(flesch fleschkincaid gunningfog smog dalechall llm_readability)
 author_level_table, type(Fem50)
 
 * Senior female author.
-author_level FemSenior using `author', stats(flesch fleschkincaid gunningfog smog dalechall)
+author_level FemSenior using `author', stats(flesch fleschkincaid gunningfog smog dalechall llm_readability)
 author_level_table, type(FemSenior)
 
 * Alternative program for calculating readability statistics.

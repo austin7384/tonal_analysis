@@ -8,7 +8,7 @@ program define matching_table
 
 	estout df1 dm1 d31 using "~/tonal_analysis/outputs/tables/tex/Table-9-`type'.tex", style(publishing-female_latex) ///
 		cells("b(fmt(2) nostar pattern(1 1 0 0)) se(fmt(2) nopar pattern(1 1 0 0)) N(fmt(0) pattern(1 1 0 0)) b(star pattern(0 0 1 1))" ". . . se(fmt(2) par pattern(0 0 1 1))") ///
-		varlabels(flesch "Flesch" fleschkincaid "Flesch Kincaid" gunningfog "Gunning Fog" smog "SMOG" dalechall "Dale-Chall")
+		varlabels(flesch "Flesch" fleschkincaid "Flesch Kincaid" gunningfog "Gunning Fog" smog "SMOG" dalechall "Dale-Chall" llm_readability "LLM Readability")
 	create_latex using "`r(fn)'", tablename("table8") type("`type'")
 end
 
@@ -22,6 +22,7 @@ program define matching_figure
 	local _gunningfog_title "Gunning Fog"
 	local _smog_title "SMOG"
 	local _dalechall_title "Dale-Chall"
+	local _llm_readability_title "LLM Readability"
 
 	preserve
 	import excel "~/tonal_analysis/data/raw/hengel_labels/tables.xlsx", firstrow clear case(preserve)
@@ -33,7 +34,7 @@ program define matching_figure
 	foreach line in "`r(text)'" {
 		local note `"`note' `"{fontface "Avenir-Light"}`line'"'"'
 	}
-	foreach stat in flesch fleschkincaid gunningfog smog dalechall {
+	foreach stat in flesch fleschkincaid gunningfog smog dalechall llm_readability {
 		summarize _`stat'_Ds1, meanonly
 		local min = -1 * max(abs(`r(min)'), abs(`r(max)'))
 		local width = abs(`min') / 5
@@ -66,7 +67,7 @@ program define matching_figure
 		yscale(off) ///
 		xscale(off) ///
 		name(blank, replace)
-	graph combine flesch fleschkincaid gunningfog smog dalechall blank, ///
+	graph combine flesch fleschkincaid gunningfog smog dalechall llm_readability blank, ///
 		scheme(publishing-female) ///
 		commonscheme
 	graph export "~/tonal_analysis/outputs/figures/Figure-5-`type'.pdf", replace fontface("Avenir-Light") as(pdf)
@@ -140,15 +141,15 @@ forvalues i=0/1 {
 
 	* Merge matched authors with author data on AuthorID.
 	rename AuthorID`i' AuthorID
-	merge 1:m AuthorID using `author_pp', assert(using match) keep(match) keepusing(t T FemRatio `jcode1' _flesch_score _fleschkincaid_score _gunningfog_score _smog_score _dalechall_score) nogenerate
+	merge 1:m AuthorID using `author_pp', assert(using match) keep(match) keepusing(t T FemRatio `jcode1' _flesch_score _fleschkincaid_score _gunningfog_score _smog_score _dalechall_score _llm_readability_score) nogenerate
 
 	* Keep first or third publication.
 	keep if t==1 | t==3
 	replace t = 2 if t>1
 
 	* Reshape wide on t.
-	rename (AuthorID t T FemRatio _flesch_score _fleschkincaid_score _gunningfog_score _smog_score _dalechall_score `jcode1') =`i'
-	reshape wide _flesch_score _fleschkincaid_score _gunningfog_score _smog_score _dalechall_score`i' `jcode1'`i' FemRatio`i', i(AuthorID`i') j(t)
+	rename (AuthorID t T FemRatio _flesch_score _fleschkincaid_score _gunningfog_score _smog_score _dalechall_score _llm_readability_score `jcode1') =`i'
+	reshape wide _flesch_score _fleschkincaid_score _gunningfog_score _smog_score _dalechall_score _llm_readability_score`i' `jcode1'`i' FemRatio`i', i(AuthorID`i') j(t)
 
 	* Merge with matched authors.
 	merge 1:m AuthorID`i' using `matches', assert(match) nogenerate
@@ -165,6 +166,7 @@ reshape long `jcode10' `jcode11' FemRatio0 FemRatio1 ///
 	_gunningfog_score0 _gunningfog_score1 ///
 	_smog_score0 _smog_score1 ///
 	_dalechall_score0 _dalechall_score1 ///
+	_llm_readability_score0 _llm_readability_score1 ///
 		, i(id) j(`t')
 reshape long AuthorID FemRatio T _weight `jcode1' ///
 	_flesch_score ///
@@ -172,10 +174,11 @@ reshape long AuthorID FemRatio T _weight `jcode1' ///
 	_gunningfog_score ///
 	_smog_score ///
 	_dalechall_score ///
+	_llm_readability_score ///
 		, i(id `t') j(`g')
 
 * Reconstruct Rit.
-	foreach stat in flesch fleschkincaid gunningfog smog dalechall {
+	foreach stat in flesch fleschkincaid gunningfog smog dalechall llm_readability {
 		if "`R'"=="base" | "`R'"=="jel" {
 			tempvar resid
 			generate _`stat'_R = .
@@ -232,6 +235,12 @@ if "`R'"=="base" {
 		style(publishing-female_latex) ///
 		varlabels(_cons Constant, prefix("\quad ")) ///
 		prehead("\multicolumn{5}{l}{{\textbf{Dale-Chall}}}\\") ///
+		prefoot("\midrule") ///
+		append noreplace
+	estout est_llm_readability_0* est_llm_readability_1* using "`r(fn)'", ///
+		style(publishing-female_latex) ///
+		varlabels(_cons Constant, prefix("\quad ")) ///
+		prehead("\multicolumn{5}{l}{{\textbf{LLM Readability}}}\\") ///
 		append noreplace
 	create_latex using "`r(fn)'", tablename("Rit_regresults")
 }
@@ -254,6 +263,7 @@ reshape wide AuthorID FemRatio T _weight `jcode1' ///
 	_gunningfog_score _gunningfog_R ///
 	_smog_score _smog_R ///
 	_dalechall_score _dalechall_R ///
+	_llm_readability_score _llm_readability_R ///
 		, i(id `t') j(`g')
 reshape wide `jcode10' `jcode11' FemRatio0 FemRatio1 ///
 	_flesch_score0 _flesch_score1 _flesch_R0 _flesch_R1 ///
@@ -261,6 +271,7 @@ reshape wide `jcode10' `jcode11' FemRatio0 FemRatio1 ///
 	_gunningfog_score0 _gunningfog_score1 _gunningfog_R0 _gunningfog_R1 ///
 	_smog_score0 _smog_score1 _smog_R0 _smog_R1 ///
 	_dalechall_score0 _dalechall_score1 _dalechall_R0 _dalechall_R1 ///
+	_llm_readability_score0 _llm_readability_score1 _llm_readability_R0 _llm_readability_R1 ///
 		, i(id) j(`t')
 
 * Save matched pair data.
@@ -431,10 +442,10 @@ if "`R'"=="base" {
 }
 
 * Main estimation results
-ereturn_post `bf1', se(`sf1') store(df1) colnames(flesch fleschkincaid gunningfog smog dalechall) matrix(N `nf1')
-ereturn_post `bm1', se(`sm1') store(dm1) colnames(flesch fleschkincaid gunningfog smog dalechall) matrix(N `nm1')
-ereturn_post `b1', se(`s1') store(d21) colnames(flesch fleschkincaid gunningfog smog dalechall) matrix(N `n1')
-ereturn_post `b2', se(`s2') store(d31) colnames(flesch fleschkincaid gunningfog smog dalechall) matrix(N `n2')
+ereturn_post `bf1', se(`sf1') store(df1) colnames(flesch fleschkincaid gunningfog smog dalechall llm_readability) matrix(N `nf1')
+ereturn_post `bm1', se(`sm1') store(dm1) colnames(flesch fleschkincaid gunningfog smog dalechall llm_readability) matrix(N `nm1')
+ereturn_post `b1', se(`s1') store(d21) colnames(flesch fleschkincaid gunningfog smog dalechall llm_readability) matrix(N `n1')
+ereturn_post `b2', se(`s2') store(d31) colnames(flesch fleschkincaid gunningfog smog dalechall llm_readability) matrix(N `n2')
 
 matching_table, type(`R')
 matching_figure, type(`R')

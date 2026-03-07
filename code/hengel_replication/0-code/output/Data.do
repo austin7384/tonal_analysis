@@ -235,6 +235,7 @@ drop _llm_modal_verb _llm_hedging _llm_qualifier _llm_ack_limits _llm_caution //
 	_llm_assertiveness _llm_active_passive _llm_directness _llm_imperative ///
 	_llm_pronoun _llm_novelty _llm_jargon _llm_emotional _llm_evidence _llm_practical ///
 	_llm_g1_score _llm_g2_score _llm_g3_score _llm_g4_score _llm_g5_score
+generate _llm_readability_score = _llm_readability
 tempfile article_pp
 save `article_pp'
 save "~/tonal_analysis/data/raw/hengel_generated/article_pp", replace
@@ -629,6 +630,7 @@ drop nber_llm_modal_verb nber_llm_hedging nber_llm_qualifier nber_llm_ack_limits
 	nber_llm_assertiveness nber_llm_active_passive nber_llm_directness nber_llm_imperative ///
 	nber_llm_pronoun nber_llm_novelty nber_llm_jargon nber_llm_emotional nber_llm_evidence nber_llm_practical ///
 	nber_llm_g1_score nber_llm_g2_score nber_llm_g3_score nber_llm_g4_score nber_llm_g5_score
+generate nber_llm_readability_score = nber_llm_readability
 tempfile nber
 save `nber'
 save "~/tonal_analysis/data/raw/hengel_generated/nber", replace

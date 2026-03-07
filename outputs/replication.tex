@@ -6,6 +6,7 @@
 % ── Tables ───────────────────────────────────────────────────────────────────
 \usepackage{booktabs}
 \usepackage{threeparttable}
+\usepackage{threeparttablex}
 \usepackage{siunitx}
 \usepackage{rotating}      % sidewaystable
 \usepackage{makecell}
@@ -20,6 +21,7 @@
 \usepackage{pifont}        % \ding
 
 % ── References ───────────────────────────────────────────────────────────────
+\usepackage{natbib}
 \usepackage{hyperref}
 
 % ── Custom macros ────────────────────────────────────────────────────────────
@@ -28,6 +30,9 @@
 
 % Centered column header cell with optional vertical alignment
 \newcommand{\crcell}[2][c]{\makecell[#1]{#2}}
+
+% Full-width spanning label row (6-column F.2 tables)
+\newcommand{\mcol}[1]{\multicolumn{6}{l}{#1}}
 
 % ─────────────────────────────────────────────────────────────────────────────
 \begin{document}
@@ -75,6 +80,123 @@
     \centering
     \includegraphics[width=\textwidth]{figures/Figure-4.pdf}
     \caption{Figure 4}
+\end{figure}
+\clearpage
+
+% ── Figure 5 (base) ──────────────────────────────────────────────────────────
+\subsection{Figure 5 (base)}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{figures/Figure-5-base.pdf}
+    \caption{Figure 5 (base)}
+\end{figure}
+\clearpage
+
+% ── Figure 5 (JEL) ───────────────────────────────────────────────────────────
+\subsection{Figure 5 (JEL)}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{figures/Figure-5-jel.pdf}
+    \caption{Figure 5 (JEL)}
+\end{figure}
+\clearpage
+
+% ── Figure 5 (R) ─────────────────────────────────────────────────────────────
+\subsection{Figure 5 (R)}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{figures/Figure-5-R.pdf}
+    \caption{Figure 5 (R)}
+\end{figure}
+\clearpage
+
+% ── Figure 6 ─────────────────────────────────────────────────────────────────
+\subsection{Figure 6}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{figures/Figure-6.pdf}
+    \caption{Figure 6}
+\end{figure}
+\clearpage
+
+% =============================================================================
+\section{Appendix Figures}
+% =============================================================================
+
+% ── Figure D.1 ───────────────────────────────────────────────────────────────
+\subsection{Figure D.1 (early)}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{figures/Figure-D.1-early.pdf}
+    \caption{Figure D.1 (early)}
+\end{figure}
+\clearpage
+
+\subsection{Figure D.1 (late)}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{figures/Figure-D.1-late.pdf}
+    \caption{Figure D.1 (late)}
+\end{figure}
+\clearpage
+
+\subsection{Figure D.1 (meta)}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{figures/Figure-D.1-meta.pdf}
+    \caption{Figure D.1 (meta)}
+\end{figure}
+\clearpage
+
+% ── Figure D.2 ───────────────────────────────────────────────────────────────
+\subsection{Figure D.2 (Flesch-Kincaid)}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{figures/Figure-D.2-fleschkincaid.pdf}
+    \caption{Figure D.2 (Flesch-Kincaid)}
+\end{figure}
+\clearpage
+
+\subsection{Figure D.2 (Gunning Fog)}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{figures/Figure-D.2-gunningfog.pdf}
+    \caption{Figure D.2 (Gunning Fog)}
+\end{figure}
+\clearpage
+
+% ── Figure F.1 ───────────────────────────────────────────────────────────────
+\subsection{Figure F.1}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{figures/Figure-F.1.pdf}
+    \caption{Figure F.1}
+\end{figure}
+\clearpage
+
+% ── Figure G.1 ───────────────────────────────────────────────────────────────
+\subsection{Figure G.1 (combo)}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{figures/Figure-G.1-combo.pdf}
+    \caption{Figure G.1 (combo)}
+\end{figure}
+\clearpage
+
+\subsection{Figure G.1 (Flesch)}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{figures/Figure-G.1-flesch.pdf}
+    \caption{Figure G.1 (Flesch)}
+\end{figure}
+\clearpage
+
+% ── Figure K.1 ───────────────────────────────────────────────────────────────
+\subsection{Figure K.1}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{figures/Figure-K.1.pdf}
+    \caption{Figure K.1}
 \end{figure}
 \clearpage
 
@@ -275,9 +397,129 @@
 \clearpage
 
 % =============================================================================
-\section{Table I.3}
+\section{Table 9 --- \(D_{ik}\)}
 % =============================================================================
+
+\subsection{Base}
+\input{tables/tex/Table-9-base.tex}
+\clearpage
+
+\subsection{JEL}
+\input{tables/tex/Table-9-jel.tex}
+\clearpage
+
+\subsection{Robustness (R)}
+\input{tables/tex/Table-9-R.tex}
+\clearpage
+
+% =============================================================================
+\section{Table 10}
+% =============================================================================
+\input{tables/tex/Table-10.tex}
+\clearpage
+
+% =============================================================================
+\section{Appendix B --- Article counts}
+% =============================================================================
+\input{tables/tex/Table-B.1.tex}
+\clearpage
+
+% =============================================================================
+\section{Appendix C --- JEL classification}
+% =============================================================================
+\input{tables/tex/Table-C.1.tex}
+\clearpage
+
+% =============================================================================
+\section{Appendix F --- LLM readability}
+% =============================================================================
+
+\subsection{Table F.1 --- Journal readability, comparisons to AER}
+\input{tables/tex/Table-F.1.tex}
+\clearpage
+
+\subsection{Table F.2 --- Female ratio}
+\input{tables/tex/Table-F.2-FemRatio.tex}
+\clearpage
+
+\subsection{Table F.2 --- At least one female author}
+\input{tables/tex/Table-F.2-Fem1.tex}
+\clearpage
+
+\subsection{Table F.2 --- Majority female-authored}
+\input{tables/tex/Table-F.2-Fem50.tex}
+\clearpage
+
+\subsection{Table F.2 --- Exclusively female-authored}
+\input{tables/tex/Table-F.2-Fem100.tex}
+\clearpage
+
+\subsection{Table F.2 --- Solo female-authored}
+\input{tables/tex/Table-F.2-FemSolo.tex}
+\clearpage
+
+\subsection{Table F.2 --- Senior female author}
+\input{tables/tex/Table-F.2-FemSenior.tex}
+\clearpage
+
+\subsection{Table F.2 --- Robustness (R)}
+\input{tables/tex/Table-F.2-R.tex}
+\clearpage
+
+% =============================================================================
+\section{Appendix G --- Double-blind review}
+% =============================================================================
+
+\subsection{Table G.1}
+\input{tables/tex/Table-G.1.tex}
+\clearpage
+
+\subsection{Table G.2}
+\input{tables/tex/Table-G.2.tex}
+\clearpage
+
+\subsection{Table G.4}
+\input{tables/tex/Table-G.4.tex}
+\clearpage
+
+% =============================================================================
+\section{Appendix H --- Robustness}
+% =============================================================================
+
+\subsection{Table H.3}
+\input{tables/tex/Table-H.3.tex}
+\clearpage
+
+\subsection{Table H.4}
+\input{tables/tex/Table-H.4.tex}
+\clearpage
+
+% =============================================================================
+\section{Appendix I --- Career effects}
+% =============================================================================
+
+\subsection{Table I.2}
+\input{tables/tex/Table-I.2.tex}
+\clearpage
+
+\subsection{Table I.3}
 \input{tables/tex/Table-I.3.tex}
+\clearpage
+
+% =============================================================================
+\section{Appendix J --- Matching}
+% =============================================================================
+
+\subsection{Table J.1}
+\input{tables/tex/Table-J.1.tex}
+\clearpage
+
+\subsection{Table J.2}
+\input{tables/tex/Table-J.2.tex}
+\clearpage
+
+\subsection{Table J.3}
+\input{tables/tex/Table-J.3.tex}
 \clearpage
 
 \end{document}

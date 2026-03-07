@@ -4,7 +4,7 @@
 use `author', clear
 sort AuthorID t
 tempname B b
-foreach stat in flesch fleschkincaid gunningfog smog dalechall {
+foreach stat in flesch fleschkincaid gunningfog smog dalechall llm_readability {
 	preserve
 	collapse (mean) Mean=_`stat'_score (first) Female First=_`stat'_score (last) Last=_`stat'_score if T>2, by(AuthorID)
 	label values Female gender

@@ -127,31 +127,31 @@ program define article_level_table
 end
 
 * Female ratio.
-article_level FemRatio using `article', stats(flesch fleschkincaid gunningfog smog dalechall) data_jel1(`article_primary_jel') data_jel3(`article_tertiary_jel_pp') colnames(_flesch_score _fleschkincaid_score _gunningfog_score _smog_score _dalechall_score)
+article_level FemRatio using `article', stats(flesch fleschkincaid gunningfog smog dalechall llm_readability) data_jel1(`article_primary_jel') data_jel3(`article_tertiary_jel_pp') colnames(_flesch_score _fleschkincaid_score _gunningfog_score _smog_score _dalechall_score _llm_readability_score)
 article_level_table, type(FemRatio)
 
 * Exclusively female-authored.
-article_level Fem100 using `article', stats(flesch fleschkincaid gunningfog smog dalechall) data_jel1(`article_primary_jel') data_jel3(`article_tertiary_jel_pp') colnames(_flesch_score _fleschkincaid_score _gunningfog_score _smog_score _dalechall_score)
+article_level Fem100 using `article', stats(flesch fleschkincaid gunningfog smog dalechall llm_readability) data_jel1(`article_primary_jel') data_jel3(`article_tertiary_jel_pp') colnames(_flesch_score _fleschkincaid_score _gunningfog_score _smog_score _dalechall_score _llm_readability_score)
 article_level_table, type(Fem100)
 
 * Solo-authored.
-article_level FemSolo using `article', stats(flesch fleschkincaid gunningfog smog dalechall) data_jel1(`article_primary_jel') data_jel3(`article_tertiary_jel_pp') colnames(_flesch_score _fleschkincaid_score _gunningfog_score _smog_score _dalechall_score)
+article_level FemSolo using `article', stats(flesch fleschkincaid gunningfog smog dalechall llm_readability) data_jel1(`article_primary_jel') data_jel3(`article_tertiary_jel_pp') colnames(_flesch_score _fleschkincaid_score _gunningfog_score _smog_score _dalechall_score _llm_readability_score)
 article_level_table, type(FemSolo)
 
 * At least one female author.
-article_level Fem1 using `article', stats(flesch fleschkincaid gunningfog smog dalechall) data_jel1(`article_primary_jel') data_jel3(`article_tertiary_jel_pp') colnames(_flesch_score _fleschkincaid_score _gunningfog_score _smog_score _dalechall_score)
+article_level Fem1 using `article', stats(flesch fleschkincaid gunningfog smog dalechall llm_readability) data_jel1(`article_primary_jel') data_jel3(`article_tertiary_jel_pp') colnames(_flesch_score _fleschkincaid_score _gunningfog_score _smog_score _dalechall_score _llm_readability_score)
 article_level_table, type(Fem1)
 
 * Majority female-authord.
-article_level Fem50 using `article', stats(flesch fleschkincaid gunningfog smog dalechall) data_jel1(`article_primary_jel') data_jel3(`article_tertiary_jel_pp') colnames(_flesch_score _fleschkincaid_score _gunningfog_score _smog_score _dalechall_score)
+article_level Fem50 using `article', stats(flesch fleschkincaid gunningfog smog dalechall llm_readability) data_jel1(`article_primary_jel') data_jel3(`article_tertiary_jel_pp') colnames(_flesch_score _fleschkincaid_score _gunningfog_score _smog_score _dalechall_score _llm_readability_score)
 article_level_table, type(Fem50)
 
 * Senior female author.
-article_level FemSenior using `article', stats(flesch fleschkincaid gunningfog smog dalechall) data_jel1(`article_primary_jel') data_jel3(`article_tertiary_jel_pp') colnames(_flesch_score _fleschkincaid_score _gunningfog_score _smog_score _dalechall_score)
+article_level FemSenior using `article', stats(flesch fleschkincaid gunningfog smog dalechall llm_readability) data_jel1(`article_primary_jel') data_jel3(`article_tertiary_jel_pp') colnames(_flesch_score _fleschkincaid_score _gunningfog_score _smog_score _dalechall_score _llm_readability_score)
 article_level_table, type(FemSenior)
 
 * Junior authors.
-article_level FemJunior using `article', stats(flesch fleschkincaid gunningfog smog dalechall) data_jel1(`article_primary_jel') data_jel3(`article_tertiary_jel_pp') colnames(_flesch_score _fleschkincaid_score _gunningfog_score _smog_score _dalechall_score)
+article_level FemJunior using `article', stats(flesch fleschkincaid gunningfog smog dalechall llm_readability) data_jel1(`article_primary_jel') data_jel3(`article_tertiary_jel_pp') colnames(_flesch_score _fleschkincaid_score _gunningfog_score _smog_score _dalechall_score _llm_readability_score)
 article_level_table, type(FemJunior)
 
 * Alternative program for calculating readability statistics.
