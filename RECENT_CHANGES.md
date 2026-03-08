@@ -1,357 +1,146 @@
 # Recent Changes
 
-## Session: 2026-02-26
+## Session: 2026-03-07
 
-### Problem
-After `hengel_data_cleaning.py` was rewritten to include LLM evaluations alongside traditional Hengel readability stats in `article_pp.csv` and `nber.csv`, `Data.do` was broken. The LLM criterion names (e.g. `"Modal Verb Strength"`, `"Hedging Frequency & Type"`) contain spaces and special characters (`&`, `/`) that are invalid in Stata variable names. The `reshape wide` commands in `Data.do` would have failed with these stat names.
+### Theme: LLM composite score versions of all readability tables/figures
+
+Created 10 new do-files that mirror every table and figure iterating over readability scores (`flesch fleschkincaid gunningfog smog dalechall llm_readability`), but using the 5 LLM tonal composite groups (`llm_g1 llm_g2 llm_g3 llm_g4 llm_g5`) instead. Updated `hengel_master.do`, `tables.xlsx`, and `replication.tex` accordingly.
 
 ---
 
-### Changes
+### New do-files created (in `0-code/output/`)
 
-#### `code/hengel_replication/hengel_data_cleaning.py`
-- Added `LLM_RENAME` dictionary mapping all 15 space/symbol-containing LLM criterion names to Stata-compatible snake_case names with an `llm_` prefix:
+#### Tier 1: Simple foreach loops
 
-| Original name | Renamed to |
-|---|---|
-| Modal Verb Strength | `llm_modal_verb` |
-| Hedging Frequency & Type | `llm_hedging` |
-| Qualifier Density | `llm_qualifier` |
-| Acknowledgement of Limitations | `llm_ack_limits` |
-| Caution-Signaling Connectors | `llm_caution` |
-| Assertiveness & Voice | `llm_assertiveness` |
-| Active/Passive Voice Ratio | `llm_active_passive` |
-| Sentence Length & Directness | `llm_directness` |
-| Imperative-Form Occurrence | `llm_imperative` |
-| Pronoun Commitment | `llm_pronoun` |
-| Novelty-Claim Strength | `llm_novelty` |
-| Jargon/Technicality Density | `llm_jargon` |
-| Emotional Valence | `llm_emotional` |
-| Evidence & Citation Usage | `llm_evidence` |
-| Practical/Impact Orientation | `llm_practical` |
+| File | Source | Description |
+|---|---|---|
+| `Table-F.1-llm.do` | `Table-F.1.do` | Journal-level LLM tonal composite differences vs AER |
+| `Table-G.1-llm.do` | `Table-G.1.do` | NBER regressions (first panel), full output |
+| `Table-G.2-llm.do` | `Table-G.2.do` | NBER FE change-in-score (second panel), full output |
+| `Table-G.4-llm.do` | `Table-G.4.do` | Semi-blind review variant (Year>1997) |
+| `Table-I.2-llm.do` | `Table-I.2.do` | Author first/mean/last paper scores; `\multicolumn{6}` → `\multicolumn{5}` |
 
-  (`llm_readability` was already correctly named and is unchanged.)
+#### Tier 2: Program reuse (only table-output program redefined)
 
-- Applied the rename to both `llm_eval` and `nber_llm` DataFrames before melting to long format, so the `StatName` column in `article_pp.csv` and `nber.csv` only contains valid Stata identifiers.
-- Updated `LLM_NEGATE` from `{'Jargon/Technicality Density'}` to `{'llm_jargon'}` to match the renamed key (this controls sign-flipping in `compute_underscore`: jargon is negated so higher = less jargon = clearer).
+| File | Source | Description |
+|---|---|---|
+| `Table-3-llm.do` | `Table-3.do` | Article-level gender regressions, 7 specs (no R variant) |
+| `Table-F.2-llm.do` | `Table-F.2.do` | Author-level Arellano-Bond, 6 specs (no R variant) |
 
-#### `code/hengel_replication/0-code/output/Data.do`
-- After the `reshape wide _` of `article_pp.csv`, added five LLM group composite scores for the published-abstract data:
+#### Tier 3: Program redefinition for substantive fix
 
-```stata
-generate _llm_g1_score = (_llm_modal_verb + _llm_hedging + _llm_qualifier + _llm_ack_limits + _llm_caution) / 5
-generate _llm_g2_score = (_llm_assertiveness + _llm_active_passive) / 2
-generate _llm_g3_score = (_llm_directness + _llm_imperative) / 2
-generate _llm_g4_score = (_llm_pronoun + _llm_novelty + _llm_jargon + _llm_emotional) / 4
-generate _llm_g5_score = (_llm_evidence + _llm_practical) / 2
+| File | Source | Description |
+|---|---|---|
+| `Table-5-llm.do` | `Table-5.do` | NBER FE/FGLS peer review impact, 9 specs (no R variant); `estimates restore ols*_fleschkincaid` → `ols*_llm_g1` |
+
+#### Tier 4: Figure
+
+| File | Source | Description |
+|---|---|---|
+| `Figure-G.1-llm.do` | `Figure-G.1.do` | Blind review event study; outputs `Figure-G.1-llm-combo.pdf` |
+
+#### Tier 5: Complex multi-section
+
+| File | Source | Description |
+|---|---|---|
+| `Section-4.3-llm.do` | `Section-4.3.do` | Mahalanobis matching → `Table-9-llm-*.tex`, `Figure-5-llm-*.pdf`, `Table-J.3-llm.tex`; saves `author_matching_llm` and `author_matching_dik_llm` |
+
+---
+
+### Supporting changes
+
+#### `hengel_master.do` — 10 new include lines
+
+Each placed immediately after its original:
+```
+include "0-code/output/Table-3-llm.do"      (after Table-3.do)
+include "0-code/output/Table-5-llm.do"      (after Table-5.do)
+include "0-code/output/Section-4.3-llm.do"  (after Section-4.3.do, before Figure-K.1.do)
+include "0-code/output/Table-F.1-llm.do"    (after Table-F.1.do)
+include "0-code/output/Table-F.2-llm.do"    (after Table-F.2.do)
+include "0-code/output/Table-G.1-llm.do"    (after Table-G.1.do)
+include "0-code/output/Table-G.2-llm.do"    (after Table-G.2.do)
+include "0-code/output/Figure-G.1-llm.do"   (after Figure-G.1.do)
+include "0-code/output/Table-G.4-llm.do"    (after Table-G.4.do)
+include "0-code/output/Table-I.2-llm.do"    (after Table-I.2.do)
 ```
 
-- After the `reshape wide nber_` of `nber.csv` and merge with the article dataset, added the parallel NBER-abstract composites (`nber_llm_g1_score` through `nber_llm_g5_score`).
+#### `data/raw/hengel_labels/tables.xlsx` — 35 new rows added via openpyxl
 
-#### `data/raw/hengel_labels/varlabels.csv`
-- Added variable label entries for all 16 individual LLM criterion variables (`_llm_readability`, `_llm_modal_verb`, …), the five group composite scores (`_llm_g1_score` through `_llm_g5_score`), and all `nber_` prefixed counterparts.
+Two categories of entries:
 
-#### Regenerated CSVs
-- `data/raw/hengel_generated/article_pp.csv` — stat names now Stata-friendly.
-- `data/raw/hengel_generated/nber.csv` — stat names now Stata-friendly.
+**Columns = LLM groups (5-column layout, explicit CellWidth/Header):**
+- `table3llm | journal` — journal comparisons
+- `table6llm | full` — NBER full output (first panel)
+- `table6llm | change_full` — NBER full output (second panel)
+- `tableH1llm` — first/mean/last scores
+- `table7_semiblindllm` — semi-blind review
+
+**Columns = model specs (same layout as originals):**
+- `table3llm` — 7 gender specs (FemRatio through FemJunior)
+- `table6llm` — 9 specs (7 gender + wordlimit + jel)
+- `table4llm` — 6 gender specs (FemRatio through FemSenior)
+- `table8llm` — 3 matching specs (base, jel, R)
+- `Rit_regresultsllm` — regression output for Rit
+- `figure8llm` — 3 figure note entries (base, jel, R)
+
+All values written explicitly (no VLOOKUP formulas, since new tablenames can't resolve against the existing named range).
+
+#### `outputs/replication.tex` — 36 new LLM references added
+
+New sections/subsections for:
+- Table 3 LLM (7 types): `Table-3-llm-*.tex`
+- Table 5 LLM (9 types): `Table-5-llm-*.tex`
+- Table 9 LLM (3 types): `Table-9-llm-*.tex`
+- Table J.3 LLM: `Table-J.3-llm.tex`
+- Table F.1 LLM: `Table-F.1-llm.tex`
+- Table F.2 LLM (6 types): `Table-F.2-llm-*.tex`
+- Tables G.1, G.2, G.4 LLM: `Table-G.1-llm.tex`, `Table-G.2-llm.tex`, `Table-G.4-llm.tex`
+- Table I.2 LLM: `Table-I.2-llm.tex`
+- Figures 5 LLM (3 types): `Figure-5-llm-*.pdf`
+- Figure G.1 LLM: `Figure-G.1-llm-combo.pdf`
 
 ---
 
-### Result
+### Key design decisions
 
-After these changes:
+1. **No R variant** — LLM do-files skip the `stats(r_fleschkincaid r_gunningfog r_smog)` calls since there's no alternative-package equivalent for LLM scores.
 
-1. **`Data.do` runs without errors.** The `reshape wide` commands in the article-level P&P section and the NBER section now succeed because all `StatName` values are valid Stata identifiers.
+2. **Program name collisions are safe** — Programs redefined in LLM files (`article_level_table`, `nber_fgls`, `nber_table`, `author_level_table`, `matching_table`, `matching_figure`) overwrite the originals. This is safe because LLM files run AFTER their originals, and the original programs are never called again afterward.
 
-2. **All saved Stata datasets include LLM variables.** Every dataset produced by `Data.do` (`article_pp`, `article`, `article_primary_jel`, `nber`, `nber_fe`, etc.) now contains:
-   - 16 individual LLM criterion variables (e.g. `_llm_modal_verb`, `_llm_readability`)
-   - 5 group composite scores (`_llm_g1_score` through `_llm_g5_score`)
-   - NBER counterparts in the NBER/nber_fe datasets
+3. **`nber_fgls` hardcoded fix** — The original `estimates restore ols*_fleschkincaid` (lines 69, 74, 80) was changed to `estimates restore ols*_llm_g1` in the redefined version, since the LLM version stores `ols_llm_g1` estimates.
 
-3. **LLM group composites integrate with the existing `nber_fe` framework.** Because the group composite variable names end in `_score`, they are automatically captured by the existing `reshape long @_score` that builds the paired NBER-vs-published dataset. This means `D._llm_g1_score` (the change in Group 1 score from working paper to published version) is available without any additional code.
-
-4. **Ready for LLM regression tables.** The five group composites follow the same `_<stat>_score` naming convention as the existing Hengel readability scores, so creating parallel LLM versions of Table-3 and Table-5 only requires passing `stats(llm_g1 llm_g2 llm_g3 llm_g4 llm_g5)` to the existing program definitions.
+4. **Section-4.3 5-stat/5-colname alignment** — The original has 5 stats in one loop but 6 colnames in `ereturn_post` (a pre-existing bug). The LLM version naturally avoids this (5 stats, 5 colnames).
 
 ---
 
 ### Next Steps
-- Create LLM-specific regression tables mirroring Table-3 (`article_level` program) and Table-5 (`nber_fgls`/`nber_fe` programs) using `stats(llm_g1 llm_g2 llm_g3 llm_g4 llm_g5)` and column names `_llm_g1_score _llm_g2_score _llm_g3_score _llm_g4_score _llm_g5_score`.
-
----
-
-## Session: 2026-02-27
-
-### Changes
-
-#### `code/hengel_replication/0-code/output/Data.do`
-
-**NBER per-group LLM datasets** — Added 15 new saved datasets (3 per group × 5 groups) after the existing `nber_fe_jel` block. For each LLM group G1–G5:
-- `nber_llm_g{n}` — NBER data retaining only that group's individual NBER criteria, its NBER composite score (`nber_llm_g{n}_score`), and the matching article-level composite (`_llm_g{n}_score`, merged from `article_llm_full`). The article-level score is required so the FE paired-difference reshape can pair NBER vs. published group scores.
-- `nber_llm_g{n}_fe` — Paired-difference version via the same double-reshape used for `nber_fe`.
-- `nber_llm_g{n}_fe_jel` — FE version with primary JEL code dummies added.
-- `nber_llm_g{n}_jel` (tempfile only) — `nber_llm_g{n}` + primary JEL; follows the existing `nber_jel` convention of not saving to disk.
-
-No tertiary JEL variants were added, consistent with the existing NBER section (unlike the article section which has both primary and tertiary JEL variants).
-
-**Duration variant datasets** — Added 6 new saved datasets immediately after the main `duration` dataset is saved. Each starts from the `duration` tempfile, drops `_flesch_score`, and merges in a replacement LLM readability measure:
-
-| Dataset | Variable merged | Source |
-|---|---|---|
-| `duration_llm_readability` | `_llm_readability` | `article` tempfile |
-| `duration_llm_g1` | `_llm_g1_score` | `article_llm_full` tempfile |
-| `duration_llm_g2` | `_llm_g2_score` | `article_llm_full` tempfile |
-| `duration_llm_g3` | `_llm_g3_score` | `article_llm_full` tempfile |
-| `duration_llm_g4` | `_llm_g4_score` | `article_llm_full` tempfile |
-| `duration_llm_g5` | `_llm_g5_score` | `article_llm_full` tempfile |
-
-`_llm_readability` is sourced from `article` (it was never dropped from the main article datasets). The group composites are sourced from `article_llm_full` (they were dropped from `article` before it was saved).
-
-#### `code/hengel_replication/hengel_data_cleaning.py` — Jargon scale flip
-
-Changed how `llm_jargon` is transformed in `compute_underscore`. Previously it was simple negation (`-value`), which placed it on a negative scale incompatible with all other LLM criteria (scored 1–10). It is now scale-flipped as `11 - value`, keeping it on the same 1–10 range:
-
-| Raw score | Before (negation) | After (flip) |
-|---|---|---|
-| 10 (densest jargon) | -10 | 1 |
-| 5 | -5 | 6 |
-| 1 (least jargon) | -1 | 10 |
-
-Implementation details:
-- Renamed `LLM_NEGATE` → `LLM_FLIP` to reflect the new semantics
-- Split `compute_underscore` into two independent steps: Hengel negation (unchanged) and LLM scale flip (new), applied sequentially so they cannot interfere
-- Updated inline comments and the sign-flip convention block
-
-`CLAUDE.md` updated to reflect the flip rather than negation.
-
-#### `code/hengel_replication/0-code_summary/` (new directory)
-
-Created short `.txt` summary files for all 25 Stata `.do` files in `0-code/output/`. Each file documents the inputs, main operations, and outputs of the corresponding do-file. Two non-`.do` files were identified and skipped: `Figure-3.nb` and `Figure-G.2.nb` (Jupyter/Mathematica notebooks).
-
----
-
-## Session: 2026-03-03
-
-### Problems fixed
-
-#### 1. `hengel_master.do` — `ssc install` failing with `r(602)`
-`ssc install` refused to overwrite existing package files without permission. Fixed by adding `, replace` to all 10 `ssc install` calls.
-
-#### 2. `hengel_master.do` — personal ado directory not found (`r(603)`)
-The copy loop for custom Stata programs failed because `~/Documents/Stata/ado/personal/` did not exist. The entire approach was replaced: instead of copying files to the personal ado directory, `adopath +` is now used to add the project's `0-code/programs/stata/` directory directly to Stata's search path. Path uses tilde notation (`~/tonal_analysis/...`) consistent with all other paths in the codebase.
-
-#### 3. `reghdfe` failing with `r(9)` — missing `require` package
-Newer versions of `reghdfe` depend on the `require` package to check its own dependencies at runtime. Added `ssc install require, replace` to `hengel_master.do` immediately after `reghdfe`.
-
-#### 4. `Table-7.do` — `r(2001)` insufficient observations for REStud regressions
-Root cause: `CiteCount` was entirely missing for all REStud articles in the raw `Article.csv` (0/2,011 non-missing), so `asinhCiteCount` was missing for every RES observation, causing listwise deletion to drop all 1,812 RES articles before `reghdfe` ran.
-
-Fix: patched `data/raw/hengel_replication_data/Article.csv` with REStud citation counts sourced from the matching dataset at `/Users/austincoffelt/readability/0-data/generated/time.csv` (identical ArticleIDs, complete RES data). 1,812 values filled in; the remaining 199 RES articles without citation data are articles that lack `Received` dates and therefore never appear in the duration dataset anyway. Regenerated `hengel_data_cleaning.py` to propagate the fix downstream.
-
-#### 5. Figure export failing with `r(693)` — output directory missing
-`graph export` for Figure-1 failed because `~/tonal_analysis/outputs/figures/` did not exist. Directory was created (implicitly, by running the analysis after the other fixes allowed execution to reach the figure export step).
-
----
-
-### Changes
-
-#### `code/hengel_replication/hengel_master.do`
-- All `ssc install` calls now use `, replace`
-- Added `ssc install require, replace` after `reghdfe`
-- Replaced copy-to-personal-ado loop with: `adopath + "~/tonal_analysis/code/hengel_replication/0-code/programs/stata"`
-
-#### `data/raw/hengel_replication_data/Article.csv`
-- Filled in `CiteCount` for 1,812 REStud articles using citation data from `/Users/austincoffelt/readability/0-data/generated/time.csv`
-
-#### `data/raw/hengel_generated/time.csv` (regenerated)
-- Downstream of `Article.csv` patch; now has complete `CiteCount` for RES (3,085 rows, previously 0)
-
-#### `outputs/replication.tex` (new file)
-- Mega LaTeX document aggregating all output for Overleaf comparison
-- Includes all 4 figures and all 44 table `.tex` files, organized by table number with subsections per gender specification
-- Preamble defines custom macros `\mrow` and `\crcell` used throughout the Hengel tables
-- References files via relative paths (`figures/` and `tables/tex/`) so the `outputs/` directory can be uploaded directly to Overleaf
-
----
-
-### Current status of `hengel_master.do` run
-The run reaches `Table-3.do` (article-level readability regressions) before stopping. All `Data.do` datasets are successfully generated. Figures 1, 2, and 4 complete. Tables 2, 3 (partial) produced.
-
----
-
-### Remaining issues / next steps
 
 #### A. Complete a clean full run of `hengel_master.do`
-The run has not yet completed end-to-end. Each session has been stopped by a new error. Need a clean run that produces all outputs.
-
-#### B. LLM regression tables (primary new analysis)
-Still the main outstanding deliverable. Need to create do-files (or extend existing ones) that mirror:
-- **Table-3** (`article_level` program) using `stats(llm_g1 llm_g2 llm_g3 llm_g4 llm_g5)` and column names `_llm_g1_score` through `_llm_g5_score`
-- **Table-5** (`nber_fgls`/`nber_fe` programs) using the same LLM group composites
-- **Table-7** (duration) using `duration_llm_g{n}` datasets
-
-These datasets already exist in `data/raw/hengel_generated/`. The regression programs already exist and accept a `stats()` argument. Adding the LLM table calls to `hengel_master.do` is the main remaining coding task.
-
-#### C. Verify `replication.tex` compiles cleanly in Overleaf
-Upload `outputs/` to Overleaf and confirm all tables and figures render correctly. Known potential issues:
-- `\autoref` cross-references point to labels in the original paper (e.g. `\autoref{gender}`) that don't exist in this standalone document — these will generate warnings but not compilation errors
-- Some landscape tables may need `pdflscape` in addition to `rotating` if Overleaf's engine differs
-
----
-
-## Session: 2026-03-05
-
-### Changes
-
-#### `code/hengel_replication/0-code_summary/` — File Paths sections added
-
-Appended a `## File Paths` section to all 30 existing `.txt` summary files. Each section contains a markdown table (`| Line | Command | Path |`) listing every disk file path referenced in the corresponding `.do` file — extracted verbatim with line numbers and the Stata command used. Tempfile/macro references (backtick names like `` `article' ``) were excluded; only paths that resolve to actual disk locations were included.
-
-#### `code/hengel_replication/0-code_summary/hengel_master.txt` (new file)
-
-Created a new summary file for `hengel_master.do`, which previously had no corresponding `.txt`. Includes a description of the master script's role and a File Paths section covering its 33 file references: `adopath`, `import excel`, `log using`, and all 30 `include` calls.
-
-#### Two incorrect paths corrected
-
-During the file-path audit, two paths were found that referenced non-existent directories (`0-tex/generated/` and `0-data/generated/`) rather than the correct project locations. Both were corrected in the `.do` files and their summary files:
-
-| File | Line | Old path | Corrected path |
-|------|------|----------|----------------|
-| `0-code/output/Section-4.3.do` | 288 | `0-tex/generated/Table-J.1.tex` | `~/tonal_analysis/outputs/tables/tex/Table-J.1.tex` |
-| `0-code/output/Table-J.2.do` | 5 | `0-data/generated/author_matching` | `~/tonal_analysis/data/raw/hengel_generated/author_matching` |
-
-#### `0-code_summary/Table-J.2.txt` — two missing paths added
-
-`listtex` and `create_latex` commands on lines 38–39 of `Table-J.2.do` were not captured by the original extraction (non-standard Stata commands). Added manually:
-- L38: `listtex ... using` → `~/tonal_analysis/outputs/tables/tex/Table-J.2.tex`
-- L39: `create_latex using` → `~/tonal_analysis/outputs/tables/tex/Table-J.2.tex`
-
----
-
-## Session: 2026-03-06
-
-### Theme: Adding `llm_readability` as a new readability statistic
-
-All changes extend the existing set of readability stats (`flesch fleschkincaid gunningfog smog dalechall`) to also include `llm_readability` as a sixth statistic.
-
-#### `code/hengel_replication/0-code/output/Data.do`
-- After dropping individual LLM criterion variables, generates `_llm_readability_score = _llm_readability` (article level) and `nber_llm_readability_score = nber_llm_readability` (NBER level) so that `llm_readability` matches the `@_score` reshape pattern used by all other readability stats.
-
-#### `code/hengel_replication/0-code/output/Table-3.do`
-- All 7 `article_level` calls now include `llm_readability` in `stats(...)` and `_llm_readability_score` in `colnames(...)`.
-
-#### `code/hengel_replication/0-code/output/Table-5.do`
-- All 9 `nber_fe`/`nber_fgls` estimation calls now include `llm_readability` in `stats(...)` and `_llm_readability_score` in `colnames(...)`.
-
-#### `code/hengel_replication/0-code/output/Table-F.1.do`
-- Added `llm_readability` to the `foreach stat in ...` loop.
-
-#### `code/hengel_replication/0-code/output/Table-F.2.do`
-- All 6 `author_level` calls now include `llm_readability` in `stats(...)`.
-
-#### `code/hengel_replication/0-code/output/Table-G.1.do`, `Table-G.2.do`, `Table-G.4.do`, `Table-I.2.do`
-- Each adds `llm_readability` to its `foreach stat in ...` loop.
-- `Table-G.2.do` also adds `fe_llm_readability` to the `estout` call.
-
-#### `code/hengel_replication/0-code/output/Figure-G.1.do`
-- Adds `local _llm_readability_title "LLM Readability"`, adds `llm_readability` to the `foreach` loop, and includes it in the combined graph.
-
-#### `code/hengel_replication/0-code/output/Section-4.3.do` (largest change)
-- Adds `llm_readability` throughout the matching analysis: title local, `foreach` loops, `merge`/`rename`/`reshape` variable lists (both `reshape long` and `reshape wide` blocks), `ereturn_post colnames(...)`, and a new `estout` block outputting `est_llm_readability_*` results to Table 9.
-
-#### `outputs/replication.tex`
-- Added packages `threeparttablex` and `natbib`.
-- Added `\mcol` macro for 6-column spanning labels.
-- Expanded document substantially: added Figures 5 (base/JEL/R), Figure 6, Appendix Figures D.1/D.2/F.1/G.1/K.1, Tables 9 and 10, and full Appendix sections B, C, F, G, H, I, and J as `\input{}`/`\includegraphics` entries. Previously the document only contained Tables 2–8 and a stub for Table I.3.
-
-#### `outputs/replication.pdf`
-- Binary updated (274KB → 691KB) reflecting the expanded `.tex`.
-
-#### `outputs/tables/tex/Table-*.tex` (65 files, regenerated from Stata)
-- SE rows: parentheses now brace-wrapped — `(0.53)` → `{(0.53)}` (siunitx fix)
-- `\midruleEditor` → `\midrule` + newline + `Editor` (missing newline fix)
-- Notes text: `(6)` → `{(6)}` in footnotes (same brace-wrapping fix)
-- Tables with readability results now include an additional `LLM Readability` row
-
----
-
-## Session: 2026-03-05 (continued)
-
-### Changes
-
-#### `outputs/replication.pdf` (new file)
-
-Compiled `outputs/replication.tex` to PDF using `tectonic` (installed via Homebrew). Two pre-existing bugs in the Stata-generated table `.tex` files were fixed in order to compile:
-
-1. **`\midrule` + `Editor` concatenation** — All 41 table files in `outputs/tables/tex/` had `\midruleEditor` or `\midruleEditor effects` with no newline separator. Fixed with a Python script across all affected files.
-2. **Unbraced parenthesized values in `S` columns** — `siunitx`'s `S` column type rejects bare `(0.42)`-style entries; they must be wrapped in `{}`. Fixed across all 44 table files in `outputs/tables/tex/`.
-
-#### `~/readability/original.pdf` (new file)
-
-Compiled a parallel PDF from the original Hengel replication output at `~/readability/0-tex/generated/` (tables) and `~/readability/0-images/generated/` (figures). A new driver file `~/readability/original.tex` was created to aggregate all content.
-
-Fixes applied to the original source files:
-
-1. **Unbraced parenthesized values** — Same siunitx fix applied to all 67 generated table files in `~/readability/0-tex/generated/`.
-2. **Brace-wrapped filenames** — `{Figure-D.1-meta}.pdf` syntax (pdflatex-specific) replaced with bare filenames for XeTeX compatibility in `Figure-D.1.tex`, `Figure-D.2.tex`, `Figure-F.1.tex`, `Figure-G.1.tex`, `Figure-G.2.tex`, `Figure-K.1.tex`.
-3. **`\mcol` column mismatch** — `Table-F.2-R.tex` has 4 columns (not 6 like the other F.2 tables); its `\mcol{...}` calls were replaced with `\multicolumn{4}{l}{...}`.
-
-Packages added to `original.tex` preamble beyond those in `replication.tex`: `floatrow`, `array`, `natbib`, `bm`, `upgreek`, `threeparttablex`.
-
-Custom macros defined in `original.tex`: `\newcolumntype{L}`, `\vect`, `\vep`, `\mcol`, `\aref`.
-
----
-
-## Session: 2026-03-06 (continued)
-
-### Theme: Consolidating LLM datasets — removing per-group splits
-
-#### `code/hengel_replication/0-code/output/Data.do` (major refactor, 933 → 413 lines)
-
-**Previous design:** After computing LLM group composites, Data.do saved a full `article_llm_full` tempfile, then dropped all 15 individual criteria and all 5 group composites from the main `article`/`nber` datasets (retaining only `_llm_readability`). It then created 30+ per-group saved datasets (`article_llm_g1` through `article_llm_g5` with PP/JEL variants, `nber_llm_g1` through `nber_llm_g5` with FE/JEL variants, and 6 duration variants).
-
-**New design:** Individual criteria and group composites are all retained directly in the main datasets. No per-group datasets are created.
-
-Specific changes:
-
-1. **Article section** — Removed `article_llm_full` tempfile save. Removed `drop` of individual criteria and group composites. All 15 individual criteria (`_llm_modal_verb`, `_llm_hedging`, etc.) and all 5 group composites (`_llm_g1_score` through `_llm_g5_score`) now flow into `article_pp`, `article`, `article_primary_jel`, `article_tertiary_jel`, and all JEL/PP variants.
-
-2. **Removed ~258 lines** of per-group article dataset creation blocks (Groups 1–5 with PP, non-PP, primary JEL, tertiary JEL variants).
-
-3. **NBER section** — Removed `nber_llm_full` tempfile save. Removed `drop` of individual NBER criteria and group composites. All 15 individual NBER criteria and 5 NBER group composites now flow into `nber`, `nber_fe`, `nber_fe_jel`. The `nber_fe` paired-difference `reshape long @_score` automatically picks up all group composites, producing `D._llm_g1_score` through `D._llm_g5_score` without extra code.
-
-4. **Removed ~183 lines** of per-group NBER dataset creation blocks (Groups 1–5 with FE and JEL variants).
-
-5. **Duration section** — Updated `keepusing` when merging from `article` to also pull `_llm_readability_score` and `_llm_g1_score` through `_llm_g5_score`, so the duration dataset carries all LLM composite scores alongside `_flesch_score`.
-
-6. **Removed ~61 lines** of per-group duration dataset creation blocks (`duration_llm_readability`, `duration_llm_g1` through `duration_llm_g5`).
-
-#### `code/hengel_replication/0-code_summary/Data.txt`
-
-- OPERATIONS updated to reflect consolidated design (no per-group datasets, all LLM variables retained throughout)
-- OUTPUTS updated: removed all per-group dataset entries (article_llm_g*, nber_llm_g*, duration_llm_*); duration entry now implicitly includes LLM composite scores
-- File Paths table: removed all per-group save entries; updated line numbers throughout
-
-#### `0-code_summary/*.txt` — summary files updated this session
-
-Earlier in this session, the following summary files were updated to reflect `llm_readability` being added as a sixth readability statistic (changes from the prior commit):
-
-- `Data.txt` — added duration_llm_* to OUTPUTS (now superseded by this session's rewrite)
-- `Table-3.txt` — Operations: 5 → 6 readability measures; added Table-3-R.tex to OUTPUTS
-- `Table-5.txt` — Operations: 5 → 6 readability measures
-- `Table-F.1.txt` — Operations: 5 → 6 regressions
-- `Table-G.2.txt` — Operations: noted 6 measures; File Paths: added fe_llm_readability to estout command
-- `Table-G.4.txt` — Operations: 5 → 6 readability measures
-- `Section-4.3.txt` — Operations: Rit reconstruction covers 6 stats; Table-J.3 includes LLM Readability block
-- `Figure-G.1.txt` — Operations: 5 → 6 measures; combo graph now includes llm_readability panel
-
----
-
-### Next Steps
-
-#### A. LLM group regression tables (primary new analysis)
-With all LLM variables now in the main datasets, the new analysis do-file can use `article`, `nber`, and `nber_fe` directly with `stats(llm_g1 llm_g2 llm_g3 llm_g4 llm_g5)`. The one remaining obstacle is the hardcoded `estimates restore ols*_fleschkincaid` in `nber_fgls` (lines ~69, 74, 80 of Table-5.do), which needs a `refstat()` option or similar fix before LLM group FGLS tables can be produced.
-
-#### B. Complete a clean full run of `hengel_master.do`
-Data.do now needs to be re-run to regenerate all `.dta` files with the new schema (all LLM variables present in main datasets).
-
-#### C. Verify `replication.tex` compiles cleanly in Overleaf
+The run has not been tested end-to-end since these changes. All 10 new LLM do-files need to execute without errors. Potential issues:
+- Estimate name collisions if `estimates clear` is missing at the right points
+- Variable existence in datasets (all LLM composites should already be in main datasets from prior Data.do consolidation)
+
+#### B. Verify new `.tex` files appear in `outputs/tables/tex/`
+After the Stata run, confirm all expected output files are produced:
+- 7 × `Table-3-llm-*.tex`
+- 9 × `Table-5-llm-*.tex`
+- `Table-F.1-llm.tex`
+- 6 × `Table-F.2-llm-*.tex`
+- `Table-G.1-llm.tex`, `Table-G.2-llm.tex`, `Table-G.4-llm.tex`
+- `Table-I.2-llm.tex`
+- 3 × `Table-9-llm-*.tex`
+- `Table-J.3-llm.tex`
+
+#### C. Verify new figures appear in `outputs/figures/`
+- `Figure-G.1-llm-combo.pdf`
+- 3 × `Figure-5-llm-*.pdf`
+
+#### D. Recompile `replication.tex` in Overleaf
+All new `\input{}` and `\includegraphics{}` entries need the corresponding files from Steps B and C. Verify rendering of LLM group labels in table headers.
+
+#### E. Create `0-code_summary/*.txt` files for new do-files
+The 10 new LLM do-files don't yet have corresponding summary files in `0-code_summary/`.
+
+#### F. Update `\mcol` macro width if needed
+The `\mcol` macro is hardcoded as `\multicolumn{6}{l}` — this works for `Table-F.2-llm` (5 LLM columns + 1 label = 6), but verify it's not used elsewhere with a different column count.
