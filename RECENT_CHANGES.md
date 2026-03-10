@@ -1,5 +1,73 @@
 # Recent Changes
 
+## Session: 2026-03-09
+
+### Theme: Stata bug fixes and replication.tex PDF hardening
+
+---
+
+### Bug fixes
+
+#### 1. `Section-4.3.do` — conformability error r(503)
+
+**Symptom:** After saving `author_matching_dik.dta`, Stata threw `conformability error r(503)` and aborted.
+
+**Root cause:** The `foreach stat in flesch fleschkincaid gunningfog smog dalechall` loop (line 321) was missing `llm_readability`. The loop builds matrices (`bf1`, `sf1`, `nf1`, etc.) with 5 columns each, but the subsequent `ereturn_post` calls specified 6 column names (`flesch fleschkincaid gunningfog smog dalechall llm_readability`). A 5-column matrix paired with 6 column names is a conformability mismatch.
+
+**Fix:** Added `llm_readability` to the loop:
+```stata
+foreach stat in flesch fleschkincaid gunningfog smog dalechall llm_readability {
+```
+This makes the loop consistent with: the merge's `keepusing` list, the reshape variable lists, `ereturn_post` colnames, and the `matching_figure` program's own loop.
+
+**Note from previous session:** This bug was documented as a known issue in Section-4.3.5 design note ("5-stat/5-colname alignment"). The LLM version (`Section-4.3-llm.do`) naturally avoids it with 5 stats and 5 colnames.
+
+---
+
+#### 2. `Section-4.3.do` — "too few quotes" r(132) (diagnosed, not yet fixed)
+
+**Symptom:** After writing `Table-9-jel.tex`, Stata threw `too few quotes r(132)` when `matching_figure, type(jel)` was called.
+
+**Root cause:** In the `notes` sheet of `tables.xlsx` (the first sheet, which Stata reads by default), the `Note` cells for `figure8 / jel` and `figure8 / R` are Excel formula cells (`=CONCATENATE(VLOOKUP(...), "J.4.")` and `=CONCATENATE(VLOOKUP(...), "J.5.")`). These formulas have no cached value in the file (openpyxl returns `None` with `data_only=True`). When Stata's `import excel` encounters an uncached formula cell, it reads the formula text as a string literal. That text contains double quotes (e.g., `"J.4."`), which break Stata's string parsing when the note is embedded inside `wordwrap \`"{it:Notes.} \`note'"\`'`.
+
+The `base` type worked because its Note is a plain string with no embedded quotes. This error was never reached in previous runs because the run aborted earlier at the r(503) error.
+
+**Fix needed:** Open `tables.xlsx` in Excel, recalculate (Ctrl+Alt+F9), and save — this will cache the formula results so Stata reads the computed strings. Alternatively, replace the two CONCATENATE formulas in the `notes` sheet with literal strings.
+
+---
+
+### `outputs/replication.tex` — graceful handling of missing outputs
+
+Added two helper macros to allow the PDF to compile even when some Stata outputs have not yet been generated:
+
+```latex
+\newcommand{\maybeInput}[1]{\IfFileExists{#1}{\input{#1}}{\textit{[Not yet generated: \texttt{#1}]}}}
+\newcommand{\maybeInclude}[1]{\IfFileExists{#1}{\includegraphics[width=\textwidth]{#1}}{\centering\textit{[Not yet generated: \texttt{#1}]}}}
+```
+
+Applied `\maybeInclude` to 4 missing figures and `\maybeInput` to 15 missing tables — all outputs from LLM do-files that have not yet run to completion:
+
+| Missing figures | Missing tables |
+|---|---|
+| `Figure-5-llm-base/jel/R.pdf` | `Table-F.1-llm.tex` |
+| `Figure-G.1-llm-combo.pdf` | `Table-F.2-llm-*` (6 variants) |
+| | `Table-G.1/G.2/G.4-llm.tex` |
+| | `Table-I.2-llm.tex` |
+| | `Table-9-llm-base/jel/R.tex` |
+| | `Table-J.3-llm.tex` |
+
+Once those do-files run successfully, the files will be picked up automatically on the next PDF compile.
+
+---
+
+### Updated Next Steps
+
+- **Fix `tables.xlsx`:** Open in Excel, force recalculation (Ctrl+Alt+F9), and save to cache the CONCATENATE formula results for `figure8/jel` and `figure8/R` in the `notes` sheet.
+- **Re-run `hengel_master.do`** end-to-end to generate remaining LLM outputs.
+- **Compile `replication.pdf`** once LaTeX is installed (`brew install --cask mactex`) or via Overleaf upload.
+
+---
+
 ## Session: 2026-03-07
 
 ### Theme: LLM composite score versions of all readability tables/figures

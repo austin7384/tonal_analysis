@@ -1,0 +1,38 @@
+\begin{sidewaystable}
+    \footnotesize
+    \centering
+    \begin{threeparttable}
+        \caption{\autoref{table6llm_FemRatio}, controlling for \textit{JEL} category}
+        \label{table6llm_jel}
+        \begin{tabular}{p{3cm}S@{}S@{}S@{}S@{}S@{}S@{}S@{}S@{}S@{}S@{}S@{}}
+            \toprule
+            &\multicolumn{3}{c}{{OLS (score)}}&\multicolumn{2}{c}{{OLS ($\Delta$ in score)}}&\multicolumn{6}{c}{{FGLS (score)}}\\\cmidrule(lr){2-4}\cmidrule(lr){5-6}\cmidrule(lr){7-12}&&&&&&\multicolumn{2}{c}{{Working paper}}&\multicolumn{2}{c}{{Published paper}}&\multicolumn{2}{c}{{Difference}}\\\cmidrule(lr){7-8}\cmidrule(lr){9-10}\cmidrule(lr){11-12}&{\(R_{jW}\)}&{\crcell[b]{Female}}&{\crcell[b]{Blind$\times$\\[-0.1cm]female}}&{\crcell[b]{Female}}&{\crcell[b]{Blind$\times$\\[-0.1cm]female}}&{\crcell[b]{Female}}&{\crcell[b]{Blind$\times$\\[-0.1cm]female}}&{\crcell[b]{Female}}&{\crcell[b]{Blind$\times$\\[-0.1cm]female}}&{\crcell[b]{Female}}&{\crcell[b]{Blind$\times$\\[-0.1cm]female}}\\
+            \midrule
+            LLM G1: Creativity & Hedging  &        0.47***&       -0.19   &        0.14   &       -0.21*  &        0.03   &        0.04   &        0.20   &       -0.17   &        0.23   &       -0.21*  &        0.03   \\
+                                          &      (0.02)   &      (0.13)   &      (0.23)   &      (0.12)   &      (0.23)   &      (0.11)   &      (0.34)   &      (0.12)   &      (0.49)   &      (0.12)   &      (0.23)   \\
+            LLM G2: Assertiveness & Voice &        0.49***&        0.05   &       -0.35** &       -0.04   &       -0.32   &        0.17   &       -0.06   &        0.14   &       -0.38   &       -0.04   &       -0.32   \\
+                                          &      (0.02)   &      (0.09)   &      (0.15)   &      (0.15)   &      (0.39)   &      (0.12)   &      (0.17)   &      (0.13)   &      (0.40)   &      (0.15)   &      (0.38)   \\
+            LLM G3: Structural Directness &        0.37***&        0.16*  &       -0.29***&        0.05   &       -0.01   &        0.17** &       -0.46** &        0.22** &       -0.46** &        0.05   &       -0.01   \\
+                                          &      (0.03)   &      (0.08)   &      (0.11)   &      (0.11)   &      (0.14)   &      (0.08)   &      (0.19)   &      (0.09)   &      (0.19)   &      (0.11)   &      (0.13)   \\
+            LLM G4: Authorial Stance & Novelty&        0.65***&        0.04   &       -0.13   &       -0.09   &       -0.07   &        0.37***&       -0.18   &        0.28*  &       -0.25   &       -0.09   &       -0.07   \\
+                                          &      (0.03)   &      (0.08)   &      (0.13)   &      (0.07)   &      (0.18)   &      (0.14)   &      (0.24)   &      (0.15)   &      (0.27)   &      (0.07)   &      (0.18)   \\
+            LLM G5: Support & Impact      &        0.65***&        0.01   &        0.18   &        0.01   &        0.04   &        0.02   &        0.40   &        0.03   &        0.44*  &        0.01   &        0.04   \\
+                                          &      (0.02)   &      (0.09)   &      (0.14)   &      (0.14)   &      (0.39)   &      (0.15)   &      (0.40)   &      (0.20)   &      (0.26)   &      (0.14)   &      (0.38)   \\
+            \midrule
+            No. observations              &               &       1,703   &               &       1,703   &               &       1,703   &               &       1,703   &               &       1,703   &               \\
+            \midruleEditor effects        &               &           {\ding{51}}   &               &           {\ding{51}}   &               &           {\ding{51}}   &               &           {\ding{51}}   &               &               &               \\
+            Journal\(\times\)Year effects          &               &           {\ding{51}}   &               &           {\ding{51}}   &               &           {\ding{51}}   &               &           {\ding{51}}   &               &               &               \\
+            \(N_j\)                       &               &           {\ding{51}}   &               &           {\ding{51}}   &               &           {\ding{51}}   &               &           {\ding{51}}   &               &               &               \\
+            Quality controls              &               &          {\(\text{\ding{51}}^2\)}   &               &          {\(\text{\ding{51}}^2\)}   &               &          {\(\text{\ding{51}}^2\)}   &               &          {\(\text{\ding{51}}^2\)}   &               &               &               \\
+            Native speaker                &               &           {\ding{51}}   &               &           {\ding{51}}   &               &           {\ding{51}}   &               &           {\ding{51}}   &               &               &               \\
+            Theory/emp. effects           &               &           {\ding{51}}   &               &           {\ding{51}}   &               &           {\ding{51}}   &               &           {\ding{51}}   &               &               &               \\
+            \textit{JEL} effects          &               &           {\ding{51}}   &               &           {\ding{51}}   &               &           {\ding{51}}   &               &           {\ding{51}}   &               &               &               \\
+            \bottomrule
+        \end{tabular}
+        \begin{tablenotes}
+            \tiny
+            \item \textit{Notes}. Columns display estimates identical to those in \autoref{table6llm_FemRatio}, except that primary JEL code effects are included as additional controls. ***, ** and * statistically significant at 1\%, 5\% and 10\%, respectively.
+        \end{tablenotes}
+    \end{threeparttable}
+
+\end{sidewaystable}

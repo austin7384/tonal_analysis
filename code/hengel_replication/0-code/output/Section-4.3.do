@@ -318,7 +318,7 @@ if "`R'"=="jel" drop if missing(JEL1_A01)|missing(JEL1_A11)
 * Create temporary variables.
 tempname a1 a2 a3 a4 a5 n bf1 sf1 bm1 sm1 nf1 nm1 b1 s1 n1 b2 s2 n2
 
-foreach stat in flesch fleschkincaid gunningfog smog dalechall {
+foreach stat in flesch fleschkincaid gunningfog smog dalechall llm_readability {
 
 	* Mean Conditions 1--2.
 	generate _`stat'_Dtm = _`stat'_R12 - _`stat'_R11 // Condition 2 for the male member.
