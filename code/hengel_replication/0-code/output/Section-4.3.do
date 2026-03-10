@@ -13,7 +13,7 @@ program define matching_table
 end
 
 * Figure 5: Distribution of Dik (Corollary 1)
-capture programm drop matching_figure
+capture program drop matching_figure
 program define matching_figure
 	syntax , type(string) [float]
 

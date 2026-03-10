@@ -1,5 +1,102 @@
 # Recent Changes
 
+## Session: 2026-03-10
+
+### Theme: Bug fix for `r(110)` program-already-defined error; `replication.tex` LLM outputs promoted from placeholders
+
+---
+
+### Bug fixes
+
+#### 1. `Section-4.3.do` and `Section-4.3-llm.do` — `r(110)` program already defined
+
+**Symptom:** When `hengel_master.do` reached `Section-4.3-llm.do`, Stata threw `program matching_figure already defined r(110)` and aborted.
+
+**Root cause:** Both files had a typo on line 16: `capture programm drop matching_figure` (`programm` with double `m`). Stata does not recognise `programm`, so `capture` silently swallowed an invalid-command error instead of dropping the program. When `Section-4.3-llm.do` ran after `Section-4.3.do`, `matching_figure` was still in memory.
+
+**Fix:** Corrected `programm` → `program` in both files:
+```stata
+capture program drop matching_figure
+```
+
+---
+
+### `outputs/replication.tex` — LLM placeholders promoted to full references
+
+All 19 `\maybeInput`/`\maybeInclude` placeholder calls replaced with standard `\input`/`\includegraphics` now that the corresponding Stata outputs exist.
+
+**Figures (4):**
+- `Figure-5-llm-base.pdf`, `Figure-5-llm-jel.pdf`, `Figure-5-llm-R.pdf`
+- `Figure-G.1-llm-combo.pdf`
+
+**Tables (15):**
+- `Table-F.1-llm.tex`
+- `Table-F.2-llm-FemRatio/Fem100/FemSolo/Fem1/Fem50/FemSenior.tex` (6 files)
+- `Table-G.1-llm.tex`, `Table-G.2-llm.tex`, `Table-G.4-llm.tex`
+- `Table-I.2-llm.tex`
+- `Table-9-llm-base.tex`, `Table-9-llm-jel.tex`, `Table-9-llm-R.tex`
+- `Table-J.3-llm.tex`
+
+The `\maybeInput`/`\maybeInclude` macro definitions remain in the preamble for future use.
+
+---
+
+### `outputs/replication.tex` — LaTeX compilation fixes (this session)
+
+Installed `tectonic` (`brew install tectonic`) and compiled `replication.tex` to `replication.pdf`. Required fixing several systematic bugs in the generated `.tex` table files:
+
+#### 1. `siunitx` v3 rejects parenthesized standard errors
+
+**Problem:** `S` columns in siunitx v3 try to parse numbers and reject `(0.02)` style entries.
+**Fix:** Added `\sisetup{parse-numbers=false,table-number-alignment=center}` to the preamble. Numbers are already pre-formatted by Stata so this has no effect on rounding.
+
+#### 2. Unescaped `&` in `\mrow{}{}` second arguments
+
+**Problem:** Row labels like `\mrow{5cm}{Hedging Frequency & Type}` had bare `&` inside the second argument, causing LaTeX to treat it as a column separator.
+**Affected files:** `Table-1-llm.tex` (4 instances), `Table-3-llm-*.tex` (6 files × 4 rows = 24 instances).
+**Fix:** Script to escape `&` → `\&` inside `\mrow{}{...}` second arguments (excluding math mode).
+
+#### 3. Unescaped `&` in direct LLM row labels (Table-5-llm-*)
+
+**Problem:** `Table-5-llm-*.tex` files use row labels like `LLM G1: Creativity & Hedging` directly in table cells (not wrapped in `\mrow`).
+**Affected files:** All 9 `Table-5-llm-*.tex` files, 4 rows each.
+**Fix:** Replaced `& Hedging`, `& Voice`, `& Novelty`, `& Impact` → `\& Hedging`, etc.
+
+#### 4. `\midrule` concatenated with next cell text
+
+**Problem:** Stata's table writer concatenated `\midrule` with the first cell of the next row in some files (e.g., `\midruleEditor effects`).
+**Affected files:** ~30+ table files across the project.
+**Fix:** Script to insert newline + indentation after `\midrule` when immediately followed by a letter.
+
+#### 5. Underscores in display text
+
+**Problem:** Variable names like `_llm_readability_score` used directly as row labels caused "Missing \$" errors.
+**Affected files:** All 9 `Table-5-*.tex` variants (both base and llm).
+**Fix:** Replaced `_llm_readability_score` → `\_llm\_readability\_score` in those files.
+
+#### 6. Column count mismatch in 3 appendix LLM tables (Stata bug)
+
+**Problem:** `Table-G.1-llm.tex`, `Table-G.4-llm.tex`, and `Table-I.2-llm.tex` declare 5 S columns in their tabular spec and header, but the data rows have 11 values each. The corresponding `\multicolumn{5}{l}{...}` group labels also span only 5 columns.
+
+**Root cause:** The Stata do-files (`Table-G.1-llm.do`, `Table-G.4-llm.do`, `Table-I.2-llm.do`) were written for 5 LLM composite groups but apparently export data for 11 model specifications (matching the Table-5-llm pattern). The column specs and headers were not updated to match.
+
+**Temporary fix for PDF compilation:** Expanded the tabular spec to 11 S columns and added placeholder headers `(6)` through `(11)`. Updated `\multicolumn{5}{l}` → `\multicolumn{12}{l}` in `Table-I.2-llm.tex`.
+
+**Permanent fix needed:** Review `Table-G.1-llm.do`, `Table-G.4-llm.do`, and `Table-I.2-llm.do` in Stata. Either:
+- Reduce the exported data to 5 columns (one per LLM composite group), or
+- Update the column specs and headers in the do-files to match the 11-column output.
+
+---
+
+### Updated Next Steps
+
+- **Fix `tables.xlsx`** — open in Excel, force recalculation (Ctrl+Alt+F9), save to cache CONCATENATE formula results for `figure8/jel` and `figure8/R` in the `notes` sheet (needed to resolve `too few quotes r(132)` when `Section-4.3.do` calls `matching_figure, type(jel)`).
+- **Re-run `hengel_master.do`** end-to-end after the `tables.xlsx` fix to confirm clean completion.
+- **Fix column mismatch in `Table-G.1-llm.do`, `Table-G.4-llm.do`, `Table-I.2-llm.do`** — see item 6 above.
+- **Create `0-code_summary/*.txt` files** for the 10 new LLM do-files.
+
+---
+
 ## Session: 2026-03-09
 
 ### Theme: Stata bug fixes and replication.tex PDF hardening

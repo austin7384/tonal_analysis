@@ -8,6 +8,7 @@
 \usepackage{threeparttable}
 \usepackage{threeparttablex}
 \usepackage{siunitx}
+\sisetup{parse-numbers=false,table-number-alignment=center}
 \usepackage{rotating}      % sidewaystable
 \usepackage{makecell}
 \usepackage{changepage}    % adjustwidth
@@ -118,7 +119,7 @@
 \subsection{Figure 5 LLM (base)}
 \begin{figure}[H]
     \centering
-    \maybeInclude{figures/Figure-5-llm-base.pdf}
+    \includegraphics[width=\textwidth]{figures/Figure-5-llm-base.pdf}
     \caption{Figure 5 LLM (base)}
 \end{figure}
 \clearpage
@@ -127,7 +128,7 @@
 \subsection{Figure 5 LLM (JEL)}
 \begin{figure}[H]
     \centering
-    \maybeInclude{figures/Figure-5-llm-jel.pdf}
+    \includegraphics[width=\textwidth]{figures/Figure-5-llm-jel.pdf}
     \caption{Figure 5 LLM (JEL)}
 \end{figure}
 \clearpage
@@ -136,7 +137,7 @@
 \subsection{Figure 5 LLM (R)}
 \begin{figure}[H]
     \centering
-    \maybeInclude{figures/Figure-5-llm-R.pdf}
+    \includegraphics[width=\textwidth]{figures/Figure-5-llm-R.pdf}
     \caption{Figure 5 LLM (R)}
 \end{figure}
 \clearpage
@@ -226,7 +227,7 @@
 \subsection{Figure G.1 LLM (combo)}
 \begin{figure}[H]
     \centering
-    \maybeInclude{figures/Figure-G.1-llm-combo.pdf}
+    \includegraphics[width=\textwidth]{figures/Figure-G.1-llm-combo.pdf}
     \caption{Figure G.1 LLM (combo)}
 \end{figure}
 \clearpage
@@ -557,7 +558,7 @@
 \clearpage
 
 \subsection{Table F.1 LLM --- Journal LLM tonal composites, comparisons to AER}
-\maybeInput{tables/tex/Table-F.1-llm.tex}
+\input{tables/tex/Table-F.1-llm.tex}
 \clearpage
 
 \subsection{Table F.2 --- Female ratio}
@@ -589,27 +590,27 @@
 \clearpage
 
 \subsection{Table F.2 LLM --- Female ratio}
-\maybeInput{tables/tex/Table-F.2-llm-FemRatio.tex}
+\input{tables/tex/Table-F.2-llm-FemRatio.tex}
 \clearpage
 
 \subsection{Table F.2 LLM --- Exclusively female-authored}
-\maybeInput{tables/tex/Table-F.2-llm-Fem100.tex}
+\input{tables/tex/Table-F.2-llm-Fem100.tex}
 \clearpage
 
 \subsection{Table F.2 LLM --- Solo female-authored}
-\maybeInput{tables/tex/Table-F.2-llm-FemSolo.tex}
+\input{tables/tex/Table-F.2-llm-FemSolo.tex}
 \clearpage
 
 \subsection{Table F.2 LLM --- At least one female author}
-\maybeInput{tables/tex/Table-F.2-llm-Fem1.tex}
+\input{tables/tex/Table-F.2-llm-Fem1.tex}
 \clearpage
 
 \subsection{Table F.2 LLM --- Majority female-authored}
-\maybeInput{tables/tex/Table-F.2-llm-Fem50.tex}
+\input{tables/tex/Table-F.2-llm-Fem50.tex}
 \clearpage
 
 \subsection{Table F.2 LLM --- Senior female author}
-\maybeInput{tables/tex/Table-F.2-llm-FemSenior.tex}
+\input{tables/tex/Table-F.2-llm-FemSenior.tex}
 \clearpage
 
 % =============================================================================
@@ -629,15 +630,15 @@
 \clearpage
 
 \subsection{Table G.1 LLM}
-\maybeInput{tables/tex/Table-G.1-llm.tex}
+\input{tables/tex/Table-G.1-llm.tex}
 \clearpage
 
 \subsection{Table G.2 LLM}
-\maybeInput{tables/tex/Table-G.2-llm.tex}
+\input{tables/tex/Table-G.2-llm.tex}
 \clearpage
 
 \subsection{Table G.4 LLM}
-\maybeInput{tables/tex/Table-G.4-llm.tex}
+\input{tables/tex/Table-G.4-llm.tex}
 \clearpage
 
 % =============================================================================
@@ -661,7 +662,7 @@
 \clearpage
 
 \subsection{Table I.2 LLM}
-\maybeInput{tables/tex/Table-I.2-llm.tex}
+\input{tables/tex/Table-I.2-llm.tex}
 \clearpage
 
 \subsection{Table I.3}
@@ -689,21 +690,21 @@
 % =============================================================================
 
 \subsection{Base}
-\maybeInput{tables/tex/Table-9-llm-base.tex}
+\input{tables/tex/Table-9-llm-base.tex}
 \clearpage
 
 \subsection{JEL}
-\maybeInput{tables/tex/Table-9-llm-jel.tex}
+\input{tables/tex/Table-9-llm-jel.tex}
 \clearpage
 
 \subsection{Robustness (R)}
-\maybeInput{tables/tex/Table-9-llm-R.tex}
+\input{tables/tex/Table-9-llm-R.tex}
 \clearpage
 
 % =============================================================================
 \section{Table J.3 LLM --- Regression output for \(\widehat R_{it}\) (LLM tonal composites)}
 % =============================================================================
-\maybeInput{tables/tex/Table-J.3-llm.tex}
+\input{tables/tex/Table-J.3-llm.tex}
 \clearpage
 
 \end{document}
