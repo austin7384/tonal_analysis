@@ -1,5 +1,133 @@
 # Recent Changes
 
+## Session: 2026-03-11
+
+### Theme: `replication.pdf` audit and fix — `\caption{0}` and broken table notes in 34 tables
+
+---
+
+### Root cause discovered and fixed: `\caption{0}` in 34 tables
+
+#### Problem
+
+34 `.tex` table files had `\caption{0}` and table notes of the form `\item \textit{Notes}. 0 ***, ** and * statistically significant at 1\%, 5\% and 10\%, respectively.` — the literal `0` where the title and note text should appear.
+
+#### Root cause
+
+The variant-table rows in `data/raw/hengel_labels/tables.xlsx` (e.g., `table3/Fem1`, `table6/Fem50`, etc.) used Excel formula cells — `=CONCATENATE("\\autoref{",A32,"_FemRatio}, ", VLOOKUP(...))` — for their Title and Note columns. Stata's `import excel` does not evaluate these formulas; it reads them and resolves to `0` instead of the cached string value. The base `FemRatio` rows used plain static strings and always worked correctly.
+
+Additionally, 4 cells had `#N/A` cached values (VLOOKUP found no match):
+- `table10/thresholds` Title
+- `table6/change_full`, `table6/wordlimit`, `table6/jel` Notes
+
+#### Fix — two layers
+
+**1. Replicable fix (`tables.xlsx`):** Python script replaced all 84 formula cells (Title and Note columns) with their computed static string values. The 4 `#N/A` cells were given explicit replacement text. A backup was saved as `tables_backup.xlsx`.
+
+```
+table10/thresholds  Title → '\autoref{table10_FemRatio}, age thresholds'
+table6/change_full  Note  → 'Coefficients from OLS regression of change in readability score. Uses the fixed-effects specification.'
+table6/wordlimit    Note  → 'Estimates are identical to those in \autoref{table6_FemRatio}, except that the sample is restricted to NBER working papers with abstracts below the official journal word limit.'
+table6/jel          Note  → 'Columns display estimates identical to those in \autoref{table6_FemRatio}, except that primary JEL code effects are included as additional controls.'
+```
+
+Future Stata runs will now read static strings from `tables.xlsx` and produce correct `\caption{...}` output.
+
+**2. Immediate fix (34 `.tex` files):** Patched all existing `.tex` files with correct captions and notes (derived from `tables.xlsx`) so the PDF is correct without waiting for a Stata re-run.
+
+Affected files (`Table-{3,5,6,7,8}-{Fem1,Fem100,Fem50,FemJunior,FemSenior,FemSolo,R,pubyear,subyear}.tex` — full list):
+- Table-3: Fem1, Fem100, Fem50, FemJunior, FemSenior, FemSolo, R
+- Table-5: Fem1, Fem100, Fem50, FemJunior, FemSenior, FemSolo, R
+- Table-6: Fem1, Fem100, Fem50, FemJunior, FemSenior, FemSolo, pubyear, subyear
+- Table-7: Fem1, Fem100, Fem50, FemJunior, FemSenior, FemSolo
+- Table-8: Fem1, Fem100, Fem50, FemSenior, FemSolo, R
+
+**Note on tablename mapping** (do-file `tablename` arg → `.tex` filename prefix):
+| .tex prefix | tablename in do-file |
+|---|---|
+| `Table-3-*` | `table3` |
+| `Table-5-*` | `table6` (Table-5.do uses `tablename("table6")`) |
+| `Table-6-*` | `table10` |
+| `Table-7-*` | `table11` |
+| `Table-8-*` | `tableH2` |
+
+`replication.pdf` recompiled cleanly after all patches.
+
+---
+
+### Remaining issues in `replication.pdf`
+
+The following issues were identified during an audit of `replication.tex` and `replication.pdf` but have **not yet been fixed**:
+
+#### Issue 3 — `\_llm\_readability\_score` row label (cosmetic, ~18 tables)
+
+**Problem:** Tables in the Table-3 and Table-5 families display `\_llm\_readability\_score` as the row label for the LLM readability score row, instead of a human-readable name like "LLM Readability".
+
+**Root cause:** The `colnames` argument in `Table-3.do` and `Table-5.do` uses `_llm_readability_score` as the column name, which `estout` passes through as the row label. The `varlabels(, prefix("\mrow{3cm}{") suffix("}"))` option wraps it as-is.
+
+**Fix needed (Stata-side):** In `Table-3.do` and `Table-5.do`, add an explicit varlabel mapping in the `estout` call:
+```stata
+varlabels(_llm_readability_score "LLM Readability", prefix("\mrow{3cm}{") suffix("}"))
+```
+Same fix needed in `Table-3-llm.do` and `Table-5-llm.do` for the LLM composite group rows (which currently show ugly `\_llm\_g*\_score` labels).
+
+#### Issue 4 — Column mismatch in 3 appendix LLM tables (Stata-side decision needed)
+
+**Problem:** `Table-G.1-llm.tex`, `Table-G.4-llm.tex`, `Table-I.2-llm.tex` have 11 data columns but headers that only name the first 5 (`G1` through `G5`), with placeholders `(6)` through `(11)`. These tables are currently readable but unprofessional.
+
+**Root cause:** The corresponding do-files were written for 5 LLM composite groups but export 11 model specifications.
+
+**Fix needed:** Review and decide in Stata — either reduce to 5 columns per composite, or update the column headers to name specs (6)–(11) properly. See 2026-03-10 session notes for full details.
+
+#### Issue 5 — Right-margin clipping on 9-column Table-3 variants
+
+**Problem:** Table-3-FemRatio and related 9-column tables clip the rightmost columns outside the page margin.
+
+**Fix needed:** Switch to `sidewaystable` (set `Landscape=1` in `tables.xlsx` for `table3/FemRatio` and variants) or use `\resizebox{\textwidth}{!}{...}` (set `AdjustWidth` column). Since Table-5-FemRatio already uses `sidewaystable`, the same approach should apply here.
+
+#### Issue 6 — Unresolved `\autoref{}` → `??` in appendix table notes
+
+**Problem:** Some appendix table notes (e.g., Table-G.1, Table-G.2) contain `\autoref{equation2}` etc. that render as `??` because the corresponding `\label{}` targets are defined inside the main body of the paper (not included in `replication.tex`, which only contains appendix tables and figures).
+
+**Fix needed:** Either add `\label` definitions for the referenced equations to `replication.tex`, or replace `\autoref{}` references with plain text (e.g., "equation (2)") in the relevant `tables.xlsx` Note cells.
+
+#### Issue 7 — TOC subsection entries missing space
+
+**Problem:** Some subsection entries in the table of contents appear as `17.10Table F.2 LLM` instead of `17.10 Table F.2 LLM` — the number and title run together.
+
+**Root cause:** The subsection title strings in `replication.tex` may be missing a leading space, or a LaTeX TOC formatting issue.
+
+**Fix needed:** Review `replication.tex` subsection titles in the affected sections and add a space where missing.
+
+#### Issue 8 — Missing original Table 1 (non-LLM)
+
+**Problem:** Table 1 in the non-LLM replication is apparently absent from the rendered PDF (summary statistics or similar). `Table-B.1.do` calls `tablename("table1")` which exists in `tables.xlsx` but the output may not be included in `replication.tex`.
+
+**Fix needed:** Verify `Table-B.1.tex` (or wherever Table 1 is written) exists and is `\input`-ted in `replication.tex`.
+
+#### Issue 9 — Excessive blank pages before sidewaystables
+
+**Problem:** Every section containing a `sidewaystable` is preceded by one or more blank pages, significantly inflating the page count.
+
+**Root cause:** `sidewaystable` (from the `rotating` package) forces a page break before and after. The blank pages appear because each sideways table section starts a new page even when there is no content before it.
+
+**Fix needed:** This is a LaTeX layout issue. Options include using `\afterpage{\clearpage}` to control page breaks, or restructuring the section ordering to minimize isolated sidewaystables.
+
+---
+
+### Updated Next Steps
+
+1. **Fix Issue 3** (varlabel for `_llm_readability_score`) in `Table-3.do`, `Table-5.do`, `Table-3-llm.do`, `Table-5-llm.do` — simple Stata one-liner each.
+2. **Fix Issue 4** (column mismatch) in `Table-G.1-llm.do`, `Table-G.4-llm.do`, `Table-I.2-llm.do` — design decision needed first.
+3. **Fix Issue 5** (right-margin clipping) by setting `Landscape=1` in `tables.xlsx` for `table3/FemRatio` and related entries.
+4. **Fix Issue 6** (`??` autorefs) by replacing `\autoref{equation*}` with plain text in the relevant `tables.xlsx` Note cells.
+5. **Fix Issue 7** (TOC spacing) in `replication.tex`.
+6. **Re-run `hengel_master.do`** end-to-end to regenerate all tables with the `tables.xlsx` formula-to-static fix and any do-file fixes applied.
+7. **Recompile `replication.pdf`** and verify all issues resolved.
+8. **Create `0-code_summary/*.txt` files** for the 10 new LLM do-files (carried over from prior sessions).
+
+---
+
 ## Session: 2026-03-10
 
 ### Theme: Bug fix for `r(110)` program-already-defined error; `replication.tex` LLM outputs promoted from placeholders
