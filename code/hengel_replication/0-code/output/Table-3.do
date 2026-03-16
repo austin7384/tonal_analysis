@@ -121,7 +121,7 @@ program define article_level_table
     stats(N editor blind journal year jnlyr Nj inst qual native jel theory jel3, labels("No. obs." "\midrule${n}Editor" "Blind" "Journal" ///
       "Year" "Journal#Year" "\(N_j\)" "Institution" "Quality" "Native speaker" ///
       "\textit{JEL} (primary)" "Theory/empirical" "\textit{JEL} (tertiary)")) ///
-    varlabels(, prefix("\mrow{3cm}{") suffix("}")) ///
+    varlabels(_llm_readability_score "LLM Readability", prefix("\mrow{3cm}{") suffix("}")) ///
     prefoot("\midrule")
   create_latex using "`r(fn)'", tablename("table3") type("`type'")
 end

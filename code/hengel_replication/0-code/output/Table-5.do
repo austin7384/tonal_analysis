@@ -163,6 +163,7 @@ program define nber_table
   estout reg_nber reg reg_blind fe fe_blind su_wp su_blind_wp su_pub su_blind_pub su_diff su_blind_diff using "~/tonal_analysis/outputs/tables/tex/Table-5-`type'.tex", style(publishing-female_latex) ///
     stats(N editor jnlyr Nj qual native theory `jel', labels("No. observations" "\midrule${n}Editor effects" "Journal#Year effects" ///
       "\(N_j\)" "Quality controls" "Native speaker" "Theory/emp. effects" "`jel_effects'")) ///
+    varlabels(_llm_readability_score "LLM Readability") ///
     prefoot("\midrule")
   create_latex using "`r(fn)'", tablename("table6") type("`type'")
 end

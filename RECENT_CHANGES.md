@@ -1,5 +1,123 @@
 # Recent Changes
 
+## Session: 2026-03-12
+
+### Theme: Fix Issues 3, 4, 5 in `replication.pdf`
+
+---
+
+### Issue 3 — `\_llm\_readability\_score` row label (FIXED)
+
+**Root cause:** `_llm_readability_score` had no Stata variable label, so `estout` used the raw variable name. Previous underscore-escaping fix made it render as `\_llm\_readability\_score`.
+
+**Fix — do-files (future runs):**
+- `Table-3.do` line 124: Added `_llm_readability_score "LLM Readability"` to `varlabels()` option
+- `Table-5.do` `nber_table` program: Added `varlabels(_llm_readability_score "LLM Readability")` (previously had no varlabels option)
+- Same precautionary change in `Table-3-llm.do` and `Table-5-llm.do`
+
+**Fix — existing .tex files (immediate patch):**
+- 7 `Table-3-*.tex` files: replaced `\mrow{3cm}{\_llm\_readability\_score}` → `\mrow{3cm}{LLM Readability}`
+- 9 `Table-5-*.tex` files: replaced `\_llm\_readability\_score` → `LLM Readability`
+
+---
+
+### Issue 5 — Right-margin clipping on Table-3 family (FIXED)
+
+**Root cause:** Two compounding problems:
+1. Tabular spec `p{2cm}` did not match `\mrow{3cm}{...}` used for row labels — causing 28.45pt overflow per data row and visual label/data overlap
+2. 9-column portrait table (with p{2cm}) exceeded text width
+
+**Fix — 7 `Table-3-{FemRatio,Fem1,Fem100,Fem50,FemJunior,FemSenior,FemSolo}.tex` (immediate patch):**
+- Changed `\begin{table}` → `\begin{sidewaystable}` (landscape, uses `rotating` package already loaded)
+- Changed tabular spec `{p{2cm}S@{}...}` → `{p{3cm}S@{}...}` to match `\mrow{3cm}{}` width
+- Result: table is ~655pt wide; in sidewaystable landscape the effective height is 697pt (\textheight) → fits without clipping
+
+**Fix — `tables.xlsx` (permanent, Stata-side — 2026-03-12 session):**
+- All `table3` and `table3llm` rows: set `Landscape = '1'` and replaced `p{2cm}` → `p{3cm}` in `CellWidth`
+- 17 rows updated (FemRatio, Fem1, Fem100, Fem50, FemJunior, FemSenior, FemSolo, R, journal variants for both table3 and table3llm)
+- Future Stata runs will automatically generate `\begin{sidewaystable}` with correct column spec
+
+---
+
+### Issue 4 — Column mismatch / overflow in 3 appendix LLM tables (FIXED)
+
+The 3 tables (`Table-G.1-llm`, `Table-G.4-llm`, `Table-I.2-llm`) had 11 data columns but placeholder headers (6)–(11).
+
+**Finding (2026-03-12 session):** The do-files were already correct — all three iterate over `foreach stat in llm_g1 llm_g2 llm_g3 llm_g4 llm_g5` → 5 columns output. The 11-column `.tex` files were artifacts of a temporary `.tex` patch from 2026-03-10. They will be automatically corrected to 5 columns on the next Stata run.
+
+**Immediate `.tex` patches (2026-03-12 session):**
+- `Table-G.4-llm.tex` (178pt over): changed `\begin{table}[H]` → `\begin{sidewaystable}` → total width 628pt < 697pt ✓
+- `Table-I.2-llm.tex` (130pt over): same → total width 580pt < 697pt ✓
+- `Table-G.1-llm.tex` (previously 438pt over): changed `\begin{table}` → `\begin{sidewaystable}`, removed `\sisetup{round-precision=3}` (which was inflating S column widths when combined with global `parse-numbers=false`), changed `p{3cm}` → `p{4cm}` to match `\mrow{4cm}{}` row labels → total width now 669pt < 697pt ✓
+
+**Fix — `tables.xlsx` (permanent, Stata-side — 2026-03-12 session):**
+- `table6llm/full` row: cleared `SISetup` (was `'round-precision=3'`) → future runs will not insert `\sisetup{round-precision=3}` into `Table-G.1-llm.tex`
+- Do-files confirmed correct (5-column output); no changes needed there
+
+---
+
+### Remaining issues in `replication.pdf`
+
+All issues resolved as of 2026-03-16. See session notes below.
+
+### Next step
+
+Re-run `hengel_master.do` end-to-end to regenerate all tables from the updated `tables.xlsx` (which now has [p] Float specifiers for sidewaystables and \autoref{} → plain text in Notes), then recompile `replication.pdf`.
+
+---
+
+## Session: 2026-03-16
+
+### Theme: Fix Issues 6, 7, 8, 9 in `replication.pdf`
+
+---
+
+### Issue 6 — `\autoref{}` → `??` (FIXED)
+
+**Root cause:** Table notes in 17 `.tex` files referenced labels (`equation2`, `equation3`, `Corollary1`, `gender`, `equationX`, etc.) defined in the main Hengel paper manuscript, which is not included in `replication.tex`.
+
+**Fix — 17 `.tex` files patched directly:**
+- All `\autoref{equationN}` → `equation~(N)`
+- `\autoref{Corollary1}` → `Corollary~1`
+- `see~\autoref{gender} for more details` → `see the text for more details`
+- `\autoref{equationX}` → `the baseline FGLS specification`
+- `\autoref{data}` → `the data appendix`
+- `\autoref{matchingestimation}` → `the matching estimation section`
+- `\autoref{quantification}` → `the quantification section`
+- `\autoref{FootnoteAERpp}` → `the paper`
+
+Affected files: `Table-3-FemRatio`, `Table-5-FemRatio`, `Table-6-FemRatio`, `Table-7-FemRatio`, `Table-8-FemRatio`, `Table-9-base/jel/R`, `Table-10`, `Table-F.2-FemRatio`, `Table-G.1/G.2/G.4`, `Table-H.3`, `Table-I.3`, `Table-J.2/J.3`.
+
+**Fix — `tables.xlsx` (permanent):** Python script replaced `\autoref{}` calls in all Note cells (~30 cells updated).
+
+---
+
+### Issue 7 — TOC subsection entries missing space (FIXED)
+
+**Fix:** Added `\setcounter{tocdepth}{1}` to `outputs/replication.tex` preamble (after `\usepackage{hyperref}`). TOC now shows only the 23 top-level sections.
+
+---
+
+### Issue 8 — Missing original Table 1 (CLOSED)
+
+**Finding:** `Table-B.1.tex` (article counts) is already included at `replication.tex:543`. There is no `Table-1.do` — only `Table-1-llm.do` exists. No separate non-LLM Table 1 ever existed in this replication. Issue closed.
+
+---
+
+### Issue 9 — Excessive blank pages before sidewaystables (FIXED)
+
+**Fix — 29 `.tex` files:** Added `[p]` placement specifier to all `\begin{sidewaystable}` → `\begin{sidewaystable}[p]`. The `[p]` option places the float on a dedicated float page, preventing blank pages before it.
+
+Affected files: all 7 `Table-3-Fem*.tex`, all 10 `Table-5-{Fem*,jel,R,wordlimit}.tex`, all 9 `Table-5-llm-*.tex`, `Table-G.1-llm.tex`, `Table-G.4-llm.tex`, `Table-I.2-llm.tex`.
+
+**Fix — `tables.xlsx` (permanent):** Python script set `Float` column to `float[p]` for all `table3`, `table3llm`, `table6`, `table6llm` rows so future Stata runs produce `[p]`.
+
+---
+
+### `replication.pdf` recompiled cleanly (no errors or undefined reference warnings).
+
+---
+
 ## Session: 2026-03-11
 
 ### Theme: `replication.pdf` audit and fix — `\caption{0}` and broken table notes in 34 tables
