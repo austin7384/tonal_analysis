@@ -21,16 +21,19 @@ program latextable
 end
 
 program longtable
-	syntax using/, fh1(namelist) cellwidth(string) header(string) colnum(integer) [title(string) label(string) note(string) opener(string) sample(string) separ(string) star(string) full(string)]
-	
+	syntax using/, fh1(namelist) cellwidth(string) header(string) colnum(integer) [title(string) label(string) note(string) opener(string) sample(string) separ(string) star(string) full(string) sisetup(string)]
+
 	file write `fh1' _col(1) "\begin{ThreePartTable}" _n
 	file write `fh1' _col(5) "\begin{TableNotes}" _n
 	file write `fh1' _col(9) "\tiny"
-	
+
 	tablenote, fh(`fh1') note(`"`note'"') opener(`"`opener'"') sample(`"`sample'"') separ(`"`separ'"') star(`"`star'"') full(`"`full'"')
-	
+
 	file write `fh1' _col(5) "\end{TableNotes}" _n
 	file write `fh1' _col(5) "{\scriptsize\begin{longtable}[c]{`cellwidth'}" _n
+	if "`sisetup'" != "" {
+		file write `fh1' _col(9) `"\sisetup{`sisetup'}"' _n
+	}
 	
 	if "`label'" == "" {
 		local match = regexm("`r(fn)'", ".*/(.*)\.tex")
@@ -73,7 +76,7 @@ program shorttable
 		local span "*"
 	}
 	if "`landscape'" != "" {
-		file write `fh1' _col(1) "\begin{sidewaystable}" _n
+		file write `fh1' _col(1) "\begin{sidewaystable}[p]" _n
 	}
 	else {
 		file write `fh1' _col(1) "\begin{table`span'}`float'" _n

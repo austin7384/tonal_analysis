@@ -87,6 +87,9 @@ After `reshape wide` in `Data.do`, individual LLM criterion variables are named 
 - Hengel articles: original IDs from the SQLite database
 - Scraped articles: IDs offset by +15,000 in `merge_datasets.py`
 
+## Open Issues
+- **Table-H.4 col 3 Constant SE discrepancy**: Replication SE = 6.21 (***), original = 25.99 (no stars). Coefficient (40.67), N, and Pseudo R² match. Likely cause: `qreg vce(robust) quantile(0.75) iterate(1000)` convergence. `Table-H.4.do` now includes a convergence check re-running with `iterate(5000)` — check the Stata log after the next full run to diagnose. See RECENT_CHANGES.md for details.
+
 ## Notes
 - LLM outputs are non-deterministic; re-running evaluations will produce slightly different scores
 - Articles with >10 authors are filtered out in the gender inference stage

@@ -26,6 +26,17 @@ foreach qtile in 25 50 75 {
   estadd local inst = "✓" : q2_`qtile'
 }
 
+* CONVERGENCE CHECK: Table-H.4 col 3 (q1_75) has an unexplained SE discrepancy vs
+* the original paper: Constant SE = 6.21 (replication) vs 25.99 (original), shifting
+* from insignificant to ***. The coefficient (40.67) and Pseudo R² (0.208) match.
+* Hypothesis: iterate(1000) hit the limit before the Hessian approximation stabilised.
+* Re-run q1_75 with iterate(5000) and compare the Constant SE. If it matches 25.99
+* the original used a non-converged solution; if it stays near 6.21 the replication
+* result is correct and the original was the non-converged one.
+display as error "*** Table-H.4 convergence check for q1_75 (Constant SE: expect ~6.21 or ~25.99) ***"
+qreg ReviewLength FemRatio Mother Birth Maxt PageN N PubOrder _flesch_score asinhCiteCount Type_* i.MaxInst i.AcceptedYear i.Editor, vce(robust) quantile(0.75) iterate(5000)
+display as error "Constant b = " _b[_cons] "  SE = " _se[_cons]
+
 estout q1_25 q1_50 q1_75 q2_25 q2_50 q2_75 using "~/tonal_analysis/outputs/tables/tex/Table-H.4.tex", style(publishing-female_latex) ///
 	keep(FemRatio Maxt PageN PageN N PubOrder _flesch_score asinhCiteCount Mother Birth Type_Theory Type_Empirical Type_Other _cons) ///
 	collabels(none) ///

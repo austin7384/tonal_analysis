@@ -32,6 +32,13 @@ code/small_changes.py
 # Textatistic
 code/hengel_replication/0-code/programs/Textatistic
 
+# LaTeX build artifacts
+outputs/replication.aux
+outputs/replication.log
+outputs/replication.log.bak
+outputs/replication.out
+outputs/replication.toc
+
 # Original PDF
 publishing_female.pdf
 empirical_summary_publishing_female.txt

@@ -76,6 +76,7 @@ program define tth_pub_table
   estout reg_* using "~/tonal_analysis/outputs/tables/tex/Table-8-`type'.tex", style(publishing-female_latex) ///
     stats(obs editor blind jnlyr Nj inst qual native, labels("No. observations" "\midrule${n}Editor effects" ///
       "Blind review" "Journal#Year effects" "\(N_j\)" "Institution effects" "Quality controls" "Native speaker")) ///
+    varlabels(_llm_readability_score "LLM Readability") ///
     prefoot("\midrule")
   create_latex using "`r(fn)'", tablename("tableH2") type("`type'")
 end
@@ -108,28 +109,28 @@ program define tth_pub_sig
 end
 
 use `author', clear
-tth_pub FemRatio using `author', stats(flesch fleschkincaid gunningfog smog dalechall) colnames(_flesch_score _fleschkincaid_score _gunningfog_score _smog_score _dalechall_score)
+tth_pub FemRatio using `author', stats(flesch fleschkincaid gunningfog smog dalechall llm_readability) colnames(_flesch_score _fleschkincaid_score _gunningfog_score _smog_score _dalechall_score _llm_readability_score)
 tth_pub_table, type(FemRatio)
 tth_pub_sig FemRatio
 
 * Solo-authored.
-tth_pub FemSolo using `author', stats(flesch fleschkincaid gunningfog smog dalechall) colnames(_flesch_score _fleschkincaid_score _gunningfog_score _smog_score _dalechall_score)
+tth_pub FemSolo using `author', stats(flesch fleschkincaid gunningfog smog dalechall llm_readability) colnames(_flesch_score _fleschkincaid_score _gunningfog_score _smog_score _dalechall_score _llm_readability_score)
 tth_pub_table, type(FemSolo)
 
 * Exclusively female-authored.
-tth_pub Fem100 using `author', stats(flesch fleschkincaid gunningfog smog dalechall) colnames(_flesch_score _fleschkincaid_score _gunningfog_score _smog_score _dalechall_score)
+tth_pub Fem100 using `author', stats(flesch fleschkincaid gunningfog smog dalechall llm_readability) colnames(_flesch_score _fleschkincaid_score _gunningfog_score _smog_score _dalechall_score _llm_readability_score)
 tth_pub_table, type(Fem100)
 
 * At least one female author.
-tth_pub Female using `author', stats(flesch fleschkincaid gunningfog smog dalechall) colnames(_flesch_score _fleschkincaid_score _gunningfog_score _smog_score _dalechall_score)
+tth_pub Female using `author', stats(flesch fleschkincaid gunningfog smog dalechall llm_readability) colnames(_flesch_score _fleschkincaid_score _gunningfog_score _smog_score _dalechall_score _llm_readability_score)
 tth_pub_table, type(Fem1)
 
 * Majority female-authored.
-tth_pub Fem50 using `author', stats(flesch fleschkincaid gunningfog smog dalechall) colnames(_flesch_score _fleschkincaid_score _gunningfog_score _smog_score _dalechall_score)
+tth_pub Fem50 using `author', stats(flesch fleschkincaid gunningfog smog dalechall llm_readability) colnames(_flesch_score _fleschkincaid_score _gunningfog_score _smog_score _dalechall_score _llm_readability_score)
 tth_pub_table, type(Fem50)
 
 * Senior female author.
-tth_pub FemSenior using `author', stats(flesch fleschkincaid gunningfog smog dalechall) colnames(_flesch_score _fleschkincaid_score _gunningfog_score _smog_score _dalechall_score)
+tth_pub FemSenior using `author', stats(flesch fleschkincaid gunningfog smog dalechall llm_readability) colnames(_flesch_score _fleschkincaid_score _gunningfog_score _smog_score _dalechall_score _llm_readability_score)
 tth_pub_table, type(FemSenior)
 
 * Alternative program for calculating readability statistics.

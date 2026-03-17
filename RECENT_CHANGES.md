@@ -1,5 +1,54 @@
 # Recent Changes
 
+## Session: 2026-03-16 (part 3)
+
+### Theme: LLM readability analogs of Table-10 and Figure-6
+
+---
+
+### New do-files: `Table-10-llm.do` and `Figure-6-llm.do`
+
+Created two new do-files that replicate the career-sequence readability analysis using LLM readability scores instead of Flesch scores.
+
+**`code/hengel_replication/0-code/output/Table-10-llm.do`**
+- Identical to `Table-10.do` with `nber_flesch_score` → `nber_llm_readability_score` and `_flesch_score` → `_llm_readability_score`
+- Outputs `outputs/tables/tex/Table-10-llm.tex` via `create_latex` tablename `table9llm`
+
+**`code/hengel_replication/0-code/output/Figure-6-llm.do`**
+- Identical to `Figure-6.do` with the same variable substitutions, plus graph title changed to `"LLM Readability"`
+- Outputs `outputs/figures/Figure-6-llm.pdf`
+
+---
+
+### `hengel_master.do` — 2 new include lines
+
+Added immediately after their classical counterparts:
+```stata
+include "~/tonal_analysis/code/hengel_replication/0-code/output/Figure-6-llm.do"   (after Figure-6.do)
+include "~/tonal_analysis/code/hengel_replication/0-code/output/Table-10-llm.do"   (after Table-10.do)
+```
+
+---
+
+### `data/raw/hengel_labels/tables.xlsx` — `table9llm` row added
+
+Added one new row (row 1007) via openpyxl:
+- **TableName:** `table9llm`
+- **Title:** `LLM readability of authors' \(t\)th paper (draft and final)`
+- **Note:** Exact copy of the `table9` note
+- **CellWidth:** `p{3cm}S@{}S@{}S@{}S@{}S@{}S@{}`
+- **Header:** `&{\(t=1\)}&{\(t=2\)}&{\(t=3\)}&{\(t=4\text{--}5\)}&{\(t\ge6\)}`
+- **Label:** `table9llm`, **Star:** `all`, all other columns empty
+
+---
+
+### `outputs/replication.tex` — 2 new entries
+
+- **Figure 6 LLM subsection** added after Figure 6 (line ~153): `\includegraphics{figures/Figure-6-llm.pdf}`
+- **Table 10 LLM section** added after Table 10 (line ~566): `\input{tables/tex/Table-10-llm.tex}`
+
+---
+
 ## Session: 2026-03-12
 
 ### Theme: Fix Issues 3, 4, 5 in `replication.pdf`
@@ -63,6 +112,27 @@ All issues resolved as of 2026-03-16. See session notes below.
 ### Next step
 
 Re-run `hengel_master.do` end-to-end to regenerate all tables from the updated `tables.xlsx` (which now has [p] Float specifiers for sidewaystables and \autoref{} → plain text in Notes), then recompile `replication.pdf`.
+
+---
+
+## Session: 2026-03-16 (part 2)
+
+### Open issue — Table-H.4 col 3 Constant SE discrepancy (UNRESOLVED — check after next Stata run)
+
+**What:** `Table-H.4.tex` col 3 (75th percentile, spec 1) Constant:
+- Original paper: `40.67` (no stars), SE = `(25.99)`
+- Replication:    `40.67***`, SE = `(6.21)`
+- Col 6 also differs slightly: SE `16.11` → `17.73`
+- All other columns (1, 2, 4, 5) and all other rows match exactly.
+
+**Not the cause:** All source CSV data is identical in values; code is identical (only output paths differ); RNG state is unaffected; N = 2,623 and Pseudo R² = 0.208 are identical.
+
+**Likely cause:** `qreg vce(robust) quantile(0.75) iterate(1000)` may have hit the iteration limit before the Hessian approximation (used for robust SEs) stabilised. The coefficient converged to 40.67 in both runs but the SE estimates diverged.
+
+**Convergence test added:** `Table-H.4.do` now re-runs `q1_75` with `iterate(5000)` after the main loop and prints `_b[_cons]` and `_se[_cons]`. After the next Stata run, check the log:
+- SE ≈ 6.21 → replication is correct; original used a non-converged solution
+- SE ≈ 25.99 → original is correct; replication hit a different non-convergence
+- SE is a third value → issue is observation-order/storage-type sensitivity, not iteration count
 
 ---
 
