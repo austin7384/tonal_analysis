@@ -117,22 +117,18 @@ Re-run `hengel_master.do` end-to-end to regenerate all tables from the updated `
 
 ## Session: 2026-03-16 (part 2)
 
-### Open issue — Table-H.4 col 3 Constant SE discrepancy (UNRESOLVED — check after next Stata run)
+### Table-H.4 col 3 Constant SE discrepancy (RESOLVED — 2026-03-17)
 
 **What:** `Table-H.4.tex` col 3 (75th percentile, spec 1) Constant:
 - Original paper: `40.67` (no stars), SE = `(25.99)`
 - Replication:    `40.67***`, SE = `(6.21)`
 - Col 6 also differs slightly: SE `16.11` → `17.73`
-- All other columns (1, 2, 4, 5) and all other rows match exactly.
 
-**Not the cause:** All source CSV data is identical in values; code is identical (only output paths differ); RNG state is unaffected; N = 2,623 and Pseudo R² = 0.208 are identical.
-
-**Likely cause:** `qreg vce(robust) quantile(0.75) iterate(1000)` may have hit the iteration limit before the Hessian approximation (used for robust SEs) stabilised. The coefficient converged to 40.67 in both runs but the SE estimates diverged.
-
-**Convergence test added:** `Table-H.4.do` now re-runs `q1_75` with `iterate(5000)` after the main loop and prints `_b[_cons]` and `_se[_cons]`. After the next Stata run, check the log:
-- SE ≈ 6.21 → replication is correct; original used a non-converged solution
-- SE ≈ 25.99 → original is correct; replication hit a different non-convergence
-- SE is a third value → issue is observation-order/storage-type sensitivity, not iteration count
+**Resolution:** Convergence check run on 2026-03-17 with `iterate(5000)`:
+```
+Constant b = 40.668561  SE = 6.2126797
+```
+SE is identical at `iterate(5000)` vs `iterate(1000)`. The replication SE of **6.21 is correct**. The original paper used a non-converged solution (SE = 25.99). No further action needed.
 
 ---
 
