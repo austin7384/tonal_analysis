@@ -1,0 +1,176 @@
+\documentclass[12pt]{article}
+
+% ── Page layout ──────────────────────────────────────────────────────────────
+\usepackage[margin=1in, a4paper]{geometry}
+
+% ── Tables ───────────────────────────────────────────────────────────────────
+\usepackage{booktabs}
+\usepackage{threeparttable}
+\usepackage{threeparttablex}
+\usepackage{siunitx}
+\sisetup{parse-numbers=false,table-number-alignment=center}
+\usepackage{rotating}      % sidewaystable
+\usepackage{makecell}
+\usepackage{changepage}    % adjustwidth
+\usepackage{longtable}
+
+% ── Figures ──────────────────────────────────────────────────────────────────
+\usepackage{graphicx}
+\usepackage{float}
+\floatplacement{table}{H}   % prevent tables from floating above their section headings
+
+% ── Fonts / symbols ──────────────────────────────────────────────────────────
+\usepackage{pifont}        % \ding
+
+% ── References ───────────────────────────────────────────────────────────────
+\usepackage{natbib}
+\usepackage{hyperref}
+\setcounter{tocdepth}{1}
+
+% ── Custom macros ────────────────────────────────────────────────────────────
+\newcommand{\mrow}[2]{\parbox[t]{#1}{\raggedright #2}}
+\newcommand{\crcell}[2][c]{\makecell[#1]{#2}}
+\newcommand{\mcol}[1]{\multicolumn{6}{l}{#1}}
+\newcommand{\maybeInput}[1]{\IfFileExists{#1}{\input{#1}}{\textit{[Not yet generated: \texttt{#1}]}}}
+\newcommand{\maybeInclude}[1]{\IfFileExists{#1}{\includegraphics[width=\textwidth]{#1}}{\centering\textit{[Not yet generated: \texttt{#1}]}}}
+
+% ─────────────────────────────────────────────────────────────────────────────
+\begin{document}
+
+\title{Publishing while Female --- Main Results Summary}
+\date{\today}
+\maketitle
+\tableofcontents
+\clearpage
+
+% =============================================================================
+\section{Figures}
+% =============================================================================
+
+% ── Figure 1 ─────────────────────────────────────────────────────────────────
+\subsection{Figure 1}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{figures/Figure-1.pdf}
+    \caption{Figure 1}
+\end{figure}
+\clearpage
+
+% ── Figure 1 LLM ─────────────────────────────────────────────────────────────
+\subsection{Figure 1 LLM}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{figures/Figure-1-llm.pdf}
+    \caption{Figure 1 LLM}
+\end{figure}
+\clearpage
+
+% ── Figure 4 ─────────────────────────────────────────────────────────────────
+\subsection{Figure 4}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{figures/Figure-4.pdf}
+    \caption{Figure 4}
+\end{figure}
+\clearpage
+
+% ── Figure 4 LLM ─────────────────────────────────────────────────────────────
+\subsection{Figure 4 LLM}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{figures/Figure-4-llm.pdf}
+    \caption{Figure 4 LLM}
+\end{figure}
+\clearpage
+
+% ── Figure 6 ─────────────────────────────────────────────────────────────────
+\subsection{Figure 6}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{figures/Figure-6.pdf}
+    \caption{Figure 6}
+\end{figure}
+\clearpage
+
+% ── Figure 6 LLM ─────────────────────────────────────────────────────────────
+\subsection{Figure 6 LLM}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{figures/Figure-6-llm.pdf}
+    \caption{Figure 6 LLM}
+\end{figure}
+\clearpage
+
+% =============================================================================
+\section{Table 1 LLM --- LLM tonal characteristics by gender}
+% =============================================================================
+\input{tables/tex/Table-1-llm.tex}
+\clearpage
+
+% =============================================================================
+\section{Table 3 --- Gender differences in readability, article-level (FemRatio)}
+% =============================================================================
+\input{tables/tex/Table-3-FemRatio.tex}
+\clearpage
+
+% =============================================================================
+\section{Table 3 LLM --- Gender differences in LLM tonal composites, article-level (FemRatio)}
+% =============================================================================
+\input{tables/tex/Table-3-llm-FemRatio.tex}
+\clearpage
+
+% =============================================================================
+\section{Table 4}
+% =============================================================================
+\input{tables/tex/Table-4.tex}
+\clearpage
+
+% =============================================================================
+\section{Table 5 --- Impact of peer review on gender readability gap (FemRatio)}
+% =============================================================================
+\input{tables/tex/Table-5-FemRatio.tex}
+\clearpage
+
+% =============================================================================
+\section{Table 5 LLM --- Impact of peer review on gender LLM tonal composite gap (FemRatio)}
+% =============================================================================
+\input{tables/tex/Table-5-llm-FemRatio.tex}
+\clearpage
+
+% =============================================================================
+\section{Table 8 --- Gender gap in readability at increasing \(t\) (FemRatio)}
+% =============================================================================
+\input{tables/tex/Table-8-FemRatio.tex}
+\clearpage
+
+% =============================================================================
+\section{Table 8 LLM --- Gender gap in LLM tonal composite scores at increasing \(t\) (FemRatio)}
+% =============================================================================
+\input{tables/tex/Table-8-llm-FemRatio.tex}
+\clearpage
+
+% =============================================================================
+\section{Table 9 --- \(D_{ik}\) (base)}
+% =============================================================================
+\input{tables/tex/Table-9-base.tex}
+\clearpage
+
+% =============================================================================
+\section{Table 9 LLM --- \(D_{ik}\) (LLM tonal composites, base)}
+% =============================================================================
+\input{tables/tex/Table-9-llm-base.tex}
+\clearpage
+
+% =============================================================================
+\section{Table 10}
+% =============================================================================
+\input{tables/tex/Table-10.tex}
+\clearpage
+
+% =============================================================================
+\section{Table 10 LLM}
+% =============================================================================
+\input{tables/tex/Table-10-llm.tex}
+\clearpage
+
+\end{document}

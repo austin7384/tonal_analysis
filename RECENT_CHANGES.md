@@ -1,5 +1,76 @@
 # Recent Changes
 
+## Session: 2026-03-18
+
+### Theme: Post-run audit, LaTeX bug fixes, replication.tex reordering, results_summary.pdf
+
+---
+
+### New master run completed
+
+Full `hengel_master.do` run completed. All outputs regenerated.
+
+---
+
+### `outputs/replication.tex` — ordering fixes
+
+Three ordering issues corrected:
+
+1. **Table 9 LLM** moved from the end of the document to immediately after Table 9 (before Table 10), consistent with the pattern used for all other LLM/non-LLM pairs.
+2. **Table J.3 LLM** demoted from a standalone `\section{}` at the end to a `\subsection{}` inside the Appendix J section, directly after Table J.3.
+3. **Table F.2 LLM** subsections reordered from `FemRatio → Fem100 → FemSolo → Fem1 → Fem50 → FemSenior` to the standard pattern `FemRatio → Fem1 → Fem50 → Fem100 → FemSolo → FemSenior`.
+
+---
+
+### LaTeX compilation bugs fixed (Stata output issues)
+
+Two classes of bugs in the generated `.tex` files were identified and fixed at both the source and the existing output files.
+
+#### Bug 1 — Unescaped `&` in `\mrow{}{}` labels (`Table-1-llm.tex`)
+
+**Symptom:** Fatal LaTeX error `Extra }, or forgotten \endgroup` on `\mrow{5cm}{Hedging Frequency & Type}`.
+
+**Root cause:** `Table-1-llm.do` uses `varlabels(, prefix("\mrow{5cm}{") suffix("}"))`, which wraps Stata variable labels in `\mrow{}{}`. Four variable labels contained bare `&` (`Hedging Frequency & Type`, `Assertiveness & Voice`, `Sentence Length & Directness`, `Evidence & Citation Usage`). Inside `\mrow{}{}` in a tabular environment, `&` is interpreted as a column separator.
+
+**Immediate fix:** Escaped `&` → `\&` in the 4 affected rows of `Table-1-llm.tex`.
+
+**Source fix — `data/raw/hengel_labels/varlabels.csv`:** Changed `&` → `\&` in all 16 LLM variable labels that contain ampersands (`_llm_hedging`, `_llm_assertiveness`, `_llm_directness`, `_llm_evidence`, `_llm_g1_score`, `_llm_g2_score`, `_llm_g4_score`, `_llm_g5_score`, and their `nber_llm_*` counterparts). These labels flow through `Data.do` → Stata variable labels → all estout calls on future runs.
+
+#### Bug 2 — `\midrule` fused with next row text (15 Table-8/H files)
+
+**Symptom:** Undefined control sequence `\midruleEditor` — LaTeX saw `\midrule` and `Editor effects` as a single undefined command.
+
+**Root cause:** All Table-8 and Table-H do-files use `"\midrule${n}Editor effects"` in their `stats()` labels. `${n}` is a Stata global intended to expand to a newline character (`char(10)`), but was never defined anywhere in the codebase. With `$n` undefined, it expanded to an empty string, producing `\midruleEditor effects` on a single line.
+
+**Why only Table-8/H files were affected:** Other tables using the same `${n}` pattern (e.g., Table-3, Table-5) had been regenerated in a Stata session where `$n` happened to be set; Table-8/H outputs were from a different session where it was not.
+
+**Immediate fix:** Inserted a newline between `\midrule` and `Editor effects` in all 15 affected files (`Table-8-{FemRatio,Fem1,Fem50,Fem100,FemSolo,FemSenior,R}.tex` and `Table-8-llm-{FemRatio,Fem1,Fem50,Fem100,FemSolo,FemSenior}.tex`, plus `Table-H.3.tex` and `Table-H.4.tex`).
+
+**Source fix — `hengel_master.do` (line 11):**
+```stata
+global n = char(10)  // newline character for use in estout stats labels
+```
+Added immediately after `set maxvar 32767`. This ensures `${n}` reliably expands to a newline in all do-files on every future run.
+
+---
+
+### `replication.pdf` recompiled cleanly — 178 pages.
+
+---
+
+### New file: `outputs/results_summary.tex` / `results_summary.pdf`
+
+Created a focused summary PDF containing only the main new results (LLM analyses alongside their traditional counterparts). 23 pages, no errors.
+
+**Contents:**
+- Figures 1, 1 LLM, 4, 4 LLM, 6, 6 LLM
+- Table 1 LLM
+- Tables 3, 3 LLM, 4, 5, 5 LLM, 8, 8 LLM, 9, 9 LLM, 10, 10 LLM (all FemRatio / base specification)
+
+**Preamble addition:** `\floatplacement{table}{H}` (requires `float` package, already loaded) — forces all `\begin{table}` environments (which default to `[tbp]`) to place exactly at their insertion point, preventing tables from floating above their section headings.
+
+---
+
 ## Session: 2026-03-16 (part 3)
 
 ### Theme: LLM readability analogs of Table-10 and Figure-6

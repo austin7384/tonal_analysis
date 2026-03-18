@@ -8,6 +8,7 @@ set seed 677275986 // French mobile number
 mata: mata set matafavor speed
 set matsize 5000
 set maxvar 32767
+global n = char(10)  // newline character for use in estout stats labels (e.g. "\midrule${n}Editor effects")
 
 * Install third-party packages.
 ssc install ftools, replace
