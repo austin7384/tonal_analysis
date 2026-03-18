@@ -1,14 +1,24 @@
-\begin{table}
-    \footnotesize
-    \centering
-    \begin{threeparttable}
-        \caption{Textual characteristics, published papers vs. drafts}
-        \label{table5}
+\begin{ThreePartTable}
+    \begin{TableNotes}
+        \tiny\item \textit{Notes}. Figures are means of textual characteristics by sex for NBER working papers and published articles. Male-authored papers are defined as having a ratio of female authors below 50 percent; female-authored papers are those with a ratio of female authors at or above 50 percent. Penultimate columns in each panel subtract working paper figures from published article figures for men (first panel) and women (second panel); difference-in-differences (female less male) shown in the final column. Standard errors in parentheses. ***, ** and * difference statistically significant at 1\%, 5\% and 10\%, respectively.
+    \end{TableNotes}
+    {\scriptsize\begin{longtable}[c]{p{3cm}S@{}S@{}S[round-precision=3]S@{}S@{}S[round-precision=3]S[round-precision=3]}
         \sisetup{group-digits=false}
-        \begin{tabular}{p{3cm}S@{}S@{}S[round-precision=3]S@{}S@{}S[round-precision=3]S[round-precision=3]}
-            \toprule
-            &\multicolumn{3}{c}{{Men}}&\multicolumn{3}{c}{{Women}}&\\\cmidrule(lr){2-4}\cmidrule(lr){5-7}&{\crcell[b]{Working\\[-0.1cm]paper}}&{\crcell[b]{Published\\[-0.1cm]article}}&{Difference}&{\crcell[b]{Working\\[-0.1cm]paper}}&{\crcell[b]{Published\\[-0.1cm]article}}&{Difference}&{\crcell[b]{Diff.-in\\[-0.1cm]diff.}}\\
-            \midrule
+        \caption{Textual characteristics, published papers vs. drafts}\label{table5} \\
+        \toprule
+        &\multicolumn{3}{c}{{Men}}&\multicolumn{3}{c}{{Women}}&\\\cmidrule(lr){2-4}\cmidrule(lr){5-7}&{\crcell[b]{Working\\[-0.1cm]paper}}&{\crcell[b]{Published\\[-0.1cm]article}}&{Difference}&{\crcell[b]{Working\\[-0.1cm]paper}}&{\crcell[b]{Published\\[-0.1cm]article}}&{Difference}&{\crcell[b]{Diff.-in\\[-0.1cm]diff.}} \\
+        \midrule
+        \endfirsthead
+        \multicolumn{8}{c}{\normalsize{\tablename~\thetable{} (continued)}} \\
+        \toprule
+        &\multicolumn{3}{c}{{Men}}&\multicolumn{3}{c}{{Women}}&\\\cmidrule(lr){2-4}\cmidrule(lr){5-7}&{\crcell[b]{Working\\[-0.1cm]paper}}&{\crcell[b]{Published\\[-0.1cm]article}}&{Difference}&{\crcell[b]{Working\\[-0.1cm]paper}}&{\crcell[b]{Published\\[-0.1cm]article}}&{Difference}&{\crcell[b]{Diff.-in\\[-0.1cm]diff.}} \\
+        \midrule
+        \endhead
+        \midrule
+        \endfoot
+        \bottomrule
+        \insertTableNotes
+        \endlastfoot
             \mrow{3cm}{No. sentences}     &        6.48&        5.10&      -1.376***&        6.76&        5.06&      -1.702***&      -0.327** \\
                                           &      (0.06)&      (0.04)&     (0.054)   &      (0.15)&      (0.08)&     (0.139)   &     (0.149)   \\
             \mrow{3cm}{No. characters}    &      862.64&      649.74&    -212.899***&      905.83&      636.18&    -269.654***&     -56.660***\\
@@ -21,7 +31,8 @@
                                           &      (0.28)&      (0.18)&     (0.245)   &      (0.71)&      (0.41)&     (0.625)   &     (0.669)   \\
             \mrow{3cm}{No. difficult words}&       58.45&       44.64&     -13.815***&       60.16&       42.42&     -17.746***&      -3.923***\\
                                           &      (0.51)&      (0.33)&     (0.482)   &      (1.30)&      (0.74)&     (1.200)   &     (1.316)   \\
-            \midrule\mrow{3cm}{Flesch}            &       41.40&       41.15&      -0.248   &       42.51&       43.12&       0.611   &       0.828*  \\
+            \midrule
+            \mrow{3cm}{Flesch}            &       41.40&       41.15&      -0.248   &       42.51&       43.12&       0.611   &       0.828*  \\
                                           &      (0.26)&      (0.18)&     (0.184)   &      (0.66)&      (0.42)&     (0.451)   &     (0.500)   \\
             \mrow{3cm}{Flesch-Kincaid}    &      -13.63&      -13.38&       0.252***&      -13.53&      -13.00&       0.531***&       0.273** \\
                                           &      (0.06)&      (0.05)&     (0.049)   &      (0.15)&      (0.11)&     (0.122)   &     (0.134)   \\
@@ -32,12 +43,19 @@
             \mrow{3cm}{Dale-Chall}        &      -10.84&      -10.93&      -0.090***&      -10.70&      -10.71&      -0.004   &       0.086** \\
                                           &      (0.02)&      (0.02)&     (0.015)   &      (0.06)&      (0.04)&     (0.037)   &     (0.042)   \\
             \midrule
+            \mrow{3cm}{LLM Readability}   &        7.03&        7.46&       0.431***&        7.46&        7.87&       0.408***&      -0.033   \\
+                                          &      (0.03)&      (0.02)&     (0.024)   &      (0.07)&      (0.05)&     (0.056)   &     (0.066)   \\
+            \mrow{3cm}{LLM G1: Creativity \& Hedging}&        7.61&        7.96&       0.349***&        7.53&        7.88&       0.357***&       0.002   \\
+                                          &      (0.04)&      (0.03)&     (0.034)   &      (0.09)&      (0.07)&     (0.084)   &     (0.092)   \\
+            \mrow{3cm}{LLM G2: Assertiveness \& Voice}&        8.23&        8.42&       0.191***&        8.32&        8.49&       0.169***&      -0.023   \\
+                                          &      (0.03)&      (0.02)&     (0.026)   &      (0.06)&      (0.05)&     (0.062)   &     (0.071)   \\
+            \mrow{3cm}{LLM G3: Structural Directness}&        3.38&        3.86&       0.486***&        3.49&        4.03&       0.544***&       0.059   \\
+                                          &      (0.02)&      (0.02)&     (0.023)   &      (0.06)&      (0.04)&     (0.059)   &     (0.063)   \\
+            \mrow{3cm}{LLM G4: Authorial Stance \& Novelty}&        3.53&        3.38&      -0.158***&        3.87&        3.68&      -0.195***&      -0.040   \\
+                                          &      (0.03)&      (0.02)&     (0.020)   &      (0.06)&      (0.04)&     (0.045)   &     (0.053)   \\
+            \mrow{3cm}{LLM G5: Support \& Impact}&        2.83&        2.56&      -0.273***&        3.12&        2.88&      -0.239***&       0.023   \\
+                                          &      (0.04)&      (0.02)&     (0.026)   &      (0.09)&      (0.06)&     (0.070)   &     (0.072)   \\
+            \midrule
             No. observations              &       1,716&       1,716&       1,716   &         272&         272&         272   &       1,988   \\
-            \bottomrule
-        \end{tabular}
-        \begin{tablenotes}
-            \tiny
-            \item \textit{Notes}. Figures are means of textual characteristics by sex for NBER working papers and published articles. Male-authored papers are defined as having a ratio of female authors below 50 percent; female-authored papers are those with a ratio of female authors at or above 50 percent. Penultimate columns in each panel subtract working paper figures from published article figures for men (first panel) and women (second panel); difference-in-differences (female less male) shown in the final column. Standard errors in parentheses. ***, ** and * difference statistically significant at 1\%, 5\% and 10\%, respectively.
-        \end{tablenotes}
-    \end{threeparttable}
-\end{table}
+    \end{longtable}}
+\end{ThreePartTable}

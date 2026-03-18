@@ -38,6 +38,11 @@ outputs/replication.log
 outputs/replication.log.bak
 outputs/replication.out
 outputs/replication.toc
+outputs/results_summary.aux
+outputs/results_summary.log
+outputs/results_summary.log.bak
+outputs/results_summary.out
+outputs/results_summary.toc
 
 # Original PDF
 publishing_female.pdf
