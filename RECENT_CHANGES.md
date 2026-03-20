@@ -1,5 +1,54 @@
 # Recent Changes
 
+## Session: 2026-03-20
+
+### Theme: LLM analysis scripts, sample correction (N=9,117), LaTeX paper diagnosis
+
+---
+
+### New scripts: `code/LLM_evaluations/correlation_matrix.py` and `code/LLM_evaluations/llm_summary_stats.py`
+
+Two new analysis scripts added to `code/LLM_evaluations/`:
+
+**`correlation_matrix.py`** — Computes the 16×16 Pearson correlation matrix of LLM tonal criteria at the article level. Outputs:
+- `outputs/tables/csv/llm_correlation_matrix.csv`
+- `outputs/tables/tex/Table-Corr.tex` (lower-triangle landscape table)
+
+**`llm_summary_stats.py`** — Summary statistics for all 16 LLM criteria. Outputs:
+- `outputs/tables/csv/llm_summary_overall.csv` — 16 criteria × 7 stats (mean, SD, min, p25, median, p75, max)
+- `outputs/tables/csv/llm_summary_by_gender.csv` — mean + SD by All-Male / Mixed / All-Female / Full Sample
+- `outputs/tables/csv/llm_summary_by_journal.csv` — mean by journal (AER, ECA, JPE, QJE)
+- `outputs/tables/tex/Table-LLM-Summary.tex` — portrait summary table by gender composition
+
+---
+
+### Sample correction: N=9,121 → N=9,117
+
+**Root cause identified:** `merged_evaluations.csv` contained 4 articles excluded by the Stata pipeline but not by the Python pipeline. All 4 were ECA articles:
+
+| ArticleID | Reason |
+|---|---|
+| 1954 | Language filter — French article |
+| 4089 | Errata filter — title contains "A Corrigendum" |
+| 8380 | Errata filter — title contains "Corrigendum to …" |
+| 9441 | Errata filter — title contains "Corrigendum to …" |
+
+**Fix:** Both `correlation_matrix.py` and `llm_summary_stats.py` now apply the same filters as `hengel_data_cleaning.py` before computing any statistics:
+1. `Language == 'English'`
+2. Title does not match `['corrigendum', 'erratum', ': a correction', ': correction']`
+
+All 4 excluded articles were all-male authored, so female-authorship statistics are unaffected.
+
+---
+
+### LaTeX paper (`Gender_Writing_Paper___Austin (1)/0_main.tex`) — compilation error diagnosed
+
+**Fatal error:** `\input{8_Appendix}` and `\input{9_Things_to_do}` reference files that no longer exist (old numbering). Actual files are `10_Appendix.tex` and `11_Things_to_do.tex`. No changes made — diagnosis only.
+
+Additional non-fatal issues noted: bibliography requires `biber` pass, `biblatex-chicago` loaded twice (lines 41 and 44), `\author{}` defined twice, stray text on line 126.
+
+---
+
 ## Session: 2026-03-18
 
 ### Theme: Post-run audit, LaTeX bug fixes, replication.tex reordering, results_summary.pdf
