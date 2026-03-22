@@ -1,0 +1,48 @@
+\begin{table}[H]
+    \scriptsize
+    \centering
+    \begin{threeparttable}
+        \caption{LLM Evaluation Rubric}
+        \label{tab:rubric}
+        \setlength{\tabcolsep}{4.5pt}
+        \begin{tabular}{@{}cl>{\raggedright\arraybackslash}p{6.4cm}>{\raggedright\arraybackslash}p{3.8cm}@{}}
+            \toprule
+            \# & Criterion & Description & Scale (1--10) \\
+            \midrule
+            %
+            \multicolumn{4}{@{}l}{\textbf{G1\enspace Creativity \& Hedging}}\\[1pt]
+            1  & Modal Verb Strength              & Balance of weak (\textit{may}, \textit{might}) vs.\ strong (\textit{will}, \textit{cannot}) modals & 1=only weak; 10=only strong \\[3pt]
+            2  & Hedging Frequency \& Type        & Frequency of single-word qualifiers and larger stance phrases (\textit{it seems that}, \textit{we believe}) & 1=continuous hedging; 10=no hedges \\[3pt]
+            3  & Qualifier Density                & Use of modifiers (\textit{to some extent}, \textit{relatively}) that soften claims & 1=extensive qualifiers; 10=none \\[3pt]
+            4  & Acknowledgement of Limitations   & Explicit mention of caveats or boundary conditions (\textit{within context}, \textit{may not generalize}) & 1=numerous limitations; 10=none or implicit only \\[3pt]
+            5  & Caution-Signaling Connectors     & Use of \textit{however}, \textit{nevertheless}, \textit{on the other hand} to signal complexity & 1=frequent; 5=occasional; 10=none \\[5pt]
+            %
+            \multicolumn{4}{@{}l}{\textbf{G2\enspace Assertiveness \& Voice}}\\[1pt]
+            6  & Assertiveness \& Voice           & Proportion of unequivocal verbs (\textit{prove}, \textit{confirm}) vs.\ tentative verbs (\textit{suggest}, \textit{explore}) & 1=almost all tentative; 10=almost all assertive \\[3pt]
+            7  & Active/Passive Voice Ratio       & Ratio of active (\textit{we test}) to passive (\textit{it was tested}) constructions & 1=90\% passive; 5=50/50; 10=90\% active \\[5pt]
+            %
+            \multicolumn{4}{@{}l}{\textbf{G3\enspace Structural Directness}}\\[1pt]
+            8  & Sentence Length \& Directness    & Degree of multi-clausal, convoluted sentences vs.\ brief, single-clause statements & 1=very long; 10=very short \\[3pt]
+            9  & Imperative-Form Occurrence       & Presence of direct commands (\textit{Apply X}) vs.\ none or only embedded suggestions & 1=no imperatives; 10=dominant \\[5pt]
+            %
+            \multicolumn{4}{@{}l}{\textbf{G4\enspace Authorial Stance \& Novelty}}\\[1pt]
+            10 & Pronoun Commitment               & Use of first-person (\textit{we}, \textit{I}) vs.\ impersonal constructions (\textit{the authors}) & 1=fully impersonal; 10=fully first-person \\[3pt]
+            11 & Novelty-Claim Strength           & Boldness of originality claims (\textit{first to}, \textit{novel framework}) & 1=no novelty claim; 5=hedged; 10=grandiose \\[3pt]
+            12 & Jargon/Technicality Density\tnote{$*$} & Density of undefined field-specific terms vs.\ accessible language & 1=minimal jargon; 10=dense undefined jargon \\[3pt]
+            13 & Emotional Valence                & Presence of emotionally charged adjectives (\textit{revolutionary}, \textit{urgent}) vs.\ neutral descriptors & 1=none; 10=frequent \\[5pt]
+            %
+            \multicolumn{4}{@{}l}{\textbf{G5\enspace Support \& Impact}}\\[1pt]
+            14 & Evidence \& Citation Usage       & How consistently claims are backed by data, statistics, or literature citations & 1=none; 10=every claim backed \\[3pt]
+            15 & Practical/Impact Orientation     & Emphasis on real-world applications, policy, or practice implications & 1=none; 5=may inform practice; 10=will transform practice \\[5pt]
+            %
+            \multicolumn{4}{@{}l}{\textbf{Standalone}}\\[1pt]
+            16 & Readability                      & Precision and ease with which a reader can understand the author's intended meaning & 1=difficult; 10=very easy \\
+            \bottomrule
+        \end{tabular}
+        \begin{tablenotes}[flushleft]
+            \scriptsize
+            \item All criteria are scored 1--10 on surface-level linguistic features only; no inference about author intent is made.
+            \item[$*$] Scale-flipped (\(11-\text{raw score}\)) before computing the G4 composite, so that higher values consistently indicate more accessible language.
+        \end{tablenotes}
+    \end{threeparttable}
+\end{table}

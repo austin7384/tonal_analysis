@@ -90,6 +90,26 @@ After `reshape wide` in `Data.do`, individual LLM criterion variables are named 
 ## Open Issues
 - **Table-H.4 col 3 Constant SE discrepancy**: Replication SE = 6.21 (***), original = 25.99 (no stars). Coefficient (40.67), N, and Pseudo R² match. Likely cause: `qreg vce(robust) quantile(0.75) iterate(1000)` convergence. `Table-H.4.do` now includes a convergence check re-running with `iterate(5000)` — check the Stata log after the next full run to diagnose. See RECENT_CHANGES.md for details.
 
+## Selectively running scripts in hengel_master.do
+
+`hengel_master.do` contains `include` statements for every output script. To control which scripts run, comment out unwanted lines with `*` — never delete them. `Data.do` must always remain active as it builds all datasets used downstream.
+
+Example — to run only Figure 6 variants:
+```stata
+* Run analyses.
+*include ".../Figure-1.do"
+*include ".../Figure-1-llm.do"
+*include ".../Figure-1-llm-g4.do"
+...
+include ".../Figure-6.do"
+include ".../Figure-6-llm.do"
+include ".../Figure-6-llm-g3.do"
+*include ".../Table-10.do"
+...
+```
+
+To restore a full run, remove all leading `*` from the `include` lines.
+
 ## Notes
 - LLM outputs are non-deterministic; re-running evaluations will produce slightly different scores
 - Articles with >10 authors are filtered out in the gender inference stage

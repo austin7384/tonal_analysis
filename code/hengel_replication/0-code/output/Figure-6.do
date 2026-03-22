@@ -27,8 +27,6 @@ generate t = real(regexs(1)) if regexm(rname, "at#([0-9]+)")
 sort female t version
 keep b version female t
 reshape wide b, i(t female) j(version)
-generate draft_label = "Draft" if t==2
-generate final_label = "Final" if t==2
 generate n = t + female*0.07
 graph twoway ///
   (scatter b1 n if !female, color(pfblue) msize(vlarge) msymbol(circle_hollow) mlwidth(medthin)) ///
@@ -43,8 +41,6 @@ graph twoway ///
   scheme(publishing-female) ///
   graphregion(margin(zero)) ///
   xscale(range(0.9 5.2)) ///
-  xlabel(1 "1" 2 "2" 3 "3" 4 "4-5" 5 "6+") ///
-  text(`=b1[4]-0.25' 2.07 "Draft", color(gray) size(small)) text(`=b2[4]+0.3' 2.07 "Final", color(gray) size(small)) ///
-  text(`=b1[7]+0.3' 4 "Draft", color(gray) size(small)) text(`=b2[7]-0.25' 4 "Final", color(gray) size(small))
+  xlabel(1 "1" 2 "2" 3 "3" 4 "4-5" 5 "6+")
 graph export "~/tonal_analysis/outputs/figures/Figure-6.pdf", replace fontface("Avenir-Light") as(pdf)
 ********************************************************************************

@@ -1,0 +1,31 @@
+\begin{table}
+    \footnotesize
+    \centering
+    \begin{threeparttable}
+        \caption{LLM G3 composite score of authors' \(t\)th paper (draft and final)}
+        \label{table9llmg3}
+        \begin{tabular}{p{3cm}S@{}S@{}S@{}S@{}S@{}S@{}}
+            \toprule
+            &{\(t=1\)}&{\(t=2\)}&{\(t=3\)}&{\(t=4\text{--}5\)}&{\(t\ge6\)}\\
+            \midrule
+            \multicolumn{6}{l}{\textbf{Predicted \(R_{jP}-R_{jW}\)}}\\
+            \quad Women                   &        0.59***&        0.59***&        0.59***&        0.55***&        0.59***\\
+                                          &      (0.14)   &      (0.11)   &      (0.11)   &      (0.13)   &      (0.17)   \\
+            \quad Men                     &        0.50***&        0.50***&        0.50***&        0.46***&        0.50***\\
+                                          &      (0.02)   &      (0.01)   &      (0.01)   &      (0.01)   &      (0.02)   \\
+            \midrule\multicolumn{6}{l}{\textbf{Marginal effect of female ratio}}\\
+            \quad Published article       &        0.02   &        0.09   &        0.16** &        0.23***&        0.30***\\
+                                          &      (0.13)   &      (0.10)   &      (0.08)   &      (0.08)   &      (0.11)   \\
+            \quad Draft paper             &       -0.07   &        0.00   &        0.07   &        0.14   &        0.20   \\
+                                          &      (0.15)   &      (0.13)   &      (0.13)   &      (0.14)   &      (0.18)   \\
+            \midrule
+            \textbf{Diff.-in-diff.}&        0.09   &        0.09   &        0.09   &        0.09   &        0.09   \\
+                                          &      (0.15)   &      (0.12)   &      (0.12)   &      (0.14)   &      (0.18)   \\
+            \bottomrule
+        \end{tabular}
+        \begin{tablenotes}
+            \tiny
+            \item \textit{Notes}. Sample 4,289 observations. Panel one displays magnitude of predicted \(R_{jP}-R_{jW}\) (the direct effect of peer review) for women and men over increasing \(t\). Panel two estimates the marginal effect of an article's female ratio (\(\beta_1+\beta_2\times t\)), separately for draft papers and published articles. Figures from FGLS estimation of~equation~(15), weighted by \(N_{it}\) (see~the data appendix). Control variables include citation count (asinh), \(\text{max. }T\) (author prominence) and \(\text{max. }t\) (author seniority), native speaker and editor and journal-year fixed effects. Standard errors clustered by editor and robust to cross-model correlation in parentheses. ***, ** and * statistically significant at 1\%, 5\% and 10\%, respectively.
+        \end{tablenotes}
+    \end{threeparttable}
+\end{table}
