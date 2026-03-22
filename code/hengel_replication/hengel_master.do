@@ -60,6 +60,15 @@ program define create_latex
 	if `"`colnum'"'!="" {
 		local colnum colnum(`colnum')
 	}
+	if `"`float'"'!="" {
+		local float float
+	}
+	if `"`landscape'"'!="" {
+		local landscape landscape
+	}
+	if `"`long'"'!="" {
+		local long long
+	}
 	latextable using `"`using'"', title(`"`title'"') note(`"`note'"') cellwidth(`"`cellwidth'"') header(`"`header'"') label(`"`label'"') `star' `float' `adjustwidth' `sisetup' `landscape' `colnum' `long'
 end
 
