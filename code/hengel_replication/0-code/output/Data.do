@@ -227,6 +227,21 @@ generate _llm_g5_score = (_llm_evidence + _llm_practical) / 2
 do `varlabels'
 compress
 generate _llm_readability_score = _llm_readability
+generate _llm_modal_verb_score = _llm_modal_verb
+generate _llm_hedging_score = _llm_hedging
+generate _llm_qualifier_score = _llm_qualifier
+generate _llm_ack_limits_score = _llm_ack_limits
+generate _llm_caution_score = _llm_caution
+generate _llm_assertiveness_score = _llm_assertiveness
+generate _llm_active_passive_score = _llm_active_passive
+generate _llm_directness_score = _llm_directness
+generate _llm_imperative_score = _llm_imperative
+generate _llm_pronoun_score = _llm_pronoun
+generate _llm_novelty_score = _llm_novelty
+generate _llm_jargon_score = _llm_jargon
+generate _llm_emotional_score = _llm_emotional
+generate _llm_evidence_score = _llm_evidence
+generate _llm_practical_score = _llm_practical
 tempfile article_pp
 save `article_pp'
 save "~/tonal_analysis/data/raw/hengel_generated/article_pp", replace
