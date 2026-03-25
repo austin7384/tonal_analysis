@@ -1,5 +1,60 @@
 # Recent Changes
 
+## Session: 2026-03-24
+
+### Theme: Table 5 LLM Individual — peer review impact on all 16 individual LLM criteria
+
+---
+
+### New script: `Table-5-llm-individual.do`
+
+**File:** `code/hengel_replication/0-code/output/Table-5-llm-individual.do`
+
+New Stata do file that estimates the impact of peer review on each individual LLM tonal criterion (Table 5 analogue for individual scores instead of composite groups). Produces 18 `.tex` files: 9 gender-measure variants × 2 sub-tables (G1–G3 and G4–G5 + Readability).
+
+**Programs defined (standalone, no dependency on Table-5.do or Table-5-llm.do):**
+- `nber_fe` — FE paired-difference regressions (redefined for standalone use)
+- `nber_fgls` — OLS + FGLS regressions with new `firststats(string)` option, replacing the hardcoded `estimates restore ols*_llm_g1` in the composite version
+- `nber_individual_table` — estout + create_latex wrapper for both sub-tables
+
+**9 variants:** FemRatio, Fem100, FemSolo, FemSenior, FemJunior, Fem1, Fem50, wordlimit, jel
+
+**Imperative-Form Occurrence dropped:** `nber_llm_imperative_score` has zero variance in the FemSolo subsample (all values = 1 for solo-authored NBER papers), causing `suest` to fail with r(322). Imperative is excluded from all Table 5 individual tables. G3 (Structural Directness) contains only Sentence Length & Directness.
+
+---
+
+### `Data.do` — 15 individual NBER score aliases added
+
+**File:** `code/hengel_replication/0-code/output/Data.do`
+
+Added `generate nber_llm_*_score = nber_llm_*` for all 15 individual criteria (modal_verb through practical) after the existing `nber_llm_readability_score` alias. These are captured by `reshape long @_score` into the `nber_fe` paired-difference dataset.
+
+---
+
+### `tables.xlsx` — 18 new rows
+
+**File:** `data/raw/hengel_labels/tables.xlsx`
+
+Added rows for `table6llmind1` (G1–G3) and `table6llmind2` (G4–G5 + Readability), 9 types each. Format: `p{4.5cm}` + 11 S columns, landscape sidewaystable, same OLS/FGLS header as `table6llm`.
+
+---
+
+### `replication.tex` — 18 new sections
+
+**File:** `outputs/replication.tex`
+
+Added two new sections for Table 5 LLM Individual (G1–G3 and G4–G5 + Readability), each with 9 `\maybeInput` subsections matching the variant order.
+
+---
+
+### `hengel_master.do` — include added
+
+**File:** `code/hengel_replication/hengel_master.do`
+
+Added `include` line for `Table-5-llm-individual.do` after `Table-5-llm.do`. Currently active; Table-2, Table-3, Table-3-llm, and Table-3-llm-individual commented out for selective run.
+
+---
+
 ## Session: 2026-03-20
 
 ### Theme: LLM analysis scripts, sample correction (N=9,117), LaTeX paper diagnosis

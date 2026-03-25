@@ -112,7 +112,91 @@ program define article_level, eclass
   ereturn_post `b9', se(`se9') obs(`obs9') dof(`dof9') store(est_9_Editor) colnames(`colnames') local(editor ✓ blind ✓ jnlyr ✓ Nj ✓ inst ✓ qual ✓¹ native ✓ jel3 ✓)
 end
 
-* ── Table 1: G1 + G2 + G3 (9 criteria) ─────────────────────────────────────
+* ── Helper: write both individual tables for a given gender measure ──────────
+* Outputs Table-3-llm-individual-1-{type}.tex (G1--G3) and
+*           Table-3-llm-individual-2-{type}.tex (G4--G5 + Readability).
+* Note: estout blist "\\${n}" produces only "\" in the tex output due to an
+* estout/Stata escaping quirk. The group-header rows in the generated files
+* therefore need a second "\" appended (making "\\") before compilation.
+capture program drop article_level_individual_table
+program define article_level_individual_table
+  syntax varname using/, type(string) data_jel1(string) data_jel3(string)
+
+  * Table 1: G1 + G2 + G3 (9 criteria).
+  article_level `varlist' using `"`using'"', ///
+    stats(llm_modal_verb llm_hedging llm_qualifier llm_ack_limits llm_caution ///
+          llm_assertiveness llm_active_passive ///
+          llm_directness llm_imperative) ///
+    data_jel1(`"`data_jel1'"') data_jel3(`"`data_jel3'"') ///
+    colnames(_llm_modal_verb_score _llm_hedging_score _llm_qualifier_score ///
+             _llm_ack_limits_score _llm_caution_score ///
+             _llm_assertiveness_score _llm_active_passive_score ///
+             _llm_directness_score _llm_imperative_score)
+  estout est_*_Editor ///
+    using "~/tonal_analysis/outputs/tables/tex/Table-3-llm-individual-1-`type'.tex", ///
+    style(publishing-female_latex) ///
+    stats(N editor blind journal year jnlyr Nj inst qual native jel theory jel3, ///
+      labels("No. obs." "\midrule${n}Editor" "Blind" "Journal" ///
+        "Year" "Journal#Year" "\(N_j\)" "Institution" "Quality" "Native speaker" ///
+        "\textit{JEL} (primary)" "Theory/empirical" "\textit{JEL} (tertiary)")) ///
+    varlabels( ///
+      _llm_modal_verb_score     "\quad Modal Verb Strength" ///
+      _llm_hedging_score        "\quad Hedging Frequency \& Type" ///
+      _llm_qualifier_score      "\quad Qualifier Density" ///
+      _llm_ack_limits_score     "\quad Acknowledgement of Limitations" ///
+      _llm_caution_score        "\quad Caution-Signaling Connectors" ///
+      _llm_assertiveness_score  "\quad Assertiveness \& Voice" ///
+      _llm_active_passive_score "\quad Active/Passive Voice Ratio" ///
+      _llm_directness_score     "\quad Sentence Length \& Directness" ///
+      _llm_imperative_score     "\quad Imperative-Form Occurrence" ///
+      , prefix("\mrow{4.5cm}{") suffix("}") ///
+      blist( ///
+        _llm_modal_verb_score    "\multicolumn{10}{l}{\textbf{G1: Creativity \& Hedging}}\\${n}" ///
+        _llm_assertiveness_score "\midrule\multicolumn{10}{l}{\textbf{G2: Assertiveness \& Voice}}\\${n}" ///
+        _llm_directness_score    "\midrule\multicolumn{10}{l}{\textbf{G3: Structural Directness}}\\${n}" ///
+      ) ///
+    ) ///
+    prefoot("\midrule")
+  create_latex using "`r(fn)'", tablename("table3llmind1") type("`type'")
+
+  * Table 2: G4 + G5 + Standalone Readability (7 criteria).
+  * \ensuremath{^\dagger} avoids the $->\$ substitution bug for the jargon label.
+  article_level `varlist' using `"`using'"', ///
+    stats(llm_pronoun llm_novelty llm_jargon llm_emotional ///
+          llm_evidence llm_practical ///
+          llm_readability) ///
+    data_jel1(`"`data_jel1'"') data_jel3(`"`data_jel3'"') ///
+    colnames(_llm_pronoun_score _llm_novelty_score _llm_jargon_score ///
+             _llm_emotional_score ///
+             _llm_evidence_score _llm_practical_score ///
+             _llm_readability_score)
+  estout est_*_Editor ///
+    using "~/tonal_analysis/outputs/tables/tex/Table-3-llm-individual-2-`type'.tex", ///
+    style(publishing-female_latex) ///
+    stats(N editor blind journal year jnlyr Nj inst qual native jel theory jel3, ///
+      labels("No. obs." "\midrule${n}Editor" "Blind" "Journal" ///
+        "Year" "Journal#Year" "\(N_j\)" "Institution" "Quality" "Native speaker" ///
+        "\textit{JEL} (primary)" "Theory/empirical" "\textit{JEL} (tertiary)")) ///
+    varlabels( ///
+      _llm_pronoun_score     "\quad Pronoun Commitment" ///
+      _llm_novelty_score     "\quad Novelty-Claim Strength" ///
+      _llm_jargon_score      "\quad Jargon/Technicality Density\ensuremath{^\dagger}" ///
+      _llm_emotional_score   "\quad Emotional Valence" ///
+      _llm_evidence_score    "\quad Evidence \& Citation Usage" ///
+      _llm_practical_score   "\quad Practical/Impact Orientation" ///
+      _llm_readability_score "\quad Readability" ///
+      , prefix("\mrow{4.5cm}{") suffix("}") ///
+      blist( ///
+        _llm_pronoun_score     "\multicolumn{10}{l}{\textbf{G4: Authorial Stance \& Novelty}}\\${n}" ///
+        _llm_evidence_score    "\midrule\multicolumn{10}{l}{\textbf{G5: Support \& Impact}}\\${n}" ///
+        _llm_readability_score "\midrule\multicolumn{10}{l}{\textbf{Standalone}}\\${n}" ///
+      ) ///
+    ) ///
+    prefoot("\midrule")
+  create_latex using "`r(fn)'", tablename("table3llmind2") type("`type'")
+end
+
+* ── FemRatio (original filenames preserved for existing references) ───────────
 article_level FemRatio using `article', ///
   stats(llm_modal_verb llm_hedging llm_qualifier llm_ack_limits llm_caution ///
         llm_assertiveness llm_active_passive ///
@@ -149,7 +233,6 @@ estout est_*_Editor using "~/tonal_analysis/outputs/tables/tex/Table-3-llm-indiv
   prefoot("\midrule")
 create_latex using "`r(fn)'", tablename("table3llmind1")
 
-* ── Table 2: G4 + G5 + Standalone Readability (7 criteria) ─────────────────
 article_level FemRatio using `article', ///
   stats(llm_pronoun llm_novelty llm_jargon llm_emotional ///
         llm_evidence llm_practical ///
@@ -183,5 +266,31 @@ estout est_*_Editor using "~/tonal_analysis/outputs/tables/tex/Table-3-llm-indiv
   ) ///
   prefoot("\midrule")
 create_latex using "`r(fn)'", tablename("table3llmind2")
+
+* ── Variant gender measures ──────────────────────────────────────────────────
+* Exclusively female-authored.
+article_level_individual_table Fem100 using `article', ///
+  type(Fem100) data_jel1(`article_primary_jel') data_jel3(`article_tertiary_jel_pp')
+
+* Solo female-authored.
+article_level_individual_table FemSolo using `article', ///
+  type(FemSolo) data_jel1(`article_primary_jel') data_jel3(`article_tertiary_jel_pp')
+
+* At least one female author.
+article_level_individual_table Fem1 using `article', ///
+  type(Fem1) data_jel1(`article_primary_jel') data_jel3(`article_tertiary_jel_pp')
+
+* Majority female-authored.
+article_level_individual_table Fem50 using `article', ///
+  type(Fem50) data_jel1(`article_primary_jel') data_jel3(`article_tertiary_jel_pp')
+
+* Senior female author.
+article_level_individual_table FemSenior using `article', ///
+  type(FemSenior) data_jel1(`article_primary_jel') data_jel3(`article_tertiary_jel_pp')
+
+* Junior female authors (t<=3).
+article_level_individual_table FemJunior using `article', ///
+  type(FemJunior) data_jel1(`article_primary_jel') data_jel3(`article_tertiary_jel_pp')
+
 estimates clear
 ********************************************************************************

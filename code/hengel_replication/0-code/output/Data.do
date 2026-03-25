@@ -370,6 +370,22 @@ merge m:1 ArticleID using "~/tonal_analysis/data/raw/hengel_generated/readstat",
 do `varlabels'
 compress
 generate nber_llm_readability_score = nber_llm_readability
+* Individual NBER LLM criterion score aliases (captured by reshape long @_score below).
+generate nber_llm_modal_verb_score     = nber_llm_modal_verb
+generate nber_llm_hedging_score        = nber_llm_hedging
+generate nber_llm_qualifier_score      = nber_llm_qualifier
+generate nber_llm_ack_limits_score     = nber_llm_ack_limits
+generate nber_llm_caution_score        = nber_llm_caution
+generate nber_llm_assertiveness_score  = nber_llm_assertiveness
+generate nber_llm_active_passive_score = nber_llm_active_passive
+generate nber_llm_directness_score     = nber_llm_directness
+generate nber_llm_imperative_score     = nber_llm_imperative
+generate nber_llm_pronoun_score        = nber_llm_pronoun
+generate nber_llm_novelty_score        = nber_llm_novelty
+generate nber_llm_jargon_score         = nber_llm_jargon
+generate nber_llm_emotional_score      = nber_llm_emotional
+generate nber_llm_evidence_score       = nber_llm_evidence
+generate nber_llm_practical_score      = nber_llm_practical
 tempfile nber
 save `nber'
 save "~/tonal_analysis/data/raw/hengel_generated/nber", replace
