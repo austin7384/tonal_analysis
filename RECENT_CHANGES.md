@@ -1,5 +1,30 @@
 # Recent Changes
 
+## Session: 2026-04-02
+
+### Completed
+- Integrated all 18 Table-5-llm-individual `.tex` files into `replication.tex` (already had `\maybeInput` placeholders — files now render automatically) and `results_summary.tex` (added two new FemRatio sections for G1–G3 and G4–G5+Readability)
+- Fixed a post-processing bug in all 18 `Table-5-llm-individual-*.tex` files: `estout` strips one backslash from group-header rows, so `\textbf{G1: ...}\\` was written as `\textbf{G1: ...}\`. Fixed by appending the missing `\` to all lines matching `\textbf{G...}` or `\textbf{Standalone}` via Python. Applied 46 fixes total (37 for G-group headers, 9 for Standalone).
+- Recompiled both `replication.pdf` (244 pages) and `results_summary.pdf` (32 pages) — both compile cleanly (only pre-existing `Table-5.tex` caption warning remains)
+- Comprehensive update to `CLAUDE.md`: added standalone analysis scripts section, expanded module descriptions, documented individual LLM criteria tables, added imperative zero-variance note, `_score` aliases note, new Outputs section, N=9,117 sample size, and corrected tablename mappings
+- Created three global slash commands: `/review-stata` (10-category Stata code review), `/review-paper` (adversarial academic paper review), `/wrap-up` (commit + memory + RECENT_CHANGES update)
+
+### Key changes
+- `outputs/results_summary.tex`: added Table-5-llm-individual-1-FemRatio and Table-5-llm-individual-2-FemRatio sections
+- `outputs/tables/tex/Table-5-llm-individual-1-*.tex` (9 files): fixed `\` → `\\` on G1/G2/G3 group-header rows
+- `outputs/tables/tex/Table-5-llm-individual-2-*.tex` (9 files): fixed `\` → `\\` on G4/G5/Standalone group-header rows
+- `outputs/replication.pdf`, `outputs/results_summary.pdf`: recompiled
+- `CLAUDE.md`: major update documenting all work done since original authoring
+- `~/.claude/commands/review-stata.md`: new global slash command
+- `~/.claude/commands/review-paper.md`: new global slash command
+- `~/.claude/commands/wrap-up.md`: new global slash command
+
+### Notes / follow-up
+- The `estout` backslash-stripping issue is documented in comments inside `Table-5-llm-individual.do` — any future re-run of that script will require re-applying the Python post-processing fix to the generated `.tex` files
+- `Table-H.4` col 3 Constant SE discrepancy still open (see Open Issues in CLAUDE.md)
+
+---
+
 ## Session: 2026-03-24
 
 ### Theme: Table 5 LLM Individual — peer review impact on all 16 individual LLM criteria
