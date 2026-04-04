@@ -73,3 +73,18 @@ OUTPUTS
 | 181 | `nber_fgls … using` | `` `nber' `` |
 | 186 | `nber_fe … using` | `` `nber_fe_jel' `` |
 | 187 | `nber_fgls … using` | `` `nber_jel' `` |
+
+## Stata Code Review: `Table-5-llm.do`
+
+### Warnings (likely bugs)
+- [WARNING] lines 30/44: Inside the `foreach stat` loop, `rename nber_\`stat'_score nber_score` (line 30) and `rename nber_score nber_\`stat'_score` (line 44) are not protected. If any estimation command between them errors and aborts the iteration, the variable is left permanently as `nber_score`. Every subsequent loop iteration will then fail at line 30 because `nber_\`stat'_score` no longer exists (it was already renamed). Wrap in `capture` with explicit error checking, or use `tempvar`.
+
+- [WARNING] lines 138/144/150/156/162/168/174/180/186: `nber_fe` is called but not defined in this file. The comment on line 4 says only `nber_fgls` is redefined here; `nber_fe` is expected to persist from Table-5.do. If Table-5.do is commented out in hengel_master.do, all nine `nber_fe` calls will fail with "unrecognized command." Unlike Table-5-llm-individual.do, which redefines `nber_fe` at the top for standalone use, this file does not.
+
+### Notes (worth knowing)
+- [NOTE] line 128: Hardcoded `~/tonal_analysis/` prefix in output path. Not portable.
+- [NOTE] lines 69/74/80/86/92/98/104/110/116: `estimates restore ols*_llm_g1` uses a wildcard. Stata's `estimates restore` supports `*` as a wildcard; this matches `ols_llm_g1`. If the stats list passed to `nber_fgls` does not include `llm_g1` as the first element, this hardcoded reference will restore the wrong estimate (or fail). The `firststats()` fix in Table-5-llm-individual.do addresses this; this file retains the fragile hardcoded form.
+- [NOTE] file-wide: No `version` statement.
+
+---
+0 error(s), 2 warning(s), 3 note(s).

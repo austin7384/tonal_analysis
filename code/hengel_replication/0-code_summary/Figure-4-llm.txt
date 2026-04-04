@@ -26,3 +26,12 @@ OUTPUTS
 |------|---------|------|
 | 4 | `use` | `` `author' `` |
 | 14 | `graph export` | `~/tonal_analysis/outputs/figures/Figure-4-llm.pdf` |
+
+## Stata Code Review: `Figure-4-llm.do`
+
+### Notes (worth knowing)
+- [NOTE] line 14: Hardcoded `~/tonal_analysis/` prefix. Not portable.
+- [NOTE] file-wide: `\`author'` is a master-defined tempfile macro; standalone execution fails. No `version` statement.
+
+---
+0 error(s), 0 warning(s), 2 note(s).

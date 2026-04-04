@@ -33,3 +33,14 @@ OUTPUTS
 | 6 | `use` | `` `nber' `` |
 | 14 | `estout … using` | `~/tonal_analysis/outputs/tables/tex/Table-G.1-llm.tex` |
 | 20 | `create_latex using` | `` `r(fn)' `` |
+
+## Stata Code Review: `Table-G.1-llm.do`
+
+### Notes (worth knowing)
+- [NOTE] line 6: Each loop iteration calls `use \`nber', clear` before the `rename`. Because the dataset is reloaded fresh on every iteration, the rename at line 7 (`rename nber_\`stat'_score nber_score`) is safe — no stranded rename risk across iterations.
+- [NOTE] line 14: Hardcoded `~/tonal_analysis/` prefix. Not portable.
+- [NOTE] file-wide: `\`nber'` is a master-defined tempfile macro; standalone execution fails.
+- [NOTE] file-wide: No `version` statement.
+
+---
+0 error(s), 0 warning(s), 4 note(s).

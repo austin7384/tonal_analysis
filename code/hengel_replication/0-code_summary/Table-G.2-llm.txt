@@ -31,3 +31,14 @@ OUTPUTS
 | 6 | `use` | `` `nber_fe' `` |
 | 13 | `estout … using` | `~/tonal_analysis/outputs/tables/tex/Table-G.2-llm.tex` |
 | 19 | `create_latex using` | `` `r(fn)' `` |
+
+## Stata Code Review: `Table-G.2-llm.do`
+
+### Notes (worth knowing)
+- [NOTE] line 6: Each loop iteration calls `use \`nber_fe', clear`; the data is reloaded fresh each time, so no cross-iteration state contamination.
+- [NOTE] line 13: Hardcoded `~/tonal_analysis/` prefix. Not portable.
+- [NOTE] file-wide: `\`nber_fe'` is a master-defined tempfile macro; standalone execution fails.
+- [NOTE] file-wide: No `version` statement.
+
+---
+0 error(s), 0 warning(s), 4 note(s).

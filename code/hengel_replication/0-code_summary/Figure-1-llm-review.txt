@@ -1,9 +1,0 @@
-## Stata Code Review: `Figure-1-llm.do`
-
-### Notes (worth knowing)
-- [NOTE] line 6: `regress _llm_readability_score FemBin` — no `vce(cluster ...)`. This regression is used only to extract `_b[FemBin]` and `_se[FemBin]` for annotation text on the figure, not for published inference; omitting clustering is acceptable in this context.
-- [NOTE] line 19: Hardcoded `~/tonal_analysis/` prefix. Not portable.
-- [NOTE] file-wide: `\`article'` is a master-defined tempfile macro; standalone execution fails. No `version` statement.
-
----
-0 error(s), 0 warning(s), 3 note(s).

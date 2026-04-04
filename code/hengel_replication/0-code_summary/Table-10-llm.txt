@@ -43,3 +43,30 @@ OUTPUTS
 | 7 | `save` | `` `nber_author' `` |
 | 56 | `estout … using` | `~/tonal_analysis/outputs/tables/tex/Table-10-llm.tex` |
 | 64 | `create_latex using` | `` `r(fn)' `` |
+
+## REVIEW (2026-04-03)
+
+### Notes (worth knowing)
+- [NOTE] line 5: `merge m:m ArticleID using \`author'` — `m:m` in Stata is a row-by-row match, not a true relational join. The correct type is likely `merge 1:m` (one NBER record per article, many authors per article). However, the identical pattern exists in the non-LLM `Table-10.do` (line 5), which produces validated outputs that replicate the original paper. If this were causing incorrect results, the non-LLM version would also be affected.
+  - Decision (2026-04-03): No code change. Same pattern in validated non-LLM counterpart; runs successfully in practice.
+
+---
+0 error(s), 0 warning(s), 1 note(s).
+
+---
+
+### Appended from original review file
+
+## Stata Code Review: `Table-10-llm.do`
+
+### Warnings (likely bugs)
+- [WARNING] line 5: `merge m:m ArticleID using \`author'` — `merge m:m` in Stata does not create a Cartesian product; it matches observations in key-order, pairing the i-th master row with the i-th using row for each ArticleID. If `nber` has one row per article and `author` has multiple rows per article (one per author), `merge 1:m` is the correct type. Using `m:m` here silently pairs observations by order-of-appearance rather than properly expanding the data, and Stata emits a warning about `m:m` misuse. The same pattern appears in Figure-6-llm.do and Figure-6-llm-g3.do.
+
+### Notes (worth knowing)
+- [NOTE] line 6: `tempfile nber_author; save \`nber_author'` — the tempfile is saved but never reloaded. The rest of the script works on the in-memory dataset. The save is harmless but dead code.
+- [NOTE] line 56: Hardcoded `~/tonal_analysis/` prefix in output path. Not portable.
+- [NOTE] file-wide: No `version` statement.
+- [NOTE] file-wide: `\`nber'` and `\`author'` are tempfile macros defined in the master do-file. Standalone execution would fail.
+
+---
+0 error(s), 1 warning(s), 4 note(s).

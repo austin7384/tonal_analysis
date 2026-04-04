@@ -43,3 +43,17 @@ OUTPUTS
 | 7 | `save` | `` `nber_author' `` |
 | 56 | `estout … using` | `~/tonal_analysis/outputs/tables/tex/Table-10-llm-g3.tex` |
 | 64 | `create_latex using` | `` `r(fn)' `` |
+
+## Stata Code Review: `Table-10-llm-g3.do`
+
+### Warnings (likely bugs)
+- [WARNING] line 5: `merge m:m ArticleID using \`author'` — same issue as Table-10-llm.do. `merge m:m` matches by observation order within each ArticleID group, not by creating a proper join. If `nber` has one row per article and `author` has multiple rows per article, this should be `merge 1:m`.
+
+### Notes (worth knowing)
+- [NOTE] line 6: `tempfile nber_author; save \`nber_author'` — saved but never reloaded; the script continues on the in-memory dataset. Dead code.
+- [NOTE] line 56: Hardcoded `~/tonal_analysis/` prefix. Not portable.
+- [NOTE] file-wide: No `version` statement.
+- [NOTE] file-wide: `\`nber'` and `\`author'` are master-defined tempfile macros; standalone execution fails.
+
+---
+0 error(s), 1 warning(s), 4 note(s).

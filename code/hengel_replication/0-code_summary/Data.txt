@@ -35,10 +35,10 @@ OPERATIONS
 - Classifies articles as Theory/Empirical/Other from JEL codes
 - Creates primary JEL one-hot dummies (JEL1_*) and tertiary JEL dummies (JEL3_*)
 - Merges readability statistics and computes derived text metrics (words/sentence, polysyllables/word, etc.)
-- Computes LLM group composite scores G1-G5 from 15 individual LLM criteria; all 15 individual criteria AND the 5 composites AND llm_readability are retained in all article and NBER datasets
+- Computes LLM group composite scores G1-G5 from 15 individual LLM criteria (excludes readability); all 16 individual criteria (including readability) AND the 5 composites are retained in all article and NBER datasets
 - Generates article-level datasets with/without P&P and with/without JEL dummies; all carry the full set of LLM variables
 - Builds author-level panel datasets for top-4 and top-5 journals with career position, author weights, and factor variable bases; author datasets inherit LLM variables from article via merge
-- Imports NBER working paper text stats, merges with article data, computes NBER-level LLM group scores; all 15 individual NBER criteria AND 5 composites AND nber_llm_readability are retained in all NBER datasets
+- Imports NBER working paper text stats, merges with article data, computes NBER-level LLM group scores; all 16 individual NBER criteria AND 5 composites are retained in all NBER datasets
 - Reshapes NBER data into paired-difference (FE) format pairing NBER vs. published scores; nber_fe automatically includes D._llm_g1_score through D._llm_g5_score via the @_score reshape
 - Builds review duration dataset merging timeline data with article and author characteristics; includes _flesch_score, _llm_readability_score, and _llm_g1_score through _llm_g5_score from article
 
@@ -107,13 +107,17 @@ data/raw/hengel_generated/duration.dta
 
 ### Errors (must fix)
 - [ERROR] line 124: `merge m:m InstID Year using \`instrank'` — `m:m` in Stata is a row-by-row match, not a true many-to-many relational join. It pairs the 1st row on the left with the 1st row on the right, 2nd with 2nd, etc., producing silently corrupted results. This should almost certainly be `merge m:1 InstID Year` since `instrank` (after the tssmooth/cut operations saved at line 122) contains one row per InstID-Year.
+  - Decision (2026-04-03): No code change. Non-LLM code; outputs replicate the original Hengel (2022) paper exactly. That validation takes precedence over a speculative fix that risks breaking a working pipeline.
 
 - [ERROR] line 349: `generate nber_pps_count = nber_polysyblword_count / _sent_count` — divides the NBER polysyllable word count by `_sent_count` (the *published* article sentence count) instead of `nber_sent_count`. Every other `nber_*` readability variable in lines 348–352 correctly uses `nber_` denominators. This cross-contaminates NBER and published-article statistics for this one metric.
+  - Decision (2026-04-03): No code change. Non-LLM code; outputs replicate the original Hengel (2022) paper exactly. Same rationale as line 124 above.
 
 ### Warnings (likely bugs)
 - [WARNING] line 98: `replace Fem50 = 1 if FemRatio0>=0.5` — Stata treats `.` as larger than any real number, so observations where `FemRatio0` is missing will satisfy `>=0.5` and be set to `Fem50=1` incorrectly. Guard with `& !missing(FemRatio0)`.
+  - Decision (2026-04-03): No code change. Non-LLM code; outputs replicate the original Hengel (2022) paper exactly.
 
 - [WARNING] line 101: `generate Fem1 = FemRatio0>0` — same trap: missing `FemRatio0` satisfies `>0`, generating `Fem1=1` for articles with unknown gender composition.
+  - Decision (2026-04-03): No code change. Non-LLM code; outputs replicate the original Hengel (2022) paper exactly.
 
 - [WARNING] lines 268, 408, 412: `use \`...' ` without `clear` — these work only because the dataset in memory was just saved (so Stata considers it unchanged). Any future insertion of a step between the preceding `save` and these `use` commands will crash with "dataset in memory has changed." Use `use \`...' , clear` explicitly.
 

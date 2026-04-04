@@ -116,3 +116,18 @@ OUTPUTS
 | 325 | `nber_fgls … using` | `` `nber_jel' `` |
 | 329 | `nber_fe … using` | `` `nber_fe_jel' `` |
 | 330 | `nber_fgls … using` | `` `nber_jel' `` |
+
+## Stata Code Review: `Table-5-llm-individual.do`
+
+### Warnings (likely bugs)
+- [WARNING] lines 71/85: Inside the `foreach stat` loop in `nber_fgls`, `rename nber_\`stat'_score nber_score` (line 71) and `rename nber_score nber_\`stat'_score` (line 85) are unprotected. If any estimation command between them errors and aborts the iteration, the variable is left permanently as `nber_score`. Every subsequent loop iteration then fails at line 71 because `nber_\`stat'_score` no longer exists.
+
+- [WARNING] lines 193–195, 217–220: All `blist` group-header rows use `"...\textbf{...}}\\${n}"`. Estout strips one backslash level, writing a single `\` at the end of each header row instead of `\\`. This breaks LaTeX table row termination. The code comments at lines 164–166 acknowledge this and require an external Python post-processing step before LaTeX compilation. The fix: append a second backslash to every line matching `\textbf{G...}` or `\textbf{Standalone}` in the generated .tex files. Affects all 6 group-header rows across both subtables in `nber_individual_table`. Must be re-run after every Stata execution before compiling LaTeX.
+
+### Notes (worth knowing)
+- [NOTE] `imperative` excluded from all subtables: The `imperative` criterion has zero variance in the FemSolo subsample (all solo-authored NBER papers score 1), causing `suest` to fail with r(322). It is excluded from both Part-1 and Part-2 subtables across all 9 gender-measure variants. Part-1 therefore contains 8 criteria (G1–G3 minus imperative: modal_verb, hedging, qualifier, ack_limits, caution, assertiveness, active_passive, directness) rather than 9.
+- [NOTE] lines 177, 203: Hardcoded `~/tonal_analysis/` prefix in output paths inside `nber_individual_table`. Not portable across machines.
+- [NOTE] file-wide: No `version` statement.
+
+---
+0 error(s), 2 warning(s), 2 note(s).

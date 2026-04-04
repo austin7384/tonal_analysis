@@ -43,3 +43,14 @@ OUTPUTS
 | 33 | `tth_pub … using` | `` `author' `` |
 | 37 | `tth_pub … using` | `` `author' `` |
 | 41 | `tth_pub … using` | `` `author' `` |
+
+## Stata Code Review: `Table-8-llm.do`
+
+### Notes (worth knowing)
+- [NOTE] lines 21/25/29/33/37/41: `tth_pub` is called but not defined in this file. It is expected to persist from Table-8.do. If Table-8.do is commented out in hengel_master.do, all six `tth_pub` calls will fail with "unrecognized command." Unlike Table-3-llm-individual.do and Table-5-llm-individual.do, no standalone redefinition is provided here.
+- [NOTE] line 8: Hardcoded `~/tonal_analysis/` prefix in output path. Not portable across machines.
+- [NOTE] lines 21/25/29/33/37/41: `\`author'` is a tempfile macro defined in the master do-file. Standalone execution would fail silently (empty path → error).
+- [NOTE] file-wide: No `version` statement.
+
+---
+0 error(s), 0 warning(s), 4 note(s).

@@ -1,5 +1,37 @@
 # Recent Changes
 
+## Session: 2026-04-03 (evening)
+
+### Completed
+- Ran `/fletcher` audit on Table-3-FemRatio; identified 5 flags (sign direction, "45 regressions" note, binary language in continuous-variable table, Flesch/LLM divergence in col 9, col 9 sample mechanism)
+- Fixed Fletcher Flag 2: "45 separate OLS regressions" → "54" in both `outputs/tables/tex/Table-3-FemRatio.tex` and `data/raw/hengel_labels/tables.xlsx` (robust for future Stata runs)
+- Audited all 71 summary `.txt` files in `0-code_summary/` for errors; categorized and triaged 9 errors
+- Fixed 3 documentation errors in summary files: `Data.txt` criteria count (15→16), `Table-3-llm-individual.txt` and `Table-5-llm-individual.txt` missing `imperative` exclusion note, `Table-I.2-llm.txt` backslash fix clarification
+- Investigated Section-4.3-llm line 93 "double merge crash" (flagged as ERROR in prior session review): confirmed it is a **harmless no-op**, not a crash risk — `nogenerate` causes Stata to silently overwrite duplicate variables with identical values. Previous review was incorrect.
+- Added "Decision: no code change" rationale notes to all unfixed errors: `Data.txt` (3 entries), `Table-10-llm.txt`, `Section-4.3.txt`, `Section-4.3-llm.txt`
+- Merged all 21 `*-review.txt` files into their corresponding `*-llm.txt` summary files; deleted all standalone review files
+
+### Key decisions
+- **Non-LLM code bugs not fixed**: `Data.do` merge m:m (line 124), wrong denominator (line 349), missing-value traps (lines 98/101) — non-LLM code replicates original paper exactly; touching it risks breaking a validated pipeline
+- **LLM merge m:m not fixed**: same pattern in validated non-LLM counterpart (`Table-10.do`); runs successfully in practice
+- **Review files consolidated**: 21 `*-review.txt` files deleted; content now lives at the bottom of each corresponding summary `.txt` — single document per do-file going forward
+
+### Key changes
+- `outputs/tables/tex/Table-3-FemRatio.tex`: "45" → "54" regressions in tablenote
+- `data/raw/hengel_labels/tables.xlsx`: same fix in `table3/FemRatio` Note cell (durable)
+- `code/hengel_replication/0-code_summary/Data.txt`: criteria count fix + "no change" decision notes on 4 entries
+- `code/hengel_replication/0-code_summary/Section-4.3-llm.txt`: corrected double-merge diagnosis (not a crash); added original review file content
+- `code/hengel_replication/0-code_summary/Table-3-llm-individual.txt`, `Table-5-llm-individual.txt`: imperative exclusion + post-processing details added; review merged in
+- `code/hengel_replication/0-code_summary/Table-I.2-llm.txt`: backslash fix approach clarified; review merged in
+- `code/hengel_replication/0-code_summary/*.txt` (21 LLM files): review content merged in, 21 `*-review.txt` files deleted
+
+### Notes / follow-up
+- Fletcher flags 1, 3, 4, 5 from Table-3-FemRatio are open and not yet investigated: sign direction of FK/Gunning Fog/SMOG, binary language in notes, Flesch/LLM divergence in col 9, col 9 sample mechanism
+- Prior session's RECENT_CHANGES noted Section-4.3-llm line 93 as a crash-risk ERROR — **this was incorrect**; confirmed harmless no-op
+- Prior session noted `merge m:m` bugs in Table-10-llm and Figure-6-llm — confirmed not causing incorrect results given non-LLM counterparts are validated
+
+---
+
 ## Session: 2026-04-03
 
 ### Completed

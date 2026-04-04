@@ -48,6 +48,7 @@ outputs/tables/tex/Table-J.3.tex
 
 ### Warnings (likely bugs)
 - [WARNING] line 117: `psmatch2 Female if T>2` — Stata treats `.` as larger than any real number, so observations with missing `T` satisfy `T>2` and are included in the matching. Guard with `T>2 & !missing(T)`.
+  - Decision (2026-04-03): No code change. Non-LLM code; outputs replicate the original Hengel (2022) paper exactly.
 
 - [WARNING] lines 289, 292: `regress \`v' ... if T>=3` and `if T>=3 & match==3` — same missing-value trap: missing `T` satisfies `T>=3` and is included in the regressions.
 
