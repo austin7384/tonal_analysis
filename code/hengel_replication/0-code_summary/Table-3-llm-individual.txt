@@ -1,0 +1,99 @@
+INPUTS
+------
+`article' (tempfile) — article-level dataset with individual LLM criterion scores (_llm_*_score) and gender indicators
+`article_primary_jel' (tempfile) — article-level primary JEL classification data (used as subsample and for JEL fixed effects)
+`article_tertiary_jel_pp' (tempfile) — article-level tertiary JEL classification data (used as subsample and for tertiary JEL fixed effects)
+
+OPERATIONS
+----------
+- Defines program `article_level` (eclass) — redefines the program so this file can run standalone without Table-3.do being active. Accepts: a gender varname, a `using` dataset path, a `stats(string)` list of LLM criteria, `data_jel1` and `data_jel3` dataset paths, and `colnames` for stored estimates.
+    - For FemRatio, FemSenior, FemJunior: treats gender as continuous; interacts with Blind using c.varlist##i.Blind.
+    - For all other gender measures: treats as binary; interacts with Blind using i.varlist##i.Blind.
+    - Loads `data_jel1' and `data_jel3' to build lists of JEL primary and tertiary dummy variable names.
+    - Loops over each criterion in `stats'. For each criterion, runs 9 progressively richer `reghdfe` OLS specifications of `_<crit>_score` on the gender×blind interaction, with editor-clustered SEs:
+        1. Journal FE + Editor FE
+        2. + Year FE
+        3. Journal×Year FE + Editor FE
+        4. + Institution FE + N (co-author count)
+        5. + Quality controls (asinhCiteCount, Maxt) + NativeEnglish FE
+        6. Same as (5), restricted to JEL subsample (uses `data_jel1')
+        7. + Primary JEL code FEs (absorbed)
+        8. + Theory/empirical type dummies (Type_*)
+        9. + Tertiary JEL code FEs (uses `data_jel3'), absorbed
+    - Accumulates gender coefficients and SEs into matrices b1–b9, se1–se9 across criteria (one column per criterion).
+    - Posts each set of estimates as `est_1_Editor` through `est_9_Editor` using `ereturn_post`, recording FE indicators as stored locals.
+
+- Defines program `article_level_individual_table` — wrapper that calls `article_level` twice for a given gender measure and writes two `estout` tables:
+    - Table 1 (G1–G3, 9 criteria: modal_verb, hedging, qualifier, ack_limits, caution, assertiveness, active_passive, directness, imperative): writes to `Table-3-llm-individual-1-{type}.tex`; group headers G1, G2, G3 inserted as `blist` rows before the first criterion in each group; calls `create_latex` with tablename "table3llmind1".
+    - Table 2 (G4–G5 + Standalone Readability, 7 criteria: pronoun, novelty, jargon, emotional, evidence, practical, readability): writes to `Table-3-llm-individual-2-{type}.tex`; group headers G4, G5, Standalone inserted as `blist` rows; calls `create_latex` with tablename "table3llmind2".
+    - Note: `estout` blist `\\${n}` produces only `\` in output due to escaping quirk; a Python post-processing step must append a second `\` to all group-header lines before LaTeX compilation.
+
+- FemRatio (base/default variant): calls `article_level` directly twice (G1–G3 criteria, then G4–G5+Readability), then writes the two tables inline (without type suffix in filename):
+    - `Table-3-llm-individual-1.tex` and `Table-3-llm-individual-2.tex` via `estout` + `create_latex`.
+
+- Variant gender measures (6 variants, each generating two tex files via `article_level_individual_table`):
+    - Fem100, FemSolo, Fem1, Fem50, FemSenior, FemJunior
+
+- Clears all stored estimates at the end.
+
+OUTPUTS
+-------
+~/tonal_analysis/outputs/tables/tex/Table-3-llm-individual-1.tex — LaTeX sidewaystable, G1–G3 individual LLM criteria (9 rows) × 9 specifications, FemRatio gender measure; group-header rows for G1/G2/G3
+~/tonal_analysis/outputs/tables/tex/Table-3-llm-individual-2.tex — LaTeX sidewaystable, G4–G5 + Readability (7 rows) × 9 specifications, FemRatio; group-header rows for G4/G5/Standalone
+~/tonal_analysis/outputs/tables/tex/Table-3-llm-individual-1-Fem100.tex — same G1–G3 structure, Fem100 gender indicator
+~/tonal_analysis/outputs/tables/tex/Table-3-llm-individual-2-Fem100.tex — same G4–G5+Readability structure, Fem100
+~/tonal_analysis/outputs/tables/tex/Table-3-llm-individual-1-FemSolo.tex — G1–G3, FemSolo
+~/tonal_analysis/outputs/tables/tex/Table-3-llm-individual-2-FemSolo.tex — G4–G5+Readability, FemSolo
+~/tonal_analysis/outputs/tables/tex/Table-3-llm-individual-1-Fem1.tex — G1–G3, Fem1
+~/tonal_analysis/outputs/tables/tex/Table-3-llm-individual-2-Fem1.tex — G4–G5+Readability, Fem1
+~/tonal_analysis/outputs/tables/tex/Table-3-llm-individual-1-Fem50.tex — G1–G3, Fem50
+~/tonal_analysis/outputs/tables/tex/Table-3-llm-individual-2-Fem50.tex — G4–G5+Readability, Fem50
+~/tonal_analysis/outputs/tables/tex/Table-3-llm-individual-1-FemSenior.tex — G1–G3, FemSenior
+~/tonal_analysis/outputs/tables/tex/Table-3-llm-individual-2-FemSenior.tex — G4–G5+Readability, FemSenior
+~/tonal_analysis/outputs/tables/tex/Table-3-llm-individual-1-FemJunior.tex — G1–G3, FemJunior
+~/tonal_analysis/outputs/tables/tex/Table-3-llm-individual-2-FemJunior.tex — G4–G5+Readability, FemJunior
+
+
+## File Paths
+
+| Line | Command | Path |
+|------|---------|------|
+| 22 | `use` | `` `data_jel1' `` |
+| 27 | `use` | `` `data_jel3' `` |
+| 37 | `use` | `` `using' `` (resolves to `` `article' ``) |
+| 73 | `use` | `` `data_jel1' `` |
+| 95 | `use` | `` `data_jel3' `` |
+| 126 | `article_level … using` | `` `using' `` (resolves to `` `article' ``) |
+| 135–136 | `estout … using` | `~/tonal_analysis/outputs/tables/tex/Table-3-llm-individual-1-<type>.tex` |
+| 160 | `create_latex using` | `` `r(fn)' `` |
+| 164 | `article_level … using` | `` `using' `` (resolves to `` `article' ``) |
+| 173–174 | `estout … using` | `~/tonal_analysis/outputs/tables/tex/Table-3-llm-individual-2-<type>.tex` |
+| 196 | `create_latex using` | `` `r(fn)' `` |
+| 200 | `article_level … using` | `` `article' `` |
+| 200 | `article_level … data_jel1(…)` | `` `article_primary_jel' `` |
+| 200 | `article_level … data_jel3(…)` | `` `article_tertiary_jel_pp' `` |
+| 210 | `estout … using` | `~/tonal_analysis/outputs/tables/tex/Table-3-llm-individual-1.tex` |
+| 234 | `create_latex using` | `` `r(fn)' `` |
+| 236 | `article_level … using` | `` `article' `` |
+| 236 | `article_level … data_jel1(…)` | `` `article_primary_jel' `` |
+| 236 | `article_level … data_jel3(…)` | `` `article_tertiary_jel_pp' `` |
+| 246 | `estout … using` | `~/tonal_analysis/outputs/tables/tex/Table-3-llm-individual-2.tex` |
+| 268 | `create_latex using` | `` `r(fn)' `` |
+| 272 | `article_level_individual_table … using` | `` `article' `` |
+| 272 | `… data_jel1(…)` | `` `article_primary_jel' `` |
+| 272 | `… data_jel3(…)` | `` `article_tertiary_jel_pp' `` |
+| 276 | `article_level_individual_table … using` | `` `article' `` |
+| 276 | `… data_jel1(…)` | `` `article_primary_jel' `` |
+| 276 | `… data_jel3(…)` | `` `article_tertiary_jel_pp' `` |
+| 280 | `article_level_individual_table … using` | `` `article' `` |
+| 280 | `… data_jel1(…)` | `` `article_primary_jel' `` |
+| 280 | `… data_jel3(…)` | `` `article_tertiary_jel_pp' `` |
+| 284 | `article_level_individual_table … using` | `` `article' `` |
+| 284 | `… data_jel1(…)` | `` `article_primary_jel' `` |
+| 284 | `… data_jel3(…)` | `` `article_tertiary_jel_pp' `` |
+| 288 | `article_level_individual_table … using` | `` `article' `` |
+| 288 | `… data_jel1(…)` | `` `article_primary_jel' `` |
+| 288 | `… data_jel3(…)` | `` `article_tertiary_jel_pp' `` |
+| 292 | `article_level_individual_table … using` | `` `article' `` |
+| 292 | `… data_jel1(…)` | `` `article_primary_jel' `` |
+| 292 | `… data_jel3(…)` | `` `article_tertiary_jel_pp' `` |

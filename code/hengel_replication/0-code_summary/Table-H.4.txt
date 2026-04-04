@@ -19,3 +19,37 @@ outputs/tables/tex/Table-H.4.tex
 | Line | Command | Path |
 |------|---------|------|
 | 29 | `estout q1_25 q1_50 q1_75 q2_25 q2_50 q2_75 using` | `~/tonal_analysis/outputs/tables/tex/Table-H.4.tex` |
+
+## REVIEW (2026-04-03)
+
+### Summary
+Table-H.4.do runs quantile regressions at the 25th, 50th, and 75th percentiles for two specifications (Table 6 col. 5 and Table 7 col. 3), producing 6 estimates. A known Constant SE discrepancy at q1_75 is under active investigation via an in-script convergence check. Several additional issues are identified below.
+
+### Issues
+
+**1. Duplicate variable in `keep()` and `order()` — `PageN` appears twice (lines 41–43)**
+`keep(... PageN PageN ...)` and `order(... PageN PageN ...)` both list `PageN` twice. `estout` silently ignores duplicate variable names in `keep`/`order`, so the output is unaffected, but the duplication suggests a copy-paste error and should be corrected to avoid confusion.
+
+**2. Asymmetric `iterate()` between the two qreg specifications (lines 15, 22)**
+`q1_*` uses `iterate(1000)` and `q2_*` uses `iterate(1500)`. There is no methodological justification documented for this asymmetry. If the intent is to match the original paper's convergence behavior, both should be set identically. If the asymmetry is intentional (e.g., the second model is larger and needs more iterations), this should be commented.
+
+**3. Convergence check re-estimates q1_75 but does NOT update `e()` or the stored estimate (lines 36–38)**
+The convergence check runs a second `qreg` with `iterate(5000)` but never calls `eststo` or compares the stored `q1_75` estimate. The check only prints the Constant SE to the log. If the 5000-iteration run produces a materially different SE, the stored `q1_75` in the table is still from `iterate(1000)`. If the goal is to use the better-converged estimate, the script must `eststo q1_75` after the convergence check run.
+
+**4. Pseudo-R² formula may be incorrect for `vce(robust)` quantile regression (lines 16, 23)**
+`estadd scalar r2 = 1 - (e(sum_adev)/e(sum_rdev))` is the standard Koenker-Machado pseudo-R². However, `e(sum_adev)` and `e(sum_rdev)` are the absolute deviation sums from the fitted and null quantile models. With `vce(robust)`, Stata recomputes the covariance matrix but does not alter `e(sum_adev)` or `e(sum_rdev)`, so the pseudo-R² formula is correct. No bug, but worth documenting.
+
+**5. Missing `estadd local year` and `inst` for q2 specification (lines 24–26)**
+For `q2_*` models, `estadd local year` is not added even though the model includes `i.AcceptedYear##i.Journal`. The stats row is `year` in the `estout` call (line 44). For q2 columns, `year` will therefore display as empty rather than "✓". The correct local should be `estadd local jnlyr = "✓"` (which is present on line 25) — `year` and `jnlyr` are distinct row labels in the `stats()` call. Verify that `year` for q2 columns is intentionally blank (it models journal-year FE rather than standalone year FE, so year alone does not apply). If so, the output is correct by design; if not, a `estadd local year` line is missing.
+
+**6. `_flesch_score` in `order()` but not labeled in `varlabels` (line 43)**
+`_flesch_score` appears in the `order()` list but the `estout` call has no `varlabels()` option. Variable labels applied in `do \`varlabels'' upstream will be used, but the user should confirm that `_flesch_score` has an appropriate label set there, otherwise the LaTeX table will show the raw Stata variable name.
+
+**7. `tablename("table10") type("quantile")` — shared tablename with Table-H.3 (line 47)**
+Both Table-H.3 and Table-H.4 use `tablename("table10")`, differentiated only by `type()`. See the same issue noted in Table-H.3 review. Confirm `tables.xlsx` has distinct rows for both types.
+
+### No Issues Found
+- Two-stage `collapse` before quantile regression correctly reduces to article-level observations, matching the OLS specification in Table 6.
+- `vce(robust)` is appropriate for quantile regression; the alternative `vce(iid)` would be misspecified with heteroskedastic residuals.
+- The `display as error` convergence check messages will be clearly visible in the Stata log.
+- `qfrac = qtile/100` correctly converts integer percentile to the fractional `quantile()` argument.

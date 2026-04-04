@@ -21,3 +21,16 @@ outputs/figures/Figure-K.1.pdf
 | Line | Command | Path |
 |------|---------|------|
 | 53 | `graph export` | `~/tonal_analysis/outputs/figures/Figure-K.1.pdf` |
+
+## REVIEW (2026-04-03)
+
+### Warnings (likely bugs)
+- [WARNING] line 6: `generate Mother = ChildReceived<=4|ChildAccepted<=4` — when either `ChildReceived` or `ChildAccepted` is missing, Stata evaluates `.<=4` as FALSE (since `.` is the largest numeric value). Authors with no childbirth data are coded as `Mother=0` (not a mother) rather than missing, potentially conflating "no children" with "unknown." If unmatched observations are common, this biases the Mother variable toward zero.
+
+- [WARNING] line 25: `if t>1 & Maxt<=t` — if `t` is ever missing, `.>1` evaluates as TRUE and `Maxt<=.` is also TRUE (since `.` is the largest value), so missing-`t` observations would pass both conditions and be included in the "expert" regression silently. Guard with an additional `& !missing(t)`.
+
+### Notes (worth knowing)
+- [NOTE] line 1: No `version` statement.
+
+---
+0 error(s), 2 warning(s), 1 note(s).

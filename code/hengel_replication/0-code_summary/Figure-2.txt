@@ -21,3 +21,18 @@ outputs/figures/Figure-2-time.pdf
 |------|---------|------|
 | 32 | `graph export` | `~/tonal_analysis/outputs/figures/Figure-2-jel.pdf` |
 | 72 | `graph export` | `~/tonal_analysis/outputs/figures/Figure-2-time.pdf` |
+
+## REVIEW (2026-04-03)
+
+### Warnings (likely bugs)
+- [WARNING] line 37: `replace Fem50 = FemRatio0>0.5` — if `FemRatio0` is ever missing, Stata evaluates `.>0.5` as TRUE and sets `Fem50=1`. In practice `FemRatio0` should always be non-missing in the article dataset, but the original `Fem50` from `Data.do` used explicit `.` coding for mixed-gender papers, and this replace silently changes that semantics without a missing-value guard.
+
+### Notes (worth knowing)
+- [NOTE] line 15: `reshape long JEL1_, i(ArticleID) j(jel) string` — no `clear` option. Works here because the data was just loaded fresh at line 5, but Stata will refuse if the in-memory dataset has unsaved changes. Defensive practice would add `, clear`.
+
+- [NOTE] line 36: `replace Fem100 = FemRatio0==1` — this overwrites `Data.do`'s original `Fem100` coding, which used `.` for mixed-gender papers, replacing it with a strict 0/1 binary. Intentional for this figure's collapse, but anyone expecting `Fem100` to preserve its upstream semantics would be surprised.
+
+- [NOTE] line 1: No `version` statement.
+
+---
+0 error(s), 1 warning(s), 3 note(s).

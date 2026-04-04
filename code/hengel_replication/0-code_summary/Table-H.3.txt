@@ -18,3 +18,36 @@ outputs/tables/tex/Table-H.3.tex
 | Line | Command | Path |
 |------|---------|------|
 | 20 | `estout est_2 est_3 est_4 est_9 est_17 using` | `~/tonal_analysis/outputs/tables/tex/Table-H.3.tex` |
+
+## REVIEW (2026-04-03)
+
+### Summary
+Table-H.3.do robustness-checks the motherhood/childbirth duration model by varying the child-age threshold across five values (2, 3, 4, 9, 17 — corresponding to "less than 3, 4, 5, 10, 18" in the table description). The structure is clean and follows the same pattern as Table-H.4. Several potential issues are identified below.
+
+### Issues
+
+**1. Off-by-one in threshold interpretation (lines 6–8)**
+The comment on line 4 says "less than 3, 4, 5, 10 and 18" but the `numlist` is `2 3 4 9 17` and the condition is `ChildReceived<=\`thresh'`. So `thresh=2` means child was aged 2 or under, which corresponds to "less than 3" — the coding is correct. However the discrepancy between the prose description ("child was less than X") and the stored threshold (`<=X-1`) is a documentation trap. If someone edits the numlist without understanding the off-by-one, the thresholds will silently shift. No bug, but a material fragility.
+
+**2. Two-stage collapse may discard within-article variation incorrectly (lines 9–10)**
+The first `collapse` is at `(ArticleID, AuthorID)` level using `(max) Mother`. This means if any author-article combination has `Mother=1`, that combination is marked as a mother. The second `collapse` takes `(min) Mother` at the `ArticleID` level. Taking the minimum means `Mother=1` for an article only if **all** author-article rows for that article have `Mother=1`. This is a non-trivial and potentially unintended aggregation rule. Contrast with taking `(max) Mother` at the article level, which would mean "at least one author is a mother." The choice of `min` vs `max` at the second stage should be verified against the conceptual definition used in the paper.
+
+**3. `merge m:1 ArticleID using \`primary_jel'' on line 11 — no verification of `primary_jel` scope**
+The `primary_jel` tempfile is defined upstream in `Data.do`. After the two-stage collapse, the ArticleID universe changes for each threshold iteration. The `keep(match master)` option silently drops articles not in `primary_jel`, which could differentially affect the sample across threshold iterations if the merge coverage changes. This should be confirmed to be stable.
+
+**4. `do \`varlabels'' called inside a `foreach` loop (line 12)**
+Calling the varlabels do-file on every iteration of the loop is redundant — variable labels do not change between iterations. This is harmless but inefficient. More importantly, if `varlabels` modifies any globals or macros used by the estimation, repeated calls could have unintended side effects.
+
+**5. Estimation stored as `est_\`thresh'` but estout uses specific names (line 20)**
+The `estout` call references `est_2 est_3 est_4 est_9 est_17` explicitly. This is consistent with the loop's `numlist 2 3 4 9 17`, so there is no mismatch. However, if the numlist were ever changed, the `estout` line would need manual updating. Using `estout est_* using` with wildcard would be more robust, though order might differ.
+
+**6. `drop(*.Year *.MaxInst *.Editor, relax)` — unnecessary `relax` if FE are absorbed (line 23)**
+`reghdfe` absorbs `i.MaxInst i.AcceptedYear i.Editor` so these factor variables are not in `e(b)` and cannot appear in `estout` output. The `relax` option suppresses the error that would occur if the listed variables are not found. This is defensive coding, but it implies the author was uncertain whether the FE were partialled out. Confirm that `reghdfe` absorbs rather than includes these FE directly, and that `drop(..., relax)` is not masking a residual specification where FE accidentally appear in the coefficient vector.
+
+**7. `tablename("table10") type("thresholds")` — shared tablename with Table-H.4 (line 25)**
+Both Table-H.3 and Table-H.4 use `tablename("table10")`, differentiated only by `type()`. Confirm that `create_latex` correctly handles multiple types under the same tablename and that `tables.xlsx` has rows for both `(table10, thresholds)` and `(table10, quantile)`.
+
+### No Issues Found
+- The use of `tempname B S` at the top is appropriate; neither B nor S is actually used in this file, suggesting they may be vestigial from a copy-paste (minor dead code).
+- `vce(cluster ReceivedYear)` is consistent with the main duration table specification.
+- `absorb(i.MaxInst i.AcceptedYear i.Editor)` matches the Table 6, column (5) fixed-effects structure.

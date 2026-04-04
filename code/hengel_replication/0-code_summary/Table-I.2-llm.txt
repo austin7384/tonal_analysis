@@ -1,0 +1,44 @@
+INPUTS
+------
+`author' (tempfile) — author-level panel dataset with LLM group composite scores (_llm_g*_score), AuthorID, t (submission count), T (total submissions), Female, and AuthorWeight
+
+OPERATIONS
+----------
+- Loads `author', sorts by AuthorID and t.
+
+- Loops over 5 LLM group composites (llm_g1 through llm_g5). For each:
+    - Preserves the dataset.
+    - Collapses to the author level (AuthorID) for authors with T>2, computing:
+        - Mean = mean of _<stat>_score across all submissions
+        - Female = first value of Female indicator
+        - First = first value of _<stat>_score (first paper in career)
+        - Last = last value of _<stat>_score (most recent paper in career)
+    - Applies gender value labels to Female.
+    - Runs `mean First Mean Last, over(Female)` to compute group means by gender (men and women separately).
+    - Posts results as stored estimate `firstlast_<stat>` using `ereturn_post` with N and df_r from the mean command.
+    - Computes percentage change from first paper score for four combinations:
+        - Mean women: (Mean_women − First_women) / First_women × 100
+        - Mean men: (Mean_men − First_men) / First_men × 100
+        - Last women: (Last_women − First_women) / First_women × 100
+        - Last men: (Last_men − First_men) / First_men × 100
+    - Accumulates these into matrix B (columns = criteria).
+    - Restores the dataset.
+
+- After the loop, sets row names of matrix B to: Mean:Women, Mean:Men, Last:Women, Last:Men.
+
+- Writes `estout` for all 5 stored estimates (`firstlast_*`) to a LaTeX table displaying means and SEs (no stars, 2 decimal places). Stats row: N. Three section headers inserted via `blist`/`elist`: "Average first paper score", "Average mean paper score", "Average final paper score". Authors indented with `\quad`. Inserts `\midrule` before footer.
+
+- Calls `create_latex` with tablename "tableH1llm".
+
+OUTPUTS
+-------
+~/tonal_analysis/outputs/tables/tex/Table-I.2-llm.tex — LaTeX table: 5 columns (one per LLM group composite G1–G5) × 6 rows (men/women for first, mean, and last paper score); author-level means by gender for authors with T>2, with three labeled sections
+
+
+## File Paths
+
+| Line | Command | Path |
+|------|---------|------|
+| 4 | `use` | `` `author' `` |
+| 22 | `estout … using` | `~/tonal_analysis/outputs/tables/tex/Table-I.2-llm.tex` |
+| 37 | `create_latex using` | `` `r(fn)' `` |

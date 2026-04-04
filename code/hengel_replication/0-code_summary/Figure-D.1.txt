@@ -24,3 +24,18 @@ outputs/tables/tex/Figure-D.1-bib.tex
 | 59 | `graph export` | `~/tonal_analysis/outputs/figures/Figure-D.1-meta.pdf` |
 | 72 | `graph export` | `~/tonal_analysis/outputs/figures/Figure-D.1-early.pdf` |
 | 82 | `graph export` | `~/tonal_analysis/outputs/figures/Figure-D.1-late.pdf` |
+
+## REVIEW (2026-04-03)
+
+### Warnings (likely bugs)
+- [WARNING] line 73: `binscatter asinhCiteCount _flesch_score if Year>2000` — Stata treats `.` as larger than any real number, so articles with missing `Year` satisfy `Year>2000` and are included in the "published after 2000" panel. The corresponding `Year<1990` condition at line 63 correctly excludes missing values (since `.` is not less than 1990), so the two panels are asymmetrically filtered. Guard with `Year>2000 & !missing(Year)`.
+
+### Notes (worth knowing)
+- [NOTE] lines 52–56: Matrix row indices `\`bd'[1,1]` through `\`bd'[5,1]` are hardcoded, assuming exactly 5 `TestType` values in a specific sorted order. If the input data ever has a different number of categories, the text annotations will be placed at wrong positions or cause a matrix subscript error with no clear warning.
+
+- [NOTE] line 21: `list in 1/10` prints bibliography entries to the Stata log — a leftover diagnostic statement with no effect on outputs.
+
+- [NOTE] line 1: No `version` statement.
+
+---
+0 error(s), 1 warning(s), 3 note(s).

@@ -1,0 +1,75 @@
+INPUTS
+------
+`nber_fe' (tempfile) — paired article/NBER working paper dataset for paired-difference (nber_fe) regressions, main sample
+`nber' (tempfile) — paired article/NBER dataset for FGLS-style suest regressions, main sample
+`nber_fe_jel' (tempfile) — paired dataset restricted to articles with JEL codes, for nber_fe with JEL fixed effects
+`nber_jel' (tempfile) — paired dataset restricted to articles with JEL codes, for suest regressions with JEL fixed effects
+
+OPERATIONS
+----------
+- Redefines program `nber_fgls` (eclass) — accepts a gender varname, an optional `if` condition, a `using` dataset path, a `stats(string)` list of LLM group composite criteria, `colnames`, and an optional `jel` flag.
+    - For FemRatio and FemSenior: treats gender as continuous (c.varlist). For all others: binary (1.varlist).
+    - Loops over each criterion in `stats`. For each criterion:
+        - Renames `nber_<crit>_score` → `nber_score` to allow a uniform regressor name across iterations.
+        - Runs OLS (col 1 control) via `reghdfe`: dependent var `_<crit>_score` on nber_score + gender×Blind interaction + N, Maxt, MaxT, asinhCiteCount, NativeEnglish FE, Type_* + absorbed Journal×Year FE, Editor FE, optional JEL1_* FE; SEs clustered by Editor. Stores as `ols_<crit>`.
+        - Extracts gender coefficient, Blind×gender coefficient, nber_score coefficient.
+        - Renames `nber_score` back to `nber_<crit>_score`.
+        - Runs FGLS pair via OLS `regress` (not reghdfe) for nber (NBER paper) and reg (published paper), then `suest nber reg` with SEs clustered by Year.
+        - Applies `lincom` to compute published–NBER difference and Blind×gender published–NBER difference from suest.
+        - Accumulates 9 rows of estimates per criterion into matrices B and SE: (1) nber_score coeff from OLS, (2) gender coeff from OLS, (3) Blind×gender from OLS, (4) NBER gender from suest, (5) NBER Blind×gender from suest, (6) pub gender from suest, (7) pub Blind×gender from suest, (8) difference, (9) Blind×gender difference.
+    - Posts 9 stored estimates using `ereturn_post`: reg_nber, reg, reg_blind, su_wp, su_blind_wp, su_pub, su_blind_pub, su_diff, su_blind_diff.
+    - Note: `estimates restore ols*_llm_g1` is called to recover N and df_r from the first criterion's OLS for rows 1–3; `estimates restore nber/reg/suest` for rows 4–9.
+
+- Redefines program `nber_table` — accepts `type(string)` and optional `jel` flag. Writes `estout` for all 11 stored estimate sets (reg_nber, reg, reg_blind, fe, fe_blind, su_wp, su_blind_wp, su_pub, su_blind_pub, su_diff, su_blind_diff) to the type-specific `.tex` file; calls `create_latex` with tablename "table6llm".
+
+- Runs `nber_fe` (defined elsewhere) + `nber_fgls` + `nber_table` for 9 variants:
+    1. FemRatio — full sample
+    2. Fem100 — exclusively female-authored
+    3. FemSolo — solo female-authored
+    4. FemSenior — senior (last) author is female
+    5. FemJunior — FemSenior restricted to Maxt<=3
+    6. Fem1 — at least one female author
+    7. Fem50 — majority female-authored
+    8. wordlimit — FemRatio restricted to BelowAbstractLen==1
+    9. jel — FemRatio with JEL controls, using `nber_fe_jel' and `nber_jel'
+
+- Each variant calls `estimates clear` before running to reset stored estimates.
+
+OUTPUTS
+-------
+~/tonal_analysis/outputs/tables/tex/Table-5-llm-FemRatio.tex — LaTeX table, 11 columns (OLS nber-score control, OLS gender, OLS Blind×gender, FE, FE blind, NBER suest, NBER blind, pub suest, pub blind, diff, diff blind) × 5 LLM group composites (G1–G5); FemRatio gender measure
+~/tonal_analysis/outputs/tables/tex/Table-5-llm-Fem100.tex — same structure, Fem100 gender indicator
+~/tonal_analysis/outputs/tables/tex/Table-5-llm-FemSolo.tex — same structure, FemSolo gender indicator
+~/tonal_analysis/outputs/tables/tex/Table-5-llm-FemSenior.tex — same structure, FemSenior gender indicator
+~/tonal_analysis/outputs/tables/tex/Table-5-llm-FemJunior.tex — same structure, FemSenior restricted to Maxt<=3
+~/tonal_analysis/outputs/tables/tex/Table-5-llm-Fem1.tex — same structure, Fem1 gender indicator
+~/tonal_analysis/outputs/tables/tex/Table-5-llm-Fem50.tex — same structure, Fem50 gender indicator
+~/tonal_analysis/outputs/tables/tex/Table-5-llm-wordlimit.tex — same structure, FemRatio restricted to BelowAbstractLen
+~/tonal_analysis/outputs/tables/tex/Table-5-llm-jel.tex — same structure, FemRatio with JEL fixed effects added
+
+
+## File Paths
+
+| Line | Command | Path |
+|------|---------|------|
+| 11 | `use` | `` `using' `` (resolves to `` `nber' ``) |
+| 128 | `estout … using` | `~/tonal_analysis/outputs/tables/tex/Table-5-llm-<type>.tex` |
+| 133 | `create_latex using` | `` `r(fn)' `` |
+| 138 | `nber_fe … using` | `` `nber_fe' `` |
+| 139 | `nber_fgls … using` | `` `nber' `` |
+| 144 | `nber_fe … using` | `` `nber_fe' `` |
+| 145 | `nber_fgls … using` | `` `nber' `` |
+| 150 | `nber_fe … using` | `` `nber_fe' `` |
+| 151 | `nber_fgls … using` | `` `nber' `` |
+| 156 | `nber_fe … using` | `` `nber_fe' `` |
+| 157 | `nber_fgls … using` | `` `nber' `` |
+| 162 | `nber_fe … using` | `` `nber_fe' `` |
+| 163 | `nber_fgls … using` | `` `nber' `` |
+| 168 | `nber_fe … using` | `` `nber_fe' `` |
+| 169 | `nber_fgls … using` | `` `nber' `` |
+| 174 | `nber_fe … using` | `` `nber_fe' `` |
+| 175 | `nber_fgls … using` | `` `nber' `` |
+| 180 | `nber_fe … using` | `` `nber_fe' `` |
+| 181 | `nber_fgls … using` | `` `nber' `` |
+| 186 | `nber_fe … using` | `` `nber_fe_jel' `` |
+| 187 | `nber_fgls … using` | `` `nber_jel' `` |

@@ -22,3 +22,17 @@ outputs/figures/Figure-G.1-combo.pdf
 |------|---------|------|
 | 98 | `graph export` | `~/tonal_analysis/outputs/figures/Figure-G.1-flesch.pdf` |
 | 104 | `graph export` | `~/tonal_analysis/outputs/figures/Figure-G.1-combo.pdf` |
+
+## REVIEW (2026-04-03)
+
+### Errors (must fix)
+- [ERROR] lines 35–36: `regress resid i.BlindVolCut if BlindVol>1&Fem50==0` (and `Fem50==1`) — `BlindVol` is only assigned for Journal==1 (AER) and Journal==4 (QJE); it is missing for all other journals. Stata treats `.` as larger than any real number, so `BlindVol>1` evaluates to TRUE for every non-AER, non-QJE observation. The post-policy-change regressions `man2` and `fem2` therefore include observations from journals that never underwent a blind-review policy change, corrupting the event-study estimates. Guard with `BlindVol>1 & !missing(BlindVol)`.
+
+### Warnings (likely bugs)
+- [WARNING] line 32: `replace Fem50 = 0 if missing(Fem50)` — silently reclassifies papers with unknown gender composition (mixed-gender, set to `.` in `Data.do`) as "not majority female." This change affects which observations enter the `man1`/`man2` and `fem1`/`fem2` regressions and is applied inside the loop without documentation or an assertion to check how many observations are affected.
+
+### Notes (worth knowing)
+- [NOTE] line 1: No `version` statement.
+
+---
+1 error(s), 1 warning(s), 1 note(s).

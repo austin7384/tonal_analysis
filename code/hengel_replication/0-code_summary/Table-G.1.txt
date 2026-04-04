@@ -19,3 +19,12 @@ outputs/tables/tex/Table-G.1.tex
 | Line | Command | Path |
 |------|---------|------|
 | 14 | `estout ols_* using` | `~/tonal_analysis/outputs/tables/tex/Table-G.1.tex` |
+
+
+## REVIEW (2026-04-03)
+
+### Notes (worth knowing)
+- [NOTE] line 1: No `version` statement.
+
+---
+0 error(s), 0 warning(s), 1 note(s).

@@ -22,3 +22,36 @@ outputs/tables/tex/Table-J.2.tex
 | 5 | `use` | `~/tonal_analysis/data/raw/hengel_generated/author_matching` |
 | 38 | `listtex ... using` | `~/tonal_analysis/outputs/tables/tex/Table-J.2.tex` |
 | 39 | `create_latex using` | `~/tonal_analysis/outputs/tables/tex/Table-J.2.tex` |
+
+## REVIEW (2026-04-03)
+
+### Summary
+Table-J.2.do produces a two-column listing of matched female-male author pairs with formatted names, sorted by female author name using a Unicode sort key. The script is primarily a data formatting and layout exercise rather than an estimation script. Several issues are identified.
+
+### Issues
+
+**1. `merge m:m` on line 10 is almost certainly wrong**
+Line 10 uses `merge m:m AuthorID using \`names'`. In Stata, `merge m:m` performs a row-by-row match that is rarely correct and is documented by StataCorp as almost always a mistake. After the first merge on line 8 (which uses `merge 1:m`), the dataset has multiple rows per `AuthorID1` value. Merging those rows `m:m` against `names` on `AuthorID` will produce a row-by-row join within each matched group, yielding incorrect pairings if the number of rows per AuthorID differs between the two datasets. The correct command is almost certainly `merge m:1 AuthorID using \`names'` (many rows in the current dataset to one row in names), matching the pattern of the first merge on line 8.
+
+**2. Name-parsing regex applied to a tempvar that replaces the original (lines 15–19)**
+The loop creates a `tempvar` with the same name as the loop variable (e.g., `tempvar AuthorName0`), generates the reformatted name in the tempvar, drops the original, then renames the tempvar to the original name. This pattern works but is convoluted. The more serious issue is that `regexm(\`v', "(.*) (.*), (.*)")` on line 16 matches names containing a comma (e.g., "John Smith, Jr."). The regex `(.*)` is greedy, so `regexs(1)` will capture everything before the last space before the comma, and `regexs(3)` will capture everything after. For compound names or names with multiple commas this may produce garbled output.
+
+**3. Van/De prefix handling regex on line 18 may be applied to the already-reformatted name**
+Line 18's `replace \`\`v'' = regexs(2) + " " + regexs(1) if regexm(\`\`v'', "(.*) ((La)|(De)|([Vv][ao]n))$")` operates on the already-reformatted tempvar (which now has the form "LastName, FirstName"). Matching `(.*) ((La)|(De)|([Vv][ao]n))$` against a string like "Smith, John De" will produce `regexs(1) = "Smith, John"` and `regexs(2) = "De"`, yielding "De Smith, John" — which is wrong. This replacement should be applied to the original `AuthorName` before reformatting, not after.
+
+**4. `local split = ceil(r(N)/2)` then `in 1/\`split'' and `in \`++split'/l` — macro increment side effect (lines 29–32)**
+`\`++split'` pre-increments the local macro `split` in-place. After `generate \`j' = 1 in 1/\`split'`, `split` equals `ceil(N/2)`. Then `\`++split'` makes `split = ceil(N/2)+1` for the start of the second half. This is intentional and correct for splitting the list without overlap. However, using `\`++split'` in a `replace ... in` context is an unusual Stata pattern that is not consistently documented and may behave differently across Stata versions. An explicit `local split2 = \`split' + 1` would be clearer and safer.
+
+**5. `listtex` is an external ado command — no availability check**
+`listtex` on line 38 is a community-contributed command (by Roger Newson). If it is not installed on the executing system, the script will error on line 38 after all the data preparation work. There is no `capture which listtex` check or installation instruction. Given that this is the only file using `listtex`, confirm it is installed and documented in the project setup.
+
+**6. `create_latex` called with a file path, not `\`r(fn)''` (line 39)**
+Most other do-files call `create_latex using "\`r(fn)''", ...` which uses the filename returned by the previous `estout`. Here, `listtex` does not set `r(fn)`, so the path is hardcoded as `"~/tonal_analysis/outputs/tables/tex/Table-J.2.tex"`. This is correct and intentional, but it creates a maintenance risk: if the output path ever changes, both lines 38 and 39 must be updated separately.
+
+**7. `end("\\\\")`  in `listtex` — row termination (line 38)**
+`listtex ... end("\\\\")` passes two backslashes to Stata, which after macro processing yields `\\` in the file. In LaTeX, `\\` is the standard row-end command in tabular environments. This is correct for LaTeX table rows. Confirm the surrounding table environment in `create_latex`/`tables.xlsx` does not add an additional `\\`, which would produce `\\\\` (four backslashes) per row.
+
+### No Issues Found
+- `ustrsortkey(AuthorName0, "en")` is the correct Stata function for locale-aware Unicode sorting.
+- `reshape wide AuthorName0 AuthorName1, i(\`i') j(\`j')` correctly produces a two-column layout.
+- `keep AuthorID*` immediately after the `use` defensively drops all non-ID columns before the first merge.

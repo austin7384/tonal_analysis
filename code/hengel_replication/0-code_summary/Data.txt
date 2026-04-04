@@ -102,3 +102,25 @@ data/raw/hengel_generated/duration.dta
 | 389 | `import delimited` | `~/tonal_analysis/data/raw/hengel_generated/time.csv` |
 | 407 | `save` | `~/tonal_analysis/data/raw/hengel_generated/duration` |
 | 410 | `import delimited` | `~/tonal_analysis/data/raw/hengel_generated/author_names.csv` |
+
+## REVIEW (2026-04-03)
+
+### Errors (must fix)
+- [ERROR] line 124: `merge m:m InstID Year using \`instrank'` — `m:m` in Stata is a row-by-row match, not a true many-to-many relational join. It pairs the 1st row on the left with the 1st row on the right, 2nd with 2nd, etc., producing silently corrupted results. This should almost certainly be `merge m:1 InstID Year` since `instrank` (after the tssmooth/cut operations saved at line 122) contains one row per InstID-Year.
+
+- [ERROR] line 349: `generate nber_pps_count = nber_polysyblword_count / _sent_count` — divides the NBER polysyllable word count by `_sent_count` (the *published* article sentence count) instead of `nber_sent_count`. Every other `nber_*` readability variable in lines 348–352 correctly uses `nber_` denominators. This cross-contaminates NBER and published-article statistics for this one metric.
+
+### Warnings (likely bugs)
+- [WARNING] line 98: `replace Fem50 = 1 if FemRatio0>=0.5` — Stata treats `.` as larger than any real number, so observations where `FemRatio0` is missing will satisfy `>=0.5` and be set to `Fem50=1` incorrectly. Guard with `& !missing(FemRatio0)`.
+
+- [WARNING] line 101: `generate Fem1 = FemRatio0>0` — same trap: missing `FemRatio0` satisfies `>0`, generating `Fem1=1` for articles with unknown gender composition.
+
+- [WARNING] lines 268, 408, 412: `use \`...' ` without `clear` — these work only because the dataset in memory was just saved (so Stata considers it unchanged). Any future insertion of a step between the preceding `save` and these `use` commands will crash with "dataset in memory has changed." Use `use \`...' , clear` explicitly.
+
+### Notes (worth knowing)
+- [NOTE] line 1: No `version` statement. Stata behavior (sort stability, factor-variable handling) differs across versions; adding `version 17` (or whichever version this was written for) prevents silent behavioral drift.
+
+- [NOTE] lines 209–213, 348–352: Division-based readability metrics (`_wps_count`, `_pps_count`, etc.) have no guard against zero denominators. If `_sent_count` or `_word_count` is ever zero, these silently produce missing values with no log warning.
+
+---
+2 error(s), 3 warning(s), 2 note(s).

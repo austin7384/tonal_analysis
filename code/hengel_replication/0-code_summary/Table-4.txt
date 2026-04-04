@@ -18,3 +18,17 @@ outputs/tables/tex/Table-4.tex
 | Line | Command | Path |
 |------|---------|------|
 | 51 | `estout sum_* using` | `~/tonal_analysis/outputs/tables/tex/Table-4.tex` |
+
+
+## REVIEW (2026-04-03)
+
+### Warnings (likely bugs)
+- [WARNING] lines 30, 36–48: `dof_all` is computed at line 30 (`scalar dof_all = e(df_r)`) but never used in the table output. The DID column (i=7, line 35) uses `dof_f` (from the last `regress` call in the loop, line 26), but at that point `dof_f = e(df_r)` from the Fem50 regression, not from a separate DID model. The stored scalar `dof_all` suggests a different degrees-of-freedom was intended for that column but was never wired in.
+
+### Notes (worth knowing)
+- [NOTE] line 9: Male mean is defined as `FemRatio < 0.5` while the female dummy `Fem50` is defined as `FemRatio >= 0.5`. This excludes papers with `FemRatio == 0.5` from the male mean but includes them in the female mean, creating an asymmetry in the reported column labels that is not flagged in the table.
+
+- [NOTE] line 1: No `version` statement.
+
+---
+1 warning(s), 2 note(s).

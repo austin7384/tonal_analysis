@@ -19,3 +19,13 @@ outputs/tables/tex/Table-2.tex
 | Line | Command | Path |
 |------|---------|------|
 | 31 | `estout sum_* using` | `~/tonal_analysis/outputs/tables/tex/Table-2.tex` |
+
+## REVIEW (2026-04-03)
+
+### Notes (worth knowing)
+- [NOTE] line 8: `replace _\`stat'_count = _\`stat'_count / _sent_count` — permanently overwrites the in-memory count variables with per-sentence ratios inside the loop. No zero guard on `_sent_count`; if any abstract has zero sentences, that observation silently becomes missing for all five statistics. These in-memory modifications also mean the `article` dataset in memory is no longer the raw article data if any subsequent code in the same session depends on the original count variables.
+
+- [NOTE] line 1: No `version` statement.
+
+---
+0 error(s), 0 warning(s), 2 note(s).

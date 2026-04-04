@@ -20,3 +20,37 @@ outputs/tables/tex/Table-I.2.tex
 | Line | Command | Path |
 |------|---------|------|
 | 22 | `estout firstlast_* using` | `~/tonal_analysis/outputs/tables/tex/Table-I.2.tex` |
+
+## REVIEW (2026-04-03)
+
+### Summary
+Table-I.2.do collapses the author-level panel to compute first, mean, and last readability scores per author (for authors with more than 2 papers, T>2), stratifies by gender, and exports results using `estout`. The script is moderately complex due to the `ereturn_post` pattern and manual matrix percentage-change calculation. Several issues are identified.
+
+### Issues
+
+**1. `T>2` filter applied inside `collapse` condition, not before it (line 9)**
+`collapse (mean) Mean=_\`stat'_score (first) ... if T>2, by(AuthorID)` applies the `if` condition at the observation level, not the author level. If `T` is an author-level constant (same value for all rows of a given author), this works correctly. But if `T` varies within an author's observations (e.g., due to a reshape or partial merge), observations with `T<=2` will be silently dropped from the mean/first/last calculation while still counting as belonging to that author. Verify that `T` is truly constant within `AuthorID` in the `author` dataset before `collapse`.
+
+**2. `(first) First=_\`stat'_score` is order-dependent (line 9)**
+`collapse (first)` returns the first value in the current sort order. The script calls `sort AuthorID t` on line 5, which should ensure `first` gives the chronologically earliest paper score. However, within `preserve/restore` blocks the sort is preserved, so this is fine. The dependency on the pre-existing sort is a fragility: if an upstream `use` or merge reorders rows, the "first" paper score changes silently.
+
+**3. `ereturn_post e(b) e(V)` — non-standard command with no documentation (line 12)**
+`ereturn_post` appears to be a user-written command (not built into Stata). Its behavior — presumably posting `e(b)` and `e(V)` from the `mean` command into `e()` for storage — is critical to the entire table. If this ado-file is missing from the adopath or its semantics differ from expectation, all six `firstlast_*` estimates will be silently wrong or will error. The script should verify that `ereturn_post` is available and document where it is defined.
+
+**4. Percentage-change matrix construction is fragile to column ordering (lines 15–18)**
+The matrix `b'` is constructed by indexing specific columns of `e(b)`: `[1,1]`, `[1,2]`, `[1,3]`, etc. The `mean ... over(Female)` command produces columns in the order defined by `Female`'s value labels. If the label order ever changes (e.g., Female=0 before Female=1, or a missing category is added), the column indices shift and the percentage changes will be computed from wrong pairs without any error. The matrix is computed but never used in `estout` or exported — confirm it is used elsewhere (e.g., in-text citations in the paper), otherwise it is dead code.
+
+**5. Matrix `B'` accumulated with `nullmat` but never exported (lines 17, 20)**
+`matrix \`B' = nullmat(\`B') , 100*\`b'` accumulates percentage changes across the six readability statistics. `matrix rownames \`B' = ...` is set on line 20. However, `B'` is never written to a file or stored for use. If the percentage changes are quoted in-text in the paper, they must be read from the log or a separate step. If this is intentional (a scratch check), add a `display matrix \`B'' for log verification.
+
+**6. `blist(c.First@0.Female "\multicolumn{6}{l}{...}\\\${n}")` — hardcoded column count (line 36)**
+`\multicolumn{6}{l}{...}` assumes exactly 6 columns. The loop runs over 6 readability measures, so this matches. But if the stat list is ever extended or shortened, the `\multicolumn` count will be wrong, producing malformed LaTeX without a Stata-level error.
+
+**7. Missing `eqlabels(none)` — may produce spurious equation headers (line 22)**
+The `estout` call does not include `eqlabels(none)`. With `mean ... over(Female)`, Stata stores results using equation names derived from the `Female` variable's value labels. `estout` may render these as equation headers above coefficient rows in the table. Confirm the `publishing-female_latex` style suppresses equation labels; if not, unwanted headers will appear.
+
+### No Issues Found
+- `preserve/restore` inside the loop correctly avoids contaminating the outer dataset across iterations.
+- `label values Female gender` ensures consistent gender label application before `mean ... over()`.
+- `cells(b(nostar fmt(2)) se(par fmt(2)))` is appropriate for a descriptive (non-inferential) table.
+- The `elist()` and `blist()` options in `varlabels` correctly insert group headers between score categories.

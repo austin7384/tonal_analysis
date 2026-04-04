@@ -27,3 +27,16 @@ outputs/tables/tex/Table-F.2-R.tex
 | Line | Command | Path |
 |------|---------|------|
 | 71 | `estout xtabond_* using` | `~/tonal_analysis/outputs/tables/tex/Table-F.2-`type'.tex` |
+
+
+## REVIEW (2026-04-03)
+
+### Notes (worth knowing)
+- [NOTE] line 14: `replace \`namelist' = 0 if missing(\`namelist') & FemRatio!=1` — `FemRatio!=1` is TRUE when `FemRatio` is missing (Stata evaluates `.!=1` as TRUE). Observations with missing `FemRatio` also have their gender variable zeroed out, even though the paper's gender composition is unknown. If the author-level dataset has any rows with missing `FemRatio`, these are silently misclassified.
+
+- [NOTE] line 33: `xtabond2` requires an active `xtset`. `use \`using', clear` at line 10 loads the dataset fresh; `xtset` metadata is preserved only if Data.do called `xtset` before saving the author tempfile. If not, every `xtabond2` call errors at runtime.
+
+- [NOTE] line 1: No `version` statement.
+
+---
+0 error(s), 0 warning(s), 3 note(s).

@@ -27,3 +27,35 @@ outputs/tables/tex/Table-7-FemJunior.tex
 | Line | Command | Path |
 |------|---------|------|
 | 37 | `estout * using` | `~/tonal_analysis/outputs/tables/tex/Table-7-`type'.tex` |
+
+## REVIEW (2026-04-03)
+
+### Summary
+`Table-7.do` defines two programs (`review_time_restud` and `review_time_restud_table`) to estimate review duration at Econometrica and REStud jointly under 6 specifications and exports results for 7 gender-composition variants. It is compact and mostly clean, but contains one real bug and several issues worth noting.
+
+### Bugs and Errors
+
+**1. Undefined macro `` `if' `` in pooled regression (line 13)**
+`eststo all: reghdfe ... if Journal==2, absorb(AcceptedYear##Journal Editor MaxInst) vce(cluster ReceivedYear)` — wait, the pooled model on line 13 references a local macro `` `if' `` at the end of the reghdfe command:
+```
+eststo all: reghdfe ReviewLength `namelist' ... Type_Other `if', absorb(AcceptedYear##Journal Editor MaxInst) ...
+```
+The program `review_time_restud` does not define a local macro `if` anywhere. Stata will expand an undefined local to an empty string, meaning the pooled model silently runs on all journals (including any beyond Journal==2 and Journal==6). If the dataset contains other journals, these are included in the "pooled" model without warning. This is a silent data-inclusion bug if the dataset contains journals other than 2 and 6.
+
+**2. `estout *` wildcard (line 37)**
+`estout *` exports all stored estimates, relying on the order they were stored matching the intended column order. If any preceding do-file left estimates in memory (and `estimates clear` was not called), those stray estimates would appear as extra columns in the table. The program does call `estimates clear` at line 9, so this is only a risk if `estimates clear` is removed or the program is called outside its normal context.
+
+**3. `_flesch_score` excluded from duration models (lines 11–16)**
+Unlike `Table-6.do`, the `Table-7.do` duration regressions do not include `_flesch_score` as a quality control. This is asymmetric and may be intentional (REStud does not have the same Flesch data coverage), but there is no comment explaining the omission.
+
+**4. Comment mismatch on lines 54 and 58**
+- Line 54: `* Table J.14x Exclusively female-authored` — but the regression on line 55 uses `Fem100`, which is correct.
+- Line 58: `* Table J.14x Solo-authored` — the regression on line 59 uses `FemSolo`, which is also correct.
+These comments are accurate; no error here. However, lines 62 and 66 label both `Fem1` ("At least one female author", Table J.9x) and `Fem50` ("Majority female-authored", Table J.4) as J.4/J.9 — the J.4 label may be a carry-over from Table-6.do. Low severity.
+
+### Style / Minor Issues
+
+- `review_time_restud` does not add `estadd local year` for the journal-specific regressions where `AcceptedYear` is absorbed without interaction; the `year` tick is set for `eca`, `res`, `jel_eca`, `jel_res` on line 23, which is correct.
+- `jnlyr` (Journal#AcceptedYear interaction FE) is set only for `all` and `jel_all` on lines 25–27, which is correct.
+- No `estimates clear` at the end of the script.
+- Hardcoded `~/tonal_analysis/` path on line 37.

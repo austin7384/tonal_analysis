@@ -1,0 +1,11 @@
+## Stata Code Review: `Table-3-llm.do`
+
+### Notes (worth knowing)
+- [NOTE] lines 19/23/27/31/35/39/43: `article_level` is called but defined elsewhere (in Table-3.do or the master script). If Table-3.do is commented out in hengel_master.do, this file will fail with "unrecognized command: article_level". The comment on line 4 acknowledges `article_level` is "reused as-is" but does not redefine it, unlike the pattern used in Table-3-llm-individual.do which redefines the program for standalone use.
+- [NOTE] line 9: Hardcoded absolute path `~/tonal_analysis/outputs/tables/tex/Table-3-llm-\`type'.tex`. Not portable across machines.
+- [NOTE] lines 19/23/27/31/35/39/43: Tempfile macros `\`article'`, `\`article_primary_jel'`, `\`article_tertiary_jel_pp'` are defined in the master do-file. If this file is run standalone, all three expand to empty strings and the calls will fail silently or error.
+- [NOTE] file-wide: No `version` statement.
+- [NOTE] file-wide: `capture program drop article_level_table` is not called before `program define article_level_table` (line 6). If this file is included twice in a session or the master do-file re-includes it, Stata will error with "command article_level_table already defined." Add `capture program drop article_level_table` before the `program define`.
+
+---
+0 error(s), 0 warning(s), 5 note(s).

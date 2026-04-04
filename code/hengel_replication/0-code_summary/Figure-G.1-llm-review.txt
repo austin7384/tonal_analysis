@@ -1,0 +1,10 @@
+## Stata Code Review: `Figure-G.1-llm.do`
+
+### Notes (worth knowing)
+- [NOTE] line 11: Each loop iteration calls `use \`nber_fe', clear`, reloading the dataset fresh. All within-loop variable construction and estimation is clean with no cross-iteration contamination.
+- [NOTE] line 31: `replace Fem50 = 0 if missing(Fem50)` — imputes missing `Fem50` to 0 (male) before the subsample regressions on lines 32–35. This is an analytical choice that affects which observations are assigned to the male group; worth confirming it is intentional.
+- [NOTE] line 99: Hardcoded `~/tonal_analysis/` prefix. Not portable.
+- [NOTE] file-wide: `\`nber_fe'` is a master-defined tempfile macro; standalone execution fails. No `version` statement.
+
+---
+0 error(s), 0 warning(s), 4 note(s).

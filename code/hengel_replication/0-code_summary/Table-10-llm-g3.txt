@@ -1,0 +1,45 @@
+INPUTS
+------
+`nber' (tempfile) — paired article/NBER working paper dataset with LLM G3 composite scores (nber_llm_g3_score, _llm_g3_score), FemRatio, and controls
+`author' (tempfile) — author-level dataset with ArticleID, AuthorWeight, and gender/time-to-publication variables; merged to nber by ArticleID
+
+OPERATIONS
+----------
+- Loads `nber', merges m:m with `author' on ArticleID (keeping matched observations only, no generate), saves result to a new tempfile `nber_author'.
+
+- Constructs a binned time variable `tBin' (tempvar) from t using recode: t=1→1, t=2→2, t=3→3, t=4–5→4, t>5→5. Labels values as "1", "2", "3", "4-5", "6+".
+
+- Runs two OLS `regress` equations with author weights (aweight=AuthorWeight):
+    - `nber`: dependent variable nber_llm_g3_score (NBER draft LLM G3 composite); regressors c.FemRatio##c.tBin, Maxt, MaxT, asinhCiteCount, N, NativeEnglish FE, Journal×Year FE, Editor FE. Stored as `nber`.
+    - `reg`: same specification with _llm_g3_score (published article LLM G3 composite) as dependent variable. Stored as `reg`.
+    - `suest nber reg` with SEs clustered by Editor. Stored as `suest`.
+
+- Computes five `margins` post-estimation quantities from the suest model, each iterated over all tBin cells (5 cells):
+    1. Predicted G3_pub − G3_draft at FemRatio=1 (women) — direct peer-review impact for fully female-authored papers
+    2. Same at FemRatio=0 (men) — direct peer-review impact for fully male-authored papers
+    3. Marginal effect of FemRatio on published G3 score (dydx, reg_mean equation)
+    4. Marginal effect of FemRatio on draft G3 score (dydx, nber_mean equation)
+    5. Diff-in-diff: contrast FemRatio=1 vs FemRatio=0 in (G3_pub − G3_draft), over tBin
+
+- Accumulates margin estimates and SEs into matrices B (5 rows × 5 cols) and SE (5 rows × 5 cols).
+
+- Loops over tBin cells (i=1 to 5). For each cell i: extracts column i from B and SE as row vectors, posts as stored estimate `est_i' using `ereturn_post' with colnames (women, men, reg, nber, diff) and FE indicators.
+
+- Writes `estout` for all 5 stored estimates (est_1–est_5) to a single LaTeX table with varlabels for women/men/diff/nber/reg and section headers ("Predicted G3_pub−G3_draft" and "Marginal effect of female ratio") inserted via `blist`.
+
+- Calls `create_latex` with tablename "table9llmg3". Clears all stored estimates.
+
+OUTPUTS
+-------
+~/tonal_analysis/outputs/tables/tex/Table-10-llm-g3.tex — LaTeX table: 5 columns (one per tBin: t=1,2,3,4-5,6+) × 5 rows (women, men, diff-in-diff, draft, published); shows predicted peer-review impact on LLM G3 composite score and marginal effect of female ratio, from suest with author weights and Editor-clustered SEs
+
+
+## File Paths
+
+| Line | Command | Path |
+|------|---------|------|
+| 4 | `use` | `` `nber' `` |
+| 5 | `merge … using` | `` `author' `` |
+| 7 | `save` | `` `nber_author' `` |
+| 56 | `estout … using` | `~/tonal_analysis/outputs/tables/tex/Table-10-llm-g3.tex` |
+| 64 | `create_latex using` | `` `r(fn)' `` |

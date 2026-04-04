@@ -19,3 +19,13 @@ outputs/figures/Figure-D.2-gunningfog.pdf
 | Line | Command | Path |
 |------|---------|------|
 | 32 | `graph export` | `~/tonal_analysis/outputs/figures/Figure-D.2-`stat'.pdf` |
+
+## REVIEW (2026-04-03)
+
+### Notes (worth knowing)
+- [NOTE] line 20: `regress article_r_\`stat' nber_r_\`stat', robust` — uses HC robust SEs but no clustering. The NBER-article pairs share journal, year, and editorial cluster structure. For a display figure this is likely acceptable, but the SE shown in the graph text differs from the clustered SEs used elsewhere in the paper.
+
+- [NOTE] line 1: No `version` statement.
+
+---
+0 error(s), 0 warning(s), 2 note(s).

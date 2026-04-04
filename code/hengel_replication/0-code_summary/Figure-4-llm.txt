@@ -1,0 +1,28 @@
+INPUTS
+------
+`author' (tempfile) — author-level panel dataset with LLM readability scores (_llm_readability_score), t (submission count / career position), and Female indicator
+
+OPERATIONS
+----------
+- Loads the author-level tempfile.
+
+- Produces a `binscatter` plot of _llm_readability_score against t (the t-th article in career), separated by Female:
+    - Two series: Male (pfblue) and Female (pfpink)
+    - Legend labels: "Male" (series 1), "Female" (series 2)
+    - X-axis titled "{it:t}th article" (south-east placement, medium-small size); no separate xtitle argument overrides this
+    - Y-axis titled "LLM Readability"
+    - Aspect ratio 0.6; uses publishing-female scheme and Avenir-Light font face
+
+- Exports the figure as a PDF.
+
+OUTPUTS
+-------
+~/tonal_analysis/outputs/figures/Figure-4-llm.pdf — Binscatter plot of mean LLM readability score by career publication number t, separately for male and female authors
+
+
+## File Paths
+
+| Line | Command | Path |
+|------|---------|------|
+| 4 | `use` | `` `author' `` |
+| 14 | `graph export` | `~/tonal_analysis/outputs/figures/Figure-4-llm.pdf` |

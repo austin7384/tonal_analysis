@@ -21,3 +21,16 @@ outputs/figures/Figure-6.pdf
 | Line | Command | Path |
 |------|---------|------|
 | 49 | `graph export` | `~/tonal_analysis/outputs/figures/Figure-6.pdf` |
+
+## REVIEW (2026-04-03)
+
+### Errors (must fix)
+- [ERROR] line 5: `merge m:m ArticleID using \`author', keep(match) nogenerate` — `m:m` is almost certainly wrong here. `nber` has one row per NberID-ArticleID pair (many NBER drafts per article), and `author` has one row per AuthorID-ArticleID pair (many authors per article). Stata's `m:m` does a row-by-row match within each ArticleID group — not a Cartesian join — silently producing corrupted pairings. The correct command to get all NBER-draft × author combinations per article is `joinby ArticleID using \`author'`.
+
+### Notes (worth knowing)
+- [NOTE] lines 14–15: The individual `regress` commands have no `vce(cluster ...)`, so the per-equation SEs are unclustered. Only the `suest` at line 16 adds `vce(cluster Editor)`. If anyone uses the stored `nber` or `reg` estimates directly (rather than the `suest` results), they would get unclustered standard errors silently.
+
+- [NOTE] line 1: No `version` statement.
+
+---
+1 error(s), 0 warning(s), 2 note(s).

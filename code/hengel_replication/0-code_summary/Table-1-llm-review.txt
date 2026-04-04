@@ -1,0 +1,11 @@
+## Stata Code Review: `Table-1-llm.do`
+
+### Notes (worth knowing)
+- [NOTE] line 4: `use \`article', clear` — path depends on a tempfile macro defined in the master do-file. If this file is ever run standalone, `\`article'` expands to empty string and Stata opens nothing (or errors). No standalone guard exists.
+- [NOTE] line 5: `replace Fem50 = 0 if missing(Fem50)` — silently imputes 0 for missing gender observations. This changes the denominator in the male-majority mean (line 26: `count if Fem50==0`) to include originally-missing observations. Whether this is intentional should be verified; no comment explains it.
+- [NOTE] line 27/32/37: `ereturn_post` is a user-written program (not built-in). If it is not installed or loaded before this file runs, execution will fail with "unrecognized command." No `capture program drop` or check for its existence appears here.
+- [NOTE] line 39: Hardcoded absolute path `~/tonal_analysis/outputs/tables/tex/Table-1-llm.tex`. Will fail if the home directory or project root differs across machines.
+- [NOTE] file-wide: No `version` statement. Stata behavior for factor variables and sort stability differs across versions.
+
+---
+0 error(s), 0 warning(s), 5 note(s).

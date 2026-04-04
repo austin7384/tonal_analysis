@@ -1,0 +1,64 @@
+INPUTS
+------
+`article' (tempfile) — article-level dataset with LLM group composite scores (_llm_g1_score through _llm_g5_score) and gender indicators
+`article_primary_jel' (tempfile) — article-level primary JEL classification data (passed to article_level for JEL controls)
+`article_tertiary_jel_pp' (tempfile) — article-level tertiary JEL classification data (passed to article_level for JEL controls)
+
+OPERATIONS
+----------
+- Defines a local program `article_level_table` with a required `type(string)` option. The program:
+    - Calls `estout` on stored estimates named `est_*_Editor` to write a LaTeX regression table for the given gender-definition variant.
+    - Displays stats rows: N, editor FE, blind, journal FE, year FE, journal×year FE, Nj, institution, quality, native speaker, primary JEL, theory/empirical, tertiary JEL.
+    - Labels the row for `_llm_readability_score` using `\mrow{3cm}{...}`.
+    - Inserts `\midrule` before the footer.
+    - Calls `create_latex` on the output file using tablename "table3llm" and the supplied type.
+
+- Runs `article_level` (defined elsewhere, reused from Table-3.do context) followed by `article_level_table` for seven gender-definition variants:
+    1. FemRatio — continuous female authorship ratio
+    2. Fem100 — exclusively female-authored papers
+    3. FemSolo — solo female-authored papers
+    4. Fem1 — at least one female author
+    5. Fem50 — majority female-authored
+    6. FemSenior — senior (last) author is female
+    7. FemJunior — junior (first) author is female
+
+- For each variant, `article_level` loads `article', computes regressions of LLM group composites (llm_g1 through llm_g5) on the gender indicator with controls, and stores estimates as `est_*_Editor`. `article_level_table` then writes those estimates to the corresponding `.tex` file.
+
+OUTPUTS
+-------
+~/tonal_analysis/outputs/tables/tex/Table-3-llm-FemRatio.tex — LaTeX regression table, LLM group composites G1–G5 on FemRatio, article-level OLS with editor/journal/year/JEL controls
+~/tonal_analysis/outputs/tables/tex/Table-3-llm-Fem100.tex — same specification with Fem100 gender indicator
+~/tonal_analysis/outputs/tables/tex/Table-3-llm-FemSolo.tex — same specification with FemSolo gender indicator
+~/tonal_analysis/outputs/tables/tex/Table-3-llm-Fem1.tex — same specification with Fem1 gender indicator
+~/tonal_analysis/outputs/tables/tex/Table-3-llm-Fem50.tex — same specification with Fem50 gender indicator
+~/tonal_analysis/outputs/tables/tex/Table-3-llm-FemSenior.tex — same specification with FemSenior gender indicator
+~/tonal_analysis/outputs/tables/tex/Table-3-llm-FemJunior.tex — same specification with FemJunior gender indicator
+
+
+## File Paths
+
+| Line | Command | Path |
+|------|---------|------|
+| 9 | `estout … using` | `~/tonal_analysis/outputs/tables/tex/Table-3-llm-<type>.tex` |
+| 15 | `create_latex using` | `` `r(fn)' `` (same file, returned by estout) |
+| 19 | `article_level … using` | `` `article' `` |
+| 19 | `article_level … data_jel1(…)` | `` `article_primary_jel' `` |
+| 19 | `article_level … data_jel3(…)` | `` `article_tertiary_jel_pp' `` |
+| 23 | `article_level … using` | `` `article' `` |
+| 23 | `article_level … data_jel1(…)` | `` `article_primary_jel' `` |
+| 23 | `article_level … data_jel3(…)` | `` `article_tertiary_jel_pp' `` |
+| 27 | `article_level … using` | `` `article' `` |
+| 27 | `article_level … data_jel1(…)` | `` `article_primary_jel' `` |
+| 27 | `article_level … data_jel3(…)` | `` `article_tertiary_jel_pp' `` |
+| 31 | `article_level … using` | `` `article' `` |
+| 31 | `article_level … data_jel1(…)` | `` `article_primary_jel' `` |
+| 31 | `article_level … data_jel3(…)` | `` `article_tertiary_jel_pp' `` |
+| 35 | `article_level … using` | `` `article' `` |
+| 35 | `article_level … data_jel1(…)` | `` `article_primary_jel' `` |
+| 35 | `article_level … data_jel3(…)` | `` `article_tertiary_jel_pp' `` |
+| 39 | `article_level … using` | `` `article' `` |
+| 39 | `article_level … data_jel1(…)` | `` `article_primary_jel' `` |
+| 39 | `article_level … data_jel3(…)` | `` `article_tertiary_jel_pp' `` |
+| 43 | `article_level … using` | `` `article' `` |
+| 43 | `article_level … data_jel1(…)` | `` `article_primary_jel' `` |
+| 43 | `article_level … data_jel3(…)` | `` `article_tertiary_jel_pp' `` |

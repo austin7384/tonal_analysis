@@ -20,3 +20,38 @@ outputs/tables/tex/Table-B.1.tex
 | Line | Command | Path |
 |------|---------|------|
 | 35 | `estout matrix(`N', fmt(%9.0f)) using` | `~/tonal_analysis/outputs/tables/tex/Table-B.1.tex` |
+
+## REVIEW (2026-04-03)
+
+### Summary
+`Table-B.1.do` is the simplest file in this batch. It counts articles by journal and decade, reshapes to wide format, adds a totals row, and exports a LaTeX matrix table. The logic is straightforward and largely correct, but contains a few latent issues.
+
+### Bugs and Errors
+
+**1. `set obs 8` assumes exactly 7 non-total rows (line 25)**
+After reshaping, the dataset should have one row per decade (7 decades: 1950s, 1960s, 1970s, 1980s, 1990s, 2000s, 2010–15). `set obs 8` adds one row at position 8 for the total. This is correct only if the data always produces exactly 7 decade rows. If any decade has zero articles across all journals, `collapse` will not produce a row for it, `reshape` will be missing that row, and `set obs 8` will incorrectly extend a dataset that has fewer than 7 rows — placing "Total" in the wrong position. Verify that all 7 decades are always populated in the data.
+
+**2. `_AER` in the `foreach` loop (line 27)**
+`foreach var of varlist _AER-DecadeTotal` iterates from `_AER` to `DecadeTotal`. After `reshape wide _, i(Decade) j(Journal) string`, variable names are `_` + journal name strings. The ordering depends on the sort order of journal names as strings. If the journal label for `Journal==1` is not "AER", or if `_AER` does not exist, the loop will error. The range `_AER-DecadeTotal` is fragile — it assumes both `_AER` is the first reshaped variable and `DecadeTotal` is the last. A safer pattern would be `foreach var of varlist _* DecadeTotal`.
+
+**3. Total row construction overwrites only the last summary from `sum` (lines 27–30)**
+```stata
+foreach var of varlist _AER-DecadeTotal {
+  sum `var'
+  replace `var' = r(sum) in 8
+}
+```
+`sum` without `if` includes row 8 itself in the sum, but since row 8 is initialized to missing (from `set obs 8`), missing values are excluded from `sum`, so `r(sum)` equals the sum of rows 1–7. This is correct because Stata's `sum` ignores missing values by default. No bug here, but it is worth confirming that `DecadeTotal` in row 8 will be the sum of the 7 `DecadeTotal` values, not a re-sum of the individual journal totals. Since `DecadeTotal` in rows 1–7 was computed with `rowtotal(_*)` (which already sums journals), summing those gives the grand total. Correct.
+
+**4. `decode Journal, generate(\`Journal')` then `drop Journal` (lines 18–19)**
+This decodes a numeric `Journal` variable into its string label and renames the result. If `Journal` has no value labels defined (or only partial labels), `decode` will produce missing strings for unlabeled values, which would then create columns with missing names after `reshape`. Assuming journal labels are fully defined in `Data.do`, this is fine.
+
+**5. `tablename("table1")` in `create_latex` (line 37)**
+Per the MEMORY.md mapping, `table1` is not listed — the MEMORY.md documents `table3`, `table6`, `table10`, `table11`, `tableH2`, etc. but not `table1`. Verify that `tables.xlsx` has a row with `TableName == "table1"` and that `create_latex` finds it without error. If `table1` is missing from `tables.xlsx`, the LaTeX wrapper will fail silently or produce a table with empty caption/notes.
+
+### Style / Minor Issues
+
+- No `estimates clear` call (not needed here since no estimation commands are run, only matrix export via `estout`).
+- Hardcoded `~/tonal_analysis/` path on line 35.
+- The `substitute(" ." "  ")` on line 36 replaces ` .` (space + dot, i.e., missing value representation) with two spaces in the LaTeX output. This is the correct approach for suppressing Stata's missing-value dot in matrix exports.
+- The file is short and well-organized overall; no major structural concerns.

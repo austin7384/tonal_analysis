@@ -1,5 +1,31 @@
 # Recent Changes
 
+## Session: 2026-04-03
+
+### Completed
+- Created 21 new `*-llm.txt` summary files in `0-code_summary/` documenting all -llm do-files (Table-1-llm through Section-4.3-llm) using `/summarize-stata`
+- Created 21 new `*-llm-review.txt` review files in `0-code_summary/` with static analysis of all -llm do-files using `/review-stata`
+- Appended `## REVIEW` sections to 30 existing non-LLM `0-code_summary/*.txt` files
+
+### Key findings from reviews
+- **ERROR** `Section-4.3-llm.do` line 93: double-merge of `primary_jel` into `author_pp` — will crash with "variable already defined" since those JEL1_* columns were already merged in on line 79
+- **WARNING** `Table-10-llm.do`, `Table-10-llm-g3.do`, `Figure-6-llm.do`, `Figure-6-llm-g3.do` line 5: `merge m:m ArticleID` should be `merge 1:m`
+- **WARNING** `Table-I.2-llm.do` lines 33–34, 36: estout `\\` backslash-stripping in `elist`/`blist` group-header rows (same issue as individual tables; needs Python post-processing fix)
+- **WARNING** `Table-3-llm-individual.do` line 255: `$^\dagger` expands as global macro, silently drops the dagger marker
+- **WARNING** `Table-5-llm.do` lines 30/44, `Table-5-llm-individual.do` lines 71/85: unprotected `rename` in estimation loop — stranded variable name if estimation errors
+- **ERROR** `Data.do` line 124: `merge m:m InstID Year` should be `merge m:1`; line 349: `nber_pps_count` divides by wrong denominator (`_sent_count` instead of `nber_sent_count`)
+
+### Key changes
+- `code/hengel_replication/0-code_summary/`: 42 new files added (21 summaries + 21 reviews for all -llm do-files)
+- `code/hengel_replication/0-code_summary/*.txt` (30 files): review sections appended to existing non-LLM summaries
+
+### Notes / follow-up
+- `Section-4.3-llm.do` ERROR (double merge) should be investigated — line 93 is redundant and would crash
+- `merge m:m` bugs in Figure-6 and Table-10 files are the same pattern as the main Figure-6.do — worth checking if the non-LLM versions have the same issue
+- `Table-I.2-llm.do` backslash-stripping bug is new (not previously documented) — needs same Python post-processing fix as the individual tables
+
+---
+
 ## Session: 2026-04-02
 
 ### Completed

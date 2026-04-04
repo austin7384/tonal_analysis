@@ -1,0 +1,12 @@
+## Stata Code Review: `Figure-6-llm.do`
+
+### Warnings (likely bugs)
+- [WARNING] line 5: `merge m:m ArticleID using \`author'` — `merge m:m` in Stata matches by observation order within each `ArticleID` group, not by performing a proper relational join. If `\`nber'` has one row per article and `\`author'` has multiple rows per article (one per author), this should be `merge 1:m ArticleID`. The current code silently produces incorrect matches.
+
+### Notes (worth knowing)
+- [NOTE] lines 6–7: `tempfile nber_author; save \`nber_author'` — the tempfile is saved here but never reloaded anywhere in the script; execution continues on the in-memory merged dataset. Dead code.
+- [NOTE] line 45: Hardcoded `~/tonal_analysis/` prefix. Not portable.
+- [NOTE] file-wide: `\`nber'` and `\`author'` are master-defined tempfile macros; standalone execution fails. No `version` statement.
+
+---
+0 error(s), 1 warning(s), 4 note(s).

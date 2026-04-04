@@ -1,0 +1,33 @@
+INPUTS
+------
+`nber_fe' (tempfile) — paired article/NBER working paper dataset in first-differenced form, with D._llm_g*_score (change in LLM composite score from draft to publication), FemRatio, Blind, controls, and fixed-effect identifiers
+
+OPERATIONS
+----------
+- Loops over 5 LLM group composites (llm_g1 through llm_g5). For each:
+    - Loads `nber_fe', clears memory.
+    - Runs `reghdfe` OLS of the first-differenced score D._<stat>_score on:
+        - c.FemRatio##i.Blind (continuous female ratio interacted with blind-review indicator)
+        - Maxt, MaxT, N, asinhCiteCount (experience, co-author count, citation controls)
+        - i.NativeEnglish (native English speaker FE)
+        - Type_Theory, Type_Empirical, Type_Other (paper type dummies)
+        - Absorbed FEs: Editor, Journal×Year interaction
+        - SEs clustered by Year
+    - Stored as `fe_<stat>`. Adds stored locals: jnlyr ✓, editor ✓.
+
+- Writes `estout` for all 5 stored estimates (`fe_llm_g1` through `fe_llm_g5`) to a single LaTeX table displaying coefficients and SEs (3 decimal places, stars on coefficients). Stats rows: N_full, editor FE, year×journal FE. Applies `varlabels` for NativeEnglish, nber_score (unused in this spec but labeled for consistency), constant, Blind×FemRatio, and Blind. Inserts `\midrule` before footer.
+
+- Calls `create_latex` with tablename "table6llm" and type "change_full".
+
+OUTPUTS
+-------
+~/tonal_analysis/outputs/tables/tex/Table-G.2-llm.tex — LaTeX table: 5 columns (one per LLM group composite G1–G5) showing full coefficient output from Equation (2) paired-difference OLS on D._llm_g*_score; reghdfe with Editor and Journal×Year FEs, Year-clustered SEs
+
+
+## File Paths
+
+| Line | Command | Path |
+|------|---------|------|
+| 6 | `use` | `` `nber_fe' `` |
+| 13 | `estout … using` | `~/tonal_analysis/outputs/tables/tex/Table-G.2-llm.tex` |
+| 19 | `create_latex using` | `` `r(fn)' `` |

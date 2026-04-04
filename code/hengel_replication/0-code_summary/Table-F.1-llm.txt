@@ -1,0 +1,32 @@
+INPUTS
+------
+`article' (tempfile) — article-level dataset with LLM group composite scores (_llm_g*_score), FemRatio, Blind, Journal, Editor, and Year variables
+
+OPERATIONS
+----------
+- Clears all stored estimates, then loads the article-level tempfile.
+
+- Loops over 5 LLM group composites (llm_g1 through llm_g5). For each, runs OLS `regress` of `_<stat>_score` on:
+    - c.FemRatio##i.Blind (continuous female ratio interacted with blind-review indicator)
+    - i.Journal (journal fixed effects, with AER as the omitted category)
+    - i.Editor (editor fixed effects)
+    - i.Year (year fixed effects)
+    - SEs clustered by Editor
+    - Stored as `reg_<stat>_Editor`.
+
+- Writes `estout` for all 5 stored estimates to a LaTeX table, keeping only journal FE coefficients for journals 2, 3, and 4 (Econometrica and two others, relative to AER). Applies `varlabels` to label journal 2 as "Econometrica" with italic formatting. Displays N as a stats row. Inserts `\midrule` before footer.
+
+- Calls `create_latex` with tablename "table3llm" and type "journal".
+
+OUTPUTS
+-------
+~/tonal_analysis/outputs/tables/tex/Table-F.1-llm.tex — LaTeX table: 5 columns (one per LLM group composite G1–G5) × 3 rows (journal FE coefficients for journals 2–4 relative to AER baseline); OLS with Editor-clustered SEs, journal/editor/year FEs
+
+
+## File Paths
+
+| Line | Command | Path |
+|------|---------|------|
+| 6 | `use` | `` `article' `` |
+| 12 | `estout … using` | `~/tonal_analysis/outputs/tables/tex/Table-F.1-llm.tex` |
+| 15 | `create_latex using` | `` `r(fn)' `` |

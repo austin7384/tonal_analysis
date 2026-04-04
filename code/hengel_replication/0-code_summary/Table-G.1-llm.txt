@@ -1,0 +1,35 @@
+INPUTS
+------
+`nber' (tempfile) — paired article/NBER working paper dataset with LLM group composite scores (_llm_g*_score, nber_llm_g*_score), FemRatio, Blind, controls, and fixed-effect identifiers
+
+OPERATIONS
+----------
+- Loops over 5 LLM group composites (llm_g1 through llm_g5). For each:
+    - Loads `nber', clears memory.
+    - Renames `nber_<stat>_score` → `nber_score` to maintain a constant regressor name across iterations.
+    - Runs `reghdfe` OLS of `_<stat>_score` on:
+        - nber_score (NBER draft score as control)
+        - c.FemRatio##i.Blind (continuous female ratio interacted with blind-review indicator)
+        - Maxt, MaxT, N, asinhCiteCount (co-author count, experience, citation controls)
+        - i.NativeEnglish (native English speaker FE)
+        - Type_Theory, Type_Empirical, Type_Other (paper type dummies)
+        - Absorbed FEs: Journal×Year interaction, Editor
+        - SEs clustered by Editor
+    - Stored as `ols_<stat>`. Adds stored locals: jnlyr ✓, editor ✓.
+
+- Writes `estout` for all 5 stored estimates (`ols_*`) to a single LaTeX table displaying coefficients and SEs (3 decimal places, stars on coefficients). Stats rows: N_full, editor FE, year×journal FE. Applies `varlabels` for NativeEnglish, nber_score, Blind×FemRatio, Blind, and constant. Inserts `\midrule` before footer.
+
+- Calls `create_latex` with tablename "table6llm" and type "full".
+
+OUTPUTS
+-------
+~/tonal_analysis/outputs/tables/tex/Table-G.1-llm.tex — LaTeX table: 5 columns (one per LLM group composite G1–G5) showing full coefficient output from Equation (1) OLS with NBER draft score control; reghdfe with Journal×Year and Editor FEs, Editor-clustered SEs
+
+
+## File Paths
+
+| Line | Command | Path |
+|------|---------|------|
+| 6 | `use` | `` `nber' `` |
+| 14 | `estout … using` | `~/tonal_analysis/outputs/tables/tex/Table-G.1-llm.tex` |
+| 20 | `create_latex using` | `` `r(fn)' `` |

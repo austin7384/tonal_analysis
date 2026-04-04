@@ -19,3 +19,13 @@ outputs/figures/Figure-F.1.pdf
 | Line | Command | Path |
 |------|---------|------|
 | 64 | `graph export` | `~/tonal_analysis/outputs/figures/Figure-F.1.pdf` |
+
+## REVIEW (2026-04-03)
+
+### Notes (worth knowing)
+- [NOTE] line 42: `by eq (b), sort: generate jel_id = _n if eq == "asobs"` — sort order within `eq=="asobs"` is determined by `b` (the estimated marginal effect). If two JEL codes happen to have identical point estimates, their relative ordering is non-deterministic and the JEL labels assigned to `jel_id` could swap between runs. Low risk in practice but worth knowing.
+
+- [NOTE] line 1: No `version` statement.
+
+---
+0 error(s), 0 warning(s), 2 note(s).

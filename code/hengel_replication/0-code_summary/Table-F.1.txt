@@ -18,3 +18,16 @@ outputs/tables/tex/Table-F.1.tex
 | Line | Command | Path |
 |------|---------|------|
 | 12 | `estout reg_*_Editor using` | `~/tonal_analysis/outputs/tables/tex/Table-F.1.tex` |
+
+
+## REVIEW (2026-04-03)
+
+### Notes (worth knowing)
+- [NOTE] line 8: `regress` is used with `i.Editor` and `i.Year` as explicit regressors rather than absorbed fixed effects. With potentially hundreds of editor dummies plus year dummies, this risks hitting Stata's default `matsize` limit (400 columns). No `set matsize` statement is present. If the editor count is large, the regressions will error at runtime.
+
+- [NOTE] line 13: The `prefix("\textit{") suffix("}")` sub-options inside `varlabels()` apply to all displayed variables, not just `2.Journal`. Since `3.Journal` and `4.Journal` have no explicit labels, they will render as `\textit{3.Journal}` and `\textit{4.Journal}` in the .tex output rather than italicised journal names.
+
+- [NOTE] line 1: No `version` statement.
+
+---
+0 error(s), 0 warning(s), 3 note(s).

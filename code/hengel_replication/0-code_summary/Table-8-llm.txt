@@ -1,0 +1,45 @@
+INPUTS
+------
+`author' (tempfile) — author-level (time-to-publication) dataset with LLM group composite scores (_llm_g*_score) and gender indicators
+
+OPERATIONS
+----------
+- Defines program `tth_pub_llm_table` with required `type(string)` option. The program:
+    - Calls `estout` on stored estimates named `reg_*` to write a LaTeX regression table for the given gender-definition variant.
+    - Displays stats rows: N, editor FE, blind review, journal×year FE, Nj, institution FE, quality controls, native speaker.
+    - Applies `varlabels` for the five LLM group composite variables (G1–G5).
+    - Inserts `\midrule` before the footer.
+    - Calls `create_latex` on the output file using tablename "tableH2llm" and the supplied type.
+
+- Runs `tth_pub` (defined elsewhere, reused from Table-8.do context) followed by `tth_pub_llm_table` for six gender-definition variants:
+    1. FemRatio — continuous female authorship ratio
+    2. FemSolo — solo female-authored papers
+    3. Fem100 — exclusively female-authored papers
+    4. Female (type label: Fem1) — at least one female author
+    5. Fem50 — majority female-authored
+    6. FemSenior — senior (last) author is female
+
+- For each variant, `tth_pub` loads `author', runs regressions of LLM group composites on the gender indicator with time-to-publication and controls, and stores estimates as `reg_*`. `tth_pub_llm_table` then writes those estimates to the corresponding `.tex` file.
+
+OUTPUTS
+-------
+~/tonal_analysis/outputs/tables/tex/Table-8-llm-FemRatio.tex — LaTeX regression table, LLM group composites G1–G5 on FemRatio, author-level time-to-publication design
+~/tonal_analysis/outputs/tables/tex/Table-8-llm-FemSolo.tex — same specification with FemSolo gender indicator
+~/tonal_analysis/outputs/tables/tex/Table-8-llm-Fem100.tex — same specification with Fem100 gender indicator
+~/tonal_analysis/outputs/tables/tex/Table-8-llm-Fem1.tex — same specification with Female (Fem1) gender indicator
+~/tonal_analysis/outputs/tables/tex/Table-8-llm-Fem50.tex — same specification with Fem50 gender indicator
+~/tonal_analysis/outputs/tables/tex/Table-8-llm-FemSenior.tex — same specification with FemSenior gender indicator
+
+
+## File Paths
+
+| Line | Command | Path |
+|------|---------|------|
+| 8 | `estout … using` | `~/tonal_analysis/outputs/tables/tex/Table-8-llm-<type>.tex` |
+| 17 | `create_latex using` | `` `r(fn)' `` |
+| 21 | `tth_pub … using` | `` `author' `` |
+| 25 | `tth_pub … using` | `` `author' `` |
+| 29 | `tth_pub … using` | `` `author' `` |
+| 33 | `tth_pub … using` | `` `author' `` |
+| 37 | `tth_pub … using` | `` `author' `` |
+| 41 | `tth_pub … using` | `` `author' `` |

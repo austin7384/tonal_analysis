@@ -29,3 +29,41 @@ outputs/tables/tex/Table-I.3.tex
 |------|---------|------|
 | 76 | `estout reg_* using` | `~/tonal_analysis/outputs/tables/tex/Table-8-`type'.tex` |
 | 106 | `estout matrix(`Chi', fmt(3)) using` | `~/tonal_analysis/outputs/tables/tex/Table-I.3.tex` |
+
+## REVIEW (2026-04-03)
+
+### Summary
+`Table-8.do` is the most complex file in this batch. It defines three programs (`tth_pub`, `tth_pub_table`, `tth_pub_sig`) to estimate career-stage-specific gender gaps in readability across multiple readability metrics, uses `suest2` for joint inference, and exports both the main results table and a chi-squared significance table. Several substantive bugs and fragile patterns are present.
+
+### Bugs and Errors
+
+**1. `tth_pub_sig` hardcodes metric names not used in `tth_pub` calls (lines 89–100)**
+`tth_pub_sig` loops over `flesch fleschkincaid gunningfog smog dalechall` and tries to restore estimates named e.g. `flesch_FemRatio`, `fleschkincaid_FemRatio`. These names are only stored by `tth_pub` when `stats()` includes those tokens. The actual callers pass `stats(flesch fleschkincaid gunningfog smog dalechall llm_readability)` — which includes `llm_readability` — but `tth_pub_sig` does not include `llm_readability` in its loop. As a result, `tth_pub_sig` silently ignores the LLM readability metric and does not produce chi-squared tests for it. This is probably intentional (Table-I.3 is for traditional readability only), but there is no comment explaining this.
+
+**2. `tth_pub_sig` only called once for `FemRatio` (line 114)**
+The significance tests are only generated for `FemRatio`, even though `tth_pub` is run for 6 variants. If Table-I.3 should reflect all variants, these calls are missing. If only FemRatio is intended, the code is correct but undocumented.
+
+**3. Counter variable `i` reset inside the loop but referenced via `n\`i++\`` pattern (lines 23–45)**
+The `local i = 1` / `` local n`i++' `` pattern stores sample sizes in locals `n1`, `n2`, etc. After the loop, `i` has been incremented to the value of the last iteration plus one, so `i-1` gives the count of stored locals. The code at line 42 then uses `` forvalues j=1/`=`i'-1' `` to retrieve them. This is correct and Stata-idiomatic, but it depends on the loop executing in a specific order. For `FemSolo`, the `continue` on line 31 skips one iteration (t==4|t==5), meaning `i` ends at 5 instead of 6, and `` n`i'' `` (i.e., `n5`) is never set. However, the code on line 42 still references up to `j = i-1 = 4`, not 5, so the FemSolo branch correctly produces 4 column estimates. This is fine but the logic is non-obvious.
+
+**4. `n6` assigned from different estimators depending on branch (lines 48–55)**
+For `FemSolo`, `n6` is assigned from `e(N_full)` after `reghdfe` (line 50). For all others, `n6` is assigned from `e(N)` after `xtreg pa` (line 54). `e(N_full)` and `e(N)` may differ (full sample vs. effective sample used in estimation). The table row "No. observations" for the final column will reflect different concepts across variants. This inconsistency should be documented.
+
+**5. `suest2` cluster options (line 39)**
+`suest2 ... , cluster(AuthorID Editor)` uses two clustering variables simultaneously. Stata's standard `suest` does not support multi-way clustering; `suest2` is a user-written command whose behavior here depends on its implementation. If `suest2` ignores the second cluster variable or handles it differently from `vce(cluster2 ...)`, results may differ from expectation. This is a correctness risk that depends on the `suest2` implementation.
+
+**6. `tth_pub_table` references `_llm_readability_score` in `varlabels` (line 79)**
+The `varlabels` only relabels `_llm_readability_score`. All other score columns will appear with their raw variable names as labels in the LaTeX output. This may be intentional (other scores already have labels from `do \`varlabels''`), but the LLM readability variable was created after the main `varlabels` do-file and requires explicit labeling here. Confirm that the other 5 metrics are labeled correctly in the output.
+
+**7. `tth_pub Female` uses `Female` as the gender variable (line 125)**
+All other callers use FemRatio, FemSolo, Fem100, Fem50, or FemSenior. Line 125 uses `Female` (a binary individual-level indicator), but the output type is `Fem1`. Inside `tth_pub`, the branch on line 12 checks if `namelist` is `FemRatio` or `FemSenior` to decide on continuous vs. binary interaction terms. `Female` is neither, so it takes the `else` branch (binary interactions), which is likely correct. However, the mismatch between the variable name `Female` and the output type label `Fem1` could cause confusion.
+
+**8. Alternative readability variant (line 137) uses `r_` prefix stats**
+`tth_pub FemRatio using \`author', stats(r_fleschkincaid r_gunningfog r_smog)` — these `r_*` stats must be variables in the dataset (prefixed `_r_fleschkincaid_score`, etc., as expanded by the `_\`stat'_score` pattern on line 36). If these variables do not exist, the estimation will silently fail or produce empty columns. The summary file does not mention these variables in the input dataset. Verify they exist in `author.dta`.
+
+### Style / Minor Issues
+
+- No `estimates clear` at the end of the file.
+- Hardcoded `~/tonal_analysis/` paths on lines 76 and 107.
+- The `tth_pub_sig` program is defined but only called once and produces output to a hardcoded filename (`Table-I.3.tex`) regardless of the `type` argument — the `type` argument is passed to `create_latex` but has no effect on the filename itself (line 107 hardcodes `Table-I.3.tex`). This is consistent behavior but means re-running with different `type` would overwrite the same file.
+- `ereturn_post` is a custom program (not a standard Stata command). Its correctness is assumed but not reviewable here.

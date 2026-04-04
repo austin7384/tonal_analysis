@@ -1,0 +1,10 @@
+## Stata Code Review: `Table-F.2-llm.do`
+
+### Notes (worth knowing)
+- [NOTE] lines 23/27/31/35/39/43: `author_level` is called but not defined in this file; it is expected to persist from Table-F.2.do. If that file is commented out in hengel_master.do, all six calls fail with "unrecognized command."
+- [NOTE] line 9: Hardcoded `~/tonal_analysis/` prefix in output path. Not portable.
+- [NOTE] lines 23/27/31/35/39/43: `\`author'` is a master-defined tempfile macro; standalone execution fails.
+- [NOTE] file-wide: No `version` statement.
+
+---
+0 error(s), 0 warning(s), 4 note(s).

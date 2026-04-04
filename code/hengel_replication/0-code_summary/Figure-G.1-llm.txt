@@ -1,0 +1,50 @@
+INPUTS
+------
+`nber_fe' (tempfile) — paired article/NBER dataset in first-differenced form, with D._llm_g*_score, FemRatio, Fem50, Volume, Journal, Blind, Year, and controls
+
+OPERATIONS
+----------
+- Defines five title locals for the five LLM group composites (G1–G5) to use as panel titles.
+
+- Loops over 5 LLM group composites (llm_g1 through llm_g5). For each iteration:
+
+    **Data preparation:**
+    - Loads `nber_fe'.
+    - Constructs `BlindVol': a continuous variable measuring volumes before/after each journal's blind-review policy change. Centered at zero = the policy-change volume:
+        - QJE (Journal==4): BlindVol = Volume − 112 (positive = after QJE went blind in vol 113)
+        - AER (Journal==1): BlindVol = Volume − 87 (positive = after AER went blind in vol 88); pre-1991 non-blind AER observations recoded as 81 − Volume (counting backward from 1991)
+        - Event volumes themselves (QJE vol 113, AER vol 88) set to missing.
+    - Creates a factor variable `BlindVolCut' by cutting BlindVol into 2-unit bins over [−10, 25] using `cut'. Shifts all values by the absolute value of the minimum so the base category (corresponding to BlindVol ≈ 0) is at zero; sets factor base to bin value 28.
+
+    **Residual estimation:**
+    - Runs `reghdfe` of D._<stat>_score on FemRatio, N, Maxt, MaxT, asinhCiteCount, NativeEnglish FE; absorbed Editor FE and Journal×Year FE; SEs clustered by Year. Saves residuals as `resid'.
+    - Recodes missing Fem50 to 0.
+
+    **Event-study regressions:**
+    - Runs 4 OLS `regress` of `resid` on i.BlindVolCut for pre/post × male/female subsamples:
+        - man1: BlindVol<−1, Fem50==0 (pre-policy, male-majority)
+        - fem1: BlindVol<−1, Fem50==1 (pre-policy, female-majority)
+        - man2: BlindVol>1, Fem50==0 (post-policy, male-majority)
+        - fem2: BlindVol>1, Fem50==1 (post-policy, female-majority)
+    - Combines via `suest man1 man2 fem1 fem2` (no clustering specified).
+
+    **Figure construction (two sub-panels per criterion):**
+    - Left panel (g1): `margins` over BlindVolCut for BlindVol<−1 and BlindVolCut>0, from fem1_mean and man1_mean equations. `marginsplot` (scatter recast, no CI) with linear fit overlay for male (pfblue) and female (pfpink). X-axis labeled as volumes before policy change (8→"2-3", 6→"4-5", etc.). First criterion (llm_g1) only: adds subtitle, ytitle, and full labels.
+    - Right panel (g2): `margins` over BlindVolCut for BlindVol>1 and BlindVolCut≤20, from fem2_mean and man2_mean equations. `marginsplot` (scatter recast, no CI) with vertical policy-change line, linear fit overlay. X-axis labeled as volumes after policy change (12→"2-3", etc.). Y-axis suppressed for alignment.
+    - Combines g1 and g2 with `graph combine`, `ycommon`, titled with the criterion label.
+
+- After the loop, combines all 5 criterion panels (llm_g1 through llm_g5) into a single composite figure using `graph combine` with `ycommon`.
+
+- Exports the composite figure as a PDF.
+
+OUTPUTS
+-------
+~/tonal_analysis/outputs/figures/Figure-G.1-llm-combo.pdf — 5-panel combined event-study figure (one panel per LLM group composite G1–G5); each panel shows unexplained change in score vs. volumes before/after blind-review policy change, separately for male-majority (pfblue) and female-majority (pfpink) papers, with linear trend lines
+
+
+## File Paths
+
+| Line | Command | Path |
+|------|---------|------|
+| 11 | `use` | `` `nber_fe' `` |
+| 99 | `graph export` | `~/tonal_analysis/outputs/figures/Figure-G.1-llm-combo.pdf` |

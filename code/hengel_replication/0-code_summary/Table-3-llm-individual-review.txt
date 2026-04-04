@@ -1,0 +1,14 @@
+## Stata Code Review: `Table-3-llm-individual.do`
+
+### Warnings (likely bugs)
+- [WARNING] line 255: `"\quad Jargon/Technicality Density$^\dagger$"` — Stata expands `$^` as a global macro named `^` (undefined → empty string) before passing the string to estout. The dagger footnote marker will silently disappear from the FemRatio Part-2 table output. The `nber_individual_table` program on line 211 correctly uses `\ensuremath{^\dagger}` to avoid this. The fix was applied to the variant program but not backported to the inline FemRatio block.
+
+- [WARNING] lines 154–156, 190–192, 228–230, 262–264: All `blist` group-header rows use `"...\textbf{...}}\\${n}"`. Estout strips one backslash level, writing `"...\textbf{...}}\"` (single backslash) to the .tex file. A single `\` at the end of a LaTeX tabular row is not a valid row terminator; it should be `\\`. The code comments at lines 118–120 acknowledge this and require an external Python post-processing step before LaTeX compilation. This affects all 14 group-header rows across the two sub-tables in the inline FemRatio block and the `nber_individual_table` program.
+
+### Notes (worth knowing)
+- [NOTE] lines 136, 174, 210, 246: Hardcoded `~/tonal_analysis/` prefix in output paths. Not portable across machines.
+- [NOTE] file-wide: No `version` statement.
+- [NOTE] lines 272–293: The six variant gender-measure calls (`article_level_individual_table Fem100`, `FemSolo`, etc.) rely on tempfile macros `\`article'`, `\`article_primary_jel'`, `\`article_tertiary_jel_pp'` defined in the master do-file. If this file is run standalone all three macros expand to empty string and the calls will error or silently use wrong data.
+
+---
+0 error(s), 2 warning(s), 3 note(s).

@@ -1,0 +1,112 @@
+INPUTS
+------
+`author' (tempfile) — author-level panel dataset with LLM group composite scores (_llm_g*_score), AuthorID, t, T, FemRatio, Female, CiteCount, InstRank, Year, Journal, and other controls
+`primary_jel' (tempfile) — article-level primary JEL classification data; merged to author by ArticleID
+`varlabels' (tempfile) — do-file that applies variable labels; called via `do `varlabels''
+~/tonal_analysis/data/raw/hengel_labels/tables.xlsx — LaTeX table metadata; queried for notes matching TableName=="figure8llm"
+
+OPERATIONS
+----------
+- Defines program `matching_table` — accepts `type(string)`. Writes `estout` for stored estimates df1, dm1, d31 to `Table-9-llm-{type}.tex`. Displays conditional female Dik means, conditional male Dik means, and unconditional Dik means across 5 LLM group composites with N column. Calls `create_latex` with tablename "table8llm".
+
+- Defines program `matching_figure` — accepts `type(string)` and optional `float`. Reads the Note field for the figure from tables.xlsx (TableName=="figure8llm", Type==type), word-wraps it. Loops over 5 LLM composites, producing a `twoway` histogram + kernel density plot of _<stat>_Ds1 (Dik), separating pairs discriminating against women (D==1, pfpink) vs. men (D==0, pfblue), with a KDE overlay. Creates a legend/notes sub-panel. Combines all 5 criterion panels plus the legend panel and exports to `Figure-5-llm-{type}.pdf`.
+
+- Outer loop over three R variants: "base", "jel", "R".
+
+    **Data preparation (each iteration):**
+    - Loads `author', merges m:1 with `primary_jel' on ArticleID (no generate); saves to tempfile `author_pp'.
+    - Builds JEL code locals (jcode1, jcode10, jcode11) for use in matching and reshaping.
+
+    **Mahalanobis matching:**
+    - Loads `author_pp', merges with `primary_jel' (keep master+match, no generate).
+    - Creates journal dummies, decade dummies (cut at decade boundaries), first-institution rank.
+    - Collapses to author level (AuthorID) keeping Female, T, FirstInst, journal/decade means, max citation count, summed JEL codes.
+    - Applies `varlabels'. Saves to tempfile `author_prematching'.
+    - Randomly sorts observations (runiform), then runs `psmatch2` Mahalanobis matching on Female (for T>2 authors) with 1 nearest neighbor on: FirstInst, maxCiteCount, Decade dummies, Journal dummies, JEL1_* dummies.
+    - Generates female and male author weights from match structure; saves matched author IDs and weights to tempfile `matches'.
+
+    **Merging matched authors' publication histories:**
+    - For i=0 (male) and i=1 (female): loads `matches', extracts AuthorID{i}, merges 1:m with `author_pp' keeping t∈{1,3}; recodes t=3→2; reshapes wide on t; merges back with `matches'; saves updated `matches'.
+
+    **Reshaping and reconstructing Rit:**
+    - Loads `matches', generates pair id, performs two `reshape long` passes to produce one row per author-time-gender combination.
+    - For each LLM composite, constructs `_<stat>_R` (adjusted score):
+        - "base": runs OLS `regress` of _<stat>_score on FemRatio [aw=_weight], by gender×time cell; predicts residuals; reconstructs Rit as if authored by a man (FemRatio=0) in a labour-economics JEL category. Stored as `est_<stat>_{gender}{time}`.
+        - "jel": same but adds JEL1_* as regressors and includes JEL1_D + JEL1_J in Rit reconstruction.
+        - "R": sets _<stat>_R = _<stat>_score directly (no adjustment).
+
+    **Table J.3 LLM (base only):**
+    - Writes 5 separate `estout` blocks (one per LLM group composite, appended) showing regression results for Rit construction (4 columns per composite: female t=1, female t=2, male t=1, male t=2). File: `Table-J.3-llm.tex`. Calls `create_latex` with tablename "Rit_regresultsllm".
+
+    **Matching balance data:**
+    - Preserves dataset, extracts AuthorID and _weight, merges with `author_prematching', saves to tempfile `balance'.
+
+    **Dik construction:**
+    - Reshapes data wide (two reshape passes) to matched-pair level with scores at t=1 and t=3 for both female (index 1) and male (index 0) members.
+    - Saves matched pair data to tempfile `author_matching_llm'. For "base" variant: also saves to disk as `author_matching_llm.dta`.
+    - For each LLM composite, constructs:
+        - _<stat>_Dtm: Condition 2 for male member (R_{male,t=3} − R_{male,t=1})
+        - _<stat>_Dg: Condition 1 (R_{female,t=3} − R_{male,t=3})
+        - _<stat>_Dtf: Condition 2 for female member (R_{female,t=3} − R_{female,t=1})
+        - _<stat>_D: binary indicator of which pair member faces higher standards (1=female, 0=male, .a=inconclusive)
+        - _<stat>_Ds1: Dik value (signed gender difference in score when conditions met)
+        - _<stat>_UDs1: unconditional Dik (Ds1=0 when inconclusive)
+        - _<stat>_Ds1_percent: Dik as a fraction of max{R_female, R_male}
+    - Computes summary statistics for Table 9 / Figure 5:
+        - Conditional mean Dik for female-discriminating pairs (df1) and male-discriminating pairs (dm1)
+        - Conditional mean of all Dik (d21 via `mean`) and unconditional mean (d31 via `mean`)
+        - For "base": proportional effects, ratio of extreme observations, discrimination percentages; all displayed as scalars.
+    - Posts 4 stored estimates (df1, dm1, d21, d31) via `ereturn_post'. (Note: d21 is posted but not included in `matching_table`; only df1, dm1, d31 are in the table.)
+    - For "base" only: saves `author_matching_dik_llm.dta' to disk.
+
+    - Calls `matching_table` and `matching_figure` for each R variant.
+
+OUTPUTS
+-------
+~/tonal_analysis/outputs/tables/tex/Table-9-llm-base.tex — LaTeX table: 5 columns (LLM composites G1–G5) × 3 rows (conditional female Dik, conditional male Dik, unconditional Dik), base R variant
+~/tonal_analysis/outputs/tables/tex/Table-9-llm-jel.tex — same structure, JEL-adjusted R variant
+~/tonal_analysis/outputs/tables/tex/Table-9-llm-R.tex — same structure, unadjusted score R variant
+~/tonal_analysis/outputs/tables/tex/Table-J.3-llm.tex — LaTeX table: regression output for Rit construction for all 5 LLM composites (4 columns each: male/female × t=1/t=3), base variant only; 5 blocks appended into one file
+~/tonal_analysis/data/raw/hengel_generated/author_matching_llm.dta — matched-pair dataset (pair×publication-time level) with raw LLM scores, reconstructed R scores, Dik variables, for the base variant
+~/tonal_analysis/data/raw/hengel_generated/author_matching_dik_llm.dta — same dataset with Dik, Dg, Dtf, Dtm, D, Ds1, UDs1, Ds1_percent variables added; base variant only
+~/tonal_analysis/outputs/figures/Figure-5-llm-base.pdf — 6-panel figure (5 LLM composites + legend/notes panel): histogram of Dik distribution by discrimination direction + KDE overlay, base variant
+~/tonal_analysis/outputs/figures/Figure-5-llm-jel.pdf — same figure, JEL-adjusted variant
+~/tonal_analysis/outputs/figures/Figure-5-llm-R.pdf — same figure, unadjusted score variant
+
+
+## File Paths
+
+| Line | Command | Path |
+|------|---------|------|
+| 27 | `import excel` | `~/tonal_analysis/data/raw/hengel_labels/tables.xlsx` |
+| 72 | `graph export` | `~/tonal_analysis/outputs/figures/Figure-5-llm-<type>.pdf` |
+| 78 | `use` | `` `author' `` |
+| 79 | `merge … using` | `` `primary_jel' `` |
+| 81 | `save` | `` `author_pp' `` |
+| 92 | `use` | `` `author_pp' `` |
+| 93 | `merge … using` | `` `primary_jel' `` |
+| 104 | `do` | `` `varlabels' `` |
+| 106 | `save` | `` `author_prematching' `` |
+| 132 | `save` | `` `matches' `` |
+| 137 | `use` | `` `matches' `` |
+| 143 | `merge … using` | `` `author_pp' `` |
+| 154 | `merge … using` | `` `matches' `` |
+| 155 | `save` | `` `matches' `` (replace) |
+| 159 | `use` | `` `matches' `` |
+| 205 | `do` | `` `varlabels' `` |
+| 208 | `estout … using` | `~/tonal_analysis/outputs/tables/tex/Table-J.3-llm.tex` |
+| 213 | `estout … using` | `` `r(fn)' `` (append) |
+| 219 | `estout … using` | `` `r(fn)' `` (append) |
+| 225 | `estout … using` | `` `r(fn)' `` (append) |
+| 231 | `estout … using` | `` `r(fn)' `` (append) |
+| 236 | `create_latex using` | `` `r(fn)' `` |
+| 244 | `merge … using` | `` `author_prematching' `` |
+| 246 | `save` | `` `balance' `` |
+| 269 | `save` | `` `author_matching_llm' `` |
+| 270 | `save` | `~/tonal_analysis/data/raw/hengel_generated/author_matching_llm` |
+| 273 | `use` | `` `author_matching_llm' `` |
+| 395 | `save` | `~/tonal_analysis/data/raw/hengel_generated/author_matching_dik_llm` |
+| 404 | `matching_table` → `estout … using` | `~/tonal_analysis/outputs/tables/tex/Table-9-llm-<type>.tex` |
+| 404 | `matching_table` → `create_latex using` | `` `r(fn)' `` |
+| 405 | `matching_figure` → `import excel` | `~/tonal_analysis/data/raw/hengel_labels/tables.xlsx` |
+| 405 | `matching_figure` → `graph export` | `~/tonal_analysis/outputs/figures/Figure-5-llm-<type>.pdf` |

@@ -1,0 +1,50 @@
+INPUTS
+------
+`nber' (tempfile) — paired article/NBER working paper dataset with LLM readability scores (nber_llm_readability_score, _llm_readability_score), FemRatio, and controls
+`author' (tempfile) — author-level dataset with ArticleID, t (career position), Female, AuthorWeight, and gender/experience variables; merged to nber by ArticleID
+
+OPERATIONS
+----------
+- Loads `nber', merges m:m with `author' on ArticleID (keeping matched observations only, no generate), saves merged result to a new tempfile `nber_author'.
+
+- Constructs a binned time variable `tBin' (tempvar) from t using recode: t=1→1, t=2→2, t=3→3, t=4–5→4, t>5→5. Labels values "1", "2", "3", "4-5", "6+".
+
+- Runs two OLS `regress` equations with author weights (aweight=AuthorWeight):
+    - `nber`: dependent variable nber_llm_readability_score; regressors c.FemRatio##c.tBin, Maxt, MaxT, asinhCiteCount, N, NativeEnglish FE, Journal×Year FE, Editor FE. Stored as `nber`.
+    - `reg`: same specification with _llm_readability_score as dependent variable. Stored as `reg`.
+    - `suest nber reg` with SEs clustered by Editor. Stored as `suest`.
+
+- Restores the suest estimates and computes `margins` at FemRatio=0 and FemRatio=1, over tBin bins, predicting from both the nber_mean and reg_mean equations simultaneously (4 combinations × 5 tBin values = 20 margin estimates).
+
+- Reshapes margin results from matrix to dataset:
+    - Extracts `r(table)'` into a dataset using `svmat_rownames`.
+    - Parses the rowname variable to extract: version (equation index: 1=nber_mean, 2=reg_mean), female (FemRatio level: 0 or 1), and t (tBin cell).
+    - Keeps only b (point estimates), version, female, t.
+    - Reshapes wide on version (b1=nber predicted, b2=reg predicted), indexed by t and female.
+    - Generates n = t + female×0.07 to horizontally jitter male/female series for legibility.
+
+- Constructs a `twoway` scatter+spike plot with 6 plot elements:
+    - Hollow circles (male, draft: b1 where !female, pfblue)
+    - Filled diamonds (male, published: b2 where !female, pfblue)
+    - Hollow circles (female, draft: b1 where female, pfpink)
+    - Filled diamonds (female, published: b2 where female, pfpink)
+    - Paired spike connecting draft to published for males (pfblue, shortdash)
+    - Paired spike connecting draft to published for females (pfpink, shortdash)
+    - Legend in position 5 (bottom-right), 1 row: "Male", "Female"
+    - X-axis labeled by tBin values; title "LLM Readability"; xtitle "{it:t}th article"
+
+- Exports the figure as a PDF.
+
+OUTPUTS
+-------
+~/tonal_analysis/outputs/figures/Figure-6-llm.pdf — Connected scatter/spike plot showing predicted LLM readability scores for NBER drafts (hollow circles) and published articles (filled diamonds) by career publication number t, separately for male and female authors; predicted margins from suest with Editor-clustered SEs and author weights
+
+
+## File Paths
+
+| Line | Command | Path |
+|------|---------|------|
+| 4 | `use` | `` `nber' `` |
+| 5 | `merge … using` | `` `author' `` |
+| 7 | `save` | `` `nber_author' `` |
+| 45 | `graph export` | `~/tonal_analysis/outputs/figures/Figure-6-llm.pdf` |

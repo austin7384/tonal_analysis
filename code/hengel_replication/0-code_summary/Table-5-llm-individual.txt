@@ -1,0 +1,118 @@
+INPUTS
+------
+`nber_fe' (tempfile) — paired article/NBER dataset for paired-difference (first-differenced reghdfe) regressions, main sample
+`nber' (tempfile) — paired article/NBER dataset for FGLS-style suest regressions, main sample
+`nber_fe_jel' (tempfile) — paired dataset restricted to articles with JEL codes, for nber_fe with JEL fixed effects
+`nber_jel' (tempfile) — paired dataset restricted to articles with JEL codes, for suest regressions with JEL fixed effects
+
+OPERATIONS
+----------
+- Redefines program `nber_fe` (eclass) — can run standalone without Table-5.do. Accepts: gender varname, optional `if`, `using` dataset, `stats(string)` list of LLM criteria, `colnames`, optional `jel` flag.
+    - For FemRatio/FemSenior: continuous gender (c.varlist); others: binary (1.varlist).
+    - Loads the `using' dataset, optionally sets JEL1_* wildcard.
+    - Loops over each criterion in `stats'. For each: runs `reghdfe` on the first-differenced score D._<crit>_score with gender×Blind interaction, controls (Maxt, MaxT, asinhCiteCount, N, NativeEnglish FE, Type_*), absorbed Editor FE + Journal×Year FE + optional JEL1_* FE; SEs clustered by Year. Stores as `fe_<crit>`. Accumulates gender and Blind×gender coefficients into matrices.
+    - Posts two stored estimates: `fe` (gender coefficients, N from last regression) and `fe_blind` (Blind×gender coefficients).
+
+- Redefines program `nber_fgls` (eclass) — extended version with a `firststats(string)` option replacing the hardcoded `ols*_llm_g1` restore call in the composite-table version. Accepts: gender varname, optional `if`, optional `using`, `stats`, `colnames`, `firststats`, optional `jel`.
+    - For FemRatio/FemSenior: continuous; others: binary.
+    - Loads `using' if provided. Optionally sets JEL1_* wildcard.
+    - Loops over each criterion in `stats'. For each criterion:
+        - Renames `nber_<crit>_score` → `nber_score`.
+        - OLS (`reghdfe`): `_<crit>_score` on nber_score + gender×Blind + controls; absorbed Journal×Year FE, Editor FE, optional JEL1_* FE; SEs clustered by Editor. Stored as `ols_<crit>`.
+        - Extracts gender coeff, Blind×gender coeff, nber_score coeff.
+        - Renames back to `nber_<crit>_score`.
+        - OLS `regress` (non-absorbed) for nber equation (NBER paper) and reg equation (published paper), then `suest nber reg` with SEs clustered by Year.
+        - `lincom` to compute published–NBER differences in gender and Blind×gender effects.
+        - Accumulates 9-row matrix per criterion: (1) nber_score coeff OLS, (2) gender OLS, (3) Blind×gender OLS, (4) NBER gender suest, (5) NBER Blind×gender suest, (6) pub gender suest, (7) pub Blind×gender suest, (8) difference, (9) Blind×gender difference.
+    - Posts 9 stored estimates via `ereturn_post`: reg_nber, reg, reg_blind, su_wp, su_blind_wp, su_pub, su_blind_pub, su_diff, su_blind_diff.
+    - `estimates restore ols*_<firststats>` is used (not hardcoded llm_g1) to recover N/df_r for OLS-based rows.
+
+- Defines program `nber_individual_table` — accepts `type(string)`, `subtable(integer)` (1 or 2), optional `jel`.
+    - subtable==1: writes G1–G3 table (8 criteria: modal_verb, hedging, qualifier, ack_limits, caution, assertiveness, active_passive, directness; imperative excluded) to `Table-5-llm-individual-1-{type}.tex`. Group headers G1/G2/G3 as `blist` rows. Tablename "table6llmind1".
+    - subtable==2: writes G4–G5+Standalone table (7 criteria: pronoun, novelty, jargon, emotional, evidence, practical, readability) to `Table-5-llm-individual-2-{type}.tex`. Group headers G4/G5/Standalone as `blist` rows. Tablename "table6llmind2".
+    - Both subtables display 11 estimate sets: reg_nber, reg, reg_blind, fe, fe_blind, su_wp, su_blind_wp, su_pub, su_blind_pub, su_diff, su_blind_diff.
+    - Note: `blist` `\\${n}` produces only `\` in output; Python post-processing must append a second `\` to group-header lines before LaTeX compilation.
+
+- Defines two local macros for reuse: `stats_g13` / `cols_g13` (8 G1–G3 criteria, imperative excluded) and `stats_g45` / `cols_g45` (7 G4–G5+Readability criteria).
+
+- Runs estimation + table output for 9 sample/gender variants, each processed in two subtable passes (G1–G3, then G4–G5+Readability):
+    1. FemRatio — main sample
+    2. Fem100 — exclusively female-authored
+    3. FemSolo — solo female-authored
+    4. FemSenior — senior author is female
+    5. FemJunior — FemSenior restricted to Maxt<=3
+    6. Fem1 — at least one female author
+    7. Fem50 — majority female-authored
+    8. wordlimit — FemRatio restricted to BelowAbstractLen
+    9. jel — FemRatio with JEL fixed effects (uses `nber_fe_jel' and `nber_jel')
+
+- `estimates clear` is called before each subtable pair to reset stored estimates.
+
+OUTPUTS
+-------
+~/tonal_analysis/outputs/tables/tex/Table-5-llm-individual-1-FemRatio.tex — LaTeX sidewaystable, G1–G3 individual criteria (8 rows) × 11 columns, FemRatio; group headers G1/G2/G3
+~/tonal_analysis/outputs/tables/tex/Table-5-llm-individual-2-FemRatio.tex — LaTeX sidewaystable, G4–G5+Readability (7 rows) × 11 columns, FemRatio; group headers G4/G5/Standalone
+~/tonal_analysis/outputs/tables/tex/Table-5-llm-individual-1-Fem100.tex — G1–G3, Fem100
+~/tonal_analysis/outputs/tables/tex/Table-5-llm-individual-2-Fem100.tex — G4–G5+Readability, Fem100
+~/tonal_analysis/outputs/tables/tex/Table-5-llm-individual-1-FemSolo.tex — G1–G3, FemSolo
+~/tonal_analysis/outputs/tables/tex/Table-5-llm-individual-2-FemSolo.tex — G4–G5+Readability, FemSolo
+~/tonal_analysis/outputs/tables/tex/Table-5-llm-individual-1-FemSenior.tex — G1–G3, FemSenior
+~/tonal_analysis/outputs/tables/tex/Table-5-llm-individual-2-FemSenior.tex — G4–G5+Readability, FemSenior
+~/tonal_analysis/outputs/tables/tex/Table-5-llm-individual-1-FemJunior.tex — G1–G3, FemSenior restricted to Maxt<=3
+~/tonal_analysis/outputs/tables/tex/Table-5-llm-individual-2-FemJunior.tex — G4–G5+Readability, FemSenior restricted to Maxt<=3
+~/tonal_analysis/outputs/tables/tex/Table-5-llm-individual-1-Fem1.tex — G1–G3, Fem1
+~/tonal_analysis/outputs/tables/tex/Table-5-llm-individual-2-Fem1.tex — G4–G5+Readability, Fem1
+~/tonal_analysis/outputs/tables/tex/Table-5-llm-individual-1-Fem50.tex — G1–G3, Fem50
+~/tonal_analysis/outputs/tables/tex/Table-5-llm-individual-2-Fem50.tex — G4–G5+Readability, Fem50
+~/tonal_analysis/outputs/tables/tex/Table-5-llm-individual-1-wordlimit.tex — G1–G3, FemRatio restricted to BelowAbstractLen
+~/tonal_analysis/outputs/tables/tex/Table-5-llm-individual-2-wordlimit.tex — G4–G5+Readability, FemRatio restricted to BelowAbstractLen
+~/tonal_analysis/outputs/tables/tex/Table-5-llm-individual-1-jel.tex — G1–G3, FemRatio with JEL FEs
+~/tonal_analysis/outputs/tables/tex/Table-5-llm-individual-2-jel.tex — G4–G5+Readability, FemRatio with JEL FEs
+
+
+## File Paths
+
+| Line | Command | Path |
+|------|---------|------|
+| 9 | `use` | `` `using' `` (resolves to `` `nber_fe' `` or `` `nber_fe_jel' ``) |
+| 51 | `use` | `` `using' `` (resolves to `` `nber' `` or `` `nber_jel' ``) |
+| 177 | `estout … using` | `~/tonal_analysis/outputs/tables/tex/Table-5-llm-individual-1-<type>.tex` |
+| 199 | `create_latex using` | `` `r(fn)' `` |
+| 203 | `estout … using` | `~/tonal_analysis/outputs/tables/tex/Table-5-llm-individual-2-<type>.tex` |
+| 224 | `create_latex using` | `` `r(fn)' `` |
+| 236 | `nber_fe … using` | `` `nber_fe' `` |
+| 237 | `nber_fgls … using` | `` `nber' `` |
+| 241 | `nber_fe … using` | `` `nber_fe' `` |
+| 242 | `nber_fgls … using` | `` `nber' `` |
+| 247 | `nber_fe … using` | `` `nber_fe' `` |
+| 248 | `nber_fgls … using` | `` `nber' `` |
+| 252 | `nber_fe … using` | `` `nber_fe' `` |
+| 253 | `nber_fgls … using` | `` `nber' `` |
+| 258 | `nber_fe … using` | `` `nber_fe' `` |
+| 259 | `nber_fgls … using` | `` `nber' `` |
+| 263 | `nber_fe … using` | `` `nber_fe' `` |
+| 264 | `nber_fgls … using` | `` `nber' `` |
+| 269 | `nber_fe … using` | `` `nber_fe' `` |
+| 270 | `nber_fgls … using` | `` `nber' `` |
+| 274 | `nber_fe … using` | `` `nber_fe' `` |
+| 275 | `nber_fgls … using` | `` `nber' `` |
+| 280 | `nber_fe … using` | `` `nber_fe' `` |
+| 281 | `nber_fgls … using` | `` `nber' `` |
+| 285 | `nber_fe … using` | `` `nber_fe' `` |
+| 286 | `nber_fgls … using` | `` `nber' `` |
+| 291 | `nber_fe … using` | `` `nber_fe' `` |
+| 292 | `nber_fgls … using` | `` `nber' `` |
+| 296 | `nber_fe … using` | `` `nber_fe' `` |
+| 297 | `nber_fgls … using` | `` `nber' `` |
+| 302 | `nber_fe … using` | `` `nber_fe' `` |
+| 303 | `nber_fgls … using` | `` `nber' `` |
+| 307 | `nber_fe … using` | `` `nber_fe' `` |
+| 308 | `nber_fgls … using` | `` `nber' `` |
+| 313 | `nber_fe … using` | `` `nber_fe' `` |
+| 314 | `nber_fgls … using` | `` `nber' `` |
+| 318 | `nber_fe … using` | `` `nber_fe' `` |
+| 319 | `nber_fgls … using` | `` `nber' `` |
+| 324 | `nber_fe … using` | `` `nber_fe_jel' `` |
+| 325 | `nber_fgls … using` | `` `nber_jel' `` |
+| 329 | `nber_fe … using` | `` `nber_fe_jel' `` |
+| 330 | `nber_fgls … using` | `` `nber_jel' `` |

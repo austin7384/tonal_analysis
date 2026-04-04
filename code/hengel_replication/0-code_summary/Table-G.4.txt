@@ -19,3 +19,37 @@ outputs/tables/tex/Table-G.4.tex
 | Line | Command | Path |
 |------|---------|------|
 | 18 | `estout semiblind_* using` | `~/tonal_analysis/outputs/tables/tex/Table-G.4.tex` |
+
+## REVIEW (2026-04-03)
+
+### Summary
+Table-G.4.do estimates a semi-blind review interaction model, regressing the change in readability scores on `FemRatio x SemiBlind` across 6 readability measures using `reghdfe` with high-dimensional fixed effects. The script is short and tightly structured. No critical bugs found, but several issues merit attention.
+
+### Issues
+
+**1. `Year>1997` filter hardcoded with no comment (line 8)**
+The sample restriction `if Year>1997` is applied inside the loop without explanation. This is presumably the year from which semi-blind review was phased in. The lack of an inline comment makes it a silent magic number that could be misread or accidentally changed. Not a bug, but a robustness hazard.
+
+**2. `D.` first-difference operator applied to stored score variable (line 8)**
+`D._`stat'_score` applies the first-difference operator. This is valid only if the data are in time-series format with `tsset` having been called upstream (in `Data.do`). If `tsset` was not set or was reset by a prior `use`, `reghdfe` will error or silently produce wrong differences. There is no `tsset` or `xtset` call in this file, so correctness depends entirely on the state of the dataset when this file is included. This is a fragility risk.
+
+**3. `SemiBlind` indicator not verified to exist in `nber_fe` (line 8)**
+The variable `SemiBlind` is referenced but not constructed in this do-file. Its existence and coding (0/1 binary, correct journal coverage, correct year cutoff) are assumed from upstream. If `Data.do` ever changes how `SemiBlind` is constructed, silent errors in this table could result.
+
+**4. Unicode checkmarks in `estadd local` strings (lines 9–14)**
+`estadd local ... = "✓"` stores a Unicode character directly in an e-result string. This is harmless at runtime but can cause encoding problems if the `.tex` output is compiled on a system with a non-UTF-8 locale, or if estout fails to pass the character through properly. The project uses `✓` consistently elsewhere so this is a known accepted pattern, but worth flagging.
+
+**5. `keep(FemRatio 1.SemiBlind#c.FemRatio)` omits the main effect of `SemiBlind` (line 21)**
+Only the interaction `1.SemiBlind#c.FemRatio` is shown in the table output; the main effect of `SemiBlind` is suppressed. This is a valid deliberate design choice (if the interest is only in the differential effect), but it means the table cannot be used to infer the total effect of `SemiBlind` for any gender composition. This design should be documented.
+
+**6. `eqlabels(none)` with no column headers (line 24)**
+With six statistics and no `mlabels` or column labels, readers cannot identify which column corresponds to which readability measure from the `estout` command alone. This relies entirely on `create_latex` supplying headers from `tables.xlsx`. If `tables.xlsx` is missing or malformed for `table7_semiblind`, the output will be unlabelled.
+
+**7. `tablename("table7_semiblind")` — name is not a standard key (line 25)**
+The `tablename` value `table7_semiblind` differs from the pattern used in Table 7's main `.do` file (`table11`). Confirm that `tables.xlsx` contains a row with `TableName = table7_semiblind`; if it is absent, `create_latex` will fail silently or error.
+
+### No Issues Found
+- Loop over `stat` list is correctly bounded; all six measures are estimable.
+- `eststo` naming convention `semiblind_*` is consistent with `estout` glob.
+- `vce(cluster Year)` is appropriate given `Year x Journal` fixed effects absorption.
+- `absorb(i.Editor i.Year##i.Journal)` is consistent with the Table 3/7 main specification.

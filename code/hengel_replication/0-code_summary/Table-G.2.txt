@@ -19,3 +19,16 @@ outputs/tables/tex/Table-G.2.tex
 | Line | Command | Path |
 |------|---------|------|
 | 13 | `estout fe_flesch fe_fleschkincaid fe_gunningfog fe_smog fe_dalechall fe_llm_readability using` | `~/tonal_analysis/outputs/tables/tex/Table-G.2.tex` |
+
+
+## REVIEW (2026-04-03)
+
+### Notes (worth knowing)
+- [NOTE] line 7: `reghdfe D._\`stat'_score ...` — the `D.` first-difference operator requires `tsset` to be active. `use \`nber_fe', clear` reloads the dataset fresh each iteration; `tsset` metadata is preserved only if Data.do embedded it in the saved file. Same implicit dependency as the parallel code in Table-5.do.
+
+- [NOTE] line 16: `varlabels(... nber_score "\(R_{jW}\)" ...)` — `nber_score` does not appear in this regression (the FE equation has no NBER readability regressor). The varlabel entry is dead code copied from Table-G.1.do and will never appear in the output.
+
+- [NOTE] line 1: No `version` statement.
+
+---
+0 error(s), 0 warning(s), 3 note(s).

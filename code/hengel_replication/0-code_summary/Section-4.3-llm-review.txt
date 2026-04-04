@@ -1,0 +1,13 @@
+## Stata Code Review: `Section-4.3-llm.do`
+
+### Errors (must fix)
+- [ERROR] line 93: `merge m:1 ArticleID using \`primary_jel', keep(master match) nogenerate` — `\`author_pp'` (loaded on line 92) was already saved after merging `\`primary_jel'` into `\`author'` (line 79). All JEL1_* variables from `\`primary_jel'` are therefore already present in `\`author_pp'`. Attempting to merge `\`primary_jel'` a second time will crash with "variable JEL1_X already defined." This line is redundant and must be removed or replaced with `use \`author_pp', clear` alone.
+
+### Notes (worth knowing)
+- [NOTE] line 116: `psmatch2 Female if T>2` — Stata treats missing `T` as larger than any real number, so observations with missing `T` satisfy `T>2` and would be passed to `psmatch2`. If `T` is never missing in this dataset, this is harmless.
+- [NOTE] line 382: `inv(diag(\`n'))` — inverts a diagonal matrix whose entries are counts of pairs exhibiting discrimination. If any group count equals zero (no discriminatory pairs detected for a given composite), the matrix is singular and Stata will error with `r(506)`. Same risk at line 386 for `inv(diag(\`bm1'))` if any conditional male mean is exactly zero.
+- [NOTE] lines 9/27/270/395 and others: Multiple hardcoded `~/tonal_analysis/` prefixes. Not portable.
+- [NOTE] file-wide: `\`author'`, `\`primary_jel'`, `\`varlabels'` are master-defined tempfile/macro references; standalone execution fails. No `version` statement.
+
+---
+1 error(s), 0 warning(s), 4 note(s).

@@ -35,3 +35,33 @@ outputs/tables/tex/Table-6-subyear.tex
 | Line | Command | Path |
 |------|---------|------|
 | 40 | `estout est_none est_exclude est_nobirth est_nomom est_ est_90s est_jel using` | `~/tonal_analysis/outputs/tables/tex/Table-6-`type'.tex` |
+
+## REVIEW (2026-04-03)
+
+### Summary
+`Table-6.do` defines two reusable programs (`review_time` and `review_time_table`) that estimate review duration at Econometrica under 7 model specifications and then export results for 9 gender-composition variants. The logic is clean and well-structured.
+
+### Bugs and Errors
+
+**1. Undeclared macro `if` in `review_time_restud` — wrong file, but mirrored risk here (line 13 of Table-7.do, not this file). No equivalent bug here.**
+
+**2. `est_` is a valid but fragile `eststo` name (line 12)**
+`eststo est_:` stores an estimate with the name `est_` (ending in underscore). This is syntactically valid but unusual. The `estout` call on line 40 explicitly lists `est_` by name, so it works. However, `eststo est_` conflicts with any other `eststo` call that generates names via patterns like `est_*` wildcards in other contexts. Low risk in isolation; worth documenting.
+
+**3. Double-collapse may silently drop observations (lines 52–53)**
+The first `collapse` uses `(firstnm)` for most variables and `(max)` for `Mother` and `Birth`, then collapses by `(ArticleID AuthorID)`. The second `collapse` uses `(firstnm)` for most variables and `(min)` for `Mother` and `Birth`, collapsing to `ArticleID`. Using `(min)` for binary indicators in the second collapse means an article is coded as `Mother=1` only if every author observed in the first collapse had `Mother=1`. This is likely intentional (conservative coding), but it is the opposite of the first collapse's `(max)` logic, which is maximally inclusive. If the intent was "any author is a mother/birth event → article is coded 1", then the second collapse should also use `(max)`. This asymmetry deserves a comment.
+
+**4. Comment mismatch on line 61 and line 77**
+Lines 61 and 77 both read `* Table J.14 Exclusively female-authored`, but line 61 is used for `FemSolo` (solo-authored) and line 77 for `FemSenior` (senior female-authored). Neither is "exclusively female-authored" (`Fem100`). These are copy-paste errors in the comments only; the code itself is correct.
+
+**5. `_flesch_score` included in `reghdfe` but not LLM controls (lines 12, 18–25)**
+Quality controls include `_flesch_score` but no LLM composite (`_llm_g*_score`). This is consistent with the duration analysis design (not an LLM table), so it is not a bug — but it means the LLM tonal quality dimension is absent from the duration controls. This is intentional per the paper's design but should be confirmed.
+
+**6. `year(varlist)` syntax accepts only one variable in practice (line 7)**
+The `syntax name, year(varlist)` declaration allows multiple variables in `year()`, but the only usage in backtick-local `year` is passed directly to `absorb(i.MaxInst i.\`year' i.Editor)`, which works correctly only for a single variable. If a caller passes two variables, `i.\`year'` would expand incorrectly. The three callers all pass a single variable (`AcceptedYear`, `Year`, `ReceivedYear`), so this is safe in practice but is a latent interface bug.
+
+### Style / Minor Issues
+
+- The `pubyear` and `subyear` variants (lines 86–91) reuse the same `review_time_table` program but with different year FEs baked into the estimation via `review_time FemRatio, year(Year)` / `year(ReceivedYear)`. The `type()` suffix correctly distinguishes the output files. This is fine.
+- `~/tonal_analysis/` hardcoded path (line 40) is consistent with the rest of the codebase but non-portable.
+- No `estimates clear` at the end of the file; estimates from the last `review_time` call remain in memory. Harmless if `hengel_master.do` sequencing handles this, but worth noting.

@@ -34,3 +34,19 @@ outputs/tables/tex/Table-5-jel.tex
 | Line | Command | Path |
 |------|---------|------|
 | 163 | `estout reg_nber reg reg_blind fe fe_blind su_wp su_blind_wp su_pub su_blind_pub su_diff su_blind_diff using` | `~/tonal_analysis/outputs/tables/tex/Table-5-`type'.tex` |
+
+
+## REVIEW (2026-04-03)
+
+### Warnings (likely bugs)
+- [WARNING] line 142: `reghdfe D._\`stat'_score ...` — the `D.` (first-difference) time-series operator requires `tsset` to be active. The program calls `use \`using', clear` at line 124, loading the dataset fresh. If the `nber_fe` dataset was not saved with `tsset` metadata embedded (i.e., if Data.do did not call `tsset` before `save`), this errors at runtime for every stat in the loop with no diagnostic message about the missing panel setup.
+
+### Notes (worth knowing)
+- [NOTE] lines 69, 74, 80: `estimates restore ols*_fleschkincaid` — uses a wildcard in `estimates restore`. This resolves correctly for all current `stats()` combinations (the standard list includes `fleschkincaid`; the R-variant stores `ols_r_fleschkincaid` which also matches). However, if the stats list is ever changed to omit any `*fleschkincaid` item, the restore silently fails or picks up a stale estimate from a prior run.
+
+- [NOTE] lines 30, 44: `rename nber_\`stat'_score nber_score` / `rename nber_score nber_\`stat'_score` — if `reghdfe` at line 33 errors mid-loop, the variable remains named `nber_score` for all subsequent iterations, causing every subsequent `rename nber_\`stat'_score nber_score` to fail with "variable not found."
+
+- [NOTE] line 1: No `version` statement.
+
+---
+0 error(s), 1 warning(s), 3 note(s).

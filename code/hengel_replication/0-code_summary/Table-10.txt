@@ -20,3 +20,40 @@ outputs/tables/tex/Table-10.tex
 | Line | Command | Path |
 |------|---------|------|
 | 56 | `estout est_* using` | `~/tonal_analysis/outputs/tables/tex/Table-10.tex` |
+
+## REVIEW (2026-04-03)
+
+### Summary
+`Table-10.do` estimates the direct impact of peer review on readability by comparing NBER working paper scores to published article scores, using `suest` for joint inference and `margins` for predicted differences-in-differences across career stages. The logic is sophisticated but contains several real bugs.
+
+### Bugs and Errors
+
+**1. `merge m:m` is almost always wrong (line 5)**
+`merge m:m ArticleID using \`author'` performs a many-to-many merge. Stata's `m:m` merge does not join on all matching records — it matches observation-by-observation in sort order within each ArticleID group, which produces arbitrary and often incorrect results. The correct command is almost certainly `merge 1:m ArticleID using \`author'` (one NBER record per article, many authors per article) or `merge m:1 ArticleID using \`author'` depending on which dataset is the "many" side. This is a serious data-construction bug that will silently produce wrong results if there are any ArticleIDs with multiple observations in both datasets.
+
+**2. `tempvar tBin` used as a `label define` name (lines 9–12)**
+`tempvar tBin` creates a temporary variable name like `__000001`. The code then calls `label define tBin 1 "1" ...` using the literal string `tBin`, not the tempvar name. The `label values \`tBin' tBin` on line 12 applies the value label `tBin` to the tempvar, which is correct. However, `label define tBin` creates a permanent label named `tBin` in the label namespace — not a temporary label — so this label persists after the do-file ends. This is a namespace pollution issue, not a functional bug.
+
+**3. `recode t` uses `nonmissing=5` to mean `t >= 6` (line 10)**
+`recode t (1=1)(2=2)(3=3)(4/5=4)(nonmissing=5)` — the `nonmissing` keyword recodes all non-missing values not yet matched by prior rules to 5. Since rules already handle t=1,2,3,4,5, this effectively recodes t>=6 to 5, which is the intended "6+" bin. This is correct but non-obvious; a comment would help.
+
+**4. `suest nber reg, vce(cluster Editor)` clusters only by Editor (line 16)**
+The Table-8.do counterpart clusters by both `AuthorID` and `Editor` via `suest2`. Here, clustering is only by `Editor`. This inconsistency may be intentional (different design: article-level rather than author-level), but should be verified against the paper's specification.
+
+**5. `margins` over `\`tBin'` where `tBin` is a tempvar (lines 21–48)**
+The `margins` calls use `over(\`tBin')` to compute predictions at each career-stage bin. Since `\`tBin'` is a tempvar (a numeric variable with value label `tBin`), `margins` should handle this correctly. However, the `at(FemRatio=1)` / `at(FemRatio=0)` specification does not fix `\`tBin'` — margins will average over it or, with `over()`, compute separately for each bin. Verify that `margins, at(FemRatio=1) over(\`tBin')` correctly holds all other covariates at their observed values and only varies FemRatio and tBin.
+
+**6. Matrix construction assumes fixed row/column counts (lines 50–53)**
+`forvalues i=1/\`=colsof(\`B')'` iterates over columns of B, storing each as a named estimate `est_1` through `est_N`. The number of columns depends on the number of career-stage bins (5 for most variants, 4 for FemSolo). Since this script only runs once for FemRatio (5 bins), the loop will produce `est_1` through `est_5`. This is correct and consistent with the 5-column `estout` on line 56.
+
+**7. `ereturn_post` is a custom program (line 53)**
+As with Table-8.do, this relies on a custom `ereturn_post` command whose behavior is not reviewable in isolation.
+
+**8. No `type` argument to `create_latex` (line 64)**
+`create_latex using "\`r(fn)'", tablename("table9")` — no `type()` argument is passed, unlike all other `create_latex` calls in the codebase. The `create_latex` program likely has a default or handles a missing `type` gracefully. Confirm that this does not cause an error and that the output file is correctly labeled in `tables.xlsx` under `tablename="table9"` with a single entry (not multiple variants).
+
+### Style / Minor Issues
+
+- `estimates clear` at line 65 is present — good practice.
+- Hardcoded `~/tonal_analysis/` path on line 56.
+- The `blist()` in `varlabels` on lines 62–63 uses `\\\${n}` which requires the `${n}` macro to be defined at `estout` time. Confirm `${n}` is set to `\\` or similar in the style file.

@@ -1,0 +1,13 @@
+## Stata Code Review: `Table-10-llm.do`
+
+### Warnings (likely bugs)
+- [WARNING] line 5: `merge m:m ArticleID using \`author'` — `merge m:m` in Stata does not create a Cartesian product; it matches observations in key-order, pairing the i-th master row with the i-th using row for each ArticleID. If `nber` has one row per article and `author` has multiple rows per article (one per author), `merge 1:m` is the correct type. Using `m:m` here silently pairs observations by order-of-appearance rather than properly expanding the data, and Stata emits a warning about `m:m` misuse. The same pattern appears in Figure-6-llm.do and Figure-6-llm-g3.do.
+
+### Notes (worth knowing)
+- [NOTE] line 6: `tempfile nber_author; save \`nber_author'` — the tempfile is saved but never reloaded. The rest of the script works on the in-memory dataset. The save is harmless but dead code.
+- [NOTE] line 56: Hardcoded `~/tonal_analysis/` prefix in output path. Not portable.
+- [NOTE] file-wide: No `version` statement.
+- [NOTE] file-wide: `\`nber'` and `\`author'` are tempfile macros defined in the master do-file. Standalone execution would fail.
+
+---
+0 error(s), 1 warning(s), 4 note(s).

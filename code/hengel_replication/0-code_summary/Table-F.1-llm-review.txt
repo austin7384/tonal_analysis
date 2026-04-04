@@ -1,0 +1,10 @@
+## Stata Code Review: `Table-F.1-llm.do`
+
+### Notes (worth knowing)
+- [NOTE] line 6: `use \`article', clear` — depends on master-defined tempfile macro. Standalone execution fails.
+- [NOTE] line 12: Hardcoded `~/tonal_analysis/` prefix. Not portable.
+- [NOTE] line 15: `create_latex using "\`r(fn)'", tablename("table3llm") type("journal")` — tablename "table3llm" with type "journal" must have a matching row in `tables.xlsx`. If that entry is absent, `create_latex` will produce a table with empty caption/notes. No validation guard here.
+- [NOTE] file-wide: No `version` statement.
+
+---
+0 error(s), 0 warning(s), 4 note(s).

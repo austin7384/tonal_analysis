@@ -1,0 +1,35 @@
+INPUTS
+------
+`nber_fe' (tempfile) — paired article/NBER working paper dataset in first-differenced form, with D._llm_g*_score (change in LLM composite from draft to publication), FemRatio, SemiBlind, Year, and controls
+
+OPERATIONS
+----------
+- Loads `nber_fe', clears memory.
+
+- Loops over 5 LLM group composites (llm_g1 through llm_g5). For each:
+    - Runs `reghdfe` OLS of the first-differenced score D._<stat>_score on:
+        - c.FemRatio##1.SemiBlind (continuous female ratio interacted with semi-blind review indicator)
+        - N, Maxt, MaxT, asinhCiteCount (co-author count, experience, citation controls)
+        - i.NativeEnglish (native English speaker FE)
+        - Type_* (paper type dummies)
+        - Sample restricted to Year > 1997 (post-internet period)
+        - Absorbed FEs: Editor, Journal×Year interaction
+        - SEs clustered by Year
+    - Stored as `semiblind_<stat>`. Adds stored locals: jnlyr ✓, editor ✓, Nj ✓, qual ✓², native ✓, theory ✓.
+
+- Writes `estout` for all 5 stored estimates (`semiblind_*`) to a single LaTeX table. Keeps only FemRatio and the SemiBlind×FemRatio interaction coefficients (drops all other regressors). Stats rows: N_full, editor FE, journal×year FE, Nj, quality controls, native speaker, theory/empirical effects. Applies `varlabels` to label the interaction as "Blind×fem. ratio". Inserts `\midrule` before footer.
+
+- Calls `create_latex` with tablename "table7_semiblindllm".
+
+OUTPUTS
+-------
+~/tonal_analysis/outputs/tables/tex/Table-G.4-llm.tex — LaTeX table: 5 columns (one per LLM group composite G1–G5) showing FemRatio and SemiBlind×FemRatio coefficients from paired-difference OLS restricted to Year>1997; reghdfe with Editor and Journal×Year FEs, Year-clustered SEs
+
+
+## File Paths
+
+| Line | Command | Path |
+|------|---------|------|
+| 5 | `use` | `` `nber_fe' `` |
+| 18 | `estout … using` | `~/tonal_analysis/outputs/tables/tex/Table-G.4-llm.tex` |
+| 25 | `create_latex using` | `` `r(fn)' `` |

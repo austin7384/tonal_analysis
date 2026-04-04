@@ -18,3 +18,15 @@ outputs/figures/Figure-1.pdf
 | Line | Command | Path |
 |------|---------|------|
 | 19 | `graph export` | `~/tonal_analysis/outputs/figures/Figure-1.pdf` |
+
+## REVIEW (2026-04-03)
+
+### Notes (worth knowing)
+- [NOTE] line 5: `recode FemRatio0 (0.1/0.4=0.25) (0.6/0.8=0.75)` — `recode` with decimal ranges can behave unexpectedly for values like 0.3333... (one female of three authors). Stata's `recode` uses `>=lower & <=upper` logic, so floating-point FemRatio0 values that don't fall cleanly on the boundaries may be left as missing or hit an unintended bucket. Worth verifying that all observed FemRatio0 values are captured by the specified ranges.
+
+- [NOTE] line 4: `use \`article', clear` — depends on the `article` tempfile being in scope from `Data.do`. If this file is ever run standalone, it will silently use an empty local and crash. No issue when run from `hengel_master.do`.
+
+- [NOTE] line 1: No `version` statement.
+
+---
+0 error(s), 0 warning(s), 3 note(s).

@@ -38,3 +38,25 @@ outputs/tables/tex/Table-J.3.tex
 | 208 | `estout est_flesch_0* est_flesch_1* using` | `~/tonal_analysis/outputs/tables/tex/Table-J.3.tex` |
 | 288 | `estout matrix(`b', fmt(2)) using` | `~/tonal_analysis/outputs/tables/tex/Table-J.1.tex` |
 | 430 | `save` | `~/tonal_analysis/data/raw/hengel_generated/author_matching_dik` |
+
+## REVIEW (2026-04-03)
+
+### Errors (must fix)
+- [ERROR] lines 214, 219, 224, 229, 234, 239, 243: `prehead("...\multicolumn{5}{l}{{\textbf{...}}}\\")` — each `prehead` string ends with `\\`. `estout` strips one backslash level, so `\\` becomes `\` in the `.tex` output file. The LaTeX row terminator `\\` is never written, breaking the table. Requires `\\\\` in the Stata string to produce `\\` in the file. 6 additional occurrences at lines 219, 224, 229, 234, 239, 243.
+
+- [ERROR] lines 305–307: `"\multicolumn{8}{l}{\textbf{...}}\\\${n}"` in `blist()` — same backslash-stripping bug. `\\` becomes `\` in the output, and `\${n}` inserts a newline. The net result is `\` + newline rather than the intended `\\` + newline LaTeX row terminator. Requires `\\\\${n}` to produce `\\` + newline in the file. 2 additional occurrences at lines 306–307.
+
+### Warnings (likely bugs)
+- [WARNING] line 117: `psmatch2 Female if T>2` — Stata treats `.` as larger than any real number, so observations with missing `T` satisfy `T>2` and are included in the matching. Guard with `T>2 & !missing(T)`.
+
+- [WARNING] lines 289, 292: `regress \`v' ... if T>=3` and `if T>=3 & match==3` — same missing-value trap: missing `T` satisfies `T>=3` and is included in the regressions.
+
+- [WARNING] lines 337–338: Conditions `_\`stat'_Dtf>0`, `_\`stat'_Dg>0`, `_\`stat'_Dtm>0`, `_\`stat'_Dg<0` — if any of the underlying difference variables are missing (e.g., due to missing matched-pair scores), `_\`stat'_D` will be set to 1 or 0 incorrectly instead of remaining missing.
+
+### Notes (worth knowing)
+- [NOTE] line 187: `if "\`R'"=="jel"==1` — the `==1` suffix is redundant. `"\`R'"=="jel"` already returns 1 or 0; appending `==1` is equivalent but misleading. Should be `if "\`R'"=="jel"`.
+
+- [NOTE] line 1: No `version` statement.
+
+---
+2 error(s), 3 warning(s), 2 note(s).

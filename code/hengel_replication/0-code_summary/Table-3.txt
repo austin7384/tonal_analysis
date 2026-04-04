@@ -37,3 +37,17 @@ outputs/tables/tex/Table-3-R.tex
 | Line | Command | Path |
 |------|---------|------|
 | 120 | `estout est_*_Editor using` | `~/tonal_analysis/outputs/tables/tex/Table-3-`type'.tex` |
+
+## REVIEW (2026-04-03)
+
+### Notes (worth knowing)
+- [NOTE] line 97: `absorb(i.Journal##i.Year Editor MaxInst MaxT NativeEnglish \`jcode3')` — the absorbed variables `Editor`, `MaxInst`, `MaxT`, and `NativeEnglish` are missing the `i.` prefix used consistently in all other `absorb()` calls (lines 38, 45, 52, 59, 66, 75, 82, 89). `reghdfe` treats bare variable names in `absorb()` as factors, so behavior is equivalent, but the inconsistency is a readability/maintenance risk.
+
+- [NOTE] lines 130–159: Specification 9 (tertiary JEL) is always estimated on `\`article_tertiary_jel_pp'`, which includes P&P articles, while specifications 1–8 use `\`article'` or `\`article_primary_jel'`, which exclude P&P (Journal==5). The sample therefore changes between spec 8 and spec 9 within the same table, without a note in the code or the table output.
+
+- [NOTE] line 158: The `R` variant call passes `stats(r_fleschkincaid r_gunningfog r_smog)`. If any of the `r_*` score variables don't exist in the article dataset (they come from an external R-computed readability source), `reghdfe` will silently fail or error at runtime.
+
+- [NOTE] line 1: No `version` statement.
+
+---
+0 error(s), 0 warning(s), 4 note(s).

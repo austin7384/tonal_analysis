@@ -1,0 +1,44 @@
+INPUTS
+------
+`author' (tempfile) — author-level panel dataset with LLM group composite scores (llm_g*) and gender indicators, used by the `author_level` program for dynamic panel estimation
+
+OPERATIONS
+----------
+- Redefines program `author_level_table` with required `type(string)` option. The program:
+    - Calls `estout` on stored estimates named `xtabond_*` to write a LaTeX regression table for the given gender-definition variant.
+    - Displays stats rows: N, Hansen test p-value, Sargan test p-value, AR(1) test, AR(2) test, editor FE, blind review, journal FE, Nj, institution FE, quality controls, native speaker.
+    - Applies `varlabels` for: Female (β₁), Male (β₁+β₂), Interaction (β₂), and lagged score (β₀).
+    - Calls `create_latex` on the output file using tablename "table4llm" and the supplied type.
+
+- Runs `author_level` (defined elsewhere, reused from Table-F.2.do context) followed by `author_level_table` for six gender-definition variants:
+    1. FemRatio — continuous female authorship ratio
+    2. Fem100 — exclusively female-authored papers
+    3. FemSolo — solo female-authored papers
+    4. Fem1 — at least one female author
+    5. Fem50 — majority female-authored
+    6. FemSenior — senior (last) author is female
+
+- For each variant, `author_level` loads `author', runs dynamic panel (Arellano-Bond / xtabond2) regressions of LLM group composites on the gender indicator with controls, and stores estimates as `xtabond_*`. `author_level_table` then writes those estimates to the corresponding `.tex` file.
+
+OUTPUTS
+-------
+~/tonal_analysis/outputs/tables/tex/Table-F.2-llm-FemRatio.tex — LaTeX regression table, LLM group composites G1–G5 on FemRatio, author-level dynamic panel (xtabond2); displays β₁, β₁+β₂, β₂, lagged score, instrument validity tests
+~/tonal_analysis/outputs/tables/tex/Table-F.2-llm-Fem100.tex — same specification with Fem100 gender indicator
+~/tonal_analysis/outputs/tables/tex/Table-F.2-llm-FemSolo.tex — same specification with FemSolo gender indicator
+~/tonal_analysis/outputs/tables/tex/Table-F.2-llm-Fem1.tex — same specification with Fem1 gender indicator
+~/tonal_analysis/outputs/tables/tex/Table-F.2-llm-Fem50.tex — same specification with Fem50 gender indicator
+~/tonal_analysis/outputs/tables/tex/Table-F.2-llm-FemSenior.tex — same specification with FemSenior gender indicator
+
+
+## File Paths
+
+| Line | Command | Path |
+|------|---------|------|
+| 9 | `estout … using` | `~/tonal_analysis/outputs/tables/tex/Table-F.2-llm-<type>.tex` |
+| 19 | `create_latex using` | `` `r(fn)' `` |
+| 23 | `author_level … using` | `` `author' `` |
+| 27 | `author_level … using` | `` `author' `` |
+| 31 | `author_level … using` | `` `author' `` |
+| 35 | `author_level … using` | `` `author' `` |
+| 39 | `author_level … using` | `` `author' `` |
+| 43 | `author_level … using` | `` `author' `` |

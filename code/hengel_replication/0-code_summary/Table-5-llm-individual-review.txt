@@ -1,0 +1,13 @@
+## Stata Code Review: `Table-5-llm-individual.do`
+
+### Warnings (likely bugs)
+- [WARNING] lines 71/85: Inside the `foreach stat` loop in `nber_fgls`, `rename nber_\`stat'_score nber_score` (line 71) and `rename nber_score nber_\`stat'_score` (line 85) are unprotected. If any estimation command between them errors and aborts the iteration, the variable is left permanently as `nber_score`. Every subsequent loop iteration then fails at line 71 because `nber_\`stat'_score` no longer exists.
+
+- [WARNING] lines 193–195, 217–220: All `blist` group-header rows use `"...\textbf{...}}\\${n}"`. Estout strips one backslash level, writing a single `\` at the end of each header row instead of `\\`. This breaks LaTeX table row termination. The code comments at lines 164–166 acknowledge this and require an external Python post-processing step before LaTeX compilation. Affects all 6 group-header rows across both subtables in `nber_individual_table`.
+
+### Notes (worth knowing)
+- [NOTE] lines 177, 203: Hardcoded `~/tonal_analysis/` prefix in output paths inside `nber_individual_table`. Not portable across machines.
+- [NOTE] file-wide: No `version` statement.
+
+---
+0 error(s), 2 warning(s), 2 note(s).

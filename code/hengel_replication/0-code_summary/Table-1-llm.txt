@@ -1,0 +1,30 @@
+INPUTS
+------
+`article' (tempfile) — article-level dataset with LLM criterion scores (_llm_*) and gender indicator Fem50
+
+OPERATIONS
+----------
+- Loads the article-level tempfile and recodes missing Fem50 to 0.
+- Defines a local list of 16 LLM criteria: readability, modal_verb, hedging, qualifier, ack_limits, caution, assertiveness, active_passive, directness, imperative, pronoun, novelty, jargon, emotional, evidence, practical.
+- Loops over all 16 criteria. For each:
+    - Runs OLS regression of _llm_<crit> on i.Fem50 (binary: 0 = male-majority, 1 = female-majority).
+    - Uses `lincom` to compute the mean for Fem50==1 (constant + coefficient).
+    - Accumulates results into two matrices: B (coefficients) and SE (standard errors), each with three rows per criterion: (1) mean for Fem50==0 (_cons), (2) mean for Fem50==1 (lincom estimate), (3) difference (1.Fem50 coefficient).
+- After the loop, extracts row 1 (male-majority means), posts as stored estimate `sum_1` via ereturn_post with column names matching the 16 _llm_* variables and N = count of Fem50==0.
+- Extracts row 2 (female-majority means), posts as `sum_2` with N = count of Fem50==1.
+- Extracts row 3 (differences), posts as `sum_3` with N = count of non-missing Fem50.
+- Outputs a LaTeX summary table using `estout` with style `publishing-female_latex`, displaying means/SEs for sum_1 and sum_2 (no stars) and the difference with stars for sum_3; adds N row and a midrule before the footer.
+- Calls `create_latex` to wrap the output in the standard project LaTeX table skeleton using tablename "table1llm".
+
+OUTPUTS
+-------
+~/tonal_analysis/outputs/tables/tex/Table-1-llm.tex — LaTeX table with three panels: mean LLM scores for male-majority papers (Fem50==0), female-majority papers (Fem50==1), and their difference (with significance stars), across all 16 LLM criteria.
+
+
+## File Paths
+
+| Line | Command | Path |
+|------|---------|------|
+| 4 | `use` | `` `article' `` |
+| 39 | `estout … using` | `~/tonal_analysis/outputs/tables/tex/Table-1-llm.tex` |
+| 44 | `create_latex using` | `` `r(fn)' `` (same file, returned by estout) |
