@@ -1,0 +1,461 @@
+% =============================================================================
+% In a Different Voice: Gender Composition and Scientific Writing in Economics
+% Conference presentation — ~20 minutes — 12 frames
+% Cassar, Coffelt, Datuashvili, Khubulashvili
+% =============================================================================
+
+\documentclass[aspectratio=169,11pt]{beamer}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{microtype}
+\usepackage{amsmath,amssymb}
+\usepackage{booktabs}
+\usepackage{graphicx}
+\usepackage{tikz}
+\usepackage{xcolor}
+\usepackage{ragged2e}
+\usepackage{colortbl}
+\usepackage{array}
+\usepackage{hyperref}
+\usepackage{adjustbox}
+\usepackage[normalem]{ulem}
+
+\pgfkeys{/pgf/.cd}
+
+% --- Color Palette: Warm Professional ---
+\definecolor{DeepNavy}{HTML}{2E4057}
+\definecolor{Teal}{HTML}{048A81}
+\definecolor{WarmOrange}{HTML}{E85D04}
+\definecolor{SoftPurple}{HTML}{9D4EDD}
+\definecolor{WarmGray}{HTML}{6C757D}
+\definecolor{LightGray}{HTML}{E9ECEF}
+\definecolor{DeepRed}{HTML}{D62828}
+\definecolor{Gold}{HTML}{D4A03A}
+\definecolor{SoftWhite}{HTML}{FAFAFA}
+
+% Beamer colors
+\setbeamercolor{normal text}{fg=DeepNavy, bg=SoftWhite}
+\setbeamercolor{structure}{fg=DeepNavy}
+\setbeamercolor{alerted text}{fg=DeepRed}
+\setbeamercolor{frametitle}{fg=DeepNavy, bg=SoftWhite}
+\setbeamercolor{title}{fg=DeepNavy}
+\setbeamercolor{subtitle}{fg=WarmGray}
+\setbeamercolor{block title}{bg=DeepNavy, fg=SoftWhite}
+\setbeamercolor{block body}{bg=LightGray, fg=DeepNavy}
+
+% Fonts
+\usefonttheme{professionalfonts}
+\setbeamerfont{title}{size=\huge, series=\bfseries}
+\setbeamerfont{frametitle}{size=\Large, series=\bfseries}
+
+% Strip chrome
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{headline}{}
+
+% Footline
+\setbeamertemplate{footline}{%
+    \hfill
+    \begin{beamercolorbox}[wd=3cm,ht=2.5ex,dp=1ex,right,rightskip=0.6cm]{normal text}
+        \color{WarmGray}\scriptsize\insertframenumber
+    \end{beamercolorbox}
+    \vspace{0.3cm}
+}
+
+\graphicspath{{slides_figures/}}
+
+% =============================================================================
+\begin{document}
+% =============================================================================
+
+% ---------------------------------------------------------------------------
+% 1. Title
+% ---------------------------------------------------------------------------
+\begin{frame}[plain]
+    \vfill
+    \centering
+    {\huge\bfseries\color{DeepNavy} In a Different Voice}\\[0.4cm]
+    {\large\color{WarmGray} Gender Composition and Scientific Writing in Economics}\\[0.8cm]
+    \textcolor{LightGray}{\rule{0.5\textwidth}{0.4pt}}\\[0.5cm]
+    {\normalsize\color{DeepNavy}
+        Alessandra Cassar \quad Austin Coffelt \quad
+        Sopiko Datuashvili \quad Robizon Khubulashvili}\\[0.2cm]
+    {\small\color{WarmGray} University of San Francisco \quad$\cdot$\quad April 2026}
+    \vfill
+\end{frame}
+
+% ---------------------------------------------------------------------------
+% 2. Hengel + our question
+% ---------------------------------------------------------------------------
+\begin{frame}{Hengel (2022) documented a readability differential; this paper extends the analysis}
+    \vfill
+    \begin{columns}[T, onlytextwidth]
+
+        \begin{column}{0.46\textwidth}
+            \RaggedRight
+            \colorbox{LightGray}{\parbox{\dimexpr\linewidth-2\fboxsep\relax}{%
+                \vspace{0.12cm}\hspace{0.2cm}
+                {\normalsize\bfseries\color{DeepNavy} Hengel (2022)}
+                \vspace{0.08cm}
+            }}
+            \vspace{0.2cm}
+            {\large Female-authored papers are \textbf{more readable}.}
+
+            \vspace{0.2cm}
+            {\normalsize\color{WarmGray}
+            The differential \emph{widens during peer review} —\\
+            consistent with higher writing standards.\\[0.15cm]
+            One dimension measured:\\
+            Readability.}
+        \end{column}
+
+        \begin{column}{0.08\textwidth}
+            \centering\vspace{1.4cm}
+            {\Large\color{WarmOrange}$\rightarrow$}
+        \end{column}
+
+        \begin{column}{0.46\textwidth}
+            \RaggedRight
+            \colorbox{LightGray}{\parbox{\dimexpr\linewidth-2\fboxsep\relax}{%
+                \vspace{0.15cm}\hspace{0.2cm}
+                {\normalsize\bfseries\color{Teal} This paper}
+                \vspace{0.1cm}
+            }}
+            \vspace{0.1cm}
+            {\normalsize\bfseries Does the differential extend to other writing dimensions?}
+
+            \vspace{0.1cm}
+            {\normalsize\color{WarmGray}
+            We extend the analysis to \textbf{15 additional}\\
+            surface-level writing dimensions:\\
+            directness, jargon, novelty-claim strength,\\
+            assertiveness, hedging, evidentiary support,\\
+            emotional valence, and more.\\[0.1cm]
+            9,117 abstracts. 16-item LLM rubric.}
+        \end{column}
+
+    \end{columns}
+    \vfill
+\end{frame}
+
+% ---------------------------------------------------------------------------
+% 3. Data + rubric
+% ---------------------------------------------------------------------------
+\begin{frame}{9,117 abstracts scored on 16 surface features by GPT-5}
+    \begin{columns}[T, onlytextwidth]
+
+        \begin{column}{0.38\textwidth}
+            \RaggedRight
+            \vspace{0.1cm}
+            \begin{center}
+                {\fontsize{42}{44}\selectfont\bfseries\color{Teal} 9,117}\\[0.05cm]
+                {\normalsize\color{WarmGray} abstracts}
+            \end{center}
+            \vspace{0.25cm}
+            \begin{center}
+                {\normalsize AER \quad ECA \quad JPE \quad QJE}\\[0.1cm]
+                {\normalsize\color{WarmGray} 1950--2015}
+            \end{center}
+            \vspace{0.3cm}
+            {\normalsize
+            $<\!10\%$ female authors overall\\[0.15cm]
+            ${\sim}3\%$ all-female articles\\[0.15cm]
+            ${\sim}9\%$ majority-female}
+        \end{column}
+
+        \begin{column}{0.04\textwidth}
+            \textcolor{LightGray}{\rule{0.4pt}{5.0cm}}
+        \end{column}
+
+        \begin{column}{0.58\textwidth}
+            \RaggedRight
+            \vspace{0.1cm}
+            {\normalsize\bfseries 16 criteria scored 1--10,
+            surface features only:}\\[0.3cm]
+
+            {\normalsize
+            \textbf{\color{Teal} G1} Creativity \& Hedging\\[0.18cm]
+            \textbf{\color{WarmOrange} G2} Assertiveness \& Voice\\[0.18cm]
+            \textbf{\color{SoftPurple} G3} Structural Directness\\[0.18cm]
+            \textbf{\color{Gold} G4} Authorial Stance \& Novelty\\[0.18cm]
+            \textbf{\color{DeepRed} G5} Support \& Impact\\[0.18cm]
+            \textbf{Standalone:} Readability
+            }
+        \end{column}
+
+    \end{columns}
+\end{frame}
+
+% ---------------------------------------------------------------------------
+% 4. Validation
+% ---------------------------------------------------------------------------
+\begin{frame}{LLM readability replicates Hengel's established pattern — $\hat{\beta} = 0.36^{***}$}
+    \begin{center}
+        \adjustbox{max width=0.88\textwidth, max height=0.58\textheight}{%
+            \includegraphics{fig_readability_validation.pdf}%
+        }
+    \end{center}
+    \begin{center}
+        {\normalsize\color{DeepNavy}
+        LLM readability coefficient \textbf{0.36} ($p<0.01$) is
+        \textbf{significant across all nine specifications}.
+        \quad{\color{WarmGray}\small Hengel's Flesch: 1.25$^{**}$.}}
+    \end{center}
+\end{frame}
+
+% ---------------------------------------------------------------------------
+% 5. Mean differences — the money slide
+% ---------------------------------------------------------------------------
+\begin{frame}{Female-majority teams score systematically higher on clarity; tonal differences are negligible}
+    \begin{center}
+        \adjustbox{max width=0.86\textwidth, max height=0.74\textheight}{%
+            \includegraphics{fig_mean_differences.pdf}%
+        }
+    \end{center}
+\end{frame}
+
+% ---------------------------------------------------------------------------
+% 6. The split
+% ---------------------------------------------------------------------------
+\begin{frame}{Five clarity dimensions are systematically elevated; tonal dimensions yield null differences}
+    \vfill
+    \begin{columns}[T, onlytextwidth]
+
+        \begin{column}{0.47\textwidth}
+            \colorbox{Teal}{\parbox{\dimexpr\linewidth-2\fboxsep\relax}{%
+                \centering\vspace{0.12cm}
+                {\large\bfseries\color{SoftWhite} Female-Majority Higher}
+                \vspace{0.08cm}
+            }}
+            \vspace{0.3cm}
+            \RaggedRight
+            {\large
+            Readability \hfill $+0.55$ SD\\[0.3cm]
+            Jargon density (lower) \hfill $+0.48$ SD\\[0.3cm]
+            Active/passive voice \hfill $+0.44$ SD\\[0.3cm]
+            Sentence directness \hfill $+0.38$ SD\\[0.3cm]
+            Evidentiary support \hfill $+0.35$ SD
+            }
+            \vspace{0.3cm}
+            {\normalsize\color{WarmOrange}
+            Novelty-claim strength \hfill $-0.05$ SD}
+        \end{column}
+
+        \begin{column}{0.06\textwidth}\end{column}
+
+        \begin{column}{0.47\textwidth}
+            \colorbox{WarmGray}{\parbox{\dimexpr\linewidth-2\fboxsep\relax}{%
+                \centering\vspace{0.12cm}
+                {\large\bfseries\color{SoftWhite} Statistically Negligible}
+                \vspace{0.08cm}
+            }}
+            \vspace{0.3cm}
+            \RaggedRight
+            {\large\color{WarmGray}
+            Assertiveness\\[0.3cm]
+            Hedging frequency\\[0.3cm]
+            Qualifier density\\[0.3cm]
+            Modal verb strength\\[0.3cm]
+            Emotional valence\\[0.3cm]
+            Caution-signaling connectors
+            }
+        \end{column}
+
+    \end{columns}
+    \vfill
+    \begin{center}
+        {\small\color{WarmGray} Unconditional; majority-gender classification; all criteria standardized.}
+    \end{center}
+\end{frame}
+
+% ---------------------------------------------------------------------------
+% 7. Regression results
+% ---------------------------------------------------------------------------
+\begin{frame}{Controlled regressions confirm five robust differentials; tonal dimensions yield null estimates}
+    \begin{center}
+        \adjustbox{max width=0.86\textwidth, max height=0.70\textheight}{%
+            \includegraphics{fig_regression_coefficients.pdf}%
+        }
+    \end{center}
+\end{frame}
+
+% ---------------------------------------------------------------------------
+% 8. Robustness
+% ---------------------------------------------------------------------------
+\begin{frame}{The readability differential is robust across six authorship specifications}
+    \begin{center}
+        \adjustbox{max width=0.88\textwidth, max height=0.56\textheight}{%
+            \includegraphics{fig_robustness.pdf}%
+        }
+    \end{center}
+    \begin{center}
+        {\small\color{WarmGray}
+        OLS coefficient on female authorship indicator, Column~1 specification.
+        Error bars denote 95\% confidence intervals.
+        Results for jargon, directness, and evidentiary support are similarly robust.}
+    \end{center}
+\end{frame}
+
+% ---------------------------------------------------------------------------
+% 9. Devil's advocate
+% ---------------------------------------------------------------------------
+\begin{frame}{Identification concern: GPT-5 may introduce systematic measurement bias}
+    \vfill
+    \begin{columns}[T, onlytextwidth]
+
+        \begin{column}{0.44\textwidth}
+            \RaggedRight
+            \colorbox{LightGray}{\parbox{\dimexpr\linewidth-2\fboxsep\relax}{%
+                \vspace{0.12cm}\hspace{0.2cm}
+                {\normalsize\bfseries\color{WarmGray} Potential confound}
+                \vspace{0.08cm}
+            }}
+            \vspace{0.35cm}
+            {\normalsize
+            GPT-5 may assign systematically\\
+            higher scores to abstracts by\\
+            female-majority teams, independent\\
+            of underlying linguistic content.}
+        \end{column}
+
+        \begin{column}{0.08\textwidth}\end{column}
+
+        \begin{column}{0.48\textwidth}
+            \RaggedRight
+            \colorbox{LightGray}{\parbox{\dimexpr\linewidth-2\fboxsep\relax}{%
+                \vspace{0.12cm}\hspace{0.2cm}
+                {\normalsize\bfseries\color{Teal} Response}
+                \vspace{0.08cm}
+            }}
+            \vspace{0.35cm}
+            {\normalsize
+            \textbf{(1)} LLM readability replicates Hengel's\\
+            \hspace{0.5cm}manually calculated scores.\\[0.3cm]
+            \textbf{(2)} Results are consistent across six\\
+            \hspace{0.5cm}authorship specifications.\\[0.3cm]
+            \textbf{(3)} A model exhibiting such bias would\\
+            \hspace{0.5cm}produce elevated scores on assertiveness\\
+            \hspace{0.5cm}and hedging. The data show no such pattern.
+            }
+        \end{column}
+
+    \end{columns}
+    \vfill
+\end{frame}
+
+% ---------------------------------------------------------------------------
+% 10. Closing
+% ---------------------------------------------------------------------------
+{\setbeamercolor{background canvas}{bg=DeepNavy}
+\begin{frame}[plain]
+    \vfill
+    \begin{center}
+        {\LARGE\bfseries\color{SoftWhite}
+        Female-majority teams in economics\\[0.4cm]
+        write more \textcolor{Gold}{clearly}.}\\[0.8cm]
+        \textcolor{WarmGray}{\rule{0.45\textwidth}{0.4pt}}\\[0.6cm]
+        {\large\color{LightGray}
+        Not more hesitantly. Not more emotionally.\\[0.3cm]
+        The difference lies in how research is \emph{communicated},\\[0.3cm]
+        not in the confidence with which findings are asserted.}
+    \end{center}
+    \vfill
+\end{frame}
+}
+
+% ===========================================================================
+% Backup slides
+% ===========================================================================
+\appendix
+
+\begin{frame}{Backup: Empirical specification}
+    \vfill
+    \begin{center}
+        {\large
+        $R_j = \beta_0 + \beta_1 \cdot \textit{FemaleRatio}_j
+             + \gamma X_j + \delta Y_j + \varepsilon_j$}
+    \end{center}
+    \vspace{0.5cm}
+    \begin{columns}[T, onlytextwidth]
+        \begin{column}{0.48\textwidth}
+            \RaggedRight
+            {\normalsize
+            $X_j$: journal$\times$year FE, editor controls,\\
+            blind-review indicator, JEL codes,\\
+            theory/empirical flag}
+        \end{column}
+        \begin{column}{0.04\textwidth}\end{column}
+        \begin{column}{0.48\textwidth}
+            \RaggedRight
+            {\normalsize
+            $Y_j$: institution FE, author prominence\\
+            (max $T$ FE), author seniority (max $t$ FE),\\
+            native-speaker indicator}
+        \end{column}
+    \end{columns}
+    \vspace{0.5cm}
+    \begin{center}
+        {\normalsize\color{WarmGray}
+        Nine specifications. SEs clustered on editor.\\
+        Alternative authorship measures: majority-female binary,
+        any-female binary, 100\% female, solo, senior female.}
+    \end{center}
+    \vfill
+\end{frame}
+
+\begin{frame}{Backup: Summary statistics by gender composition}
+    \RaggedRight
+    \begin{center}
+    {\small
+    \begin{tabular}{lcccc}
+        \toprule
+        & All-Male & Mixed & All-Female & Full\\
+        & ($N=7{,}951$) & ($N=853$) & ($N=313$) & ($N=9{,}117$)\\
+        \midrule
+        Readability    & 6.70 (1.38) & 7.42 (1.25) & 7.37 (1.30) & 6.79 (1.38)\\
+        Directness     & 5.94 (2.08) & 6.71 (1.81) & 6.53 (1.86) & 6.03 (2.06)\\
+        Jargon (raw)   & 7.00 (1.73) & 6.48 (1.86) & 6.07 (1.92) & 6.92 (1.76)\\
+        Evidence       & 1.68 (1.34) & 2.31 (1.90) & 2.19 (1.73) & 1.75 (1.43)\\
+        Novelty        & 2.27 (2.12) & 2.26 (2.20) & 1.90 (1.85) & 2.25 (2.12)\\
+        Assertiveness  & 8.18 (1.55) & 8.43 (1.28) & 8.04 (1.55) & 8.20 (1.53)\\
+        Hedging        & 8.35 (1.98) & 8.49 (1.73) & 8.07 (2.11) & 8.35 (1.96)\\
+        Emotional val. & 1.12 (0.37) & 1.11 (0.35) & 1.10 (0.31) & 1.12 (0.37)\\
+        \bottomrule
+    \end{tabular}
+    }
+    \end{center}
+    {\small\color{WarmGray} Means and SDs. Scored 1--10. Descriptive only; no significance stars.}
+\end{frame}
+
+\begin{frame}{Backup: Key regression coefficients (col.\ 1, full sample)}
+    \RaggedRight
+    \begin{center}
+    {\small
+    \setlength{\tabcolsep}{8pt}
+    \begin{tabular}{lcc}
+        \toprule
+        Criterion & Coef. & SE\\
+        \midrule
+        \multicolumn{3}{l}{\textit{Female $>$ male (significant)}}\\
+        \quad Jargon (less dense) & $+0.52^{***}$ & (0.11)\\
+        \quad Evidence \& citation & $+0.44^{***}$ & (0.09)\\
+        \quad Readability          & $+0.36^{***}$ & (0.07)\\
+        \quad Directness           & $+0.27^{**}$  & (0.10)\\
+        \midrule
+        \multicolumn{3}{l}{\textit{Female $<$ male (significant)}}\\
+        \quad Novelty claims        & $-0.32^{***}$ & (0.10)\\
+        \midrule
+        \multicolumn{3}{l}{\textit{Not significant}}\\
+        \quad Assertiveness         & $-0.08$       & (0.08)\\
+        \quad Emotional valence     & $-0.02$       & (0.02)\\
+        \bottomrule
+    \end{tabular}
+    }
+    \end{center}
+    {\small\color{WarmGray} OLS, female ratio, 1950--2015. SEs clustered on editor. $N=9{,}117$.}
+\end{frame}
+
+% =============================================================================
+\end{document}
+% =============================================================================
