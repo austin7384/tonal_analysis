@@ -104,10 +104,10 @@
 
             \vspace{0.2cm}
             {\normalsize\color{WarmGray}
-            The differential \emph{widens during peer review} —\\
-            consistent with higher writing standards.\\[0.15cm]
-            One dimension measured:\\
-            Readability.}
+            The differential \emph{widens during peer review} — consistent with higher writing standards.
+
+            \vspace{0.1cm}
+            One dimension measured: Readability.}
         \end{column}
 
         \begin{column}{0.08\textwidth}
@@ -127,11 +127,9 @@
 
             \vspace{0.1cm}
             {\normalsize\color{WarmGray}
-            We extend the analysis to \textbf{15 additional}\\
-            surface-level writing dimensions:\\
-            directness, jargon, novelty-claim strength,\\
-            assertiveness, hedging, evidentiary support,\\
-            emotional valence, and more.\\[0.1cm]
+            We extend the analysis to \textbf{15 additional} surface-level writing dimensions: directness, jargon, novelty-claim strength, assertiveness, hedging, evidentiary support, emotional valence, and more.
+
+            \vspace{0.05cm}
             9,117 abstracts. 16-item LLM rubric.}
         \end{column}
 
@@ -188,7 +186,39 @@
 \end{frame}
 
 % ---------------------------------------------------------------------------
-% 4. Validation
+% 4. Empirical specification
+% ---------------------------------------------------------------------------
+\begin{frame}{One estimating equation applied separately to each criterion across nine control specifications}
+    \vfill
+    \begin{center}
+        {\large
+        $R_j = \beta_0 + \beta_1 \cdot \textit{FemaleRatio}_j
+             + \gamma X_j + \delta Y_j + \varepsilon_j$}
+    \end{center}
+    \vspace{0.4cm}
+    \begin{columns}[T, onlytextwidth]
+        \begin{column}{0.48\textwidth}
+            \RaggedRight
+            {\normalsize
+            $X_j$: journal$\times$year FE, editor controls, blind-review indicator, JEL codes, theory/empirical flag}
+        \end{column}
+        \begin{column}{0.04\textwidth}\end{column}
+        \begin{column}{0.48\textwidth}
+            \RaggedRight
+            {\normalsize
+            $Y_j$: institution FE, author prominence (max $T$ FE), author seniority (max $t$ FE), native-speaker indicator}
+        \end{column}
+    \end{columns}
+    \vspace{0.4cm}
+    \begin{center}
+        {\normalsize\color{WarmGray}
+        Nine specifications. SEs clustered on editor. Alternative authorship measures: majority-female binary, any-female binary, 100\% female, solo, senior female.}
+    \end{center}
+    \vfill
+\end{frame}
+
+% ---------------------------------------------------------------------------
+% 5. Validation
 % ---------------------------------------------------------------------------
 \begin{frame}{LLM readability replicates Hengel's established pattern — $\hat{\beta} = 0.36^{***}$}
     \begin{center}
@@ -313,10 +343,7 @@
             }}
             \vspace{0.35cm}
             {\normalsize
-            GPT-5 may assign systematically\\
-            higher scores to abstracts by\\
-            female-majority teams, independent\\
-            of underlying linguistic content.}
+            GPT-5 may assign systematically higher scores to abstracts by female-majority teams, independent of underlying linguistic content.}
         \end{column}
 
         \begin{column}{0.08\textwidth}\end{column}
@@ -330,13 +357,9 @@
             }}
             \vspace{0.35cm}
             {\normalsize
-            \textbf{(1)} LLM readability replicates Hengel's\\
-            \hspace{0.5cm}manually calculated scores.\\[0.3cm]
-            \textbf{(2)} Results are consistent across six\\
-            \hspace{0.5cm}authorship specifications.\\[0.3cm]
-            \textbf{(3)} A model exhibiting such bias would\\
-            \hspace{0.5cm}produce elevated scores on assertiveness\\
-            \hspace{0.5cm}and hedging. The data show no such pattern.
+            \textbf{(1)} LLM readability replicates Hengel's manually calculated scores.\\[0.3cm]
+            \textbf{(2)} Results are consistent across six authorship specifications.\\[0.3cm]
+            \textbf{(3)} A model exhibiting such bias would produce elevated scores on assertiveness and hedging. The data show no such pattern.
             }
         \end{column}
 
@@ -356,9 +379,7 @@
         write more \textcolor{Gold}{clearly}.}\\[0.8cm]
         \textcolor{WarmGray}{\rule{0.45\textwidth}{0.4pt}}\\[0.6cm]
         {\large\color{LightGray}
-        Not more hesitantly. Not more emotionally.\\[0.3cm]
-        The difference lies in how research is \emph{communicated},\\[0.3cm]
-        not in the confidence with which findings are asserted.}
+        Not more hesitantly. Not more emotionally. The difference lies in how research is \emph{communicated}, not in the confidence with which findings are asserted.}
     \end{center}
     \vfill
 \end{frame}
@@ -368,41 +389,6 @@
 % Backup slides
 % ===========================================================================
 \appendix
-
-\begin{frame}{Backup: Empirical specification}
-    \vfill
-    \begin{center}
-        {\large
-        $R_j = \beta_0 + \beta_1 \cdot \textit{FemaleRatio}_j
-             + \gamma X_j + \delta Y_j + \varepsilon_j$}
-    \end{center}
-    \vspace{0.5cm}
-    \begin{columns}[T, onlytextwidth]
-        \begin{column}{0.48\textwidth}
-            \RaggedRight
-            {\normalsize
-            $X_j$: journal$\times$year FE, editor controls,\\
-            blind-review indicator, JEL codes,\\
-            theory/empirical flag}
-        \end{column}
-        \begin{column}{0.04\textwidth}\end{column}
-        \begin{column}{0.48\textwidth}
-            \RaggedRight
-            {\normalsize
-            $Y_j$: institution FE, author prominence\\
-            (max $T$ FE), author seniority (max $t$ FE),\\
-            native-speaker indicator}
-        \end{column}
-    \end{columns}
-    \vspace{0.5cm}
-    \begin{center}
-        {\normalsize\color{WarmGray}
-        Nine specifications. SEs clustered on editor.\\
-        Alternative authorship measures: majority-female binary,
-        any-female binary, 100\% female, solo, senior female.}
-    \end{center}
-    \vfill
-\end{frame}
 
 \begin{frame}{Backup: Summary statistics by gender composition}
     \RaggedRight

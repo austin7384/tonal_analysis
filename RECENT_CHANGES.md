@@ -1,5 +1,24 @@
 # Recent Changes
 
+## Session: 2026-04-15
+
+### Completed
+- Removed all forced `\\` line breaks from running text paragraphs in `outputs/slides.tex` (kept structural `\\[gap]` on title/closing slides)
+- Moved empirical specification slide from backup appendix into the main deck as slide 4 (after data/rubric, before validation); retitled assertively
+- Added then removed a tonal criteria coefficients table slide (Tables 11–12 data across four control specs); user removed it after preview
+
+### Key changes
+- `outputs/slides.tex`: `\\` breaks removed from Hengel column, "This paper" column, devil's advocate text, closing slide body, and backup spec text — text now flows as natural paragraphs
+- `outputs/slides.tex`: Empirical specification frame promoted from `\appendix` to main deck (slide 4); removed duplicate from backup section
+- `outputs/slides.pdf`: Recompiled, 13 pages, 0 Overfull/Underfull warnings
+
+### Notes / follow-up
+- Deck is 13 slides (10 main + 3 backup): title, motivation, data/rubric, empirical spec, validation, mean differences, the split, regression coefficients, robustness, devil's advocate, closing
+- User considered but rejected a tonal criteria table slide showing coefficients from Tables 11–12 across four specifications — may revisit in a different format
+- `outputs/slides_notes.md` documents all on-screen claims with exact paper page/table/figure citations
+
+---
+
 ## Session: 2026-04-03 (evening)
 
 ### Completed
