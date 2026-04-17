@@ -1,0 +1,22 @@
+\begin{table}[htbp]
+\centering
+\begin{threeparttable}
+\caption{Correlations between LLM Readability and Traditional Readability Measures}
+\label{tab:readability_corr}
+\begin{tabular}{lr}
+\toprule
+Readability Measure & Pearson $r$ \\
+\midrule
+Flesch Reading Ease & 0.352 \\
+Flesch-Kincaid Grade Level (negated) & 0.460 \\
+Gunning Fog Index (negated) & 0.462 \\
+SMOG Index (negated) & 0.446 \\
+Dale-Chall Score (negated) & 0.273 \\
+\bottomrule
+\end{tabular}
+\begin{tablenotes}
+\footnotesize
+\item \textit{Notes}. Pearson correlation coefficients between the LLM Readability score (1--10; 10\,=\,easiest to understand) and five traditional readability measures (N\,=\,9,117; AER, ECA, JPE, QJE; English-language articles only; one observation per article). Hengel measures are sign-flipped where needed so that higher values indicate easier/clearer writing: Flesch-Kincaid Grade Level, Gunning Fog Index, SMOG Index, and Dale-Chall Score are negated; Flesch Reading Ease is not.
+\end{tablenotes}
+\end{threeparttable}
+\end{table}

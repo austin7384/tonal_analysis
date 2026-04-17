@@ -1,5 +1,29 @@
 # Recent Changes
 
+## Session: 2026-04-16
+
+### Completed
+- Created `code/LLM_evaluations/readability_correlation.py`: computes Pearson correlations between LLM Readability and five Hengel readability measures (Flesch, FK, Gunning Fog, SMOG, Dale-Chall); outputs CSV and LaTeX table
+- Fully restructured `outputs/slides.tex` from 11 frames to 12 content frames + 4 backup slides; replaced all slides_figures/ figure references with inline tables or `figures/diff_means_plot.pdf`
+- New slides added: Related Literature (slide 3), LLM Evaluations (slide 6), Robustness (slide 11)
+- Replaced figure-based results slides with inline booktabs tables showing cols 4–5 only
+- Reformatted slide 5 (Rubric) from cramped two-column to full-width 2×3 grid
+- Converted slide 6 (LLM Evaluations) from two-column boxed layout to single-column bullet list
+- Trimmed word-heavy bullets on slides 2 and 3
+- Rewrote conclusion as a single flowing sentence (no bullets)
+
+### Key changes
+- `code/LLM_evaluations/readability_correlation.py`: new script; outputs `outputs/tables/csv/readability_correlation.csv` and `outputs/tables/tex/Table-ReadCorr.tex`
+- `outputs/slides.tex`: full restructure — 12 content frames, no slides_figures/ dependencies, `\graphicspath{{figures/}}`; inline tables for benchmarking (Table 1 cols 4–5) and controlled regressions (individual criteria cols 4–5 from Table-3-llm-individual-1/2)
+- `outputs/slides.pdf`: recompiled, 16 pages, 0 warnings
+
+### Notes / follow-up
+- Readability correlations: Flesch-Kincaid/Gunning Fog/SMOG correlate strongest with LLM readability (~0.46); Dale-Chall weakest (~0.27)
+- Slides now use `figures/diff_means_plot.pdf` for 5.2 mean differences — this file is untracked; ensure it stays in `outputs/figures/`
+- `slides_figures/` directory is no longer referenced in slides.tex but files remain on disk
+
+---
+
 ## Session: 2026-04-15
 
 ### Completed
