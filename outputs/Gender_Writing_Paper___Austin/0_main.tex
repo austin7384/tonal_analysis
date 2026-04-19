@@ -1,0 +1,126 @@
+\documentclass[12pt]{article}
+\usepackage[utf8]{inputenc}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Language and font encodings
+\usepackage[english]{babel}
+\usepackage{setspace}
+\doublespacing
+\usepackage{float}
+\usepackage{bbm}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Sets page size and margins
+\usepackage[a4paper,top=2.54cm,bottom=2.54cm,left=2.54cm,right=2.54cm,marginparwidth=1.75cm]{geometry}
+\usepackage{adjustbox}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Useful packages
+\usepackage{threeparttable}  
+\usepackage{threeparttablex} 
+\usepackage{siunitx}
+\sisetup{parse-numbers=false, table-number-alignment=center}
+\usepackage{rotating}    
+\usepackage{pifont}
+\usepackage{makecell}
+\usepackage{changepage} 
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{subcaption}
+\DeclareMathOperator{\E}{\mathbb{E}}
+\usepackage{graphicx}
+\usepackage{upgreek}
+\setlength{\marginparwidth}{2cm}
+\usepackage[colorinlistoftodos]{todonotes}
+\usepackage[colorlinks=true, allcolors=blue]{hyperref}
+\usepackage{caption}
+\usepackage{stackengine}
+\usepackage{csquotes}
+\usepackage[title]{appendix}
+% \usepackage[round]{natbib}
+% \bibliographystyle{apa}
+\usepackage[authordate]{biblatex-chicago}
+\DeclareFieldFormat[article]{title}{\mkbibquote{#1}} % make article titles in quotes
+\DeclareFieldFormat[thesis]{title}{\mkbibemph{#1}} % make theses italics
+\addbibresource{bibliography.bib}
+\usepackage{appendix}
+\BeforeBeginEnvironment{appendices}{\clearpage}
+\newcommand\barbelow[1]{\stackunder[1.2pt]{$#1$}{\rule{.8ex}{.075ex}}}
+\newcommand{\source}[1]{\caption*{Source: {#1}} }
+% packages for the game tree
+\usepackage{tikz}
+\usetikzlibrary{calc}
+%\usepackage[dvipsnames]{xcolor}
+\newcommand{\payoff}[4][below]{\node[#1]at(#2){$(#3,#4)$};}
+\makeatletter
+\newcommand{\distas}[1]{\mathbin{\overset{#1}{\kern\z@\sim}}}%
+\newsavebox{\mybox}\newsavebox{\mysim}
+\newcommand{\distras}[1]{%
+  \savebox{\mybox}{\hbox{\kern3pt$\scriptstyle#1$\kern3pt}}%
+  \savebox{\mysim}{\hbox{$\sim$}}%
+  \mathbin{\overset{#1}{\kern\z@\resizebox{\wd\mybox}{\ht\mysim}{$\sim$}}}%
+}
+\makeatother
+% Row label command used in regression tables: \mrow{width}{label text}
+% The width matches the p{} column declaration; we simply output the text.
+\newcommand{\mrow}[2]{#2}
+
+% Tables spanning multiple pages
+\usepackage{longtable}
+\usepackage{booktabs}
+\usepackage{array}
+
+% Center longtables
+\setlength{\LTleft}{0pt}
+\setlength{\LTright}{0pt}
+
+
+
+
+\title{In a Different Voice: Gender Composition and Scientific Writing in Economics\thanks{\textcolor{red}{\textbf{This paper is a work in progress intended solely for feedback and should not be circulated.}}}}
+
+
+
+\author{
+\color{black}{\text{Alessandra Cassar}}\thanks{University of San Francisco} 
+\color{black}{\text{, Austin Coffelt}}\thanks{University of San Francisco}
+\color{black}{\text{, Sopiko Datuashvili}}\thanks{University of San Francisco} \\
+\color{black}{\text{Robizon Khubulashvili}}\thanks{
+University of San Francisco}
+\date{\today \vspace{-1.5\baselineskip} 
+}\\
+}
+
+
+\begin{document}
+
+\maketitle
+
+\input{1_Abstract}
+
+\newpage
+
+\input{2_Introduction}
+
+
+\input{3_Lit}
+
+\input{4_Data}
+
+\input{5_Methodology}
+
+\input{6_Results}
+
+
+\input{7_conclusion}
+
+
+
+\newpage
+
+\printbibliography
+\appendix
+
+
+\input{8_Appendix}
+
+
+
+\end{document}

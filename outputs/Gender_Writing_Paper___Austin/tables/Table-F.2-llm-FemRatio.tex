@@ -1,0 +1,40 @@
+\begin{table}
+    \footnotesize
+    \centering
+    \begin{threeparttable}
+        \caption{Gender differences in LLM tonal composites, author-level analysis}
+        \label{table4llm_FemRatio}
+        \begin{tabular}{p{3cm}S@{}S@{}S@{}S@{}S@{}}
+            \toprule
+            &{\crcell[b]{G1: Creativity\\[-0.1cm]\& Hedging}}&{\crcell[b]{G2: Assert.\\[-0.1cm]\& Voice}}&{\crcell[b]{G3: Structural\\[-0.1cm]Directness}}&{\crcell[b]{G4: Stance\\[-0.1cm]\& Novelty}}&{\crcell[b]{G5: Support\\[-0.1cm]\& Impact}}\\
+            \midrule
+            \mrow{4cm}{Female ratio for women (\(\beta_1\))}&       -0.10   &       -0.03   &       -0.02   &        0.09   &        0.21*  \\
+                                          &      (0.12)   &      (0.10)   &      (0.07)   &      (0.08)   &      (0.12)   \\
+            \mrow{4cm}{Female ratio for men (\(\beta_1+\beta_2\))}&       -0.06   &       -0.02   &        0.15   &        0.22** &        0.43***\\
+                                          &      (0.16)   &      (0.14)   &      (0.10)   &      (0.11)   &      (0.16)   \\
+            \mrow{4cm}{Female ratio\(\times\)male (\(\beta_2\))}&        0.04   &        0.02   &        0.17   &        0.14   &        0.22   \\
+                                          &      (0.19)   &      (0.16)   &      (0.12)   &      (0.13)   &      (0.18)   \\
+            \mrow{4cm}{Lagged score (\(\beta_0\))}&        0.01   &        0.04** &        0.02   &        0.05***&        0.02   \\
+                                          &      (0.02)   &      (0.02)   &      (0.02)   &      (0.02)   &      (0.02)   \\
+            \midrule
+            No. observations      &       9,181   &       9,181   &       9,181   &       9,181   &       9,181   \\
+            \mcol{\textit{Tests of instrument validity}} \\\quad Hansen test (\(p\)-value)&       0.976   &       0.897   &       0.975   &       0.989   &       0.939   \\
+            \quad Sargan test (\(p\)-value)&       0.098   &       0.876   &       0.479   &       0.057   &       0.213   \\
+            \mcol{\textit{\(z\)-test for no serial correlation}} \\\quad Order 1&     -18.742   &     -17.919   &     -19.132   &     -18.652   &     -17.793   \\
+            \quad Order 2                 &       0.746   &      -0.135   &      -0.240   &       0.737   &       0.522   \\
+            \midrule
+            Editor effects        &           {\ding{51}}   &           {\ding{51}}   &           {\ding{51}}   &           {\ding{51}}   &           {\ding{51}}   \\
+            Blind review                  &           {\ding{51}}   &           {\ding{51}}   &           {\ding{51}}   &           {\ding{51}}   &           {\ding{51}}   \\
+            Journal effects               &           {\ding{51}}   &           {\ding{51}}   &           {\ding{51}}   &           {\ding{51}}   &           {\ding{51}}   \\
+            \(N_j\)                       &           {\ding{51}}   &           {\ding{51}}   &           {\ding{51}}   &           {\ding{51}}   &           {\ding{51}}   \\
+            Institution effects           &           {\ding{51}}   &           {\ding{51}}   &           {\ding{51}}   &           {\ding{51}}   &           {\ding{51}}   \\
+            Quality controls              &          {\(\text{\ding{51}}^2\)}   &          {\(\text{\ding{51}}^2\)}   &          {\(\text{\ding{51}}^2\)}   &          {\(\text{\ding{51}}^2\)}   &          {\(\text{\ding{51}}^2\)}   \\
+            Native speaker                &           {\ding{51}}   &           {\ding{51}}   &           {\ding{51}}   &           {\ding{51}}   &           {\ding{51}}   \\
+            \bottomrule
+        \end{tabular}
+        \begin{tablenotes}
+            \tiny
+            \item \textit{Notes}. Figures from first-differenced, IV estimation where instruments are lagged LLM tonal composite scores. Each column corresponds to a separate LLM composite group. ***, ** and * statistically significant at 1\%, 5\% and 10\%, respectively.
+        \end{tablenotes}
+    \end{threeparttable}
+\end{table}

@@ -1,0 +1,24 @@
+\section{Empirical Methodology}\label{sec:method}
+
+
+Our empirical analysis proceeds in three steps. First, we validate the LLM-based readability score by benchmarking it against the readability measures used in \cite{hengel2022publishing}. This shows that the LLM measure is anchored to an existing and interpretable construct rather than being an arbitrary score. Second, we present unconditional mean differences across the 16 standardized writing-style criteria. Third, we estimate regressions that add journal, year, article, and author controls to assess whether the observed differences survive after accounting for observable compositional differences across papers and teams. Before we present our formal analysis, we describe summary statistics of our data.
+
+\subsection{Summary Statistics}\label{sec:summary_stats}
+
+In total, across the top 4 journals, we have 9117 articles, written by 16055 authors, of whom fewer than 10\% are women. Out of all articles, 8264 are single gender out of which only about 3\% are female-only articles. About 13\% of articles have at least 1 female author, and 9\% have a majority of female authors.
+
+
+
+Table~\ref{tab:llm_summary} in Appendix \ref{sec:Summary Statistics} gives the mean and standard deviations for the LLM evaluations of every rubric item. This table also clearly shows the outlines of a gender writing difference, with Readability, Sentence Length, and Directness, and Acknowledgment of Limitations showing large differences in means between the all-male and all-female populations. Further summary statistics are available in Appendix~\ref{sec:Summary Statistics}.
+
+\subsection{Analysis}\label{sec:analysis}
+
+\cite{hengel2022publishing} establishes that female-authored papers are written more clearly than comparable male-authored papers. We replicate and extend this result by substituting first our LLM based readability score to confirm consistance of LLM evaluation on manual readability scores from \cite{hengel2022publishing} and next remaining 15 LLM-based evaluation metrics for tonal analysis. 
+
+To estimate the relationship between author gender and writing characterists, we regress respective outcome variables on the female authorship measure, controlling for various article- and author-level variables, using different specifications. The estimating equation is:
+\begin{equation}
+R_j = \beta_0 + \beta_1 \, \textit{female ratio}_j + \gamma \mathbf{X}_j + \delta \mathbf{Y}_j + \varepsilon_j
+\end{equation}
+where $R_j$ is the readability score or other LLM based tonal criteria for article $j$, $\textit{female ratio}_j$ is the female authorship measure described in Section~\ref{sec:data_and_measu}, $\mathbf{X}_j$ is a vector of article-level controls, $\mathbf{Y}_j$ is a vector of author-level controls, and $\beta_1$ is the coefficient of interest. To the original analysis, we add our readability score and the rubric's tonal criteria group composite scores as dependent variables. For a full discussion of identification, see \cite{hengel2022publishing} Section 3.2.
+
+
