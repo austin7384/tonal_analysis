@@ -1,24 +1,55 @@
 \section{Empirical Methodology}\label{sec:method}
 
 
-Our empirical analysis proceeds in three steps. First, we validate the LLM-based readability score by benchmarking it against the readability measures used in \cite{hengel2022publishing}. This shows that the LLM measure is anchored to an existing and interpretable construct rather than being an arbitrary score. Second, we present unconditional mean differences across the 16 standardized writing-style criteria. Third, we estimate regressions that add journal, year, article, and author controls to assess whether the observed differences survive after accounting for observable compositional differences across papers and teams. Before we present our formal analysis, we describe summary statistics of our data.
+Our empirical analysis proceeds in four steps. First, we validate the LLM-based readability score by benchmarking it against the readability measures used in \cite{hengel2022publishing}. This shows that the LLM measure is anchored to an existing and interpretable construct rather than being an arbitrary score. Second, we present unconditional mean differences across the 16 standardized writing-style criteria. Third, we estimate regressions that add journal, year, article, and author controls to assess whether the observed differences survive after accounting for observable compositional differences across papers and teams. Finally, following \cite{hengel2022publishing}, we extend our analysis to examine the differences that arise in peer review and as experience is gained. Before we present our formal analysis, we describe summary statistics of our data.
 
 \subsection{Summary Statistics}\label{sec:summary_stats}
 
 In total, across the top 4 journals, we have 9117 articles, written by 16055 authors, of whom fewer than 10\% are women. Out of all articles, 8264 are single gender out of which only about 3\% are female-only articles. About 13\% of articles have at least 1 female author, and 9\% have a majority of female authors.
 
-
-
 Table~\ref{tab:llm_summary} in Appendix \ref{sec:Summary Statistics} gives the mean and standard deviations for the LLM evaluations of every rubric item. This table also clearly shows the outlines of a gender writing difference, with Readability, Sentence Length, and Directness, and Acknowledgment of Limitations showing large differences in means between the all-male and all-female populations. Further summary statistics are available in Appendix~\ref{sec:Summary Statistics}.
 
 \subsection{Analysis}\label{sec:analysis}
 
-\cite{hengel2022publishing} establishes that female-authored papers are written more clearly than comparable male-authored papers. We replicate and extend this result by substituting first our LLM based readability score to confirm consistance of LLM evaluation on manual readability scores from \cite{hengel2022publishing} and next remaining 15 LLM-based evaluation metrics for tonal analysis. 
+\cite{hengel2022publishing} establishes three main empirical findings: that female-authored papers are written more clearly than comparable male-authored papers; that this gap widens during peer review, suggesting women face higher standards from referees; and that female authors who are more exposed to the review process show larger improvements in writing quality over time. We replicate and extend each of these analyses by substituting our LLM-based writing quality measure for the original readability indices. The subsections below describe the empirical approach for each.
 
-To estimate the relationship between author gender and writing characterists, we regress respective outcome variables on the female authorship measure, controlling for various article- and author-level variables, using different specifications. The estimating equation is:
+\subsubsection{Gender Differences in Writing Quality}\label{sec:Gen_Diff_Method}
+
+To estimate the relationship between author gender and writing quality, we regress readability scores on the female authorship measure, controlling for various article- and author-level variables, using different specifications. The estimating equation is:
 \begin{equation}
 R_j = \beta_0 + \beta_1 \, \textit{female ratio}_j + \gamma \mathbf{X}_j + \delta \mathbf{Y}_j + \varepsilon_j
 \end{equation}
-where $R_j$ is the readability score or other LLM based tonal criteria for article $j$, $\textit{female ratio}_j$ is the female authorship measure described in Section~\ref{sec:data_and_measu}, $\mathbf{X}_j$ is a vector of article-level controls, $\mathbf{Y}_j$ is a vector of author-level controls, and $\beta_1$ is the coefficient of interest. To the original analysis, we add our readability score and the rubric's tonal criteria group composite scores as dependent variables. For a full discussion of identification, see \cite{hengel2022publishing} Section 3.2.
+where $R_j$ is the readability score for article $j$, $\textit{female ratio}_j$ is the female authorship measure described in Section~\ref{sec:data_and_measu}, $\mathbf{X}_j$ is a vector of article-level controls, $\mathbf{Y}_j$ is a vector of author-level controls, and $\beta_1$ is the coefficient of interest. To the original analysis, we add our readability score and the rubric's tonal criteria group composite scores as dependent variables. For a full discussion of identification, see \cite{hengel2022publishing} Section 3.2.
 
+\subsubsection{The Effect of Peer Review}\label{sec:Peer_Review_Method}
 
+To estimate the effect that peer review has on readability by gender, we estimate two different models. The first is a first difference model, whose estimating equation is given by: 
+\begin{equation}
+R_j^P - R_j^W = \beta_0^P + \beta_1^P \, \textit{female ratio}_j + \theta^P \mathbf{X}_j^P + \mu_j^P + \varepsilon_j^P
+\end{equation}
+where $R_j^P$ and $R_j^W$ are readability scores for the published and working paper versions of article $j$, respectively, $\mathbf{X}_j^P$ is a vector of published-version-specific controls, $\mu_j^P$ captures unobservable factors, and $\beta_1^P$ captures the impact of female authorship on the change in readability that occurs specifically during peer review. For $\beta_1^P$ to be causal, there must be zero partial correlation between $\beta_1^P$ and $\mu_j^P$. 
+
+The second model \cite{hengel2022publishing} estimates is a feasible generalized least squares model (FGLS) based on \cite{ashenfelter1994estimates}. The reduced-form equations are:
+\begin{equation}
+R_j^W = \tilde{\beta}_0^W + \tilde{\beta}_1^W \, \textit{female ratio}_j + \tilde{\theta}^W \mathbf{X}_j^W + \delta^P \mathbf{X}_j^P + \tilde{\varepsilon}_j^W
+\end{equation}
+\begin{equation}
+R_j^P = (\tilde{\beta}_0^W + \beta_0^P) + (\tilde{\beta}_1^W + \beta_1^P) \, \textit{female ratio}_j + \tilde{\theta}^W \mathbf{X}_j^W + \tilde{\theta}^P \mathbf{X}_j^P + \mu_j^P + \tilde{\varepsilon}_j^P
+\end{equation}
+where the tilde terms absorb the correlation between version-invariant unobservables and the observable controls. $\beta_1^P$ is identified post-estimation by subtracting the coefficient on $\textit{female ratio}_j$ in Equation (3) from that in Equation (4). 
+
+We estimate these models with 2 data samples. The first is the full subset of 1988 articles for which we have NBER working papers. The second is with a subset of AER and QJE articles that underwent blind review. For the full derivation, see \cite{hengel2022publishing}, Section 3.3.
+
+\subsubsection{Cumulative Exposure to Peer Review}\label{sec:Exposure_Method}
+
+The gender readability gap documented in the above subsections could be driven by two broad mechanisms. The first is internal factors: women may voluntarily write more clearly due to, for example, higher risk aversion, lower confidence, or a greater tendency to exert effort on tasks without obvious returns (\cite{crosongneezy2009}, \cite{coffman2014}, \cite{babcock2017}). The second is external factors: women may write more clearly as a rational response to higher standards imposed by referees and editors.
+
+These two mechanisms generate distinct predictions about how the readability gap should evolve as authors gain experience in peer review. If internal factors dominate, the gap should shrink over time, as women would gradually learn that they are exceeding the standards required for publication and reduce their effort accordingly. If external factors dominate, the gap should grow. Women would initially underestimate the bar they are held to, but revise their beliefs upward as they accumulate experience with the review process. The source of the gap should also shift: in early publications, the gap should emerge primarily during peer review, as referees and editors push female authors to revise more heavily. In later publications, the gap should emerge primarily before peer review, as women anticipate higher standards and submit better-written drafts from the beginning.
+
+Following \cite{hengel2022publishing}, we test for the presence of external factors by examining how readability changes across authors' successive publications. Specifically, we estimate whether the coefficient on female authorship grows with publication order, which would be consistent with women learning about and adapting to higher standards over time. We note that the interpretation of this analysis as evidence of external factors requires the additional assumption that women are not rewarded for their better writing with higher acceptance rates, something we cannot test directly but is supported by evidence from \cite{card2020} showing that female-authored papers are not accepted more frequently than comparable male-authored papers at a similar set of journals. 
+
+To implement this test, we estimate the following equation separately for working papers ($m = W$) and published articles ($m = P$):
+\begin{equation}
+R_{itm} = \beta_0 + \beta_1 \text{female ratio}_{it} + \beta_2 \text{female ratio}_{it} \times t_{it} + \beta_3 t_{it} + \theta X_{it} + \varepsilon_{it}, \label{eq:exposure}
+\end{equation}
+where $R_{itm}$ is the readability or LLM score for author $i$'s $t$th top-four paper in version $m$, $t_{it}$ is author $i$'s cumulative number of top-four publications, and $X_{it}$ is a vector of controls. The coefficient $\beta_1$ captures the baseline gender gap at an author's first publication, while $\beta_2$ captures how that gap evolves with experience. A positive and significant $\beta_2$ in the working paper specification would indicate that women submit progressively better-written drafts as they accumulate peer review experience, consistent with a preemptive response to higher standards. A positive $\beta_2$ in the published paper specification that exceeds its working paper counterpart would additionally suggest a direct effect operating through the review process itself.

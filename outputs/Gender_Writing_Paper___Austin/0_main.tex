@@ -6,6 +6,10 @@
 \usepackage{setspace}
 \doublespacing
 \usepackage{float}
+\usepackage[section]{placeins}
+\usepackage{etoolbox}
+\AtBeginEnvironment{tabular}{\singlespacing}
+\AtBeginEnvironment{longtable}{\singlespacing}
 \usepackage{bbm}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Sets page size and margins
@@ -17,7 +21,8 @@
 \usepackage{threeparttablex} 
 \usepackage{siunitx}
 \sisetup{parse-numbers=false, table-number-alignment=center}
-\usepackage{rotating}    
+\usepackage{rotating}
+\usepackage{pdflscape}
 \usepackage{pifont}
 \usepackage{makecell}
 \usepackage{changepage} 
@@ -61,6 +66,8 @@
 % Row label command used in regression tables: \mrow{width}{label text}
 % The width matches the p{} column declaration; we simply output the text.
 \newcommand{\mrow}[2]{#2}
+\newcommand{\crcell}[2][c]{\makecell[#1]{#2}}
+\newcommand{\mcol}[1]{\multicolumn{6}{l}{#1}}
 
 % Tables spanning multiple pages
 \usepackage{longtable}
