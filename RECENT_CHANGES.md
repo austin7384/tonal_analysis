@@ -1,5 +1,31 @@
 # Recent Changes
 
+## Session: 2026-04-21
+
+### Completed
+- Installed two new Claude Code skills: `content-editor` (economics journal content edit) and `latex-copy-editor` (professional LaTeX copy edit) from `/Users/austincoffelt/Documents/` to `~/.claude/commands/`
+- Ran `/latex-copy-editor` on the full paper draft in `outputs/Gender_Writing_Paper___Austin/`
+- Applied 18 copy-edit fixes across all prose files
+- Performed full citation command overhaul: `(\cite{X})` → `\parencite{X}`, narrative `\cite{X}` → `\textcite{X}`, multi-citation clusters consolidated into single `\parencite{A,B,C}` — applied to all 6 section files
+- Verified clean compilation throughout (119 pages, 0 errors)
+
+### Key changes
+- `0_main.tex`: removed duplicate `\usepackage{appendix}`; moved `\date{}` outside `\author{}` block
+- `2_Introduction.tex`: "data comes" → "data come"; `~` before all section `\ref`s; full citation overhaul (4 `\textcite`, 1 `\parencite`)
+- `3_Lit.tex`: 4 narrative `\cite` → `\textcite`
+- `4_Data.tex`: "11695" → "11,695"; "article data includes" → "include"; "scale of 1-10" → "1--10"; "LLM model" → "LLM"; "LLM) powered" → "LLM)-powered"; citation overhaul (6 `\textcite`, 5 `\parencite`); "copied from \cite{}" rephrased to clean `\parencite`
+- `5_Methodology.tex`: "9117" → "9,117"; "2 data samples" → "two"; "first difference" → "first-difference"; `\label{}` added to equations (1)–(4); hard-coded "Equation (3)/(4)" → `\eqref`; `~` before `\ref`; citation overhaul (5 `\textcite`, 2 `\parencite`)
+- `6_Results.tex`: "3 possible explanations" → "three"; `t=1` / `t$\geq$6` → proper math mode; "Figures~\ref{} shows" → "Figure~\ref{} shows"; missing `~` before refs; citation overhaul (8 `\textcite`)
+- `7_conclusion.tex`: 2 narrative `\cite` → `\textcite`
+
+### Notes / follow-up
+- Citation overhaul complete for all prose files; table/figure `\input` files (Stata-generated) not touched
+- One edge case "(copied from \cite{}))" in `4_Data.tex` rephrased to "Flesch readability \parencite{}" — author should verify the phrasing reads naturally
+- "Empty Ibidem citation" warnings from biblatex-chicago are pre-existing (ibid. mechanism on consecutive same-source cites); suppressing requires `\usepackage[ibidpage=false]{...}` or similar — not addressed this session
+- Table overfull hbox warnings all originate in Stata-generated files; not fixable without modifying those files
+
+---
+
 ## Session: 2026-04-16
 
 ### Completed

@@ -45,7 +45,6 @@
 \DeclareFieldFormat[article]{title}{\mkbibquote{#1}} % make article titles in quotes
 \DeclareFieldFormat[thesis]{title}{\mkbibemph{#1}} % make theses italics
 \addbibresource{bibliography.bib}
-\usepackage{appendix}
 \BeforeBeginEnvironment{appendices}{\clearpage}
 \newcommand\barbelow[1]{\stackunder[1.2pt]{$#1$}{\rule{.8ex}{.075ex}}}
 \newcommand{\source}[1]{\caption*{Source: {#1}} }
@@ -89,11 +88,10 @@
 \color{black}{\text{Alessandra Cassar}}\thanks{University of San Francisco} 
 \color{black}{\text{, Austin Coffelt}}\thanks{University of San Francisco}
 \color{black}{\text{, Sopiko Datuashvili}}\thanks{University of San Francisco} \\
-\color{black}{\text{Robizon Khubulashvili}}\thanks{
-University of San Francisco}
-\date{\today \vspace{-1.5\baselineskip} 
-}\\
+\color{black}{\text{Robizon Khubulashvili}}\thanks{University of San Francisco}
 }
+
+\date{\today \vspace{-1.5\baselineskip}}
 
 
 \begin{document}
