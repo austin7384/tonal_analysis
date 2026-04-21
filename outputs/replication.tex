@@ -13,6 +13,7 @@
 \usepackage{makecell}
 \usepackage{changepage}    % adjustwidth
 \usepackage{longtable}
+\usepackage{pdflscape}     % landscape environment for multi-page sideways tables
 
 % ── Figures ──────────────────────────────────────────────────────────────────
 \usepackage{graphicx}
@@ -177,6 +178,43 @@
     \includegraphics[width=\textwidth]{figures/Figure-6-llm.pdf}
     \caption{Figure 6 LLM}
 \end{figure}
+\clearpage
+
+% ── Figure 6 LLM Individual ──────────────────────────────────────────────────
+\subsection{Figure 6 LLM --- Modal Verb Strength}
+\IfFileExists{figures/Figure-6-llm-modal-verb.pdf}{\begin{figure}[H]\centering\includegraphics[width=\textwidth]{figures/Figure-6-llm-modal-verb.pdf}\caption{Figure 6 LLM --- Modal Verb Strength}\end{figure}}{}
+\clearpage
+
+\subsection{Figure 6 LLM --- Hedging Frequency \& Type}
+\IfFileExists{figures/Figure-6-llm-hedging.pdf}{\begin{figure}[H]\centering\includegraphics[width=\textwidth]{figures/Figure-6-llm-hedging.pdf}\caption{Figure 6 LLM --- Hedging Frequency \& Type}\end{figure}}{}
+\clearpage
+
+\subsection{Figure 6 LLM --- Acknowledgement of Limitations}
+\IfFileExists{figures/Figure-6-llm-ack-limits.pdf}{\begin{figure}[H]\centering\includegraphics[width=\textwidth]{figures/Figure-6-llm-ack-limits.pdf}\caption{Figure 6 LLM --- Acknowledgement of Limitations}\end{figure}}{}
+\clearpage
+
+\subsection{Figure 6 LLM --- Active/Passive Voice Ratio}
+\IfFileExists{figures/Figure-6-llm-active-passive.pdf}{\begin{figure}[H]\centering\includegraphics[width=\textwidth]{figures/Figure-6-llm-active-passive.pdf}\caption{Figure 6 LLM --- Active/Passive Voice Ratio}\end{figure}}{}
+\clearpage
+
+\subsection{Figure 6 LLM --- Sentence Length \& Directness}
+\IfFileExists{figures/Figure-6-llm-directness.pdf}{\begin{figure}[H]\centering\includegraphics[width=\textwidth]{figures/Figure-6-llm-directness.pdf}\caption{Figure 6 LLM --- Sentence Length \& Directness}\end{figure}}{}
+\clearpage
+
+\subsection{Figure 6 LLM --- Pronoun Commitment}
+\IfFileExists{figures/Figure-6-llm-pronoun.pdf}{\begin{figure}[H]\centering\includegraphics[width=\textwidth]{figures/Figure-6-llm-pronoun.pdf}\caption{Figure 6 LLM --- Pronoun Commitment}\end{figure}}{}
+\clearpage
+
+\subsection{Figure 6 LLM --- Novelty-Claim Strength}
+\IfFileExists{figures/Figure-6-llm-novelty.pdf}{\begin{figure}[H]\centering\includegraphics[width=\textwidth]{figures/Figure-6-llm-novelty.pdf}\caption{Figure 6 LLM --- Novelty-Claim Strength}\end{figure}}{}
+\clearpage
+
+\subsection{Figure 6 LLM --- Jargon/Technicality Density}
+\IfFileExists{figures/Figure-6-llm-jargon.pdf}{\begin{figure}[H]\centering\includegraphics[width=\textwidth]{figures/Figure-6-llm-jargon.pdf}\caption{Figure 6 LLM --- Jargon/Technicality Density}\end{figure}}{}
+\clearpage
+
+\subsection{Figure 6 LLM --- Evidence \& Citation Usage}
+\IfFileExists{figures/Figure-6-llm-evidence.pdf}{\begin{figure}[H]\centering\includegraphics[width=\textwidth]{figures/Figure-6-llm-evidence.pdf}\caption{Figure 6 LLM --- Evidence \& Citation Usage}\end{figure}}{}
 \clearpage
 
 % =============================================================================
@@ -509,8 +547,8 @@
 \section{Table 5 LLM Individual --- Impact of peer review on individual LLM tonal criteria (G1--G3)}
 % =============================================================================
 
-\subsection{Female ratio (G1--G3)}
-\maybeInput{tables/tex/Table-5-llm-individual-1-FemRatio.tex}
+\subsection{Female ratio (all groups, combined)}
+\maybeInput{tables/tex/Table-5-llm-individual-FemRatio.tex}
 \clearpage
 
 \subsection{At least one female author (G1--G3)}
@@ -549,9 +587,7 @@
 \section{Table 5 LLM Individual --- Impact of peer review on individual LLM tonal criteria (G4--G5 and Readability)}
 % =============================================================================
 
-\subsection{Female ratio (G4--G5 and Readability)}
-\maybeInput{tables/tex/Table-5-llm-individual-2-FemRatio.tex}
-\clearpage
+% Female ratio (G4--G5 and Readability) merged into Table-5-llm-individual-FemRatio.tex above
 
 \subsection{At least one female author (G4--G5 and Readability)}
 \maybeInput{tables/tex/Table-5-llm-individual-2-Fem1.tex}
@@ -718,6 +754,58 @@
 \clearpage
 
 % =============================================================================
+\section{Table 8 LLM Individual --- Gender gap in individual LLM tonal criteria at increasing \(t\)}
+% =============================================================================
+
+\subsection{G1--G3: Female ratio}
+\maybeInput{tables/tex/Table-8-llm-individual-1-FemRatio.tex}
+\clearpage
+
+\subsection{G1--G3: At least one female author}
+\maybeInput{tables/tex/Table-8-llm-individual-1-Fem1.tex}
+\clearpage
+
+\subsection{G1--G3: Majority female-authored}
+\maybeInput{tables/tex/Table-8-llm-individual-1-Fem50.tex}
+\clearpage
+
+\subsection{G1--G3: Exclusively female-authored}
+\maybeInput{tables/tex/Table-8-llm-individual-1-Fem100.tex}
+\clearpage
+
+\subsection{G1--G3: Solo female-authored}
+\maybeInput{tables/tex/Table-8-llm-individual-1-FemSolo.tex}
+\clearpage
+
+\subsection{G1--G3: Senior female author}
+\maybeInput{tables/tex/Table-8-llm-individual-1-FemSenior.tex}
+\clearpage
+
+\subsection{G4--G5 and Readability: Female ratio}
+\maybeInput{tables/tex/Table-8-llm-individual-2-FemRatio.tex}
+\clearpage
+
+\subsection{G4--G5 and Readability: At least one female author}
+\maybeInput{tables/tex/Table-8-llm-individual-2-Fem1.tex}
+\clearpage
+
+\subsection{G4--G5 and Readability: Majority female-authored}
+\maybeInput{tables/tex/Table-8-llm-individual-2-Fem50.tex}
+\clearpage
+
+\subsection{G4--G5 and Readability: Exclusively female-authored}
+\maybeInput{tables/tex/Table-8-llm-individual-2-Fem100.tex}
+\clearpage
+
+\subsection{G4--G5 and Readability: Solo female-authored}
+\maybeInput{tables/tex/Table-8-llm-individual-2-FemSolo.tex}
+\clearpage
+
+\subsection{G4--G5 and Readability: Senior female author}
+\maybeInput{tables/tex/Table-8-llm-individual-2-FemSenior.tex}
+\clearpage
+
+% =============================================================================
 \section{Table 9 --- \(D_{ik}\)}
 % =============================================================================
 
@@ -765,6 +853,28 @@
 \section{Table 10 Combined}
 % =============================================================================
 \maybeInput{tables/tex/Table-10-combined.tex}
+\clearpage
+
+% =============================================================================
+\section{Table 10 LLM Individual --- Individual criteria, draft vs.\ final}
+% =============================================================================
+\maybeInput{tables/tex/Table-10-llm-modal-verb.tex}
+\clearpage
+\maybeInput{tables/tex/Table-10-llm-hedging.tex}
+\clearpage
+\maybeInput{tables/tex/Table-10-llm-ack-limits.tex}
+\clearpage
+\maybeInput{tables/tex/Table-10-llm-active-passive.tex}
+\clearpage
+\maybeInput{tables/tex/Table-10-llm-directness.tex}
+\clearpage
+\maybeInput{tables/tex/Table-10-llm-pronoun.tex}
+\clearpage
+\maybeInput{tables/tex/Table-10-llm-novelty.tex}
+\clearpage
+\maybeInput{tables/tex/Table-10-llm-jargon.tex}
+\clearpage
+\maybeInput{tables/tex/Table-10-llm-evidence.tex}
 \clearpage
 
 % =============================================================================

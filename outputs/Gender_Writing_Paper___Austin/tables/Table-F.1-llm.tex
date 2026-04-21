@@ -1,0 +1,26 @@
+\begin{table}[H]
+    \footnotesize
+    \centering
+    \begin{threeparttable}
+        \caption{Journal LLM tonal composites, comparisons to \textit{AER}}
+        \label{table3llm_journal}
+        \begin{tabular}{p{3cm}S@{}S@{}S@{}S@{}S@{}}
+            \toprule
+            &{\crcell[b]{G1: Creativity\\[-0.1cm]\& Hedging}}&{\crcell[b]{G2: Assert.\\[-0.1cm]\& Voice}}&{\crcell[b]{G3: Structural\\[-0.1cm]Directness}}&{\crcell[b]{G4: Stance\\[-0.1cm]\& Novelty}}&{\crcell[b]{G5: Support\\[-0.1cm]\& Impact}}\\
+            \midrule
+            \textit{Econometrica}         &       -0.73***&       -1.23***&       -1.87***&       -0.40*  &        0.07   \\
+                                          &      (0.21)   &      (0.32)   &      (0.23)   &      (0.21)   &      (0.25)   \\
+            \textit{JPE}                  &       -2.50***&       -0.99***&       -2.72***&        0.33   &        0.79***\\
+                                          &      (0.21)   &      (0.31)   &      (0.23)   &      (0.21)   &      (0.25)   \\
+            \textit{QJE}                  &       -0.48***&        0.00   &       -0.08   &        0.13** &        0.39***\\
+                                          &      (0.10)   &      (0.13)   &      (0.09)   &      (0.06)   &      (0.11)   \\
+            \midrule
+            No. observations              &       9,117   &       9,117   &       9,117   &       9,117   &       9,117   \\
+            \bottomrule
+        \end{tabular}
+        \begin{tablenotes}
+            \tiny
+            \item \textit{Notes}. Figures are the estimated coefficients on the journal dummy variables from column (2) in~\autoref{table3llm_FemRatio}. Each column corresponds to a separate OLS regression of LLM tonal composite scores on the ratio of female authors, controlling for editor effects.
+        \end{tablenotes}
+    \end{threeparttable}
+\end{table}

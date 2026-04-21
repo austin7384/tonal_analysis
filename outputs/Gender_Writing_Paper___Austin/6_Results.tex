@@ -1,0 +1,119 @@
+\section{Results}\label{sec:results}
+
+\subsection{Gender Difference in Writing Quality}\label{sec:Gen_Diff_Results}
+
+\subsubsection{Benchmarking the LLM Readability Measure}\label{sec:benchmark_llm}
+
+We start by using the LLM readability score to make a comparison with  \cite{hengel2022publishing}. Table~\ref{table3_FemRatio} shows the results of regressing various readability scores on the ratio of female authors. The first 5 rows of Table~\ref{table3_FemRatio} replicate the corresponding specifications from \cite{hengel2022publishing}. The final row adds the LLM readability score as the dependent variable.
+
+\input{tables/Table-3-FemRatio}
+
+Results for Table~\ref{table3_FemRatio} suggest that abstracts written by women score between 0.27 and 0.4 points higher on average on our rubric than those written by men after accounting for different levels of controls. The estimates are significant at the one percent level for all levels of controls, though this does not fully account for possible inconsistencies or noise in the LLM evaluation process, meaning the true standard errors are likely higher.
+
+Appendix~\ref{app:sec:readability_robust} shows Table~\ref{table3_FemRatio} estimated using the alternative specifications for female authorship described in Section~\ref{sec:data_and_measu}. These alternative specifications yield similar coefficients and statistically significant results for the LLM readability metric, indicating robustness.
+
+\subsubsection{Mean Differences in Writing Style}
+
+After establishing the consistency of LLM-based readability scores with manually defined readability scores from \cite{hengel2022publishing}, we look at other tonal criteria. We start by comparing sample means for male and female authors for each of the 16 rubric items. To define the gender of a paper, we use the gender of the majority of the authors. That is, if at least 50\% are female, we call the paper female-authored and male otherwise. For better comparison across rubric items, we standardized all criteria with mean and standard deviation. Figure \ref{fig:mean_diff} shows the difference in means with 95\% intervals for each of the 16 standardized criteria. 
+
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\linewidth]{figures/diff_means_plot.pdf}
+    \caption{Papers are classified as female if at least 50\% of authors are female, and male otherwise. All criteria are standardized (mean zero, unit standard deviation) for comparability. Figure shows differences in means with 95\% confidence intervals across the 16 criteria. The sign of ``Jargon Technical Density" is reversed so that positive values indicate less jargon for female-majority papers; for all other criteria, positive values indicate higher scores for females.}
+    \label{fig:mean_diff}
+\end{figure}
+
+Taken together, the evidence points to systematic and robust differences in writing by team gender composition. Female-majority teams emphasize clarity -- higher readability and greater directness -- use more active voice, avoid jargon, and provide more evidentiary support through citations. Differences in acknowledgment of limitations are statistically significant but modest in magnitude; under our coding, positive values indicate that female-majority teams make fewer explicit limitation statements (see Appendix \ref{sec:rubric} for the scale). There is also a smaller but significant tendency for female-majority teams to place greater emphasis on practical importance.
+
+In contrast, differences in tone -- such as assertiveness, qualifiers, hedging, and emotional valence -- are generally small or negligible, with the exception of slightly weaker novelty claims and fewer imperatives among female-majority teams.
+
+\subsubsection{Controlled Regressions.}
+
+It is possible that the mean differences are simply due to Female or Male groups working on different types of research. To control for such compounding, we control for journal, publication year, and article characteristics. 
+
+Tables \ref{table3llmind1_FemRatio} and \ref{table3llmind2_FemRatio} in appendix \ref{app:sec:reg} show results. The full sample (columns 1 to 5) shows that there are statistically significant positive (female higher) differences in Sentence length, technical jargon, Evidence/citation usage, and readability, while there is a significant negative (female lower) difference in novelty claims. 
+
+\subsection{The Effect of Peer Review}\label{sec:Peer_Review_Results}
+
+We continue our analysis by investigating whether the LLM scores show any signs of discriminatory bias that the  \cite{hengel2022publishing} scores show, first by looking at readability and extending to other criteria.
+
+\input{tables/Table-5-FemRatio}
+
+Table~\ref{table6_FemRatio}, estimates the two equations described in Section~\ref{sec:Peer_Review_Method}. Our coefficients of interest are in column 4 for the first-difference model and in column 10 for the FGLS model. The first 5 rows are exact replications of Table 5 in \cite{hengel2022publishing}, with the final row adding LLM readability to the analysis. This table clearly shows significant differential effects of peer review on the \cite{hengel2022publishing} readability scores, but no significant differential effects on the LLM readability score. This is also true for blind-review estimates, where the original estimates show negative (though insignificant) differential effects, while the LLM readability coefficient changes very little.
+
+\input{tables/Table-5-llm-individual-FemRatio}
+
+\input{tables/Table-5-llm-individual-b-FemRatio}
+
+Tables~\ref{table6llmind_FemRatio} and~\ref{table6llmindG45_FemRatio}, which estimate the same Section~\ref{sec:Peer_Review_Method} equations but with individual LLM criterion scores, show similar results. Peer review raises scores on average (positive $R_{jW}$ throughout), but the Female and Blind$\times$female coefficients in both the OLS first-difference and FGLS difference columns are small and statistically insignificant across nearly all criteria, indicating no differential gender effect from the review process.
+
+Appendix~\ref{sec:Robust} presents estimates for Tables~\ref{table6_FemRatio} and~\ref{table6llmind_FemRatio} under different female authorship specifications. The results shown here are robust to the different specifications, consistently showing no effect for the LLM evaluated criteria.
+
+We propose 3 possible explanations for the absence of a differential gender effect in the LLM scores. The first is the possibility that the effect of peer review is drowned out by LLM evaluation noise, as the LLM may exhibit inconsistent evaluations from article to article. The second explanation is that the LLM rubric lacks sufficient granularity. The true effects documented in \cite{hengel2022publishing} are on the order of a few percentage points, and a discrete 1–10 scale may not provide enough resolution to detect differences of that magnitude, particularly given our substantially smaller sample. The third is that the LLM evaluations capture a dimension of writing quality and style that is altogether different from the \cite{hengel2022publishing} readability scores, something more internal to the author than externally imposed during review, and therefore unlikely to shift differentially by gender through the peer review process.
+
+\subsection{Cumulative Exposure to Peer Review}\label{sec:Exposure_Results}
+
+Now, we test the two broad mechanisms for the gender difference in readability described in Section~\ref{sec:Exposure_Method}. For this analysis, we will use the Flesch readability score to replicate the results of \cite{hengel2022publishing}, as well as the LLM readability score. For the individual criteria, we focus only on criteria shown in Figure~\ref{fig:mean_diff} to have a significant difference between gender writing groups.
+
+\input{tables/Table-10-combined}
+
+Table~\ref{table10combined} estimates the equation found in Section~\ref{sec:Exposure_Method} for two measures of writing quality: Flesch Reading Ease (Panel A) and LLM Readability (Panel B). The two panels tell strikingly different stories about how the gender gap in writing quality evolves with peer review experience.
+
+Panel A replicates the key finding from \cite{hengel2022publishing}: the gender gap in published Flesch readability is relatively stable across publication counts, but its source shifts. At t=1, the gap forms almost entirely during peer review: women's papers improve by 2.09 points, while men's are essentially unchanged, producing a significant diff-in-diff of 2.29. By t$\geq$6, the diff-in-diff has vanished, and the gap is instead driven by women submitting substantially more readable drafts (3.68 points higher than men's). This is the pattern predicted by the external-factors hypothesis: women learn about higher standards through experience and preemptively adapt.
+
+Panel B shows no such pattern for the LLM score. In Panel B, peer review improves LLM readability by a similar, significant amount for both genders at every t, and the diff-in-diff is always near zero. The gender gap in drafts grows modestly with experience (from 0.44 to 0.60), but this is not accompanied by a corresponding decline in the direct effect of peer review — suggesting the improvement is internally driven rather than a response to review feedback.
+
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{figures/Figure-6.pdf}
+        \caption{Flesch Readability}
+        \label{fig6:panel_a}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{figures/Figure-6-llm.pdf}
+        \caption{LLM Readability}
+        \label{fig6:panel_b}
+    \end{subfigure}
+    \caption{Readability of Author's \textit{t}th paper (draft and final)}
+    \label{fig6:all_panels}
+\end{figure}
+
+Figure~\ref{fig6:all_panels} shows the results of Table~\ref{table10combined} in graphical form, where the differences are more striking. Figure~\ref{fig6:panel_a} shows the readability gap shifting from coming entirely from the peer review process to women submitting better working papers. Figures~\ref{fig6:panel_b} shows no such pattern, as the differences between the working paper and published paper readability score remain relatively constant through increasing~$t$.
+
+The remaining criteria — Hedging Frequency and Type, Sentence Length and Directness, Pronoun Commitment, Jargon/Technicality Density, and Evidence and Citation Usage — show the same pattern as LLM Readability: peer review effects that are relatively constant across experience levels with no meaningful gender differential. These are presented in Appendix~\ref{app:sec:exposure_criteria}.
+
+Three criteria, however, depart from this null result, producing patterns that resemble a rational behavioral response to external standards. We interpret these as suggestive rather than definitive, since, as discussed above, apparent departures could equally reflect LLM evaluation noise or the limited granularity of the 1 to 10 rubric rather than a genuine underlying mechanism.
+
+\textbf{Acknowledgement of Limitations.} Figure~\ref{fig6:ack_limits} shows a pattern closely mirroring Figure~\ref{fig6:panel_a}: the gap between working paper and published paper scores narrows with experience, while the gap between men and women widens. Female authors at low~$t$ receive significant upward revisions during peer review; by high~$t$, this direct effect diminishes as women increasingly self-correct in the draft stage. This pattern is qualitatively consistent with the preemptive adaptation mechanism \cite{hengel2022publishing} identify for readability, though given the limitations of the LLM measurement noted above, we cannot rule out that the apparent adaptive signature reflects measurement artifacts rather than a genuine behavioral response.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.55\textwidth]{figures/Figure-6-llm-ack-limits.pdf}
+    \caption{Acknowledgement of Limitations of Author's \textit{t}th paper (draft and final).}
+    \label{fig6:ack_limits}
+\end{figure}
+
+\textbf{Modal Verb Strength.} Figure~\ref{fig6:modal_verb} shows a divergence between working and published papers that grows with experience: published papers trend upward in strong modal usage while working papers trend downward for female authors. One interpretation is that early in their careers, female authors learn that reviewers expect tentative language and preemptively soften their drafts, even as reviewer expectations themselves evolve over time. While this would be consistent with a response to external pressures, the divergence is modest and could alternatively reflect LLM scoring inconsistencies on a dimension (modal verb use) where the underlying signal is especially narrow and discretized.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.55\textwidth]{figures/Figure-6-llm-modal-verb.pdf}
+    \caption{Modal Verb Strength of Author's \textit{t}th paper (draft and final).}
+    \label{fig6:modal_verb}
+\end{figure}
+
+\textbf{Novelty-Claim Strength.} Figure~\ref{fig6:novelty} tells a qualitatively different story. Rather than preemptive softening, female authors appear to push back: working paper novelty claims increase steadily with~$t$, as one could expect from a more senior economist growing in confidence. Yet published papers show a consistently lower novelty score across all experience levels. One reading of this is that peer review systematically dampens female authors' novelty framing regardless of seniority, a pattern less consistent with rational adaptation to known standards and more suggestive of persistent reviewer resistance to strong novelty claims from female authors. We emphasize that this is one possible interpretation: the same pattern is also consistent with LLM noise or with novelty being a dimension on which the LLM systematically captures something other than the review-relevant signal Hengel's readability measure captures.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.55\textwidth]{figures/Figure-6-llm-novelty.pdf}
+    \caption{Novelty-Claim Strength of Author's \textit{t}th paper (draft and final).}
+    \label{fig6:novelty}
+\end{figure}
+
+Taken together, the LLM-based measures show no aggregate evidence of the mechanism identified in \cite{hengel2022publishing}: across most criteria, there is no shift from a direct peer review effect to a preemptive adaptation effect as women gain experience. Instead, the LLM scores largely capture persistent features of writing style that evolve independently of the peer review process. Three exceptions stand out as the more suggestive findings: Acknowledgement of Limitations, Modal Verb Strength, and Novelty-Claim Strength. Each produces a pattern that could be read as a distinct mode of response to external standards, and together they raise the possibility that the mechanism Hengel identifies in readability is not entirely absent from LLM-evaluated writing but concentrated in specific dimensions of authorial stance and hedging. We caution, however, that all three of the alternative explanations for the aggregate null (evaluation noise, limited rubric granularity, and the LLM capturing a different underlying construct) apply equally to these dimension-specific patterns, and additional work is needed to distinguish a genuine mechanism from measurement artifacts.

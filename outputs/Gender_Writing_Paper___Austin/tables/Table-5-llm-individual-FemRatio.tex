@@ -1,0 +1,55 @@
+\begin{table}[H]
+    \footnotesize
+    \centering
+    \begin{threeparttable}
+        \caption{Gender differences in individual LLM tonal criteria, impact of peer review: G1--G3} \label{table6llmind_FemRatio}
+        \begin{tabular}{p{4.5cm}S@{}S@{}S@{}S@{}S@{}}
+            \toprule
+            &{\(R_{jW}\)}&\multicolumn{2}{c}{{OLS ($\Delta$ in score)}}&\multicolumn{2}{c}{{FGLS (Difference)}}\\
+            \cmidrule(lr){3-4}\cmidrule(lr){5-6}
+            &&{\crcell[b]{Female}}&{\crcell[b]{Blind$\times$\\[-0.1cm]female}}&{\crcell[b]{Female}}&{\crcell[b]{Blind$\times$\\[-0.1cm]female}}\\
+            \midrule
+            %
+            % ── G1: Creativity & Hedging ─────────────────────────────────────────
+            \multicolumn{6}{l}{\textbf{G1: Creativity \& Hedging}}\\
+            \mrow{4.5cm}{\quad Modal Verb Strength}&        0.34***&       -0.50*  &        0.17   &       -0.50*  &        0.17   \\
+                                                  &      (0.02)   &      (0.30)   &      (0.74)   &      (0.30)   &      (0.72)   \\
+            \mrow{4.5cm}{\quad Hedging Frequency \& Type}&        0.43***&       -0.12   &       -0.78*  &       -0.12   &       -0.78*  \\
+                                                  &      (0.03)   &      (0.18)   &      (0.42)   &      (0.18)   &      (0.41)   \\
+            \mrow{4.5cm}{\quad Qualifier Density}&        0.42***&        0.06   &       -0.24   &        0.06   &       -0.24   \\
+                                                  &      (0.02)   &      (0.18)   &      (0.71)   &      (0.17)   &      (0.70)   \\
+            \mrow{4.5cm}{\quad Acknowledgement of Limitations}&        0.45***&       -0.02   &        0.02   &       -0.02   &        0.02   \\
+                                                  &      (0.03)   &      (0.27)   &      (0.53)   &      (0.26)   &      (0.52)   \\
+            \mrow{4.5cm}{\quad Caution-Signaling Connectors}&        0.46***&       -0.11   &        0.57   &       -0.11   &        0.57   \\
+                                                  &      (0.03)   &      (0.30)   &      (0.72)   &      (0.30)   &      (0.71)   \\
+            %
+            % ── G2: Assertiveness & Voice ────────────────────────────────────────
+            \midrule
+            \multicolumn{6}{l}{\textbf{G2: Assertiveness \& Voice}}\\
+            \mrow{4.5cm}{\quad Assertiveness \& Voice}&        0.48***&       -0.13   &       -0.89***&       -0.13   &       -0.89***\\
+                                                  &      (0.02)   &      (0.14)   &      (0.29)   &      (0.13)   &      (0.29)   \\
+            \mrow{4.5cm}{\quad Active/Passive Voice Ratio}&        0.56***&        0.20   &       -0.05   &        0.20   &       -0.05   \\
+                                                  &      (0.03)   &      (0.21)   &      (0.59)   &      (0.21)   &      (0.58)   \\
+            %
+            % ── G3: Structural Directness ────────────────────────────────────────
+            \midrule
+            \multicolumn{6}{l}{\textbf{G3: Structural Directness}}\\
+            \mrow{4.5cm}{\quad Sentence Length \& Directness}&        0.38***&        0.20   &       -0.33   &        0.20   &       -0.33   \\
+                                                  &      (0.03)   &      (0.20)   &      (0.29)   &      (0.20)   &      (0.29)   \\
+            \midrule
+            No. observations              &               &       1,988   &               &       1,988   &               \\
+            \midrule
+            Editor effects                &               &           {\ding{51}}   &               &               &               \\
+            Journal\(\times\)Year effects &               &           {\ding{51}}   &               &               &               \\
+            \(N_j\)                       &               &           {\ding{51}}   &               &               &               \\
+            Quality controls              &               &          {\(\text{\ding{51}}^2\)}   &               &               &               \\
+            Native speaker                &               &           {\ding{51}}   &               &               &               \\
+            Theory/emp.\ effects          &               &           {\ding{51}}   &               &               &               \\
+            \bottomrule
+        \end{tabular}
+        \begin{tablenotes}
+            \tiny
+            \item \textit{Notes}. $R_{jW}$ is the OLS coefficient from regressing the working paper score on journal mean quality. OLS ($\Delta$ in score) uses the change in LLM criterion score (published minus working paper) as the dependent variable; standard errors clustered by editor. FGLS (Difference) shows the published-minus-working-paper contrast from the FGLS model. \(^\dagger\)Jargon/Technicality Density is scale-flipped before analysis (raw 10 = dense jargon $\rightarrow$ stored as 1). ***, ** and * statistically significant at 1\%, 5\% and 10\%, respectively.
+        \end{tablenotes}
+    \end{threeparttable}
+\end{table}

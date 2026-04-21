@@ -1,0 +1,31 @@
+\begin{table}[H]
+    \footnotesize
+    \centering
+    \begin{threeparttable}
+        \caption{Active/Passive Voice Ratio of authors' \(t\)th paper (draft and final)}
+        \label{table9llmactivepas}
+        \begin{tabular}{p{3cm}S@{}S@{}S@{}S@{}S@{}S@{}}
+            \toprule
+            &{\(t=1\)}&{\(t=2\)}&{\(t=3\)}&{\(t=4\text{--}5\)}&{\(t\ge6\)}\\
+            \midrule
+            \multicolumn{6}{l}{\textbf{Predicted \(R_{jP}-R_{jW}\)}}\\
+            \quad Women                   &        0.58***&        0.48***&        0.33***&        0.25   &        0.20   \\
+                                          &      (0.20)   &      (0.12)   &      (0.10)   &      (0.15)   &      (0.25)   \\
+            \quad Men                     &        0.22***&        0.21***&        0.17***&        0.20***&        0.25***\\
+                                          &      (0.02)   &      (0.02)   &      (0.01)   &      (0.02)   &      (0.03)   \\
+            \midrule\multicolumn{6}{l}{\textbf{Marginal effect of female ratio}}\\
+            \quad Published article       &        0.20   &        0.15   &        0.11   &        0.06   &        0.01   \\
+                                          &      (0.19)   &      (0.14)   &      (0.16)   &      (0.23)   &      (0.32)   \\
+            \quad Draft paper             &       -0.17   &       -0.11   &       -0.05   &        0.01   &        0.06   \\
+                                          &      (0.20)   &      (0.16)   &      (0.16)   &      (0.19)   &      (0.24)   \\
+            \midrule
+            \textbf{Diff.-in-diff.}&        0.37*  &        0.26** &        0.16   &        0.05   &       -0.05   \\
+                                          &      (0.21)   &      (0.13)   &      (0.10)   &      (0.16)   &      (0.25)   \\
+            \bottomrule
+        \end{tabular}
+        \begin{tablenotes}
+            \tiny
+            \item \textit{Notes}. Sample 4,289 observations. Panel one displays magnitude of predicted \(R_{jP}-R_{jW}\) (the direct effect of peer review) for women and men over increasing \(t\). Panel two estimates the marginal effect of an article's female ratio (\(\beta_1+\beta_2\times t\)), separately for draft papers and published articles. Figures from FGLS estimation of~equation~(15), weighted by \(N_{it}\) (see~the data appendix). Control variables include citation count (asinh), \(\text{max. }T\) (author prominence) and \(\text{max. }t\) (author seniority), native speaker and editor and journal-year fixed effects. Standard errors clustered by editor and robust to cross-model correlation in parentheses. ***, ** and * statistically significant at 1\%, 5\% and 10\%, respectively.
+        \end{tablenotes}
+    \end{threeparttable}
+\end{table}
