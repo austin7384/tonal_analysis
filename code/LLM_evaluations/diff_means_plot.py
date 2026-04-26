@@ -40,7 +40,7 @@ OUT_PATH  = ROOT / 'outputs/figures/diff_means_plot_slides.pdf'
 # ── publishing-female scheme colours ─────────────────────────────────────────
 PF_BLUE   = '#346C8B'
 PF_PINK   = '#D85C63'
-AXIS_GRAY = '#747474'
+AXIS_GRAY = '#2a2a2a'
 GRID_GRAY = '#B0C5CC'
 
 # ── 16 LLM criteria (column names in merged_evaluations.csv) ─────────────────
@@ -153,9 +153,11 @@ ax.set_facecolor('white')
 res = res.sort_values('diff', ascending=True).reset_index(drop=True)
 y = np.arange(len(res))
 
+bar_colors = [PF_PINK if row['col'] == 'Jargon/Technicality Density' else PF_BLUE
+              for _, row in res.iterrows()]
 ax.barh(
     y, res['diff'],
-    color=PF_BLUE,
+    color=bar_colors,
     alpha=0.85,
     height=0.6,
     zorder=3,

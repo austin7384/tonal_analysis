@@ -1,5 +1,22 @@
 # Recent Changes
 
+## Session: 2026-04-26
+
+### Completed
+- Updated slide 9 (`diff_means_plot_slides.pdf`) figure: darkened all axis/tick text from `#747474` to `#2a2a2a` and colored the Jargon bar pink (`#D85C63`) to flag its reversed sign
+- Recompiled `outputs/slides.tex` to zero warnings; reduced `max height` from `0.82\textheight` to `0.78\textheight` on the figure frame to absorb the slightly taller regenerated figure
+
+### Key changes
+- `code/LLM_evaluations/diff_means_plot.py`: `AXIS_GRAY` darkened to `#2a2a2a`; bar color logic now assigns `PF_PINK` to Jargon, `PF_BLUE` to all other criteria
+- `outputs/figures/diff_means_plot_slides.pdf`: regenerated with new colors
+- `outputs/slides.tex`: `max height=0.78\textheight` on slide 9 frame (was `0.82`)
+- `outputs/slides.pdf`: recompiled, 16 pages, 0 warnings
+
+### Notes / follow-up
+- The pink Jargon bar visually signals to audiences that the sign was flipped (higher = less jargon); may want to add a footnote or legend annotation to the figure itself in a future pass
+
+---
+
 ## Session: 2026-04-21
 
 ### Completed
