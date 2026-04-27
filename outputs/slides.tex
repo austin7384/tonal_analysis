@@ -430,51 +430,40 @@
 % ---------------------------------------------------------------------------
 % 11. Robustness
 % ---------------------------------------------------------------------------
-\begin{frame}[shrink=5]{The clarity differential is robust across six alternative authorship specifications}
+\begin{frame}{The clarity differential is robust across six alternative authorship specifications}
     \vfill
-    \begin{columns}[T, onlytextwidth]
-
-        \begin{column}{0.44\textwidth}
-            \RaggedRight
-            \colorbox{LightGray}{\parbox{\dimexpr\linewidth-2\fboxsep\relax}{%
-                \vspace{0.08cm}\hspace{0.2cm}
-                {\normalsize\bfseries\color{WarmGray} What we vary}
-                \vspace{0.08cm}
-            }}
-            \vspace{0.25cm}
-            {\normalsize
-            \begin{itemize}\setlength\itemsep{0.08cm}
-                \item FemaleRatio (continuous) — main spec
-                \item Majority-female binary ($\geq\!50\%$)
-                \item Any-female binary ($\geq\!1$ female author)
-                \item All-female binary (100\% female)
-                \item Solo-authored articles only
-                \item Senior female coauthor vs.\ all-male papers
-            \end{itemize}
-            }
-        \end{column}
-
-        \begin{column}{0.08\textwidth}\end{column}
-
-        \begin{column}{0.48\textwidth}
-            \RaggedRight
-            \colorbox{Teal}{\parbox{\dimexpr\linewidth-2\fboxsep\relax}{%
-                \vspace{0.08cm}\hspace{0.2cm}
-                {\normalsize\bfseries\color{SoftWhite} What holds}
-                \vspace{0.08cm}
-            }}
-            \vspace{0.25cm}
-            {\normalsize
-            \begin{itemize}\setlength\itemsep{0.08cm}
-                \item Readability differential significant at 1\% in all six specifications
-                \item Jargon, directness, and evidence differentials similarly robust
-                \item Tonal dimensions (assertiveness, hedging, emotional valence) remain null across all specifications
-                \item Results consistent in full sample (1950--2015) and restricted sample (1990--2015)
-            \end{itemize}
-            }
-        \end{column}
-
-    \end{columns}
+    \begin{center}
+    {\small
+    \begin{tabular}{lcccccc}
+        \toprule
+        & \multicolumn{6}{c}{Authorship measure} \\
+        \cmidrule(lr){2-7}
+        Criterion
+            & \shortstack[c]{Female\\ratio}
+            & \shortstack[c]{$\geq$50\%\\female}
+            & \shortstack[c]{$\geq$1\\female}
+            & \shortstack[c]{100\%\\female}
+            & \shortstack[c]{Solo\\female}
+            & \shortstack[c]{Senior\\female} \\
+        \midrule
+        \textbf{LLM Readability}          & $0.32^{***}$ & $0.22^{***}$ & $0.18^{***}$ & $0.31^{***}$ & $0.26^{**}$  & $0.33^{***}$ \\
+        Jargon/Technicality$^{\dagger}$   & $0.48^{***}$ & $0.31^{***}$ & $0.28^{***}$ & $0.51^{***}$ & $0.45^{***}$ & $0.57^{***}$ \\
+        Sentence Directness               & $0.25^{**}$  & $0.20^{**}$  & $0.17^{***}$ & $0.21^{*}$   & $0.16$       & $0.21^{**}$  \\
+        \midrule
+        Assertiveness                     & $-0.05$      & $-0.00$      & $-0.02$      & $-0.13$      & $-0.16$      & $-0.14$      \\
+        Emotional Valence                 & $-0.03$      & $-0.02$      & $-0.01$      & $-0.04^{*}$  & $-0.04^{**}$ & $-0.03^{*}$  \\
+        \midrule
+        $N$                               & \multicolumn{6}{c}{9,117} \\
+        \bottomrule
+    \end{tabular}
+    }
+    \end{center}
+    \vspace{0.2cm}
+    \begin{center}
+        {\small\color{WarmGray}
+        OLS col~(5) coefficients on authorship measure. SEs clustered on editor.
+        $^{\dagger}$Scale-flipped (11$-$raw); positive $=$ less jargon.}
+    \end{center}
     \vfill
 \end{frame}
 
@@ -528,119 +517,143 @@
     {\small\color{WarmGray} Means and SDs. Scored 1--10. Descriptive only; no significance stars.}
 \end{frame}
 
-\begin{frame}{Backup: Key regression coefficients (col.\ 1, full sample)}
-    \RaggedRight
+% ---------------------------------------------------------------------------
+% Backup A: col 4+5, G1+G2 tonal criteria not on slide 10
+% ---------------------------------------------------------------------------
+\begin{frame}{Backup: Tonal criteria — controlled regressions (G1--G2)}
+    \vfill
     \begin{center}
     {\small
-    \setlength{\tabcolsep}{8pt}
     \begin{tabular}{lcc}
         \toprule
-        Criterion & Coef. & SE\\
+        Criterion & (4) & (5) \\
         \midrule
-        \multicolumn{3}{l}{\textit{Female $>$ male (significant)}}\\
-        \quad Jargon (less dense) & $+0.52^{***}$ & (0.11)\\
-        \quad Evidence \& citation & $+0.44^{***}$ & (0.09)\\
-        \quad Readability          & $+0.36^{***}$ & (0.07)\\
-        \quad Directness           & $+0.27^{**}$  & (0.10)\\
+        Modal Verb Strength               & $-0.32^{*}$  & $-0.34^{*}$  \\
+        Hedging Frequency \& Type         & $-0.20^{*}$  & $-0.17$      \\
+        Qualifier Density                 & $0.00$       & $0.01$       \\
+        Caution-Signaling Connectors      & $0.08$       & $0.08$       \\
+        Assertiveness \& Voice            & $-0.06$      & $-0.05$      \\
         \midrule
-        \multicolumn{3}{l}{\textit{Female $<$ male (significant)}}\\
-        \quad Novelty claims        & $-0.32^{***}$ & (0.10)\\
-        \midrule
-        \multicolumn{3}{l}{\textit{Not significant}}\\
-        \quad Assertiveness         & $-0.08$       & (0.08)\\
-        \quad Emotional valence     & $-0.02$       & (0.02)\\
+        $N$                               & \multicolumn{2}{c}{9,117} \\
         \bottomrule
     \end{tabular}
     }
     \end{center}
-    {\small\color{WarmGray} OLS, female ratio, 1950--2015. SEs clustered on editor. $N=9{,}117$.}
+    \vspace{0.2cm}
+    \begin{center}
+        {\small\color{WarmGray}
+        OLS coefficients on female ratio. SEs clustered on editor.
+        Col.~(4): journal$\times$year, $N_j$, institution, editor, blind-review.
+        Col.~(5) adds quality controls, native speaker, JEL, theory/empirical.}
+    \end{center}
+    \vfill
 \end{frame}
 
-\begin{frame}{Backup: Five clarity dimensions elevated; tonal dimensions negligible}
-    \vfill
-    \begin{columns}[T, onlytextwidth]
-
-        \begin{column}{0.47\textwidth}
-            \colorbox{Teal}{\parbox{\dimexpr\linewidth-2\fboxsep\relax}{%
-                \centering\vspace{0.08cm}
-                {\large\bfseries\color{SoftWhite} Female-Majority Higher}
-                \vspace{0.08cm}
-            }}
-            \vspace{0.3cm}
-            \RaggedRight
-            {\large
-            Readability \hfill $+0.55$ SD\\[0.3cm]
-            Jargon density (lower) \hfill $+0.48$ SD\\[0.3cm]
-            Active/passive voice \hfill $+0.44$ SD\\[0.3cm]
-            Sentence directness \hfill $+0.38$ SD\\[0.3cm]
-            Evidentiary support \hfill $+0.35$ SD
-            }
-            \vspace{0.3cm}
-            {\normalsize\color{WarmOrange}
-            Novelty-claim strength \hfill $-0.05$ SD}
-        \end{column}
-
-        \begin{column}{0.06\textwidth}\end{column}
-
-        \begin{column}{0.47\textwidth}
-            \colorbox{WarmGray}{\parbox{\dimexpr\linewidth-2\fboxsep\relax}{%
-                \centering\vspace{0.08cm}
-                {\large\bfseries\color{SoftWhite} Statistically Negligible}
-                \vspace{0.08cm}
-            }}
-            \vspace{0.3cm}
-            \RaggedRight
-            {\large\color{WarmGray}
-            Assertiveness\\[0.3cm]
-            Hedging frequency\\[0.3cm]
-            Qualifier density\\[0.3cm]
-            Modal verb strength\\[0.3cm]
-            Emotional valence\\[0.3cm]
-            Caution-signaling connectors
-            }
-        \end{column}
-
-    \end{columns}
+% ---------------------------------------------------------------------------
+% Backup B: col 4+5, remaining criteria not on slide 10
+% ---------------------------------------------------------------------------
+\begin{frame}{Backup: Remaining criteria — controlled regressions (G3--G5)}
     \vfill
     \begin{center}
-        {\small\color{WarmGray} Unconditional; majority-gender classification; all criteria standardized.}
+    {\small
+    \begin{tabular}{lcc}
+        \toprule
+        Criterion & (4) & (5) \\
+        \midrule
+        Imperative-Form Occurrence        & $-0.02^{***}$ & $-0.02^{***}$ \\
+        Novelty-Claim Strength            & $-0.31^{***}$ & $-0.30^{***}$ \\
+        Emotional Valence                 & $-0.03$       & $-0.03$       \\
+        Practical/Impact Orientation      & $0.09$        & $0.05$        \\
+        \midrule
+        $N$                               & \multicolumn{2}{c}{9,117} \\
+        \bottomrule
+    \end{tabular}
+    }
     \end{center}
+    \vspace{0.2cm}
+    \begin{center}
+        {\small\color{WarmGray}
+        OLS coefficients on female ratio. SEs clustered on editor.
+        Col.~(4): journal$\times$year, $N_j$, institution, editor, blind-review.
+        Col.~(5) adds quality controls, native speaker, JEL, theory/empirical.}
+    \end{center}
+    \vfill
 \end{frame}
 
-\begin{frame}{Backup: Identification concern — GPT-5 may introduce systematic measurement bias}
+% ---------------------------------------------------------------------------
+% Backup C: col 5 × 6 specs, G1+G2 criteria not on slide 11
+% ---------------------------------------------------------------------------
+\begin{frame}{Backup: Tonal criteria — robustness across authorship specifications (G1--G2)}
     \vfill
-    \begin{columns}[T, onlytextwidth]
+    \begin{center}
+    {\small
+    \begin{tabular}{lcccccc}
+        \toprule
+        & \multicolumn{6}{c}{Authorship measure} \\
+        \cmidrule(lr){2-7}
+        Criterion
+            & \shortstack[c]{Female\\ratio}
+            & \shortstack[c]{$\geq$50\%\\female}
+            & \shortstack[c]{$\geq$1\\female}
+            & \shortstack[c]{100\%\\female}
+            & \shortstack[c]{Solo\\female}
+            & \shortstack[c]{Senior\\female} \\
+        \midrule
+        Modal Verb Strength       & $-0.34^{*}$  & $-0.14$      & $-0.10$      & $-0.55^{**}$ & $-0.59^{**}$ & $-0.59^{**}$ \\
+        Hedging Frequency \& Type & $-0.17$      & $-0.09$      & $-0.09$      & $-0.26^{*}$  & $-0.32^{**}$ & $-0.30^{**}$ \\
+        Qualifier Density         & $0.01$       & $0.02$       & $-0.04$      & $-0.03$      & $-0.05$      & $-0.05$      \\
+        Ack.\ of Limitations      & $0.15$       & $0.10$       & $0.12$       & $0.20$       & $0.10$       & $0.14$       \\
+        Caution-Signaling         & $0.08$       & $0.04$       & $-0.02$      & $0.03$       & $0.10$       & $0.01$       \\
+        Active/Passive Voice      & $0.15$       & $0.12^{*}$   & $0.10^{*}$   & $0.13$       & $0.25$       & $0.12$       \\
+        \midrule
+        $N$                       & \multicolumn{6}{c}{9,117} \\
+        \bottomrule
+    \end{tabular}
+    }
+    \end{center}
+    \vspace{0.2cm}
+    \begin{center}
+        {\small\color{WarmGray}
+        OLS col~(5) coefficients on authorship measure. SEs clustered on editor.}
+    \end{center}
+    \vfill
+\end{frame}
 
-        \begin{column}{0.44\textwidth}
-            \RaggedRight
-            \colorbox{LightGray}{\parbox{\dimexpr\linewidth-2\fboxsep\relax}{%
-                \vspace{0.08cm}\hspace{0.2cm}
-                {\normalsize\bfseries\color{WarmGray} Potential confound}
-                \vspace{0.08cm}
-            }}
-            \vspace{0.35cm}
-            {\normalsize
-            GPT-5 may assign systematically higher scores to abstracts by female-majority teams, independent of underlying linguistic content.}
-        \end{column}
-
-        \begin{column}{0.08\textwidth}\end{column}
-
-        \begin{column}{0.48\textwidth}
-            \RaggedRight
-            \colorbox{LightGray}{\parbox{\dimexpr\linewidth-2\fboxsep\relax}{%
-                \vspace{0.08cm}\hspace{0.2cm}
-                {\normalsize\bfseries\color{Teal} Response}
-                \vspace{0.08cm}
-            }}
-            \vspace{0.35cm}
-            {\normalsize
-            \textbf{(1)} LLM readability replicates Hengel's manually calculated scores.\\[0.3cm]
-            \textbf{(2)} Results are consistent across six authorship specifications.\\[0.3cm]
-            \textbf{(3)} A model exhibiting such bias would produce elevated scores on assertiveness and hedging. The data show no such pattern.
-            }
-        \end{column}
-
-    \end{columns}
+% ---------------------------------------------------------------------------
+% Backup D: col 5 × 6 specs, remaining criteria not on slide 11
+% ---------------------------------------------------------------------------
+\begin{frame}{Backup: Remaining criteria — robustness across authorship specifications (G3--G5)}
+    \vfill
+    \begin{center}
+    {\small
+    \begin{tabular}{lcccccc}
+        \toprule
+        & \multicolumn{6}{c}{Authorship measure} \\
+        \cmidrule(lr){2-7}
+        Criterion
+            & \shortstack[c]{Female\\ratio}
+            & \shortstack[c]{$\geq$50\%\\female}
+            & \shortstack[c]{$\geq$1\\female}
+            & \shortstack[c]{100\%\\female}
+            & \shortstack[c]{Solo\\female}
+            & \shortstack[c]{Senior\\female} \\
+        \midrule
+        Imperative-Form Occurrence    & $-0.02^{***}$ & $-0.01^{**}$  & $-0.00$       & $-0.02^{***}$ & $-0.02^{**}$  & $-0.02^{***}$ \\
+        Novelty-Claim Strength        & $-0.30^{***}$ & $-0.21^{**}$  & $-0.24^{**}$  & $-0.28^{**}$  & $-0.27^{*}$   & $-0.33^{***}$ \\
+        Pronoun Commitment            & $0.32$        & $0.39^{**}$   & $0.15$        & $-0.00$       & $0.36^{*}$    & $-0.05$       \\
+        Evidence \& Citation Usage    & $0.36^{***}$  & $0.30^{***}$  & $0.25^{***}$  & $0.26^{**}$   & $0.21^{*}$    & $0.29^{***}$  \\
+        Practical/Impact Orientation  & $0.05$        & $0.04$        & $0.02$        & $0.01$        & $0.02$        & $0.07$        \\
+        \midrule
+        $N$                           & \multicolumn{6}{c}{9,117} \\
+        \bottomrule
+    \end{tabular}
+    }
+    \end{center}
+    \vspace{0.2cm}
+    \begin{center}
+        {\small\color{WarmGray}
+        OLS col~(5) coefficients on authorship measure. SEs clustered on editor.}
+    \end{center}
     \vfill
 \end{frame}
 

@@ -1,5 +1,30 @@
 # Recent Changes
 
+## Session: 2026-04-26 (evening)
+
+### Completed
+- Created `code/LLM_evaluations/readability_sd_comparison.py`: standardizes regression coefficients from slide 8 by dividing by SD(Y), showing LLM effect is ~2–3× larger in SD units than any objective measure (LLM: 0.29 SD vs Flesch-family: 0.08–0.12 SD)
+- Replaced slide 11 text (two-column "what we vary / what holds") with a 5×6 booktabs table of col~(5) coefficients across all six authorship specifications for: LLM Readability, Jargon, Directness, Assertiveness, Emotional Valence
+- Fixed coefficient extraction bug in slide 11: `\&` in criterion labels (Directness, Assertiveness) caused off-by-one column shift; corrected by neutralizing `\&` before splitting on `&`. Directness/FemRatio corrected from 0.31*** → 0.25** (matching slide 10)
+- Replaced backup slides 14 ("Key regression coefficients"), 15 ("Five clarity dimensions"), 16 ("GPT bias concern") with four structured data backup slides covering all remaining criteria not shown on slides 10–11
+- Recompiled deck to 17 pages, 0 warnings
+
+### Key changes
+- `code/LLM_evaluations/readability_sd_comparison.py`: new script; loads `Hengel_evaluations.csv` + `ReadStat.csv`, computes SD per measure, prints beta/SD comparison table
+- `outputs/slides.tex`: slide 11 replaced with robustness table (5 criteria × 6 authorship specs); backup slides 14–16 replaced with 4 new slides:
+  - Backup A: col~(4)+(5) for G1+G2 tonal criteria (Modal Verb, Hedging, Qualifier, Caution, Assertiveness)
+  - Backup B: col~(4)+(5) for G3–G5 remaining (Imperative, Novelty, Emotional, Practical)
+  - Backup C: col~(5) × 6 specs for G1+G2 not on slide 11 (Modal Verb, Hedging, Qualifier, Ack Limits, Caution, Active/Passive)
+  - Backup D: col~(5) × 6 specs for G3–G5 not on slide 11 (Imperative, Novelty, Pronoun, Evidence, Practical)
+- `outputs/slides.pdf`: recompiled, 17 pages, 0 warnings
+
+### Notes / follow-up
+- Slide 11 Directness is now 0.25** (corrected); all other slide 11 values also corrected for the `\&` parsing bug
+- LLM Readability excluded from backup col~(4)+(5) tables — already shown on slides 8 and 11
+- `readability_sd_comparison.py` uses `Hengel_evaluations.csv` (not `merged_evaluations.csv` which is git-ignored); matched N=9,117 confirms correct sample
+
+---
+
 ## Session: 2026-04-26
 
 ### Completed
