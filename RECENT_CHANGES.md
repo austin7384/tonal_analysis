@@ -1,5 +1,29 @@
 # Recent Changes
 
+## Session: 2026-04-26 (night)
+
+### Completed
+- Renamed all 5 "Backup" frame titles to "Appendix" in slides.tex
+- Rewrote slides 2–6, 8–9, 12 to match handwritten speaker script and improve memory prompting
+- Verified rubric score direction: G1 (Creativity & Hedging) runs opposite to "clearer" — high = more hedging/caution, not clearer
+- Decided to omit novelty claims from main talk (not materially important)
+
+### Key changes
+- `outputs/slides.tex` slide 2: two-column boxed → single-column; added "different voice" italic hook, "Preview of findings" section with 2 result bullets
+- `outputs/slides.tex` slide 3: two-column boxed → single-column; fixed title "two" → "three" literatures; added Gilligan as first bullet; restructured as 4 bullets (Gilligan, Card/Sarsons, Hengel, Our contribution)
+- `outputs/slides.tex` slide 4: two-column → single-column; replaced percentage stats with raw counts (7,939 all-male, 319 all-female); added article/author control details; listed all 5 authorship measures
+- `outputs/slides.tex` slide 5: added jargon scale-flip footnote (11−raw; high = less jargon)
+- `outputs/slides.tex` slide 6: updated validation bullet to mention human-in-the-loop on small subset, auditing outputs, iteratively improving prompt
+- `outputs/slides.tex` slide 9: added footer naming null tonal dimensions (assertiveness, hedging, emotional valence); scaled figure to 0.63\textheight to fit
+- `outputs/slides.tex` slide 12: removed "novelty claims"; sharpened null finding to "not more hesitant or emotional"; added robustness + LLM measurement error caveat
+- `outputs/slides.pdf`: recompiled, 17 pages, 0 warnings
+
+### Notes / follow-up
+- Slides 7, 10, 11 reviewed against script — no changes needed
+- Novelty-Claim Strength result (negative, significant) is in appendix tables but intentionally omitted from main talk
+
+---
+
 ## Session: 2026-04-26 (evening)
 
 ### Completed

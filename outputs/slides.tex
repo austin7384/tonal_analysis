@@ -88,107 +88,44 @@
 % ---------------------------------------------------------------------------
 % 2. Motivation & Research Question
 % ---------------------------------------------------------------------------
-\begin{frame}[shrink=10]{Scientific writing is not a neutral container for ideas}
+\begin{frame}{Scientific writing is not a neutral container for ideas}
     \vfill
-    \begin{columns}[T, onlytextwidth]
+    \RaggedRight
+    {\normalsize\color{WarmGray}\textit{How research is framed shapes evaluation --- dominant standards may systematically overlook a ``different voice'' (Gilligan 1993)}}
+    \vspace{0.25cm}
 
-        \begin{column}{0.48\textwidth}
-            \RaggedRight
-            \colorbox{LightGray}{\parbox{\dimexpr\linewidth-2\fboxsep\relax}{%
-                \vspace{0.1cm}\hspace{0.2cm}
-                {\small\bfseries\color{WarmGray} Motivation}
-                \vspace{0.06cm}
-            }}
-            \vspace{0.2cm}
-            {\normalsize
-            \begin{itemize}\setlength\itemsep{0.08cm}
-                \item How research is framed shapes peer evaluation and knowledge dissemination
-                \item Gilligan (1993): dominant standards may overlook different modes of communication
-                \item Economics literature focuses on publication and promotion outcomes, not the writing itself
-            \end{itemize}
-            }
-        \end{column}
-
-        \begin{column}{0.04\textwidth}\end{column}
-
-        \begin{column}{0.48\textwidth}
-            \RaggedRight
-            \colorbox{LightGray}{\parbox{\dimexpr\linewidth-2\fboxsep\relax}{%
-                \vspace{0.1cm}\hspace{0.2cm}
-                {\small\bfseries\color{Teal} This paper}
-                \vspace{0.06cm}
-            }}
-            \vspace{0.2cm}
-            {\normalsize
-            \begin{itemize}\setlength\itemsep{0.08cm}
-                \item Does author-team gender composition predict systematic differences in how economists write?
-                \item Builds on Hengel (2022): female-authored papers are more readable; writing gap widens during peer review
-                \item Extends beyond readability to \textbf{15 additional} writing dimensions
-                \item 9,117 abstracts $\cdot$ 16-item LLM rubric
-            \end{itemize}
-            }
-        \end{column}
-
-    \end{columns}
+    {\normalsize
+    \begin{itemize}\setlength\itemsep{0.18cm}
+        \item Does gender composition predict systematic differences in how economists write?
+        \item Builds on Hengel (2022) \textit{Publishing While Female}: female-authored papers more readable; writing gap widens during peer review
+        \item Extends to \textbf{15 additional} tonal dimensions --- assertiveness, hedging, directness, novelty claims, and more
+    \end{itemize}
+    }
+    \vspace{0.22cm}
+    {\small\bfseries\color{Teal} Preview of findings}\\[0.1cm]
+    {\normalsize
+    \begin{itemize}\setlength\itemsep{0.15cm}
+        \item Clarity gap: female-majority teams score higher on readability, directness, and evidentiary support; lower on jargon
+        \item Tonal dimensions --- assertiveness, hedging, emotional valence --- no systematic difference
+    \end{itemize}
+    }
     \vfill
 \end{frame}
 
 % ---------------------------------------------------------------------------
 % 3. Related Literature
 % ---------------------------------------------------------------------------
-\begin{frame}[shrink=18]{This paper sits at the intersection of two literatures}
+\begin{frame}{This paper contributes to three literatures}
     \vfill
-    \begin{columns}[T, onlytextwidth]
-
-        \begin{column}{0.47\textwidth}
-            \RaggedRight
-            \colorbox{LightGray}{\parbox{\dimexpr\linewidth-2\fboxsep\relax}{%
-                \vspace{0.1cm}\hspace{0.2cm}
-                {\small\bfseries\color{WarmGray} Gender, voice, \& communication}
-                \vspace{0.06cm}
-            }}
-            \vspace{0.2cm}
-            {\normalsize
-            \begin{itemize}\setlength\itemsep{0.08cm}
-                \item Gilligan (1993): evaluation standards may embed preferences for particular exposition styles
-            \end{itemize}
-            }
-            \vspace{0.1cm}
-            \colorbox{LightGray}{\parbox{\dimexpr\linewidth-2\fboxsep\relax}{%
-                \vspace{0.1cm}\hspace{0.2cm}
-                {\small\bfseries\color{WarmGray} Gender and economics research}
-                \vspace{0.06cm}
-            }}
-            \vspace{0.2cm}
-            {\normalsize
-            \begin{itemize}\setlength\itemsep{0.08cm}
-                \item Card et al.\ (2020): editors and referees treat submissions differently by gender
-                \item Sarsons (2017): collaborative work differentially credited by gender
-                \item Hengel (2022): female-authored papers more readable; writing gap widens during peer review
-            \end{itemize}
-            }
-        \end{column}
-
-        \begin{column}{0.06\textwidth}\end{column}
-
-        \begin{column}{0.47\textwidth}
-            \RaggedRight
-            \colorbox{LightGray}{\parbox{\dimexpr\linewidth-2\fboxsep\relax}{%
-                \vspace{0.1cm}\hspace{0.2cm}
-                {\small\bfseries\color{Teal} Our contribution}
-                \vspace{0.06cm}
-            }}
-            \vspace{0.2cm}
-            {\normalsize
-            \begin{itemize}\setlength\itemsep{0.08cm}
-                \item Focus on writing as an observable input into evaluation
-                \item Multidimensional rubric: separates \textbf{clarity and structure} from \textbf{tone, assertiveness, and affect}
-                \item Three-step design: validation $\rightarrow$ mean differences $\rightarrow$ controlled regressions
-            \end{itemize}
-            }
-        \end{column}
-
-    \end{columns}
+    \RaggedRight
+    {\normalsize
+    \begin{itemize}\setlength\itemsep{0.3cm}
+        \item \textbf{Gender, voice, \& communication} --- Gilligan (1993): dominant evaluative standards may systematically overlook a ``different voice''
+        \item \textbf{Gender and economics outcomes} --- Card et al.\ (2020): referees treat submissions differently by gender; Sarsons (2017): collaborative work differentially credited
+        \item \textbf{Readability and peer review} --- Hengel (2022) \textit{Publishing While Female}: female-authored papers more readable; writing gap widens during review
+        \item \textbf{Our contribution} --- extend Hengel with 15 additional tonal dimensions; sharpen the ``different voice'' debate by identifying \textit{which} dimensions move with team composition
+    \end{itemize}
+    }
     \vfill
 \end{frame}
 
@@ -196,52 +133,18 @@
 % 4. Data
 % ---------------------------------------------------------------------------
 \begin{frame}{9,117 abstracts from four top economics journals, 1950--2015}
-    \begin{columns}[T, onlytextwidth]
-
-        \begin{column}{0.42\textwidth}
-            \RaggedRight
-            \vspace{0.1cm}
-            \begin{center}
-                {\fontsize{42}{44}\selectfont\bfseries\color{Teal} 9,117}\\[0.05cm]
-                {\normalsize\color{WarmGray} abstracts}
-            \end{center}
-            \vspace{0.25cm}
-            \begin{center}
-                {\normalsize AER \quad ECA \quad JPE \quad QJE}\\[0.1cm]
-                {\normalsize\color{WarmGray} 1950--2015}
-            \end{center}
-            \vspace{0.3cm}
-            {\normalsize
-            $<\!10\%$ female authors overall\\[0.12cm]
-            ${\sim}3\%$ all-female articles\\[0.12cm]
-            ${\sim}9\%$ majority-female\\[0.12cm]
-            ${\sim}13\%$ with $\geq\!1$ female author
-            }
-        \end{column}
-
-        \begin{column}{0.04\textwidth}
-            \textcolor{LightGray}{\rule{0.4pt}{5.0cm}}
-        \end{column}
-
-        \begin{column}{0.54\textwidth}
-            \RaggedRight
-            \vspace{0.1cm}
-            {\normalsize\bfseries Source:} {\normalsize Hengel (2022) replication package (GitHub)}
-            \vspace{0.25cm}
-
-            {\normalsize\bfseries Article data}\\[0.1cm]
-            {\normalsize Title, abstract, citation count, submission/acceptance dates, JEL codes, pre-computed readability scores}
-            \vspace{0.25cm}
-
-            {\normalsize\bfseries Author data}\\[0.1cm]
-            {\normalsize Gender, native language, institution (linked at author level)}
-            \vspace{0.25cm}
-
-            {\normalsize\color{WarmGray}
-            Excludes ReSTUD (submission dates only) and AER P\&P (no abstracts).}
-        \end{column}
-
-    \end{columns}
+    \vfill
+    \RaggedRight
+    {\normalsize
+    \begin{itemize}\setlength\itemsep{0.28cm}
+        \item Source: Hengel (2022) replication dataset --- 4 journals, 1950--2015; analysis on abstracts only
+        \item \textbf{Article-level controls}: JEL codes, submission \& acceptance dates, citation count, pre-computed readability scores, blind-review indicator
+        \item \textbf{Author-level controls}: gender, native language, institution, seniority, prominence (most-published co-author)
+        \item Sample: 7,939 all-male articles, 319 all-female; $<\!10\%$ female authors overall
+        \item Five authorship measures: female ratio, majority female, any female, 100\% female, solo female, senior female
+    \end{itemize}
+    }
+    \vfill
 \end{frame}
 
 % ---------------------------------------------------------------------------
@@ -288,6 +191,8 @@
         \end{column}
 
     \end{columns}
+    \vspace{0.3cm}
+    {\small\color{WarmGray} $^{\dagger}$Jargon/Technicality Density is scale-flipped ($11-$raw) so that high score $=$ less jargon.}
 \end{frame}
 
 % ---------------------------------------------------------------------------
@@ -300,7 +205,7 @@
         \item \textbf{Model:} GPT-5 — extended reasoning before answering improves accuracy on complex tasks (Shojaee et al.\ 2025)
         \item \textbf{Pipeline:} abstract $\rightarrow$ rubric $\rightarrow$ model $\rightarrow$ structured 16-score output
         \item \textbf{Prompt engineering:} step-by-step reasoning induced per criterion; shorter inputs increase accuracy (Modarressi et al.\ 2025)
-        \item \textbf{Validation:} trained on subset, tested on holdout, then validated against Hengel (2022) readability scores
+        \item \textbf{Validation:} human-in-the-loop on small subset --- audited outputs and iteratively improved prompt; then benchmarked against Hengel (2022) readability scores
         \item {\color{WarmGray}\textit{Caveat:} some randomness in LLM outputs; reported SEs may understate true uncertainty}
     \end{itemize}
     }
@@ -387,9 +292,12 @@
 \begin{frame}{Female-majority teams score higher on clarity; tonal differences are negligible}
     \vspace{-0.2cm}
     \begin{center}
-        \adjustbox{max width=\textwidth, max height=0.78\textheight}{%
+        \adjustbox{max width=\textwidth, max height=0.63\textheight}{%
             \includegraphics{diff_means_plot_slides.pdf}%
         }
+    \end{center}
+    \begin{center}
+        {\small\color{WarmGray} Null: assertiveness, hedging, emotional valence --- no difference between male- and female-majority teams.}
     \end{center}
 \end{frame}
 
@@ -481,19 +389,20 @@
         {\large\color{LightGray}
         LLM readability validates against Hengel (2022). In mean differences and controlled regressions,
         female-majority teams score higher on readability, directness, active voice, and evidentiary support,
-        and lower on jargon and novelty claims.
-        Assertiveness, hedging, and emotional valence show no systematic difference.}
+        and lower on jargon --- not more hesitant or emotional.
+        Robust across control levels and authorship specifications;
+        LLM measurement error not yet fully quantified.}
     \end{center}
     \vfill
 \end{frame}
 }
 
 % ===========================================================================
-% Backup slides
+% Appendix slides
 % ===========================================================================
 \appendix
 
-\begin{frame}{Backup: Summary statistics by gender composition}
+\begin{frame}{Appendix: Summary statistics by gender composition}
     \RaggedRight
     \begin{center}
     {\small
@@ -520,7 +429,7 @@
 % ---------------------------------------------------------------------------
 % Backup A: col 4+5, G1+G2 tonal criteria not on slide 10
 % ---------------------------------------------------------------------------
-\begin{frame}{Backup: Tonal criteria — controlled regressions (G1--G2)}
+\begin{frame}{Appendix: Tonal criteria — controlled regressions (G1--G2)}
     \vfill
     \begin{center}
     {\small
@@ -552,7 +461,7 @@
 % ---------------------------------------------------------------------------
 % Backup B: col 4+5, remaining criteria not on slide 10
 % ---------------------------------------------------------------------------
-\begin{frame}{Backup: Remaining criteria — controlled regressions (G3--G5)}
+\begin{frame}{Appendix: Remaining criteria — controlled regressions (G3--G5)}
     \vfill
     \begin{center}
     {\small
@@ -583,7 +492,7 @@
 % ---------------------------------------------------------------------------
 % Backup C: col 5 × 6 specs, G1+G2 criteria not on slide 11
 % ---------------------------------------------------------------------------
-\begin{frame}{Backup: Tonal criteria — robustness across authorship specifications (G1--G2)}
+\begin{frame}{Appendix: Tonal criteria — robustness across authorship specifications (G1--G2)}
     \vfill
     \begin{center}
     {\small
@@ -622,10 +531,10 @@
 % ---------------------------------------------------------------------------
 % Backup D: col 5 × 6 specs, remaining criteria not on slide 11
 % ---------------------------------------------------------------------------
-\begin{frame}{Backup: Remaining criteria — robustness across authorship specifications (G3--G5)}
+\begin{frame}{Appendix: Remaining criteria — robustness across authorship specifications (G3--G5)}
     \vfill
     \begin{center}
-    {\small
+    \adjustbox{max width=\textwidth}{\small
     \begin{tabular}{lcccccc}
         \toprule
         & \multicolumn{6}{c}{Authorship measure} \\
