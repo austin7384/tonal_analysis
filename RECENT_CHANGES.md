@@ -1,5 +1,19 @@
 # Recent Changes
 
+## Session: 2026-04-29
+
+### Completed
+- Fixed slide 11 title capitalization: title-case → sentence-case to match all other slides
+
+### Key changes
+- `outputs/slides.tex` slide 11: "Clarity Differential is Robust across Six Authorship Measures" → "Clarity differential is robust across six authorship measures"
+- `outputs/slides.pdf`: recompiled — clean, 17 pages, 0 errors/warnings
+
+### Notes / follow-up
+- No open issues from this session
+
+---
+
 ## Session: 2026-04-28
 
 ### Completed
