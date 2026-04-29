@@ -1,5 +1,22 @@
 # Recent Changes
 
+## Session: 2026-04-28
+
+### Completed
+- Fixed slide 11 title: replaced verbose original with "Clarity Differential is Robust across Six Authorship Measures"
+- Fixed slide 4 bullet: "Five authorship measures" → "Six authorship measures" (correct count)
+- Recompiled slides — clean, 17 pages, 0 errors
+
+### Key changes
+- `outputs/slides.tex` slide 11: frame title updated for concision and accuracy
+- `outputs/slides.tex` slide 4: authorship measure count corrected from five to six
+- `outputs/slides.pdf`: recompiled
+
+### Notes / follow-up
+- No open issues from this session
+
+---
+
 ## Session: 2026-04-26 (night)
 
 ### Completed
