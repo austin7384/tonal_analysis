@@ -1,5 +1,26 @@
 # Recent Changes
 
+## Session: 2026-05-03
+
+### Completed
+- Slide 4: replaced generic "4 journals" wording with explicit list of journal abbreviations (AER, ECA, JPE, QJE) in italics
+- Recompiled slides — clean, 17 pages
+- Read GST (2019) phrase-partisanship paper (`articles/articles_build/split_politext/`) and assessed applicability to LLM tonal-criteria phrase ranking
+- Saved methodology assessment to `notes/gst_method_for_tonal_phrases.md`; added `notes/` to `.gitignore`
+- Drafted minimum-viable scoping spec for a single-criterion (LLM readability) phrase-ranking pipeline (top/bottom decile binarization, Poisson-approximation lasso, BIC tuning, permutation validation)
+
+### Key changes
+- `outputs/slides.tex` slide 4: source bullet now lists \textit{AER}, \textit{ECA}, \textit{JPE}, \textit{QJE} explicitly
+- `outputs/slides.pdf`: recompiled
+- `.gitignore`: added `notes/` (local-only research notes directory)
+- `notes/gst_method_for_tonal_phrases.md` (gitignored): full assessment of GST method for the project
+
+### Notes / follow-up
+- Phrase-ranking implementation deferred — four open decisions before coding: bigrams-only vs. uni+bigrams, decile vs. quintile split, R (`gamlr`) vs. Python (`sklearn`/`statsmodels`) for the lasso, output format (CSV only vs. CSV + .tex)
+- v1 scope: readability only, no covariates, penalized estimator + permutation test; defer leave-out estimator, subsampling CIs, and other 15 criteria
+
+---
+
 ## Session: 2026-04-29
 
 ### Completed
