@@ -1,5 +1,22 @@
 # Recent Changes
 
+## Session: 2026-05-06
+
+### Completed
+- Recompiled paper (`outputs/Gender_Writing_Paper___Austin/`) to pick up user edits to `6_Results.tex`
+- Full build cycle: pdflatex → biber → pdflatex × 2; output is 119 pages, only 3 minor `biblatex-chicago` empty-Ibidem warnings (non-blocking)
+- Updated canonical `A_Coffelt_Paper.pdf` from the fresh `0_main.pdf` compile
+
+### Key changes
+- `outputs/Gender_Writing_Paper___Austin/6_Results.tex`: user reorganized Section 6 narrative — merged Panel A/B paragraphs into one block, replaced `\textbf{...}` mini-headings for Acknowledgement of Limitations / Modal Verb Strength / Novelty-Claim Strength with `\subsubsection{...}` headings (each suffixed "Criteria Analysis"), refined wording on the ack-limits direction (women revise to acknowledge *fewer* limitations, not "upward revisions"), minor copy edits
+- `outputs/Gender_Writing_Paper___Austin/A_Coffelt_Paper.pdf`: refreshed from new compile
+
+### Notes / follow-up
+- Verified `git fetch` — branch already up to date with `origin/master`, no remote changes to merge
+- Build artifacts (`0_main.aux/log/bbl/bcf/blg/out/run.xml/pdf`, `slides.aux/log/nav/out/snm/toc`) remain untracked; not currently in `.gitignore` but consistent with prior session patterns of not committing them
+
+---
+
 ## Session: 2026-05-03
 
 ### Completed
