@@ -2,6 +2,16 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
+## Always read RECENT_CHANGES.md first
+
+At the start of every session, before reading any other code or planning work, read `RECENT_CHANGES.md` in the project root. It contains dated session entries describing what was done, key decisions, and open follow-ups. Use it to:
+
+- Avoid redoing work that was already completed
+- Pick up open follow-ups from the previous session
+- Stay consistent with recent decisions (file conventions, build state, known issues)
+
+If `RECENT_CHANGES.md` is missing, note it but do not block — proceed with the task.
+
 ## Setup
 
 ```bash
