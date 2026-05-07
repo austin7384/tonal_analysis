@@ -1,5 +1,20 @@
 # Recent Changes
 
+## Session: 2026-05-07
+
+### Completed
+- Added a "Thank you / Questions?" closing slide (slide 13) to the deck, placed between the conclusion (slide 12) and the appendix
+- Recompiled `outputs/slides.pdf` cleanly to 18 pages
+
+### Key changes
+- `outputs/slides.tex`: inserted a new `\begin{frame}[plain]` block wrapped in `{\setbeamercolor{background canvas}{bg=DeepNavy}…}` so it inherits the conclusion slide's palette — "Thank you." in `SoftWhite` `\Huge\bfseries`, a `WarmGray` 0.35-textwidth horizontal rule, and "Questions?" in `Gold` `\LARGE`
+- `outputs/slides.pdf`: recompiled to include the new slide
+
+### Notes / follow-up
+- Build artifacts (`slides.aux/log/nav/out/snm/toc`, `0_main.*` byproducts) remain untracked; consistent with prior session pattern of not committing them
+
+---
+
 ## Session: 2026-05-06
 
 ### Completed
