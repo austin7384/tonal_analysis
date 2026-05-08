@@ -1,6 +1,32 @@
 # Recent Changes
 
-## Session: 2026-05-07
+## Session: 2026-05-07 (afternoon — GST phrase-ranking v1 Python stage)
+
+### Completed
+- Implemented v1 Python stage of the GST phrase-ranking pipeline at `code/Shapiro_Gentzkow_Phrase_Analysis/build_phrase_matrix.py`
+- Locked all four scoping decisions: bigrams-only, top/bottom quintile binarization, R `gamlr`/`distrom` for the lasso, CSV-only output (see project memory `project_gst_phrase_ranking.md`)
+- Decided sample = match Hengel N=9,117 analysis sample; mirrored filter chain from `correlation_matrix.py:58–70` (main journals + English + errata regex + dedupe + dropna). Filter chain landed exactly at 9,117.
+- Tokenized abstracts to bigrams (lowercase, strip non-alphanumeric, drop digits/single-char, keep stopwords for tonal moves like `we_show`/`may_be`); applied phrase filter (n_docs≥5 ∧ total_count≥10) yielding 9,670 surviving bigrams
+- Wrote three sparse-triplet staging CSVs to `data/processed/sg_phrase_analysis/` for the R stage (6,704 docs × 9,670 phrases, 302,815 nonzero entries)
+- Wrote detailed per-section documentation summary at `code/Shapiro_Gentzkow_Phrase_Analysis/0-code_summary/build_phrase_matrix.txt` matching the existing `0-code_summary/` convention used in `hengel_replication/`
+- Drafted R-stage plan (`fit_phrase_lasso.R` using `distrom::dmr()` with BIC tuning, output to `outputs/tables/csv/sg_phrase_ranking_readability.csv`); user deferred review — plan archived as `code/Shapiro_Gentzkow_Phrase_Analysis/r_stage_plan.md` (gitignored)
+
+### Key changes
+- `code/Shapiro_Gentzkow_Phrase_Analysis/build_phrase_matrix.py` (new): six-section procedural script — load & filter, quintile binarization, tokenize bigrams, phrase filter, build sparse triplets, write outputs
+- `code/Shapiro_Gentzkow_Phrase_Analysis/0-code_summary/build_phrase_matrix.txt` (new): operational summary + section-by-section detail with rationale and most-recent-run numbers
+- `data/processed/sg_phrase_analysis/documents.csv` (new, 6,704 rows / 110 KB)
+- `data/processed/sg_phrase_analysis/phrases.csv` (new, 9,670 rows / 221 KB)
+- `data/processed/sg_phrase_analysis/phrase_counts.csv` (new, 302,815 rows / 3.2 MB)
+- `.gitignore`: added `code/Shapiro_Gentzkow_Phrase_Analysis/r_stage_plan.md` under "Saved plan archives" (deferred-review plan)
+
+### Notes / follow-up
+- **R stage not yet implemented.** Plan is archived at `code/Shapiro_Gentzkow_Phrase_Analysis/r_stage_plan.md` (gitignored). When picking it up: `gamlr` and `distrom` must be installed first (`install.packages("gamlr")` works on CRAN; `distrom` may need `remotes::install_github("TaddyLab/distrom")` if archived).
+- **Quintile-tie asymmetry on Readability** (integer 1–10 with mass at 6/7/8): the `<=p20` / `>=p80` predicates landed groups at 3,635 vs. 3,069 instead of balanced fifths. v1 keeps the asymmetric cut as-is; tighter cuts (≤5 vs. ≥9) planned for robustness in v2. Same issue will recur for any 1–10 integer-scored criterion when the pipeline generalizes.
+- Permutation test, decile/tertile robustness runs, additional LLM criteria, and uni+bigrams all deferred to v2.
+
+---
+
+## Session: 2026-05-07 (morning — closing slide)
 
 ### Completed
 - Added a "Thank you / Questions?" closing slide (slide 13) to the deck, placed between the conclusion (slide 12) and the appendix
