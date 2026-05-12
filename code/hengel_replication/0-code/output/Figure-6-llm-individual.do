@@ -37,7 +37,7 @@ program define fig6_llm_ind
     (scatter b2 n if  female, color(pfpink) msize(large) msymbol(diamond)) ///
     (pcspike b1 n b2 n if !female, color(pfblue) lwidth(vthin) lpattern(shortdash)) ///
     (pcspike b1 n b2 n if  female, color(pfpink) lwidth(vthin) lpattern(shortdash)) ///
-    , legend(pos(5) ring(0) rows(1) order(1 "Male" 3 "Female") color(gray) size(small)) ///
+    , legend(pos(5) ring(0) rows(2) order(1 "Male, working paper" 2 "Male, final paper" 3 "Female, working paper" 4 "Female, final paper") color(gray) size(small)) ///
     title("`title'", size(medsmall) color(gray)) ///
     xtitle("{it:t}th article", size(medsmall) color(gray) placement(seast) justification(right)) ///
     scheme(publishing-female) ///

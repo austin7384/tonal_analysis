@@ -1,5 +1,33 @@
 # Recent Changes
 
+## Session: 2026-05-12 (Figures 3–6 working/final clarification + slide 9 note)
+
+### Completed
+- Pulled remote master (4 commits ahead: AER/ECA/JPE/QJE journal list on slide 4, slide 11 title fix, "Thank you" closing slide on slide 13). Resolved binary conflict on `slides.pdf` by taking upstream and recompiling.
+- Added "Values standardized (mean 0, SD 1) across the full sample." to the slide 9 caption note.
+- **Figures 3–6 clarity fix (reviewer feedback):** Expanded the Stata legend on all four `Figure-6*.do` plots from 2 color-only entries (`"Male" "Female"`) to 4 entries that label both color and shape (`"Male, working paper" "Male, final paper" "Female, working paper" "Female, final paper"`), with `rows(2)` for a 2×2 layout inside the existing `pos(5) ring(0)` slot. Reran the figures via Stata batch (Data.do + 4 figure do-files in one session); 12 figure PDFs regenerated cleanly, zero `r(...)` errors.
+- Tightened the 4 Figure 3–6 captions in `6_Results.tex` to spell out the encoding: "Hollow circles show working-paper estimates; filled diamonds show final-paper estimates."
+- Recompiled `A_Coffelt_Paper.pdf` (119 pages, no LaTeX errors).
+- **Caught and fixed a silent staleness bug:** paper has its own local `outputs/Gender_Writing_Paper___Austin/figures/` dir that the `\includegraphics{figures/...}` calls resolve to, distinct from `outputs/figures/` where Stata writes. First compile after the Stata run still showed old figures because the local dir wasn't updated. Manually copied all 12 fresh PDFs over, recompiled.
+
+### Key changes
+- `code/hengel_replication/0-code/output/Figure-6.do`: legend line 38 — added shape labels
+- `code/hengel_replication/0-code/output/Figure-6-llm.do`: legend line 38 — same change
+- `code/hengel_replication/0-code/output/Figure-6-llm-individual.do`: legend line 40 (inside `fig6_llm_ind` program) — same change; cascades to all 9 per-criterion PDFs
+- `code/hengel_replication/0-code/output/Figure-6-llm-g3.do`: legend line 38 — same change
+- `outputs/Gender_Writing_Paper___Austin/6_Results.tex`: captions for `fig6:all_panels`, `fig6:ack_limits`, `fig6:modal_verb`, `fig6:novelty` (lines 80, 97, 108, 119)
+- `outputs/slides.tex`: slide 9 standardization note + backup appendix slide (Backup E, Figure 3 panels)
+- `outputs/figures/Figure-6*.pdf` (12 files): regenerated with new legend
+- `outputs/Gender_Writing_Paper___Austin/figures/Figure-6*.pdf` (12 files): manually copied from `outputs/figures/`
+- `outputs/Gender_Writing_Paper___Austin/A_Coffelt_Paper.pdf`: recompiled
+- `outputs/slides.pdf`: recompiled
+
+### Notes / follow-up
+- **Dual `figures/` directory gotcha** — `outputs/figures/` is where Stata writes; `outputs/Gender_Writing_Paper___Austin/figures/` is what the paper actually reads (`\includegraphics{figures/...}` resolves relative to the source file, and there's no `\graphicspath` declared). After any future figure regeneration, must run `cp outputs/figures/Figure-*.pdf outputs/Gender_Writing_Paper___Austin/figures/` or the paper silently uses stale figures. User chose to keep the manual-copy workflow over adding `\graphicspath` or dual-write from Stata. Captured as project memory.
+- Stata Data.do also touched many tracked `.dta` files under `data/raw/hengel_generated/` (regeneration side-effect). Left those out of the commit — unrelated to this session's intent and likely just timestamp/metadata noise.
+
+---
+
 ## Session: 2026-05-07 (afternoon — GST phrase-ranking v1 Python stage)
 
 ### Completed
