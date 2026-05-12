@@ -1,5 +1,29 @@
 # Recent Changes
 
+## Session: 2026-05-12 (Section 5.3 expansion + composite-score cleanup)
+
+### Completed
+- **Expanded the Controlled Regressions subsection** (§5.3) in `6_Results.tex` from 2 short paragraphs (5 lines) to 4 paragraphs that (a) state the question and confounders, (b) walk readers through the col 1→5 progression and name col 5 as the preferred specification, (c) cite specific column-5 coefficients in 1–10 rubric units (jargon 0.48***, evidence 0.36***, readability 0.32***, directness 0.25**, novelty −0.30***), and (d) name what fades under stricter controls (pronoun commitment and acknowledgement of limitations drop out at col 5).
+- **Caught a unit-of-measure bug mid-draft:** initial draft described regression coefficients as "standardized units." User flagged this; verified in `Data.do:229–244` that `_llm_<crit>_score` variables are plain renames of the raw 1–10 rubric values. Only Figure 2 (`diff_means_plot.py`) standardizes. Fixed paragraph 1 wording ("on their native 1–10 rubric scale") and paragraph 3 wording ("0.48-point higher … on the 1–10 rubric"); dropped the misleading "20–30% smaller than raw mean differences" comparison.
+- **Locked col 5 framing per user clarification:** col 5 is preferred because it combines the most controls *with* the full N=9,117 sample; cols 6–9 add JEL/theory-empirical but halve N to ~5,200. Wrote this into paragraph 2.
+- **Dropped LLM composite scores from the paper** to shorten it. User opted to keep the 5-group conception in the methodology (now framed as a design choice rather than as estimated DVs) but cut all composite tables and the composite figure from the appendix. Intro mention "at the composite level of LLM scores" → "across the LLM scores."
+- **Recompiled paper: 120 → 100 pages (20-page cut)**, no errors, no broken references.
+
+### Key changes
+- `outputs/Gender_Writing_Paper___Austin/6_Results.tex`: 4-paragraph §5.3 expansion with corrected 1–10 rubric units, column-progression walk-through, and "what fades under col 5" paragraph.
+- `outputs/Gender_Writing_Paper___Austin/2_Introduction.tex`: dropped "at the composite level of" from the cumulative-exposure paragraph.
+- `outputs/Gender_Writing_Paper___Austin/5_Methodology.tex`: rephrased the dependent-variables sentence to preserve the 5-group conception (`"organized into five conceptual groups; see Appendix~\ref{sec:rubric}"`) while no longer claiming composites are estimated.
+- `outputs/Gender_Writing_Paper___Austin/8_Appendix.tex`: removed four composite blocks — Table-3-llm subsection (6 tables), Table-5-llm subsection (6 tables), Table-8-llm subsection (6 tables), Table-10-llm + Table-10-llm-g3 from the cumulative-exposure subsection (renamed it "Hengel Cumulative Exposure"), and the G3 composite figure (`fig6:g3`).
+- `outputs/Gender_Writing_Paper___Austin/A_Coffelt_Paper.pdf`: recompiled (100 pages, was 120).
+- Two new project memories saved (see Notes).
+
+### Notes / follow-up
+- **Orphaned composite artifacts:** the stale composite `.tex` files in `outputs/Gender_Writing_Paper___Austin/tables/` (Table-3-llm-*.tex, Table-5-llm-*.tex, Table-8-llm-*.tex, Table-10-llm.tex, Table-10-llm-g3.tex) and the composite figure `Figure-6-llm-g3.pdf` are no longer referenced by the paper. The composite `.do` files (`Table-3-llm.do`, `Table-5-llm.do`, `Table-8-llm.do`, `Table-10-llm.do`, `Table-10-llm-g3.do`, `Figure-6-llm-g3.do`) are already commented out in `hengel_master.do`, so future runs won't regenerate them. Safe to delete the stale artifacts whenever cleanup is wanted.
+- **Two new project memories** capturing this session's gotchas: `project_preferred_specification.md` (col 5 is the headline because of N=9,117) and `project_llm_score_scales.md` (Figure 2 is standardized; regression tables are raw 1–10 — don't conflate).
+- **.dta byproducts under `data/raw/hengel_generated/`** remain unstaged — same incidental Stata-rewrite from the earlier figure-regen run; not part of this session's scope.
+
+---
+
 ## Session: 2026-05-12 (Figures 3–6 working/final clarification + slide 9 note)
 
 ### Completed
