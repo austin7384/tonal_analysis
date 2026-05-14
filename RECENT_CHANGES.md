@@ -1,5 +1,32 @@
 # Recent Changes
 
+## Session: 2026-05-13 (GST phrase-ranking v1 R-stage + v2 residualized pipeline)
+
+### Completed
+- **Pulled remote** (`c8f8f65..2b13d8f`, fast-forward): includes Figure-6 working/final-paper legend regen, §5.3 expansion, slide 9 standardization note, and the composite-score cleanup. No conflicts.
+- **GST phrase-ranking v1 R-stage** (`fit_phrase_lasso.R`): implemented Taddy's Distributed Multinomial Regression (`distrom::dmr` over Poisson-approximation `gamlr`, BIC-tuned) per the v1 plan. Installed `gamlr` + `distrom` from CRAN (GitHub fallback prepared but not needed). DMR ran in 96.7s on a 6,704 × 9,670 sparse matrix; round-trip total_count check passed (338,706 = 338,706). Hit one bug — `setorder(ranking, -abs(zeta))` failed because data.table's `setorder` doesn't accept expressions; fixed with a temporary `abs_zeta` column. **Inspection:** top 30 by `|ζ|` are entirely `high_read`, dominated by applied-empirical topic markers (`house_prices`, `gender_gap`, `tax_returns`, `median_voter`); low_read top is econometric-theory jargon (`asymptotically_normal`, `unit_root`, `regularity_conditions`). Output is **topic-confounded**, not a clean style ranking — motivating v2.
+- **v2 plan written** (`v2_residualize_plan.md`): residualize Readability on slide-8 col-5 controls (journal×year, editor, institution FE, JEL1_*, Type_*, NativeEnglish, Blind, N, Maxt, MaxT, asinhCiteCount), redefine top/bottom quintile on the residual, rerun the existing R lasso. `nber_score` and gender measures deliberately excluded (gender is a treatment in the main paper; `nber_score` is draft-readability, would change interpretation).
+- **v2 Python stage** (`build_phrase_matrix_residualized.py`): inner-merges `data/raw/hengel_generated/article_primary_jel.dta` to attach col-5 controls (sample shrinks 9,117 → 5,211 due to JEL-required restriction — same restriction the main paper col-5 imposes). Fits `statsmodels.OLS` on a 5,211 × 177 design matrix with one-dummy-dropped per categorical block. **OLS R² = 0.3323** (top of plan's 0.15–0.35 expected band). Quintile cut on residuals produces balanced 1,043/1,043 split (vs v1's asymmetric 3,635/3,069).
+- **v2 R-stage** (`fit_phrase_lasso_residualized.R`): twin of v1 with `IN_DIR`/`OUT_FILE` repointed. DMR ran in 7.6s on 2,086 × 2,456 (much smaller corpus). Round-trip 67,275 = 67,275. **Inspection:** v1 topic markers (`house_prices`, `gender_gap`, `asymptotically_normal`, `unit_root`) are gone from v2 top 30; replaced by methodological/structural phrases (`find_no`, `compare_the`, `study_how`, `paper_tests`, `panel_of`, `new_data`). Residual theoretical-econ contamination remains on the low_read side (`unique_equilibrium`, `incentive_compatible`, `rational_expectations`, `first_best`) — JEL coarseness, flagged for v3.
+- **Installed statsmodels** (and scipy + patsy as transitive deps) via pip for the OLS step.
+
+### Key changes
+- `code/Shapiro_Gentzkow_Phrase_Analysis/fit_phrase_lasso.R`: new — v1 R DMR stage.
+- `code/Shapiro_Gentzkow_Phrase_Analysis/v2_residualize_plan.md`: new — v2 plan, locks col-5 controls.
+- `code/Shapiro_Gentzkow_Phrase_Analysis/build_phrase_matrix_residualized.py`: new — v2 Python stage with OLS residualization.
+- `code/Shapiro_Gentzkow_Phrase_Analysis/fit_phrase_lasso_residualized.R`: new — v2 R stage twin.
+- `data/processed/sg_phrase_analysis_residualized/{documents,phrases,phrase_counts}.csv`: new — v2 staging files (2,086 docs × 2,456 phrases × 59,753 triples).
+- `outputs/tables/csv/sg_phrase_ranking_readability.csv`: new — v1 ranking (9,670 rows).
+- `outputs/tables/csv/sg_phrase_ranking_readability_residualized.csv`: new — v2 ranking (2,456 rows).
+
+### Notes / follow-up
+- **v3 hooks (already flagged in v2 plan):** rerun with col-4 controls (drop quality/native/JEL/theory to isolate which controls do the work); rerun with col-5 + tertiary JEL (`JEL3_*`); try LDA-topic controls in place of JEL since JEL is coarse and leaves theoretical-econ jargon in the residual.
+- **Other LLM criteria deferred to later:** v1 and v2 only cover Readability. Same residualization machinery will apply to the other 15 criteria, but each will have its own R² and survivor-phrase profile.
+- **Out-of-scope untracked files left alone:** `articles/` (split-pdf artifacts from a different session), `outputs/Gender_Writing_Paper___Austin/0_main.*` LaTeX build artifacts, `outputs/slides.{aux,log,nav,out,snm,toc}` build artifacts.
+- **Updated project memory** `project_gst_phrase_ranking.md` from "not yet implemented" to "v1 + v2 implemented; v3 hooks listed."
+
+---
+
 ## Session: 2026-05-12 (Section 5.3 expansion + composite-score cleanup)
 
 ### Completed
